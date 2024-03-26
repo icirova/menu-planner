@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Sorts+Mill+Goudy:ital@0;1&display=swap');
+
+html { box-sizing: border-box; }
+*, ::before, ::after { box-sizing: inherit; margin: 0; padding: 0; }
+
+html {
+  font-family: 'Open Sans', sans-serif;
+  background-color: rgb(220, 220, 220);
+}
+
+h1, h2, h3 {
+  font-family:'Amatic SC', cursive;
+  font-weight: 400;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.main{
+  box-shadow: -9px 19px 12px 0px rgb(98, 98, 98);
+  border-radius: 5px;
+  background-color: white;
+  padding: 1rem;
+}
+
+.title {
+  text-align: center;
+  font-size: 4rem;
+  margin-bottom: 3rem;
+}
+
+
+
+
+@media screen and (min-width: 680px) {
+  .section--grid {
+    display: flex;
+    flex-wrap: wrap;
+   gap: 1rem;
+  }
+}
+
+@media screen and (min-width: 1024) {
+  .section--grid {
+    /* column-gap: 1rem */
+  }
+ 
+}

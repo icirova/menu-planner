@@ -1,0 +1,33 @@
+
+.menu__list {
+    text-align: center; 
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    padding: 0; 
+}
+
+.menu__item {
+    text-decoration: none;
+    display: block;
+    color: black;
+    font-family: "Sorts Mill Goudy", serif;
+    font-weight: 700;
+   padding: 10px 15px;
+ 
+   
+}
+
+.menu__item:hover{
+    color: #819e2b 
+}
+
+@media screen and (min-width: 680px) {
+    .menu {
+       
+    }
+}
+
+.active {
+    color: #819e2b 
+}

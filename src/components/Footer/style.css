@@ -1,0 +1,9 @@
+.footer {
+    height: 100px;
+    display: grid;
+    place-content: center;
+   
+    padding: 15px;
+   
+    
+}

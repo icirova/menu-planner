@@ -1,0 +1,29 @@
+
+.header__title {
+ 
+    margin: 20px auto;
+    text-align: center;
+    font-size: 3rem;
+ }
+
+ @media screen and (min-width: 680px) {
+    .header{
+        display: flex;
+        justify-content: space-between; 
+        align-items: baseline;
+    }
+
+    .header__title{
+        margin: 0;
+        font-size: 4rem;
+    } 
+ }
+
+ @media screen and (min-width: 1024) {
+    
+    .header__title{
+        font-size: 6rem;
+    } 
+ }
+
+

@@ -1,0 +1,172 @@
+[
+    {
+        "id": 1,
+        "day_in_week": 1,
+        "breakfast": {
+            "id" : 2,
+            "name": "Lívance",
+            "id_surovin": [2 ,3, 4, 5]
+        },
+        "snack": {
+            "id" : 1,
+            "name": "Dýňová polévka",
+            "id_surovin": [1, 5]
+        },
+        "lunch": {
+            "id" : 2,
+            "name": "Špagety Carbonara",
+            "id_surovin": [5]
+        },
+        
+        "dinner": {
+            "id" : 3,
+            "name": "Pizza",
+            "id_surovin": [2, 4, 5]
+        }
+    },
+    {
+        "id": 2,
+        "day_in_week": 2,
+        "breakfast": {
+            "id" : 2,
+            "name": "Lívance",
+            "id_surovin": [2 ,3, 4, 5]
+        },
+        "snack": {
+            "id" : 4,
+            "name": "Zeleninový salát",
+            "id_surovin": [1, 5]
+        },
+        "lunch": {
+            "id" : 6,
+            "name": "Boloňské špagety",
+            "id_surovin": [5]
+        },
+        "dinner": {
+            "id" : 3,
+            "name": "Pizza",
+            "id_surovin": [2, 4, 5]
+        }
+    }, {
+        "id": 3,
+        "day_in_week": 3,
+        "breakfast": {
+            "id" : 7,
+            "name": "Makronky",
+            "id_surovin": [2 ,3, 4, 5]
+        },
+        "snack": {
+            "id" : 1,
+            "name": "Dýňová polévka",
+            "id_surovin": [1, 5]
+        },
+        "lunch": {
+            "id" : 8,
+            "name": "Smažený řízek",
+            "id_surovin": [2, 5]
+        },
+        "dinner": {
+            "id" : 3,
+            "name": "Pizza",
+            "id_surovin": [2, 4, 5]
+        }
+    },
+    {
+        "id": 4,
+        "day_in_week": 4,
+        "breakfast": {
+            "id" : 2,
+            "name": "Lívance",
+            "id_surovin": [2 ,3, 4, 5]
+        },
+        "snack": {
+            "id" : 4,
+            "name": "Zeleninový salát",
+            "id_surovin": [6, 5]
+        },
+        "lunch": {
+            "id" : 9,
+            "name": "Přírodní řízek s hranolkami",
+            "id_surovin": [5]
+        },
+        "dinner": {
+            "id" : 3,
+            "name": "Pizza",
+            "id_surovin": [2, 4, 5]
+        }
+    },
+    {
+        "id": 5,
+        "day_in_week": 5,
+        "breakfast": {
+            "id" : 2,
+            "name": "Lívance",
+            "id_surovin": [2 ,3, 4, 5]
+        },
+        "snack": {
+            "id" : 1,
+            "name": "Dýňová polévka",
+            "id_surovin": [1, 5]
+        },
+        "lunch": {
+            "id" : 2,
+            "name": "Špagety Carbonara",
+            "id_surovin": [5]
+        },
+        "dinner": {
+            "id" : 3,
+            "name": "Pizza",
+            "id_surovin": [2, 4, 5]
+        }
+    },
+    {
+        "id": 6,
+        "day_in_week": 6,
+        "breakfast": {
+            "id" : 2,
+            "name": "Lívance",
+            "id_surovin": [2 ,3, 4, 5]
+        },
+        "snack": {
+            "id" : 1,
+            "name": "Dýňová polévka",
+            "id_surovin": [1, 5]
+        },
+        "lunch": {
+            "id" : 2,
+            "name": "Špagety Carbonara",
+            "id_surovin": [5]
+        },
+        "dinner": {
+            "id" : 3,
+            "name": "Pizza",
+            "id_surovin": [2, 4, 5]
+        }
+    },
+    {
+        "id": 7,
+        "day_in_week": 7,
+        "breakfast": {
+            "id" : 2,
+            "name": "Lívance",
+            "id_surovin": [2 ,3, 4, 5]
+        },
+        "snack": {
+            "id" : 1,
+            "name": "Dýňová polévka",
+            "id_surovin": [1, 5]
+        },
+        "lunch": {
+            "id" : 2,
+            "name": "Špagety Carbonara",
+            "id_surovin": [5]
+        },
+        "dinner": {
+            "id" : 3,
+            "name": "Pizza",
+            "id_surovin": [2, 4, 5]
+        }
+    }
+
+
+]
