@@ -1,16 +1,13 @@
-import { Link } from "react-router-dom";
 import "./style.css";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { recipes } from "../../../data/recipes";
 import { useState, useEffect } from "react";
-
-
 
 export const RecipeDetail = () => {
 
     const {id} = useParams();
     const [recipeDetail, setRecipeDetail] = useState(null);
-   
    
     useEffect(() => {
         const foundRecipe = recipes.find(recipe => recipe.id === parseInt(id))
