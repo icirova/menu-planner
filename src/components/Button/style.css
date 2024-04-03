@@ -1,11 +1,10 @@
 .button {
     border: black solid 5px;
-
-    border-radius: 10px;
-    padding: 10px 15px;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
     display: block;
     width: 100px;
-    border: 0;
+    border: none;
     background-color: rgb(220, 220, 220);
     font-family: 'Sorts Mill Goudy', serif;
     font-size: 1rem;
@@ -15,4 +14,12 @@
 .button:hover {
     background-color: rgb(143, 142, 142);
     color: white; 
+}
+
+.button--new-recipe {
+    background-color: #819e2b;
+}
+
+.button--new-recipe:hover {
+    background-color: #54661d
 }

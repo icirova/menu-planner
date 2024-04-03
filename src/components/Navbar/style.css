@@ -13,9 +13,14 @@
     color: black;
     font-family: "Sorts Mill Goudy", serif;
     font-weight: 700;
-   padding: 10px 15px;
- 
+    padding: 0.5rem 1rem;
    
+   
+}
+
+.menu__item:focus {
+   
+    border-radius: 0.25rem;
 }
 
 .menu__item:hover{

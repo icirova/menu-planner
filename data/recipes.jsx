@@ -1,8 +1,8 @@
-[
+export const recipes = [
     {
         "id": 1,
         "tag":["soup"],
-        "photo_url": "/images/recipes/dynova-polevka.webp",
+        "photo_url": "dynova-polevka.webp",
         "ingredients": [
             "dýně",
             "olej"
@@ -14,7 +14,7 @@
     {
         "id": 2,
         "tag":["breakfast","snack","dessert"],
-        "photo_url": "/images/recipes/livance.webp",
+        "photo_url": "livance.webp",
         "ingredients": [
             "hladká mouka",
             "mléko",
@@ -28,7 +28,7 @@
     {
         "id": 3,
         "tag":["lunch","dinner"],
-        "photo_url": "/images/recipes/pizza.webp",
+        "photo_url": "pizza.webp",
         "ingredients": [
             "hladká mouka",
             "mléko",
@@ -42,7 +42,7 @@
     {
         "id": 4,
         "tag":["lunch","dinner", "snack"],
-        "photo_url": "/images/recipes/salat.webp",
+        "photo_url": "salat.webp",
         "ingredients": [
             "hladká mouka",
             "mléko",
@@ -56,7 +56,7 @@
     {
         "id": 5,
         "tag":["lunch","dinner"],
-        "photo_url": "/images/recipes/carbonara.webp",
+        "photo_url": "carbonara.webp",
         "ingredients": [
             "špagety",
             "žloutky",
@@ -69,7 +69,7 @@
     {
         "id": 6,
         "tag":["lunch","dinner"],
-        "photo_url": "/images/recipes/bolonske.webp",
+        "photo_url": "bolonske.webp",
         "ingredients": [
             "špagety",
             "mrkev",
@@ -84,7 +84,7 @@
     {
         "id": 7,
         "tag":["dessert"],
-        "photo_url": "/images/recipes/makronky.webp",
+        "photo_url": "makronky.webp",
         "ingredients": [
             "hladká mouka",
             "mléko",
@@ -98,7 +98,7 @@
     {
         "id": 8,
         "tag":["lunch","dinner"],
-        "photo_url": "/images/recipes/smazeny-rizek.webp",
+        "photo_url": "smazeny-rizek.webp",
         "ingredients": [
             "hladká mouka",
             "mléko",
@@ -113,7 +113,7 @@
     {
         "id": 9,
         "tag":["lunch","dinner"],
-        "photo_url": "/images/recipes/rizek-hranolky.webp",
+        "photo_url": "rizek-hranolky.webp",
         "ingredients": [
             "hladká mouka",
             "mléko",
