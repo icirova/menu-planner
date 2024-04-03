@@ -23,3 +23,8 @@
 .button--new-recipe:hover {
     background-color: #54661d
 }
+
+.button--active {
+    background-color: rgb(143, 142, 142);
+    color: white;
+  }

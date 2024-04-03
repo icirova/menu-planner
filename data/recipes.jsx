@@ -1,7 +1,7 @@
 export const recipes = [
     {
         "id": 1,
-        "tag":["soup"],
+        "tags":["polévky"],
         "photo_url": "dynova-polevka.webp",
         "ingredients": [
             "dýně",
@@ -10,24 +10,9 @@ export const recipes = [
         "title": "Dýňová polévka",
         "workflow": "Uvař dýni."
     },
-
-    {
-        "id": 2,
-        "tag":["breakfast","snack","dessert"],
-        "photo_url": "livance.webp",
-        "ingredients": [
-            "hladká mouka",
-            "mléko",
-            "vejce",
-            "olej" 
-        ],
-        "title": "Lívance",
-        "workflow": "Připrav těsto a na oleji smaž lívance."
-    },
-
     {
         "id": 3,
-        "tag":["lunch","dinner"],
+        "tags":["obědy","večeře"],
         "photo_url": "pizza.webp",
         "ingredients": [
             "hladká mouka",
@@ -38,10 +23,9 @@ export const recipes = [
         "title": "Pizza",
         "workflow": "Objednej pizzu s dovozem."
     },
-
     {
         "id": 4,
-        "tag":["lunch","dinner", "snack"],
+        "tags":["obědy","večeře","svačiny"],
         "photo_url": "salat.webp",
         "ingredients": [
             "hladká mouka",
@@ -52,10 +36,9 @@ export const recipes = [
         "title": "Zeleninový salát",
         "workflow": "Natrhej salát."
     },
-
     {
         "id": 5,
-        "tag":["lunch","dinner"],
+        "tags":["obědy","večeře"],
         "photo_url": "carbonara.webp",
         "ingredients": [
             "špagety",
@@ -68,7 +51,7 @@ export const recipes = [
     },
     {
         "id": 6,
-        "tag":["lunch","dinner"],
+        "tags":["obědy","večeře"],
         "photo_url": "bolonske.webp",
         "ingredients": [
             "špagety",
@@ -83,7 +66,7 @@ export const recipes = [
     },
     {
         "id": 7,
-        "tag":["dessert"],
+        "tags":["moučníky"],
         "photo_url": "makronky.webp",
         "ingredients": [
             "hladká mouka",
@@ -94,10 +77,9 @@ export const recipes = [
         "title": "Makronky",
         "workflow": "Připrav těsto a peč makronky."
     },
-
     {
         "id": 8,
-        "tag":["lunch","dinner"],
+        "tags":["obědy","večeře"],
         "photo_url": "smazeny-rizek.webp",
         "ingredients": [
             "hladká mouka",
@@ -111,8 +93,21 @@ export const recipes = [
         "workflow": "Naklepej a obal."
     },
     {
+        "id": 2,
+        "tags":["snídaně","svačiny","moučníky"],
+        "photo_url": "livance.webp",
+        "ingredients": [
+            "hladká mouka",
+            "mléko",
+            "vejce",
+            "olej" 
+        ],
+        "title": "Lívance",
+        "workflow": "Připrav těsto a na oleji smaž lívance."
+    },
+    {
         "id": 9,
-        "tag":["lunch","dinner"],
+        "tags":["obědy","večeře"],
         "photo_url": "rizek-hranolky.webp",
         "ingredients": [
             "hladká mouka",
