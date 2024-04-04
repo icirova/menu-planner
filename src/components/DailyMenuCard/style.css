@@ -1,0 +1,75 @@
+.card {
+    
+    background-color:  rgb(238, 238, 238);
+    border-radius: 20px;
+    margin-bottom: 1rem;
+}
+
+.card__title{
+    text-align: center;
+    margin: 1.5rem; 
+}
+
+.card__title {
+       
+    padding-top: 0.8rem; 
+    margin: 0;
+    border-radius: 20px 20px 0 0;
+}
+
+.card__content{
+    padding: 1rem;
+}
+
+.card__text{
+    display: flex;
+    margin-bottom: 0.8rem
+}
+
+.card__text--dinner{
+    margin-bottom: 0;
+}
+
+.card__subtitle{
+    flex-basis: 25%;
+    font-weight: 700;
+    font-size: 1.1rem;
+    font-family:'Sorts Mill Goudy', serif;
+}
+
+.card__description {
+    flex-basis: 75%;
+}
+
+.card__image {
+    display: block;
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+}
+
+@media screen and (min-width: 680px) {
+   .card {
+    flex-basis: calc((100% - 1rem) / 2);
+   }
+
+   .card:nth-child(odd) {
+    margin-right: 1rem;
+}
+   /* .card--shopping-list{
+    flex-basis: 100%;
+   
+   } */
+}
+
+@media screen and (min-width: 1024px) {
+   .card {
+    flex-basis: calc((100% - (1rem * 2)) / 3);
+   }
+
+   .card:nth-child(odd) {
+    margin-right: 0;
+}
+   .card--shopping-list{
+    flex-basis: calc((100% - (1rem * 2)) / 3);
+   }
+}

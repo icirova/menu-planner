@@ -47,7 +47,7 @@ export const Recipes = () => {
           openDetail={() => openDetail(oneRecipe.id)}
           />
         })
-      };
+      }
     
     </div>
 

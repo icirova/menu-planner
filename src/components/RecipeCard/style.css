@@ -1,6 +1,7 @@
 .recipe {
     background-color: rgb(238, 238, 238);
     border-radius: 20px;
+    cursor: pointer;
 }
 
 .recipe__title {
