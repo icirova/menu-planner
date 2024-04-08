@@ -27,7 +27,7 @@ export const RecipeDetail = () => {
                     <h1 className="title">{recipeDetail.title}</h1>
                     <div className="recipe-detail">
                         <div className="recipe-detail__img">
-                            <img src={`../components/RecipeCard/img/${recipeDetail.photo_url}`} alt="" className="recipe-detail__image" />
+                            <img src={`../imgRecipe/${recipeDetail.photo_url}`} alt="" className="recipe-detail__image" />
                         </div>
 
                         <div className="recipe-detail__text">

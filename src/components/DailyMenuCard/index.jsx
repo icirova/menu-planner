@@ -3,7 +3,7 @@ import "./style.css"
 export const DailyMenuCard = ({day, img}) => {
  
  return  <div className="card">
-  <img className="card__image" src={`./components/DailyMenuCard/image/${img}`} alt=""/>
+  <img className="card__image" src={`./image/${img}`} alt=""/>
   <h1 className="card__title">{day}</h1>
 
   <div className="card__content" id="1">

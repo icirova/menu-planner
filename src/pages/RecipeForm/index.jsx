@@ -3,7 +3,7 @@ import "./style.css"
 export const RecipeForm = () => {
   return <div className="main">
     <h1 className="title">Nový recept</h1>
-    <img className="form__img" src="./pages/RecipeForm/form.webp" alt=""/>
+    <img className="form__img" src="./form.webp" alt=""/>
 
     <form id="form" className="form">
     
