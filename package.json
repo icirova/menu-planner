@@ -4,6 +4,7 @@
   "description": "Starter kit for React JavaScript project",
   "type": "module",
   "scripts": {
+    "run": "npm run dev",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"

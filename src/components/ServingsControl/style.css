@@ -1,0 +1,11 @@
+.servings-control {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.servings-control input {
+  width: 60px;
+  padding: 0.2rem;
+}

@@ -31,3 +31,62 @@
     margin-bottom: 2rem;
 }
 
+.recipe-detail__list {
+  margin-bottom: 2rem;
+  padding-left: 1.2rem;
+  list-style-type: disc;
+}
+
+.recipe-detail__subtitle {
+  margin-top: 1.5rem;
+  font-family: 'Sorts Mill Goudy', serif;
+}
+
+.recipe-detail__suitable-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.recipe-detail__allergen-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.recipe-detail__tag--allergen {
+  background-color: #fce8e8; /* světlejší, jemná červená */
+  color: #8b0000;            /* tmavě červený text (dobrá čitelnost) */
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+
+.recipe-detail__tag {
+  background-color: #edf5e1;   /* jemná světle zelená */
+  color: #2f5e00;              /* tmavší zeleň pro čitelnost */
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+
+
+.recipe-detail__list {
+  margin-bottom: 2rem;
+  padding-left: 1.2rem;
+  list-style-type: disc;
+}
