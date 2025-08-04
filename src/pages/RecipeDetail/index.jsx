@@ -2,9 +2,9 @@ import "./style.css";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { recipes } from "../../../data/recipes";
+import { AllergenTags } from "../../components/AllergenTags/index";
+import { SuitabilityTags } from "../../components/SuitabilityTags/index";
 import { ServingsControl } from "../../components/ServingsControl/index";
-import { getAllergenIcon } from "../../utils/getAllergenIcon";
-import { getSuitabilityIcon } from "../../utils/getSuitabilityIcon";
 import { formatIngredient } from "../../utils/formatIngredient";
 
 const IngredientsList = ({ ingredients, baseServings, desiredServings }) => (
@@ -20,31 +20,6 @@ const IngredientsList = ({ ingredients, baseServings, desiredServings }) => (
   </>
 );
 
-const AllergenTags = ({ allergens }) => (
-  <>
-    <h2 className="recipe-detail__subtitle">Alergeny:</h2>
-    <div className="recipe-detail__allergen-tags">
-      {allergens.map((a, idx) => (
-        <span key={idx} className="recipe-detail__tag--allergen">
-          {getAllergenIcon(a)} {a}
-        </span>
-      ))}
-    </div>
-  </>
-);
-
-const SuitabilityTags = ({ suitability }) => (
-  <>
-    <h2 className="recipe-detail__subtitle">Vhodné pro:</h2>
-    <div className="recipe-detail__suitable-tags">
-      {suitability.map((s, idx) => (
-        <span key={idx} className="recipe-detail__tag">
-          {getSuitabilityIcon(s)} {s}
-        </span>
-      ))}
-    </div>
-  </>
-);
 
 export const RecipeDetail = () => {
   const { id } = useParams();
