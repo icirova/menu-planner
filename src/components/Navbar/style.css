@@ -1,38 +1,41 @@
+.menu {
+  max-width: 1100px;
+  margin: 0;
+}
 
 .menu__list {
-    text-align: center; 
-    list-style-type: none;
-    display: flex;
-    justify-content: center;
-    padding: 0; 
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin-bottom: -1px; /* aby záložka a .main navazovaly beze švu */
 }
 
 .menu__item {
-    text-decoration: none;
-    display: block;
-    color: black;
-    font-family: "Sorts Mill Goudy", serif;
-    font-weight: 700;
-    padding: 0.5rem 1rem;
-   
-   
+  text-decoration: none;
+  color: #333;
+  font-family: "Sorts Mill Goudy", serif;
+  font-weight: 700;
+  padding: 0.5rem 1.5rem;
+  background-color: #e8e8e8;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+  margin-left:0.25rem;
+  transition: background-color 0.2s ease;
 }
 
-.menu__item:focus {
-   
-    border-radius: 0.25rem;
-}
 
-.menu__item:hover{
-    color: #819e2b 
-}
-
-@media screen and (min-width: 680px) {
-    .menu {
-       
-    }
+.menu__item:hover {
+  background-color: #d2e0d2;
+  color: #2b5c41;
 }
 
 .active {
-    color: #819e2b 
+  background-color: white; /* stejné jako .main */
+  color: #2b5c41;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+  z-index: 2;
+  position: relative;
 }
