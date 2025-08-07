@@ -1,0 +1,17 @@
+.buttons--suitability {
+  margin-top: -2rem;
+  margin-bottom: 2rem;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.buttons--suitability .button {
+  background-color: #d8f3dc;
+  color: #1b4332;
+}
+
+.buttons--suitability .button:hover,
+.buttons--suitability .button--active {
+  background-color: #3d7958;
+  color: white;
+}

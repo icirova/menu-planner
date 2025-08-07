@@ -147,38 +147,34 @@ export const recipes = [
     tags: ["obědy", "večeře"],
     photo_url: "smazeny-rizek.webp",
     ingredients: [
-      { amount: 150, unit: "g", item: "vepřové maso" },
-      { amount: 50, unit: "g", item: "hladká mouka" },
-      { amount: 1, unit: "", item: "vejce" },
-      { amount: 50, unit: "ml", item: "mléko" },
-      { amount: 50, unit: "g", item: "strouhanka" },
-      { amount: 100, unit: "ml", item: "olej na smažení" },
-      { amount: 1, unit: "špetka", item: "sůl" }
+      { amount: 500, unit: "g", item: "vepřové maso" },
+      { amount: 80, unit: "g", item: "hladká mouka" },
+      { amount: 2, unit: "", item: "vejce" },
+      { amount: 80, unit: "ml", item: "mléko" },
+      { amount: 150, unit: "g", item: "strouhanka" },
+      { amount: 200, unit: "ml", item: "olej na smažení" },
+      { amount: 1, unit: "lžička", item: "sůl" }
     ],
     allergens: ["lepek", "mléko", "vejce"],
     suitableFor: [],
     calories: 680,
-    workflow: "Maso naklepej a osol. Obal v mouce, vejci s mlékem a ve strouhance. Smaž na oleji dozlatova z obou stran. Podávej s bramborem nebo salátem."
+    workflow: "Maso naporcuj, naklepej a osol. Obal v mouce, vejci s mlékem a ve strouhance. Smaž na oleji dozlatova z obou stran. Podávej s bramborem nebo salátem."
   },
   {
     id: 9,
-    title: "Přírodní řízek s hranolkami",
+    title: "Přírodní řízek",
     servings: 4,
     tags: ["obědy", "večeře"],
     photo_url: "rizek-hranolky.webp",
     ingredients: [
-      { amount: 150, unit: "g", item: "kuřecí nebo vepřové maso" },
-      { amount: 2, unit: "", item: "brambory" },
-      { amount: 50, unit: "ml", item: "olej" },
-      { amount: 1, unit: "", item: "vejce" },
-      { amount: 30, unit: "g", item: "hladká mouka" },
-      { amount: 50, unit: "ml", item: "mléko" },
-      { amount: 1, unit: "špetka", item: "sůl" }
+      { amount: 600, unit: "g", item: "kuřecí nebo vepřové maso" },
+      { amount: 1, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "lžička", item: "sůl" }
     ],
-    allergens: ["lepek", "mléko", "vejce"],
+    allergens: [],
     suitableFor: [],
-    calories: 720,
-    workflow: "Maso naklepej, osol a opeč z obou stran na oleji. Brambory nakrájej na hranolky, osol a osmaž dozlatova. Podávej společně jako klasické jídlo z hospody."
+    calories: "200 - 300",
+    workflow: "Maso naporcuj, naklepej, osol a opeč z obou stran na pánvi nebo v troubě."
   }
 ];
 

@@ -5,20 +5,7 @@ import { recipes } from "../../../data/recipes";
 import { AllergenTags } from "../../components/AllergenTags/index";
 import { SuitabilityTags } from "../../components/SuitabilityTags/index";
 import { ServingsControl } from "../../components/ServingsControl/index";
-import { formatIngredient } from "../../utils/formatIngredient";
-
-const IngredientsList = ({ ingredients, baseServings, desiredServings }) => (
-  <>
-    <h2 className="recipe-detail__subtitle">Suroviny:</h2>
-    <ul className="recipe-detail__list">
-      {ingredients.map((ing, idx) => (
-        <li key={idx}>
-          {formatIngredient(ing, baseServings, desiredServings)}
-        </li>
-      ))}
-    </ul>
-  </>
-);
+import { IngredientsList } from "../../components/IngredientsList/index";
 
 
 export const RecipeDetail = () => {
