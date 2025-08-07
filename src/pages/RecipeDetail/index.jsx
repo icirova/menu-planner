@@ -1,27 +1,28 @@
 import "./style.css";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { recipes } from "../../../data/recipes";
 import { AllergenTags } from "../../components/AllergenTags/index";
 import { SuitabilityTags } from "../../components/SuitabilityTags/index";
 import { ServingsControl } from "../../components/ServingsControl/index";
 import { IngredientsList } from "../../components/IngredientsList/index";
+import { useOutletContext } from "react-router-dom";
 
 
 export const RecipeDetail = () => {
   const { id } = useParams();
   const [recipeDetail, setRecipeDetail] = useState(null);
   const [desiredServings, setDesiredServings] = useState(4);
+  const { recipeList } = useOutletContext();
 
   useEffect(() => {
-    const foundRecipe = recipes.find((r) => r.id === parseInt(id));
+    const foundRecipe = recipeList.find((r) => r.id === parseInt(id));
     if (foundRecipe) {
       setRecipeDetail(foundRecipe);
       setDesiredServings(foundRecipe.servings || 4);
     } else {
       console.warn("Recept nebyl nalezen.");
     }
-  }, [id]);
+  }, [id, recipeList]); 
 
   if (!recipeDetail) {
     return (

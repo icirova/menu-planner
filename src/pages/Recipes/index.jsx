@@ -1,7 +1,7 @@
 import { Buttons } from "../../components/Buttons";
 import { RecipeCard } from "../../components/RecipeCard";
 import "./style.css";
-import { recipes } from "../../../data/recipes";
+import { useOutletContext } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { SuitabilityButtons } from "../../components/SuitabilityButtons";
@@ -9,6 +9,7 @@ import { SuitabilityButtons } from "../../components/SuitabilityButtons";
 export const Recipes = () => {
   const navigate = useNavigate();
   const [selectedTags, setSelectedTags] = useState([]);
+  
 
   const openDetail = (recipeId) => {
     navigate(`/recipe-detail/${recipeId}`);
@@ -33,11 +34,15 @@ export const Recipes = () => {
     }
   };
 
-  const filteredRecipes = recipes.filter(
-    (recipe) =>
-      selectedTags.every((tag) => recipe.tags.includes(tag)) &&
-      selectedSuitabilities.every((suit) => recipe.suitableFor?.includes(suit))
-  );
+  const { recipeList } = useOutletContext();
+
+  const filteredRecipes = recipeList.filter(
+  (recipe) =>
+    selectedTags.every((tag) => recipe.tags.includes(tag)) &&
+    selectedSuitabilities.every((suit) =>
+      recipe.suitableFor?.includes(suit)
+    )
+);
 
   return (
     <div className="main">
