@@ -7,7 +7,7 @@ export const SuitabilityTags = ({ suitability }) => {
 
   return (
     <>
-      <h2 className="recipe-detail__subtitle">Vhodné pro:</h2>
+      {/* <h2 className="recipe-detail__subtitle">Vhodné pro:</h2> */}
       <div className="recipe-detail__suitable-tags">
         {suitability.map((s, idx) => (
           <span key={idx} className="recipe-detail__tag">

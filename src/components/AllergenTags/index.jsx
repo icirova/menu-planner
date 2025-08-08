@@ -6,7 +6,7 @@ export const AllergenTags = ({ allergens }) => {
 
   return (
     <>
-      <h2 className="recipe-detail__subtitle">Alergeny:</h2>
+      {/* <h2 className="recipe-detail__subtitle">Alergeny:</h2> */}
       <div className="recipe-detail__allergen-tags">
         {allergens.map((a, idx) => (
           <span key={idx} className="recipe-detail__tag--allergen">

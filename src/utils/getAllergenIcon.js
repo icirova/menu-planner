@@ -8,6 +8,8 @@ export const getAllergenIcon = (allergen) => {
     "lepek": "🌾",
     "nuts": "🥜",
     "ořechy": "🥜",
+    "arašídy": "🥜",
+    "peanuts": "🥜",
     "soy": "🌱",
     "sója": "🌱",
     "fish": "🐟",

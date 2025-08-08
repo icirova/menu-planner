@@ -48,6 +48,15 @@ export const RecipeDetail = () => {
         </div>
 
         <div className="recipe-detail__text">
+          {recipeDetail.calories && (
+            <>
+              {/* <h2 className="recipe-detail__subtitle">Kalorie:</h2> */}
+              <p className="recipe-detail__description">
+                ⚖️ {recipeDetail.calories} kcal na 1 porci
+              </p>
+            </>
+          )}
+
           <ServingsControl
             value={desiredServings}
             onChange={(e) => setDesiredServings(parseInt(e.target.value) || 1)}
@@ -62,15 +71,6 @@ export const RecipeDetail = () => {
           <h2 className="recipe-detail__subtitle">Postup:</h2>
           <p className="recipe-detail__description">{recipeDetail.workflow}</p>
 
-          {recipeDetail.calories && (
-            <>
-              <h2 className="recipe-detail__subtitle">Kalorie:</h2>
-              <p className="recipe-detail__description">
-                {recipeDetail.calories} kcal na 1 porci
-              </p>
-            </>
-          )}
-
           {recipeDetail.allergens?.length > 0 && (
             <AllergenTags allergens={recipeDetail.allergens} />
           )}
@@ -78,7 +78,6 @@ export const RecipeDetail = () => {
           {recipeDetail.suitableFor?.length > 0 && (
             <SuitabilityTags suitability={recipeDetail.suitableFor} />
           )}
-
 
           {recipeDetail.tags?.length > 0 && (
             <RecipeTags tags={recipeDetail.tags} />

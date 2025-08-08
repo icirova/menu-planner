@@ -10,26 +10,30 @@ export const RecipeForm = () => {
   const [ingredients, setIngredients] = useState([]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const newRecipe = {
-      id: Date.now(),
-      title: e.target.name.value,
-      servings: Number(e.target.servings.value),
-      tags: e.target.tags.value.split(",").map((t) => t.trim()),
-      photo_url: e.target.photo.files[0]?.name || "",
+  const formData = new FormData(e.target);
 
-      ingredients: ingredients.filter((i) => i.item.trim() !== ""),
+  const tags = formData.getAll("tags"); 
+  const suitableFor = formData.getAll("suitableFor"); 
+  const allergens = formData.getAll("allergens")
 
-      suitableFor: e.target.suitableFor.value.split(",").map((s) => s.trim()),
-      calories: Number(e.target.calories.value),
-      workflow: e.target.method.value,
-      allergens: [],
-    };
-
-    addRecipe(newRecipe);
-    navigate("/recipes");
+  const newRecipe = {
+    id: Date.now(),
+    title: formData.get("name"),
+    servings: Number(formData.get("servings")),
+    tags: tags,
+    photo_url: e.target.photo.files[0]?.name || "",
+    ingredients: ingredients.filter((i) => i.item.trim() !== ""),
+    suitableFor: suitableFor,
+    calories: Number(formData.get("calories")),
+    workflow: formData.get("method"),
+    allergens,
   };
+
+  addRecipe(newRecipe);
+  navigate("/recipes");
+};
 
   return (
     <div className="main">
@@ -123,9 +127,41 @@ export const RecipeForm = () => {
             </label>
           </div>
         </div>
+
+
+<div className="form__item">
+  <label className="form__label">Alergeny</label>
+  <div className="form__checkbox-group">
+    {[
+      "lepek",
+      "korýši",
+      "vejce",
+      "ryby",
+      "arašídy",
+      "sója",
+      "mléko",
+      "ořechy",
+      "celer",
+      "hořčice",
+      "sezam",
+    ].map((a) => (
+      <label key={a} className="form__checkbox-label">
+        <input
+          type="checkbox"
+          name="allergens"   // <- stejné jméno pro všechny checkboxy
+          value={a}
+          className="form__checkbox"
+        />
+        {a.charAt(0).toUpperCase() + a.slice(1)}
+      </label>
+    ))}
+  </div>
+</div>
+
+
         <div className="form__item">
           <label htmlFor="calories" className="form__label">
-            Kalorie
+            Kalorie (kcal na 1 porci)
           </label>
           <input
             type="number"
