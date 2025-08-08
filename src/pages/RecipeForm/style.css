@@ -38,6 +38,7 @@
      border: 2px solid white;
      border-radius: 0.25rem;
      outline: none;
+     font-family: monospace;
    }
 
    .form__input--file {
@@ -57,5 +58,36 @@
      justify-content: center;
      align-items: center;
    }
+
+   .form__checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background-color: white;
+  border: 2px solid white;
+  border-radius: 0.25rem;
+}
+
+.form__checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form__checkbox-label:hover {
+  border-color: black;
+  background-color: rgb(245, 245, 245);
+}
+
+.form__checkbox {
+  accent-color: black; /* Moderní prohlížeče */
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
    
   

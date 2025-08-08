@@ -5,8 +5,8 @@ import { AllergenTags } from "../../components/AllergenTags/index";
 import { SuitabilityTags } from "../../components/SuitabilityTags/index";
 import { ServingsControl } from "../../components/ServingsControl/index";
 import { IngredientsList } from "../../components/IngredientsList/index";
+import { RecipeTags } from "../../components/RecipeTags/index";
 import { useOutletContext } from "react-router-dom";
-
 
 export const RecipeDetail = () => {
   const { id } = useParams();
@@ -22,7 +22,7 @@ export const RecipeDetail = () => {
     } else {
       console.warn("Recept nebyl nalezen.");
     }
-  }, [id, recipeList]); 
+  }, [id, recipeList]);
 
   if (!recipeDetail) {
     return (
@@ -77,6 +77,11 @@ export const RecipeDetail = () => {
 
           {recipeDetail.suitableFor?.length > 0 && (
             <SuitabilityTags suitability={recipeDetail.suitableFor} />
+          )}
+
+
+          {recipeDetail.tags?.length > 0 && (
+            <RecipeTags tags={recipeDetail.tags} />
           )}
         </div>
       </div>

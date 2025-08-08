@@ -76,7 +76,7 @@ export const IngredientInputs = ({ ingredients, setIngredients }) => {
           className="button button--add"
           onClick={addIngredient}
         >
-          ➕
+          +
         </button>
       </div>
 

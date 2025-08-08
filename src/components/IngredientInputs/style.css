@@ -41,6 +41,14 @@
   border: none;
 }
 
+.button--add {
+  font-weight: 400;
+}
+
+.button--add:hover {
+  color: white;
+}
+
 .button--remove {
   background: none;
   border: none;

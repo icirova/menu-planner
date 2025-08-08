@@ -19,10 +19,11 @@
 }
 
 .button--new-recipe {
-  background-color: #a2c523;
-  color: white;
+  background-color: #d8f3dc;
+  color: #1b4332;
 }
 
 .button--new-recipe:hover {
-  background-color: #7ba700;
+  background-color: #3d7958;
+  color: white;
 }

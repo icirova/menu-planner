@@ -18,9 +18,8 @@ export const RecipeForm = () => {
       servings: Number(e.target.servings.value),
       tags: e.target.tags.value.split(",").map((t) => t.trim()),
       photo_url: e.target.photo.files[0]?.name || "",
-      
 
-       ingredients: ingredients.filter(i => i.item.trim() !== ""),
+      ingredients: ingredients.filter((i) => i.item.trim() !== ""),
 
       suitableFor: e.target.suitableFor.value.split(",").map((s) => s.trim()),
       calories: Number(e.target.calories.value),
@@ -66,19 +65,64 @@ export const RecipeForm = () => {
         </div>
 
         <div className="form__item">
-          <label htmlFor="tags" className="form__label">
-            Tagy
-          </label>
-          <input
-            type="text"
-            id="tags"
-            name="tags"
-            className="form__input"
-            defaultValue="polévky"
-            placeholder="např. polévky, oběd"
-          />
+          <label className="form__label">Tagy</label>
+
+          <div className="form__checkbox-group">
+            {[
+              "Snídaně",
+              "Svačina",
+              "Polévky",
+              "Oběd",
+              "Večeře",
+              "Moučníky",
+            ].map((tag) => (
+              <label key={tag} className="form__checkbox-label">
+                <input
+                  type="checkbox"
+                  name="tags"
+                  value={tag.toLowerCase()}
+                  className="form__checkbox"
+                />
+                {tag}
+              </label>
+            ))}
+          </div>
         </div>
 
+        <div className="form__item">
+          <label className="form__label">Vhodné pro</label>
+          <div className="form__checkbox-group">
+            <label className="form__checkbox-label">
+              <input
+                type="checkbox"
+                name="suitableFor"
+                value="veganské"
+                className="form__checkbox"
+              />
+              Veganské
+            </label>
+
+            <label className="form__checkbox-label">
+              <input
+                type="checkbox"
+                name="suitableFor"
+                value="bez lepku"
+                className="form__checkbox"
+              />
+              Bez lepku
+            </label>
+
+            <label className="form__checkbox-label">
+              <input
+                type="checkbox"
+                name="suitableFor"
+                value="bez mléka"
+                className="form__checkbox"
+              />
+              Bez mléka
+            </label>
+          </div>
+        </div>
         <div className="form__item">
           <label htmlFor="calories" className="form__label">
             Kalorie
@@ -92,27 +136,10 @@ export const RecipeForm = () => {
           />
         </div>
 
-        <div className="form__item">
-          <label htmlFor="suitableFor" className="form__label">
-            Vhodné pro
-          </label>
-          <input
-            type="text"
-            id="suitableFor"
-            name="suitableFor"
-            className="form__input"
-            defaultValue="veganské, bez lepku, bez mléka"
-            placeholder="odděluj čárkami"
-          />
-        </div>
-
-       
-
-       <IngredientInputs
-  ingredients={ingredients}
-  setIngredients={setIngredients}
-/>
-
+        <IngredientInputs
+          ingredients={ingredients}
+          setIngredients={setIngredients}
+        />
 
         <div className="form__item">
           <label htmlFor="method" className="form__label">
