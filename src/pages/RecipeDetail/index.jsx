@@ -7,6 +7,7 @@ import { ServingsControl } from "../../components/ServingsControl/index";
 import { IngredientsList } from "../../components/IngredientsList/index";
 import { RecipeTags } from "../../components/RecipeTags/index";
 import { useOutletContext } from "react-router-dom";
+import { resolveImageSrc } from "../../utils/resolveImageSrc";
 
 export const RecipeDetail = () => {
   const { id } = useParams();
@@ -15,7 +16,7 @@ export const RecipeDetail = () => {
   const { recipeList } = useOutletContext();
 
   useEffect(() => {
-    const foundRecipe = recipeList.find((r) => r.id === parseInt(id));
+    const foundRecipe = recipeList.find((r) => r.id === parseInt(id, 10));
     if (foundRecipe) {
       setRecipeDetail(foundRecipe);
       setDesiredServings(foundRecipe.servings || 4);
@@ -28,12 +29,12 @@ export const RecipeDetail = () => {
     return (
       <div className="main">
         <p>Načítání...</p>
-        <Link to="/recipes" className="menu__item">
-          Zpět
-        </Link>
+        <Link to="/recipes" className="menu__item">Zpět</Link>
       </div>
     );
   }
+
+  const imgSrc = resolveImageSrc(recipeDetail.photo_url);
 
   return (
     <div className="main">
@@ -41,25 +42,22 @@ export const RecipeDetail = () => {
       <div className="recipe-detail">
         <div className="recipe-detail__img">
           <img
-            src={`../imgRecipe/${recipeDetail.photo_url}`}
-            alt=""
+            src={imgSrc}
+            alt={recipeDetail.title}
             className="recipe-detail__image"
           />
         </div>
 
         <div className="recipe-detail__text">
           {recipeDetail.calories && (
-            <>
-              {/* <h2 className="recipe-detail__subtitle">Kalorie:</h2> */}
-              <p className="recipe-detail__description">
-                ⚖️ {recipeDetail.calories} kcal na 1 porci
-              </p>
-            </>
+            <p className="recipe-detail__description">
+              ⚖️ {recipeDetail.calories} kcal na 1 porci
+            </p>
           )}
 
           <ServingsControl
             value={desiredServings}
-            onChange={(e) => setDesiredServings(parseInt(e.target.value) || 1)}
+            onChange={(e) => setDesiredServings(parseInt(e.target.value, 10) || 1)}
           />
 
           <IngredientsList
@@ -85,9 +83,7 @@ export const RecipeDetail = () => {
         </div>
       </div>
 
-      <Link to="/recipes" className="menu__item">
-        Zpět
-      </Link>
+      <Link to="/recipes" className="menu__item button">Zpět</Link>
     </div>
   );
 };
