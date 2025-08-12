@@ -62,7 +62,7 @@ export const Recipes = () => {
           return (
             <RecipeCard
               key={oneRecipe.id}
-              photo_url={oneRecipe.photo_url}
+              photo_urls={oneRecipe.photo_urls}
               title={oneRecipe.title}
               openDetail={() => openDetail(oneRecipe.id)}
             />

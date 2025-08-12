@@ -4,7 +4,7 @@ export const recipes = [
     title: "Dýňová polévka",
     servings: 4,
     tags: ["polévky"],
-    photo_url: "dynova-polevka.webp",
+    photo_urls: ["/imgRecipe/dynova-polevka.webp", "/imgRecipe/dynova-polevka.webp"],
     ingredients: [
       { amount: 500, unit: "g", item: "dýně" },
       { amount: 1, unit: "", item: "cibule" },
@@ -24,7 +24,7 @@ export const recipes = [
     title: "Lívance",
     servings: 4,
     tags: ["snídaně", "svačiny", "moučníky"],
-    photo_url: "livance.webp",
+    photo_urls: ["/imgRecipe/livance.webp"],
     ingredients: [
       { amount: 200, unit: "g", item: "hladká mouka" },
       { amount: 300, unit: "ml", item: "mléko" },
@@ -44,7 +44,7 @@ export const recipes = [
     title: "Pizza",
     servings: 4,
     tags: ["obědy", "večeře"],
-    photo_url: "pizza.webp",
+    photo_urls: ["/imgRecipe/pizza.webp"],
     ingredients: [
       { amount: 250, unit: "g", item: "hladká mouka" },
       { amount: 150, unit: "ml", item: "mléko" },
@@ -66,7 +66,7 @@ export const recipes = [
     title: "Zeleninový salát",
     servings: 4,
     tags: ["obědy", "večeře", "svačiny"],
-    photo_url: "salat.webp",
+    photo_urls: ["/imgRecipe/salat.webp"],
     ingredients: [
       { amount: 100, unit: "g", item: "salát (ledový, římský nebo mix)" },
       { amount: 1, unit: "", item: "rajče" },
@@ -87,7 +87,7 @@ export const recipes = [
     title: "Špagety carbonara",
     servings: 4,
     tags: ["obědy", "večeře"],
-    photo_url: "carbonara.webp",
+    photo_urls: ["/imgRecipe/carbonara.webp"],
     ingredients: [
       { amount: 200, unit: "g", item: "špagety" },
       { amount: 100, unit: "g", item: "slanina" },
@@ -106,7 +106,7 @@ export const recipes = [
     title: "Boloňské špagety",
     servings: 4,
     tags: ["obědy", "večeře"],
-    photo_url: "bolonske.webp",
+    photo_urls: ["/imgRecipe/bolonske.webp"],
     ingredients: [
       { amount: 200, unit: "g", item: "špagety" },
       { amount: 200, unit: "g", item: "mleté hovězí maso" },
@@ -127,7 +127,7 @@ export const recipes = [
     title: "Makronky",
     servings: 4,
     tags: ["moučníky"],
-    photo_url: "makronky.webp",
+    photo_urls: ["/imgRecipe/makronky.webp"],
     ingredients: [
       { amount: 100, unit: "g", item: "hladká mouka" },
       { amount: 100, unit: "g", item: "cukr" },
@@ -145,7 +145,7 @@ export const recipes = [
     title: "Smažený řízek",
     servings: 4,
     tags: ["obědy", "večeře"],
-    photo_url: "smazeny-rizek.webp",
+    photo_urls: ["/imgRecipe/smazeny-rizek.webp"],
     ingredients: [
       { amount: 500, unit: "g", item: "vepřové maso" },
       { amount: 80, unit: "g", item: "hladká mouka" },
@@ -165,7 +165,7 @@ export const recipes = [
     title: "Přírodní řízek",
     servings: 4,
     tags: ["obědy", "večeře"],
-    photo_url: "rizek-hranolky.webp",
+    photo_urls: ["/imgRecipe/rizek-hranolky.webp"],
     ingredients: [
       { amount: 600, unit: "g", item: "kuřecí nebo vepřové maso" },
       { amount: 1, unit: "lžíce", item: "olej" },

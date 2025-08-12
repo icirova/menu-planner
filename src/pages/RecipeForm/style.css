@@ -41,6 +41,29 @@
      font-family: monospace;
    }
 
+   .visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+/* hezké přidávací tlačítko */
+.button--file {
+  display: inline-block;
+  cursor: pointer;
+  
+  border-radius: 50%;
+  box-shadow: 0 6px 20px rgba(0,0,0,.08);
+  border: 1px solid rgba(0,0,0,.1);
+  background: #fff;
+  transition: transform .06s ease, box-shadow .2s ease;
+}
+.button--file:hover { transform: translateY(-1px); }
+.button--file:active { transform: translateY(0); }
+.file-count { margin-left: .5rem; opacity: .75; font-size: .9rem; }
+
    .form__input--file {
     background-color: white ;
    }
@@ -90,4 +113,57 @@
 }
 
    
-  
+.form__previews {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px,1fr));
+  gap: .75rem;
+  margin-top: .5rem;
+}
+.form__preview-wrap { position: relative; }
+.form__preview {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.08);
+}
+.form__preview--cover {
+  outline: 2px solid rgba(0,0,0,.2);
+}
+.form__preview-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .8rem;
+  margin-top: .25rem;
+  opacity: .8;
+}
+.form__preview-remove {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: .1rem .3rem;
+  line-height: 1;
+}
+
+.form__note {
+  font-family: monospace;
+  margin-top: 10px;
+}
+
+
+
+.form__filenames {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.form__filename {
+
+  border-radius: 6px;
+  font-size: 0.85rem;    
+  overflow-wrap: anywhere;  /* zalamuje dlouhá slova */
+}

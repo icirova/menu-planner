@@ -1,31 +1,39 @@
 import "./style.css";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { IngredientInputs } from "../../components/IngredientInputs/index";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const RecipeForm = () => {
   const navigate = useNavigate();
   const { addRecipe } = useOutletContext();
 
   const [ingredients, setIngredients] = useState([]);
-  const [photoPreview, setPhotoPreview] = useState(null); // blob URL
-  const [photoFile, setPhotoFile] = useState(null);       // originál file (kdyby bylo někdy potřeba)
+  const [photos, setPhotos] = useState([]); // { url: string, name: string }[]
 
-  const handlePhotoChange = (e) => {
-    const file = e.target.files?.[0] || null;
+  const handlePhotosChange = (e) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
 
-    if (photoPreview) URL.revokeObjectURL(photoPreview);
+    // vytvoř položky {url, name} pro každý vybraný soubor
+    const newItems = files.map((f) => ({
+      url: URL.createObjectURL(f),
+      name: f.name,
+    }));
+    setPhotos((prev) => [...prev, ...newItems]);
 
-    if (!file) {
-      setPhotoFile(null);
-      setPhotoPreview(null);
-      return;
-    }
-    setPhotoFile(file);
-    setPhotoPreview(URL.createObjectURL(file));
+    // vyčisti input (ať můžeš vybrat stejné soubory znovu, pokud chceš)
+    e.target.value = "";
   };
 
- 
+  const removePhotoAt = (index) => {
+    setPhotos((prev) => {
+      // zruš blob URL, které mažeš (šetří paměť)
+      URL.revokeObjectURL(prev[index].url);
+      const copy = [...prev];
+      copy.splice(index, 1);
+      return copy;
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,7 +48,7 @@ export const RecipeForm = () => {
       title: formData.get("name"),
       servings: Number(formData.get("servings")),
       tags,
-      photo_url: photoPreview || "", // <- blob URL pro <img src=...>
+      photo_urls: photos.map((p) => p.url), // první = cover
       ingredients: ingredients.filter((i) => i.item.trim() !== ""),
       suitableFor,
       calories: Number(formData.get("calories")),
@@ -59,7 +67,9 @@ export const RecipeForm = () => {
 
       <form id="form" className="form" onSubmit={handleSubmit}>
         <div className="form__item">
-          <label htmlFor="name" className="form__label">Název</label>
+          <label htmlFor="name" className="form__label">
+            Název
+          </label>
           <input
             type="text"
             id="name"
@@ -71,7 +81,9 @@ export const RecipeForm = () => {
         </div>
 
         <div className="form__item">
-          <label htmlFor="servings" className="form__label">Počet porcí</label>
+          <label htmlFor="servings" className="form__label">
+            Počet porcí
+          </label>
           <input
             type="number"
             id="servings"
@@ -84,7 +96,14 @@ export const RecipeForm = () => {
         <div className="form__item">
           <label className="form__label">Tagy</label>
           <div className="form__checkbox-group">
-            {["Snídaně","Svačina","Polévky","Oběd","Večeře","Moučníky"].map((tag) => (
+            {[
+              "Snídaně",
+              "Svačina",
+              "Polévky",
+              "Oběd",
+              "Večeře",
+              "Moučníky",
+            ].map((tag) => (
               <label key={tag} className="form__checkbox-label">
                 <input
                   type="checkbox"
@@ -102,15 +121,30 @@ export const RecipeForm = () => {
           <label className="form__label">Vhodné pro</label>
           <div className="form__checkbox-group">
             <label className="form__checkbox-label">
-              <input type="checkbox" name="suitableFor" value="veganské" className="form__checkbox" />
+              <input
+                type="checkbox"
+                name="suitableFor"
+                value="veganské"
+                className="form__checkbox"
+              />
               Veganské
             </label>
             <label className="form__checkbox-label">
-              <input type="checkbox" name="suitableFor" value="bez lepku" className="form__checkbox" />
+              <input
+                type="checkbox"
+                name="suitableFor"
+                value="bez lepku"
+                className="form__checkbox"
+              />
               Bez lepku
             </label>
             <label className="form__checkbox-label">
-              <input type="checkbox" name="suitableFor" value="bez mléka" className="form__checkbox" />
+              <input
+                type="checkbox"
+                name="suitableFor"
+                value="bez mléka"
+                className="form__checkbox"
+              />
               Bez mléka
             </label>
           </div>
@@ -133,7 +167,12 @@ export const RecipeForm = () => {
               "sezam",
             ].map((a) => (
               <label key={a} className="form__checkbox-label">
-                <input type="checkbox" name="allergens" value={a} className="form__checkbox" />
+                <input
+                  type="checkbox"
+                  name="allergens"
+                  value={a}
+                  className="form__checkbox"
+                />
                 {a.charAt(0).toUpperCase() + a.slice(1)}
               </label>
             ))}
@@ -141,7 +180,9 @@ export const RecipeForm = () => {
         </div>
 
         <div className="form__item">
-          <label htmlFor="calories" className="form__label">Kalorie (kcal na 1 porci)</label>
+          <label htmlFor="calories" className="form__label">
+            Kalorie (kcal na 1 porci)
+          </label>
           <input
             type="number"
             id="calories"
@@ -151,42 +192,79 @@ export const RecipeForm = () => {
           />
         </div>
 
-        <IngredientInputs ingredients={ingredients} setIngredients={setIngredients} />
+        <IngredientInputs
+          ingredients={ingredients}
+          setIngredients={setIngredients}
+        />
 
         <div className="form__item">
-          <label htmlFor="method" className="form__label">Postup</label>
-          <textarea
-            id="method"
-            name="method"
-            className="form__input form__textarea"
-            required
-            defaultValue="Oloupej a nakrájej dýni a cibuli. Na oleji orestuj cibuli, přidej dýni a zalij vývarem. Vař do změknutí. Rozmixuj dohladka a dochuť solí, pepřem a muškátovým oříškem."
-          />
-        </div>
-
-        <div className="form__item">
-          <label htmlFor="photo" className="form__label">Nahrát obrázek</label>
+          <label htmlFor="photos" className="form__label">
+            Nahrát obrázky
+          </label>
           <input
             type="file"
-            id="photo"
-            name="photo"
+            id="photos"
+            name="photos"
             accept="image/*"
-            onChange={handlePhotoChange}
-            className="form__input form__input--file"
+            multiple
+            onChange={handlePhotosChange}
+            className="visually-hidden"
           />
-          {photoPreview && (
-            <img
-              src={photoPreview}
-              alt="Náhled"
-              className="form__preview"
-              style={{ marginTop: "0.5rem", maxWidth: 240, borderRadius: 8 }}
-            />
+
+          <label htmlFor="photos" className="button button--file">
+            +
+          </label>
+
+          {photos?.length > 0 && (
+            <span className="file-count">{photos.length} vybraných</span>
           )}
-          {!photoPreview && <p className="form__note">Vyber obrázek (např. dynova-polevka.webp)</p>}
+
+          {photos.length > 0 ? (
+  <div className="form__filenames" aria-live="polite">
+    {photos.map((p, i) => (
+      <div key={`${p.name}-${i}`} className="form__filename">
+        {i === 0 ? "Obálka: " : ""}
+        {p.name}
+      </div>
+    ))}
+  </div>
+) : (
+  <p className="form__note">
+    Vyber jednu či více fotek. První bude hlavička.
+  </p>
+)}
+
+          {photos.length > 0 && (
+            <div className="form__previews">
+              {photos.map((p, i) => (
+                <div key={`${p.url}-${i}`} className="form__preview-wrap">
+                  <img
+                    src={p.url}
+                    alt={`Náhled ${i + 1}`}
+                    className={`form__preview ${
+                      i === 0 ? "form__preview--cover" : ""
+                    }`}
+                  />
+                  <div className="form__preview-meta">
+                    {i === 0 ? "Obálka (hlavička)" : `Galerie #${i}`}
+                    <button
+                      type="button"
+                      className="form__preview-remove"
+                      onClick={() => removePhotoAt(i)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="form__button--div">
-          <button type="submit" className="button button--new-recipe">Vytvořit</button>
+          <button type="submit" className="button button--new-recipe">
+            Vytvořit
+          </button>
         </div>
       </form>
     </div>

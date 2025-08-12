@@ -43,6 +43,7 @@
 
 .button--add {
   font-weight: 400;
+  background-color: white;
 }
 
 .button--add:hover {

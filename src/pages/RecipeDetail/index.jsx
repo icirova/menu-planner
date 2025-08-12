@@ -1,11 +1,11 @@
 import "./style.css";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { AllergenTags } from "../../components/AllergenTags/index";
-import { SuitabilityTags } from "../../components/SuitabilityTags/index";
-import { ServingsControl } from "../../components/ServingsControl/index";
-import { IngredientsList } from "../../components/IngredientsList/index";
-import { RecipeTags } from "../../components/RecipeTags/index";
+import { AllergenTags } from "../../components/AllergenTags";
+import { SuitabilityTags } from "../../components/SuitabilityTags";
+import { ServingsControl } from "../../components/ServingsControl";
+import { IngredientsList } from "../../components/IngredientsList";
+import { RecipeTags } from "../../components/RecipeTags";
 import { useOutletContext } from "react-router-dom";
 import { resolveImageSrc } from "../../utils/resolveImageSrc";
 
@@ -34,7 +34,9 @@ export const RecipeDetail = () => {
     );
   }
 
-  const imgSrc = resolveImageSrc(recipeDetail.photo_url);
+  // <<< AŽ TADY pracuj s recipeDetail >>>
+  const coverSrc = resolveImageSrc(recipeDetail?.photo_urls?.[0] ?? "");
+  const gallery = (recipeDetail?.photo_urls ?? []).slice(1).map(resolveImageSrc);
 
   return (
     <div className="main">
@@ -42,7 +44,7 @@ export const RecipeDetail = () => {
       <div className="recipe-detail">
         <div className="recipe-detail__img">
           <img
-            src={imgSrc}
+            src={coverSrc || "/placeholder.webp"}
             alt={recipeDetail.title}
             className="recipe-detail__image"
           />
@@ -77,11 +79,25 @@ export const RecipeDetail = () => {
             <SuitabilityTags suitability={recipeDetail.suitableFor} />
           )}
 
-          {recipeDetail.tags?.length > 0 && (
-            <RecipeTags tags={recipeDetail.tags} />
-          )}
+          {recipeDetail.tags?.length > 0 && <RecipeTags tags={recipeDetail.tags} />}
         </div>
       </div>
+
+      {gallery.length > 0 && (
+        <>
+          <h2 className="recipe-detail__subtitle">Galerie</h2>
+          <div className="recipe-detail__gallery">
+            {gallery.map((src, i) => (
+              <img
+                key={`${recipeDetail.id}-${i}`}
+                src={src}
+                alt={`${recipeDetail.title} – foto ${i + 2}`}
+                className="recipe-detail__thumb"
+              />
+            ))}
+          </div>
+        </>
+      )}
 
       <Link to="/recipes" className="menu__item button">Zpět</Link>
     </div>
