@@ -1,19 +1,40 @@
 import "./style.css";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { AllergenTags } from "../../components/AllergenTags";
-import { SuitabilityTags } from "../../components/SuitabilityTags";
-import { ServingsControl } from "../../components/ServingsControl";
-import { IngredientsList } from "../../components/IngredientsList";
-import { RecipeTags } from "../../components/RecipeTags";
+import { AllergenTags } from "../../components/AllergenTags/index";
+import { SuitabilityTags } from "../../components/SuitabilityTags/index";
+import { ServingsControl } from "../../components/ServingsControl/index";
+import { IngredientsList } from "../../components/IngredientsList/index";
+import { RecipeTags } from "../../components/RecipeTags/index";
 import { useOutletContext } from "react-router-dom";
 import { resolveImageSrc } from "../../utils/resolveImageSrc";
 
 export const RecipeDetail = () => {
   const { id } = useParams();
+  const { recipeList } = useOutletContext();
+
   const [recipeDetail, setRecipeDetail] = useState(null);
   const [desiredServings, setDesiredServings] = useState(4);
-  const { recipeList } = useOutletContext();
+
+  // Lightbox hooky MUSÍ být mimo podmínky
+  const [lightboxIndex, setLightboxIndex] = useState(null); // null = zavřeno
+  const galleryLength = Math.max((recipeDetail?.photo_urls?.length || 0) - 1, 0); // bez coveru
+
+  // Klávesnice: ESC zavře, ←/→ nav
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setLightboxIndex(null);
+      if (e.key === "ArrowLeft") {
+        setLightboxIndex((i) => (i === 0 ? galleryLength - 1 : i - 1));
+      }
+      if (e.key === "ArrowRight") {
+        setLightboxIndex((i) => (i === galleryLength - 1 ? 0 : i + 1));
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightboxIndex, galleryLength]);
 
   useEffect(() => {
     const foundRecipe = recipeList.find((r) => r.id === parseInt(id, 10));
@@ -34,13 +55,21 @@ export const RecipeDetail = () => {
     );
   }
 
-  // <<< AŽ TADY pracuj s recipeDetail >>>
-  const coverSrc = resolveImageSrc(recipeDetail?.photo_urls?.[0] ?? "");
-  const gallery = (recipeDetail?.photo_urls ?? []).slice(1).map(resolveImageSrc);
+  // Data pro obrázky (cover + galerie)
+  const coverSrc = resolveImageSrc(recipeDetail.photo_urls?.[0] || "/image/placeholder.png");
+  const gallery = (recipeDetail.photo_urls ?? []).slice(1).map(resolveImageSrc);
+
+  const openLightbox = (i) => setLightboxIndex(i);
+  const closeLightbox = () => setLightboxIndex(null);
+  const prev = () =>
+    setLightboxIndex((i) => (i === 0 ? gallery.length - 1 : i - 1));
+  const next = () =>
+    setLightboxIndex((i) => (i === gallery.length - 1 ? 0 : i + 1));
 
   return (
     <div className="main">
       <h1 className="title">{recipeDetail.title}</h1>
+
       <div className="recipe-detail">
         <div className="recipe-detail__img">
           <img
@@ -88,15 +117,64 @@ export const RecipeDetail = () => {
           <h2 className="recipe-detail__subtitle">Galerie</h2>
           <div className="recipe-detail__gallery">
             {gallery.map((src, i) => (
-              <img
+              <button
                 key={`${recipeDetail.id}-${i}`}
-                src={src}
-                alt={`${recipeDetail.title} – foto ${i + 2}`}
-                className="recipe-detail__thumb"
-              />
+                className="recipe-detail__thumb-btn"
+                onClick={() => openLightbox(i)}
+                aria-label={`Otevřít foto ${i + 2}`}
+              >
+                <img
+                  src={src}
+                  alt={`${recipeDetail.title} – foto ${i + 2}`}
+                  className="recipe-detail__thumb"
+                  loading="lazy"
+                />
+              </button>
             ))}
           </div>
         </>
+      )}
+
+      {/* Lightbox modal */}
+      {lightboxIndex !== null && (
+        <div
+          className="lightbox"
+          onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+        >
+          <button
+            className="lightbox__close"
+            onClick={closeLightbox}
+            aria-label="Zavřít"
+          >
+            ×
+          </button>
+          {gallery.length > 1 && (
+            <>
+              <button
+                className="lightbox__nav lightbox__nav--prev"
+                onClick={(e) => { e.stopPropagation(); prev(); }}
+                aria-label="Předchozí"
+              >
+                ‹
+              </button>
+              <button
+                className="lightbox__nav lightbox__nav--next"
+                onClick={(e) => { e.stopPropagation(); next(); }}
+                aria-label="Další"
+              >
+                ›
+              </button>
+            </>
+          )}
+          <img
+            className="lightbox__img"
+            src={gallery[lightboxIndex]}
+            alt={`${recipeDetail.title} – foto ${lightboxIndex + 2}`}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
       )}
 
       <Link to="/recipes" className="menu__item button">Zpět</Link>

@@ -1,7 +1,7 @@
 import "./style.css";
 
 export const RecipeCard = ({ title, photo_urls = [], openDetail }) => {
-  const cover = photo_urls[0] || "/placeholder.webp";
+  const cover = photo_urls[0] || "/image/placeholder.png";
 
   return (
     <div className="recipe">
