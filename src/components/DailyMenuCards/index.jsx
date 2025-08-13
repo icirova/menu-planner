@@ -1,47 +1,71 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import "./style.css";
 import { DailyMenuCard } from "../DailyMenuCard";
 import { ShoppingList } from "../ShoppingList";
 import { NotesCard } from "../NotesCard";
 
 const DAYS = ["Pondělí","Úterý","Středa","Čtvrtek","Pátek","Sobota","Neděle"];
-const STORAGE_KEY = "weeklyMenu";
+const STORAGE_KEY = "weeklyMenu"; // používáme stejný klíč, ale s migrací
 const DEFAULT_DAY = { breakfast: "", snack1: "", lunch: "", snack2: "", dinner: "" };
+
+const makeEmptyWeek = () => DAYS.map(() => ({ ...DEFAULT_DAY }));
+
+const initialState = { week: makeEmptyWeek(), shopping: "" };
 
 function reducer(state, action) {
   switch (action.type) {
     case "INIT_FROM_STORAGE": {
-      return action.payload ?? state;
+      const payload = action.payload;
+      // MIGRACE: dříve byl uložen čistě Array; teď očekáváme {week, shopping}
+      if (Array.isArray(payload)) {
+        return { week: payload, shopping: "" };
+      }
+      if (payload && Array.isArray(payload.week)) {
+        return { week: payload.week, shopping: payload.shopping ?? "" };
+      }
+      return state;
     }
     case "UPDATE_MEAL": {
       const { dayIndex, mealKey, value } = action;
-      const next = state.map((d, i) => (i === dayIndex ? { ...d, [mealKey]: value } : d));
-      return next;
+      const nextWeek = state.week.map((d, i) =>
+        i === dayIndex ? { ...d, [mealKey]: value } : d
+      );
+      return { ...state, week: nextWeek };
     }
     case "CLEAR_MEAL": {
       const { dayIndex, mealKey } = action;
-      const next = state.map((d, i) => (i === dayIndex ? { ...d, [mealKey]: "" } : d));
-      return next;
+      const nextWeek = state.week.map((d, i) =>
+        i === dayIndex ? { ...d, [mealKey]: "" } : d
+      );
+      return { ...state, week: nextWeek };
+    }
+    case "CLEAR_DAY": {
+      const { dayIndex } = action;
+      const nextWeek = state.week.map((d, i) =>
+        i === dayIndex ? { ...DEFAULT_DAY } : d
+      );
+      return { ...state, week: nextWeek };
     }
     case "MOVE_MEAL": {
       const { fromDay, fromKey, toDay, toKey } = action;
-      const value = state[fromDay][fromKey];
+      const value = state.week[fromDay][fromKey];
       if (!value || (fromDay === toDay && fromKey === toKey)) return state;
-      const next = state.map((d) => ({ ...d }));
+      const next = state.week.map((d) => ({ ...d }));
       if (next[toDay][toKey]) {
-        // swap
         const tmp = next[toDay][toKey];
         next[toDay][toKey] = value;
         next[fromDay][fromKey] = tmp;
       } else {
-        // move
         next[toDay][toKey] = value;
         next[fromDay][fromKey] = "";
       }
-      return next;
+      return { ...state, week: next };
+    }
+    case "UPDATE_SHOPPING": {
+      return { ...state, shopping: action.value };
     }
     case "RESET_WEEK": {
-      return DAYS.map(() => ({ ...DEFAULT_DAY }));
+      return { week: makeEmptyWeek(), shopping: "" };
     }
     default:
       return state;
@@ -49,31 +73,26 @@ function reducer(state, action) {
 }
 
 export const DailyMenuCards = () => {
-  const [week, dispatch] = useReducer(
-    reducer,
-    DAYS.map(() => ({ ...DEFAULT_DAY }))
-  );
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [clearIndex, setClearIndex] = useState(0);
 
-  // init from localStorage
+  // init from localStorage (s migrací)
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed) && parsed.length === DAYS.length) {
-          dispatch({ type: "INIT_FROM_STORAGE", payload: parsed });
-        }
+        dispatch({ type: "INIT_FROM_STORAGE", payload: parsed });
       }
     } catch {}
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // persist to localStorage
+  // persist to localStorage (nově ukládáme {week, shopping})
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(week));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {}
-  }, [week]);
+  }, [state]);
 
   const images = [
     "1-menu.webp","2-menu.webp","3-menu.webp","4-menu.webp",
@@ -81,33 +100,36 @@ export const DailyMenuCards = () => {
   ];
 
   return (
-     <>
-
-      {/* Toolbar pro celý týden */}
+    <>
+      {/* Toolbar NAD gridem karet */}
       <div className="cards__toolbar">
-        <button className="button button--toolbar" onClick={() => dispatch({ type: "RESET_WEEK" })}>
+
+        <button className="button" onClick={() => dispatch({ type: "RESET_WEEK" })}>
           Vymazat plán
         </button>
       </div>
 
-    <div className="cards">
-     
+      {/* GRID karet */}
+      <div className="cards">
+        {DAYS.map((day, i) => (
+          <DailyMenuCard
+            key={day}
+            day={day}
+            img={images[i]}
+            dayIndex={i}
+            data={state.week[i]}
+            dispatch={dispatch}
+          />
+        ))}
 
-      {DAYS.map((day, i) => (
-        <DailyMenuCard
-          key={day}
-          day={day}
-          img={images[i]}
-          dayIndex={i}
-          data={week[i]}
-          dispatch={dispatch}
+       <NotesCard value={state.notes} onChange={(v) => dispatch({ type: "UPDATE_NOTES", value: v })} />
+
+
+        <ShoppingList
+          value={state.shopping}
+          onChange={(value) => dispatch({ type: "UPDATE_SHOPPING", value })}
         />
-      ))}
-
-      {/* Tvoje existující doplňkové karty zůstávají */}
-      <NotesCard />
-      <ShoppingList />
-    </div>
+      </div>
     </>
   );
 };

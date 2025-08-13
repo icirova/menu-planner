@@ -46,7 +46,8 @@
 
 /* Malý badge „Režim úprav“ */
 .chip {
-  margin-right: auto; /* odtlačí tlačítka doprava */
+    margin: 0 auto;
+  margin-top: 6px;
 }
 
 
@@ -122,7 +123,7 @@
   width: 100%;
   resize: none;         /* auto-resize děláme v JS, viz onInput */
   overflow: auto;       /* pokud překročí max-height, objeví se scrollbar */
-  max-height: 96px;     /* cca 4 řádky – uprav podle potřeby */
+  max-height: 96px;     /* cca 4 řádky  */
   min-height: 36px;
   line-height: 1.4;
 
