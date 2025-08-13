@@ -1,75 +1,137 @@
 .card {
-    
-    background-color:  rgb(238, 238, 238);
-    border-radius: 20px;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(238, 238, 238);
+  border-radius: 20px;
+  overflow: hidden;             /* drží zaoblení i pro obrázek */
 }
 
-.card__title{
-    text-align: center;
-    margin: 1.5rem; 
+/* viditelný, ale jemný indikátor editace */
+.card.is-editing {
+  box-shadow: inset 0 0 0 2px #cfe0ff;
 }
 
-.card__title {
-       
-    padding-top: 0.8rem; 
-    margin: 0;
-    border-radius: 20px 20px 0 0;
-}
-
-.card__content{
-    padding: 1rem;
-}
-
-.card__text{
-    display: flex;
-    margin-bottom: 0.8rem
-}
-
-.card__text--dinner{
-    margin-bottom: 0;
-}
-
-.card__subtitle{
-    flex-basis: 25%;
-    font-weight: 700;
-    font-size: 1.1rem;
-    font-family:'Sorts Mill Goudy', serif;
-}
-
-.card__description {
-    flex-basis: 75%;
-}
-
+/* Obrázek — pevná výška pro stejné karty */
 .card__image {
-    display: block;
-    width: 100%;
-    border-radius: 20px 20px 0 0;
+  display: block;
+  width: 100%;
+  height: 160px;                /* můžeš změnit na 180px */
+  object-fit: cover;
 }
 
-@media screen and (min-width: 680px) {
-   .card {
-    flex-basis: calc((100% - 1rem) / 2);
-   }
-
-   .card:nth-child(odd) {
-    margin-right: 1rem;
-}
-   /* .card--shopping-list{
-    flex-basis: 100%;
-   
-   } */
+/* Nadpis karty */
+.card__title {
+  text-align: center;
+  padding: 0.8rem 1rem 0;
+  margin: 0;
+  border-radius: 20px 20px 0 0;
 }
 
-@media screen and (min-width: 1024px) {
-   .card {
-    flex-basis: calc((100% - (1rem * 2)) / 3);
-   }
+/* Obsah karty */
+.card__content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
 
-   .card:nth-child(odd) {
-    margin-right: 0;
+/* Toolbar v kartě (Upravit / Vymazat den) */
+.card__toolbar {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  padding: 0 1rem 0.5rem;
+  margin-top: 0.8rem;
 }
-   .card--shopping-list{
-    flex-basis: calc((100% - (1rem * 2)) / 3);
-   }
+
+/* Malý badge „Režim úprav“ */
+.chip {
+  margin-right: auto; /* odtlačí tlačítka doprava */
 }
+
+
+/* =======================
+   ŘÁDEK: label + políčko
+   ======================= */
+.card__text {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+}
+
+.card__text--dinner {
+  margin-bottom: 0; /* volitelně */
+}
+
+/* levý sloupec (label) */
+.card__subtitle {
+  flex-basis: 25%;
+  font-weight: 700;
+  font-size: 1.1rem;
+  font-family: 'Sorts Mill Goudy', serif;
+}
+
+/* pravý sloupec (pole) – společné pro zobrazení i editaci
+   (ponechávám kompatibilitu i s .card__description, kdybys ho někde používala) */
+.card__slot,
+.card__description {
+  flex-basis: 75%;
+  min-height: 36px;
+  padding: .4rem .5rem;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
+  background: #f7f7f7;
+  box-sizing: border-box;
+  font: inherit;
+  line-height: 1.4;
+
+  /* zalamování dlouhých textů */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+  display: block;     /* místo -webkit-box */
+  overflow: visible;  /* žádné ořezávání */
+
+}
+
+/* odlišené pozadí večeře (p i textarea) */
+.card__text--dinner .card__slot,
+.card__text--dinner .card__description {
+  background: #f3f7ff;
+}
+
+/* DnD highlight v zobrazení */
+.card__slot.is-drop-target,
+.card__description.is-drop-target {
+  outline: 2px dashed #b8c6ff;
+  background: #eef3ff;
+}
+
+/* kurzor, pokud je slot draggable */
+.card__description[draggable="true"],
+.card__slot[draggable="true"] {
+  cursor: grab;
+}
+
+/* EDITAČNÍ POLE (textarea) – stejné rozměry, řízený růst */
+.card__slot--input {
+  background: #fff;
+  box-shadow: inset 0 0 0 2px #cfe0ff;
+  border: none;
+  width: 100%;
+  resize: none;         /* auto-resize děláme v JS, viz onInput */
+  overflow: auto;       /* pokud překročí max-height, objeví se scrollbar */
+  max-height: 96px;     /* cca 4 řádky – uprav podle potřeby */
+  min-height: 36px;
+  line-height: 1.4;
+
+  /* textarea nepotřebuje -webkit-line-clamp */
+  display: block;
+}
+.card__slot--input:focus {
+  box-shadow: inset 0 0 0 2px #99b7ff;
+}
+
+
+

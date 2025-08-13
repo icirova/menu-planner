@@ -12,15 +12,12 @@ import { resolveImageSrc } from "../../utils/resolveImageSrc";
 export const RecipeDetail = () => {
   const { id } = useParams();
   const { recipeList } = useOutletContext();
-
   const [recipeDetail, setRecipeDetail] = useState(null);
   const [desiredServings, setDesiredServings] = useState(4);
-
-  // Lightbox hooky MUSÍ být mimo podmínky
+  // Lightbox hooky
   const [lightboxIndex, setLightboxIndex] = useState(null); // null = zavřeno
   const galleryLength = Math.max((recipeDetail?.photo_urls?.length || 0) - 1, 0); // bez coveru
 
-  // Klávesnice: ESC zavře, ←/→ nav
   useEffect(() => {
     if (lightboxIndex === null) return;
     const onKey = (e) => {
@@ -61,10 +58,8 @@ export const RecipeDetail = () => {
 
   const openLightbox = (i) => setLightboxIndex(i);
   const closeLightbox = () => setLightboxIndex(null);
-  const prev = () =>
-    setLightboxIndex((i) => (i === 0 ? gallery.length - 1 : i - 1));
-  const next = () =>
-    setLightboxIndex((i) => (i === gallery.length - 1 ? 0 : i + 1));
+  const prev = () => setLightboxIndex((i) => (i === 0 ? gallery.length - 1 : i - 1));
+  const next = () => setLightboxIndex((i) => (i === gallery.length - 1 ? 0 : i + 1));
 
   return (
     <div className="main">

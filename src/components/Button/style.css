@@ -27,3 +27,38 @@
   background-color: #3d7958;
   color: white;
 }
+
+.button--toolbar{
+  background-color: #fce8e8;        
+}
+
+/* ghost */
+.button--ghost {
+  color: #1b4332;
+  background-color: #d8f3dc;
+  border: none;
+}
+
+.button--ghost:hover {
+  color: white;
+  background-color: #3c7a59;
+  border: none;
+}
+
+/* danger */
+.button--danger {
+  background-color: #fce8e8;
+  border: none;
+}
+
+
+
+/* (pro případné ikonové tlačítko)
+.button--icon {
+  width: 36px; height: 36px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+}
+*/
+
+
