@@ -134,4 +134,21 @@
 }
 
 
+.slot {
+  position: relative;
+  flex-basis: 75%;
+}
 
+/* ať text nepodjíždí pod ikonku */
+.card__slot--withClear { padding-right: 2.5rem; } /* ~ 40px */
+
+/* pozice ikonového tlačítka ✕ */
+.slot__clear {
+  position: absolute;
+  top: 3px;
+  right: 6px;
+  z-index: 1;
+}
+
+
+.slot__clear:focus-visible { outline: 2px solid #99b7ff; outline-offset: 2px; }

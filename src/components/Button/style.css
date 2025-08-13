@@ -18,6 +18,8 @@
    transform: scale(1.05);
 }
 
+
+/* RecipeForm/tlačítko pro přidání receptu */
 .button--new-recipe {
   background-color: #d8f3dc;
   color: #1b4332;
@@ -28,11 +30,12 @@
   color: white;
 }
 
+/* DailyMenuCard/tlačítko pro vymazání celého týdne */
 .button--toolbar{
   background-color: #fce8e8;        
 }
 
-/* ghost */
+/* DailyMenuCard/tlačítko Upravit/hotovo */
 .button--ghost {
   color: #1b4332;
   background-color: #d8f3dc;
@@ -45,20 +48,30 @@
   border: none;
 }
 
-/* danger */
+/* DailyMenuCard/tlačítko pro vymazání dne */
 .button--danger {
   background-color: #fce8e8;
   border: none;
 }
 
-
-
-/* (pro případné ikonové tlačítko)
+/* DailyMenuCard/editační políčko menu - červený křížek */
 .button--icon {
   width: 36px; height: 36px; padding: 0;
   display: inline-flex; align-items: center; justify-content: center;
   border-radius: 8px;
+    background: none;
+  border: none;
+  color: #b33;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0;
+  transition: color 0.2s ease;
 }
-*/
 
+.button--icon:hover {
+  color: #800;
+  border: none;
+  background-color: transparent;
+}
 

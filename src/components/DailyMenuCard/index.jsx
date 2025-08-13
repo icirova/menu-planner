@@ -9,7 +9,13 @@ const MEAL_KEYS = [
   { key: "dinner", label: "Večeře" },
 ];
 
-const DEFAULT_DAY = { breakfast: "", snack1: "", lunch: "", snack2: "", dinner: "" };
+const DEFAULT_DAY = {
+  breakfast: "",
+  snack1: "",
+  lunch: "",
+  snack2: "",
+  dinner: "",
+};
 
 export const DailyMenuCard = ({ day, img, dayIndex, data, dispatch }) => {
   const [editing, setEditing] = useState(false);
@@ -48,6 +54,12 @@ export const DailyMenuCard = ({ day, img, dayIndex, data, dispatch }) => {
     );
   };
 
+  const autoGrow = (el) => {
+  if (!el) return;
+  el.style.height = "auto";                 // reset
+  el.style.height = el.scrollHeight + "px"; // výška podle obsahu
+};
+
   return (
     <div
       className={`card ${editing ? "is-editing" : ""}`}
@@ -64,7 +76,10 @@ export const DailyMenuCard = ({ day, img, dayIndex, data, dispatch }) => {
             ✏️
           </span>
         )}
-        <button className="button button--ghost" onClick={() => setEditing((v) => !v)}>
+        <button
+          className="button button--ghost"
+          onClick={() => setEditing((v) => !v)}
+        >
           {editing ? "Hotovo" : "Upravit"}
         </button>
         <button
@@ -80,42 +95,56 @@ export const DailyMenuCard = ({ day, img, dayIndex, data, dispatch }) => {
         {MEAL_KEYS.map(({ key, label }, i) => (
           <div
             key={key}
-            className={`card__text ${key === "dinner" ? "card__text--dinner" : ""}`}
+            className={`card__text ${
+              key === "dinner" ? "card__text--dinner" : ""
+            }`}
           >
             <p className="card__subtitle">{label}:</p>
 
             {editing ? (
-              // první slot po zapnutí editačního režimu dostane focus
-              <textarea
-                className="card__slot card__slot--input"
-                placeholder="Napiš…"
-                value={model[key]}
-                onChange={(e) =>
-      dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: key, value: e.target.value })
-    }
-    onInput={(e) => {
-      // auto-grow (bez omezení)
-      e.currentTarget.style.height = "auto";
-      e.currentTarget.style.height = e.currentTarget.scrollHeight + "px";
-    }}
-    rows={1}
-    autoComplete="off"
-    autoFocus={i === 0}
-  />
-            ) : (
-              <p
+  <div className="slot">
+    <textarea
+      className="card__slot card__slot--input card__slot--withClear"
+      placeholder="Napiš…"
+      value={model[key]}
+      onChange={(e) =>
+        dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: key, value: e.target.value })
+      }
+      // ⬇️ autosize: při mountu, při psaní i při focusu
+      ref={autoGrow}
+      onInput={(e) => autoGrow(e.currentTarget)}
+      onFocus={(e) => autoGrow(e.currentTarget)}
+      rows={1}
+      autoComplete="off"
+      autoFocus={i === 0}
+    />
+    {!!model[key] && (
+      <button
+        type="button"
+        className="button button--icon slot__clear"
+        title="Smazat obsah"
+        aria-label={`Smazat ${label}`}
+        onClick={() => dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: key, value: "" })}
+      >
+        ✕
+      </button>
+    )}
+  </div>
+) : (
+  <p
     className="card__slot"
-    title={model[key] || ""}
     draggable={!!model[key]}
     onDragStart={(e) => onDragStart(e, key)}
     onDragOver={(e) => e.preventDefault()}
     onDragEnter={(e) => e.currentTarget.classList.add("is-drop-target")}
     onDragLeave={(e) => e.currentTarget.classList.remove("is-drop-target")}
     onDrop={(e) => { e.currentTarget.classList.remove("is-drop-target"); onDropTo(e, key); }}
+    title={model[key] ? "Přetáhni na jiný slot/den" : "Sem můžeš přetáhnout jídlo"}
   >
-                {model[key] || ""}
-              </p>
-            )}
+    {model[key] || ""}
+  </p>
+)}
+            
           </div>
         ))}
       </div>
