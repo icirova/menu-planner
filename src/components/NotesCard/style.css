@@ -2,18 +2,18 @@
    NOTES (izolováno pod .notes-card namespace)
    ======================================================= */
 
-/* min výška textarea v edit módu (snadno změnit v budoucnu) */
+/* min výška v edit módu (stejná logika jako u shopping) */
 :root{
-  --shop-content-min-h: 16rem;  /* mobil – prázdné pole nebude proužek */
-  --shop-content-max-h: 56vh;   /* strop okna; když je text dlouhý, scrolluje se */
+  --notes-content-min-h: 16.5rem;
+  --notes-content-max-h: 56vh;   /* strop okna; když je text dlouhý, scrolluje se */
 }
 
 /* okno obsahu – stejné jako ostatní karty (zarovná výšky) */
 .notes-card .card__content{
   display: flex;
   flex-direction: column;
-  min-height: var(--card-content-min-h);
-  max-height: var(--card-content-max-h);
+  min-height: var(--notes-content-min-h);
+  max-height: var(--notes-content-max-h);
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   padding: 1rem;
@@ -43,7 +43,7 @@
   font: inherit;
   line-height: 1.45;
 
-  /* textové chování – bez clampů a ořezů */
+  /* textové chování – žádné ořezy ani clampy */
   white-space: pre-wrap;     /* zachová \n */
   overflow-wrap: anywhere;
   word-break: break-word;
@@ -57,8 +57,7 @@
    EDIT (textarea + ✕ clear)
    ========================= */
 .notes-card__textarea{
-  /* výšku řídí JS (autosize) – nenech flex natahovat */
-  flex: 1;
+  flex: 1;               /* 1:1 jako u ShoppingListu */
   min-height: 100%;
   width: 100%;
   box-sizing: border-box;
@@ -72,7 +71,7 @@
   line-height: 1.45;
 
   white-space: pre-wrap;  /* zachová \n */
-  resize: none;           /* výšku řídí JS */
+  resize: none;           /* výšku řídí JS autosize */
   overflow: hidden;       /* žádný vnitřní scrollbar – scrolluje .card__content */
   display: block;
 }

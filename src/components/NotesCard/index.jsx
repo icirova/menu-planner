@@ -24,16 +24,18 @@ export const NotesCard = ({ value = "", onChange }) => {
   const autosize = (el) => {
     if (!el) return;
     el.style.height = "0px"; // reset pro přesný scrollHeight
-    const contentH = el.scrollHeight;                             // výška obsahu
-    const minVarPx = getCssVarPx("--notes-content-min-h", 0);     // např. 16rem => px
-    const winPx    = contentRef.current?.clientHeight || 0;       // aktuální výška okna karty
+
+    const contentH = el.scrollHeight;                          // výška obsahu
+    const minVarPx = getCssVarPx("--notes-content-min-h", 0);  // např. 16rem => px
+    const winPx    = contentRef.current?.clientHeight || 0;    // aktuální výška okna karty
+
     const next = Math.max(contentH, minVarPx, winPx);
     el.style.height = next + "px";
     el.style.overflowY = "hidden"; // žádný vnitřní scrollbar (scrolluje okno karty)
   };
 
   const toggleEditing = () => setEditing((v) => !v);
-  const clearNotes = () => onChange?.("") ?? null;
+  const clearNotes = () => onChange("");
 
   // Po zapnutí editace: dorovnej výšku, focusni a skoč kurzorem na konec
   useLayoutEffect(() => {
@@ -44,6 +46,7 @@ export const NotesCard = ({ value = "", onChange }) => {
     ta.focus();
     const len = ta.value.length;
     try { ta.setSelectionRange(len, len); } catch {}
+    // posuň okno karty na spodek, ať je konec textu vidět
     if (contentRef.current) {
       contentRef.current.scrollTop = contentRef.current.scrollHeight;
     }

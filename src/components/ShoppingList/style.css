@@ -4,7 +4,7 @@
 
 /* výškové tokeny – min. výška „okna“ + strop (viewport) */
 :root{
-  --shop-content-min-h: 16rem;  /* mobil – prázdné pole nebude proužek */
+  --shop-content-min-h: 16.5rem;  /* mobil – prázdné pole nebude proužek */
   --shop-content-max-h: 56vh;   /* strop okna; když je text dlouhý, scrolluje se */
 }
 

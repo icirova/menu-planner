@@ -4,13 +4,27 @@ import { DailyMenuCard } from "../DailyMenuCard";
 import { ShoppingList } from "../ShoppingList";
 import { NotesCard } from "../NotesCard";
 
-const DAYS = ["Pondělí","Úterý","Středa","Čtvrtek","Pátek","Sobota","Neděle"];
+const DAYS = [
+  "Pondělí",
+  "Úterý",
+  "Středa",
+  "Čtvrtek",
+  "Pátek",
+  "Sobota",
+  "Neděle",
+];
 const STORAGE_KEY = "weeklyMenu"; // používáme stejný klíč, ale s migrací
-const DEFAULT_DAY = { breakfast: "", snack1: "", lunch: "", snack2: "", dinner: "" };
+const DEFAULT_DAY = {
+  breakfast: "",
+  snack1: "",
+  lunch: "",
+  snack2: "",
+  dinner: "",
+};
 
 const makeEmptyWeek = () => DAYS.map(() => ({ ...DEFAULT_DAY }));
 
-const initialState = { week: makeEmptyWeek(), shopping: "" };
+const initialState = { week: makeEmptyWeek(),notes: "", shopping: "" };
 
 function reducer(state, action) {
   switch (action.type) {
@@ -61,11 +75,14 @@ function reducer(state, action) {
       }
       return { ...state, week: next };
     }
+    case "UPDATE_NOTES": {
+      return { ...state, notes: action.value };
+    }
     case "UPDATE_SHOPPING": {
       return { ...state, shopping: action.value };
     }
     case "RESET_WEEK": {
-      return { week: makeEmptyWeek(), shopping: "" };
+      return { week: makeEmptyWeek(),notes: "", shopping: "" };
     }
     default:
       return state;
@@ -95,16 +112,23 @@ export const DailyMenuCards = () => {
   }, [state]);
 
   const images = [
-    "1-menu.webp","2-menu.webp","3-menu.webp","4-menu.webp",
-    "5-menu.webp","6-menu.webp","7-menu.webp"
+    "1-menu.webp",
+    "2-menu.webp",
+    "3-menu.webp",
+    "4-menu.webp",
+    "5-menu.webp",
+    "6-menu.webp",
+    "7-menu.webp",
   ];
 
   return (
     <>
       {/* Toolbar NAD gridem karet */}
       <div className="cards__toolbar">
-
-        <button className="button" onClick={() => dispatch({ type: "RESET_WEEK" })}>
+        <button
+          className="button"
+          onClick={() => dispatch({ type: "RESET_WEEK" })}
+        >
           Vymazat plán
         </button>
       </div>
@@ -122,8 +146,10 @@ export const DailyMenuCards = () => {
           />
         ))}
 
-       <NotesCard value={state.notes} onChange={(v) => dispatch({ type: "UPDATE_NOTES", value: v })} />
-
+        <NotesCard
+          value={state.notes}
+          onChange={(v) => dispatch({ type: "UPDATE_NOTES", value: v })}
+        />
 
         <ShoppingList
           value={state.shopping}
