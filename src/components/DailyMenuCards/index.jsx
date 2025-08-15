@@ -91,7 +91,8 @@ function reducer(state, action) {
 
 export const DailyMenuCards = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [clearIndex, setClearIndex] = useState(0);
+  const [editAll, setEditAll] = useState(false);
+
 
   // init from localStorage (s migrací)
   useEffect(() => {
@@ -126,7 +127,15 @@ export const DailyMenuCards = () => {
       {/* Toolbar NAD gridem karet */}
       <div className="cards__toolbar">
         <button
-          className="button"
+          className="button button--ghost"
+          onClick={() => setEditAll(v => !v)}
+          title={editAll ? "Vypnout úpravy na všech kartách" : "Zapnout úpravy na všech kartách"}
+        >
+          {editAll ? "Hotovo (vypnout úpravy)" : "Upravit vše"}
+        </button>
+
+        <button
+          className="button button--danger"
           onClick={() => dispatch({ type: "RESET_WEEK" })}
         >
           Vymazat plán
@@ -143,17 +152,23 @@ export const DailyMenuCards = () => {
             dayIndex={i}
             data={state.week[i]}
             dispatch={dispatch}
+            forceEditing={editAll}
+            shouldAutoFocus={editAll && i === 0}   // ⬅️ focus na Pondělí vreřimu editAll
           />
         ))}
 
         <NotesCard
           value={state.notes}
           onChange={(v) => dispatch({ type: "UPDATE_NOTES", value: v })}
+          forceEditing={editAll}
+          shouldAutoFocus={false} // aby nekradl focus 
         />
 
         <ShoppingList
           value={state.shopping}
           onChange={(value) => dispatch({ type: "UPDATE_SHOPPING", value })}
+          forceEditing={editAll}
+          shouldAutoFocus={false}
         />
       </div>
     </>

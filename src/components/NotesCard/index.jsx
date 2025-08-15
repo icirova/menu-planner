@@ -1,8 +1,9 @@
 import { useState, useRef, useLayoutEffect } from "react";
 import "./style.css"; // jen notes-card styly
 
-export const NotesCard = ({ value = "", onChange }) => {
+export const NotesCard = ({ value = "", onChange,forceEditing = false, shouldAutoFocus = false }) => {
   const [editing, setEditing] = useState(false);
+  const isEditing = forceEditing || editing;
   const contentRef = useRef(null); // .card__content (okno karty)
   const taRef = useRef(null);      // <textarea>
 
@@ -39,7 +40,7 @@ export const NotesCard = ({ value = "", onChange }) => {
 
   // Po zapnutí editace: dorovnej výšku, focusni a skoč kurzorem na konec
   useLayoutEffect(() => {
-    if (!editing) return;
+    if (!isEditing || !shouldAutoFocus) return;
     const ta = taRef.current;
     if (!ta) return;
     autosize(ta);
@@ -50,7 +51,7 @@ export const NotesCard = ({ value = "", onChange }) => {
     if (contentRef.current) {
       contentRef.current.scrollTop = contentRef.current.scrollHeight;
     }
-  }, [editing]);
+  }, [isEditing, shouldAutoFocus]);
 
   return (
     <div className={`card notes-card ${editing ? "is-editing" : ""}`}>
@@ -59,8 +60,11 @@ export const NotesCard = ({ value = "", onChange }) => {
 
       <div className="card__toolbar">
         {editing && <span className="chip chip--edit" aria-live="polite">✏️</span>}
-        <button className="button button--ghost" onClick={toggleEditing}>
-          {editing ? "Hotovo" : "Upravit"}
+        <button className="button button--ghost" onClick={() => setEditing(v => !v)}
+          disabled={forceEditing}                                 // ⬅️
+          title={forceEditing ? 'Řízeno tlačítkem „Upravit vše“' : ''}
+          >
+          {isEditing ? "Hotovo" : "Upravit"}
         </button>
         <button className="button button--danger" onClick={clearNotes} title="Vymazat poznámky">
           Vymazat
@@ -68,7 +72,7 @@ export const NotesCard = ({ value = "", onChange }) => {
       </div>
 
       <div className="card__content" ref={contentRef}>
-        {editing ? (
+        {isEditing ? (
           <div className="notes-card__field">
             <textarea
               ref={taRef}
@@ -80,7 +84,7 @@ export const NotesCard = ({ value = "", onChange }) => {
               onFocus={(e) => autosize(e.currentTarget)}
               rows={1}
               autoComplete="off"
-              autoFocus
+              autoFocus={shouldAutoFocus}
             />
             {!!value && (
               <button

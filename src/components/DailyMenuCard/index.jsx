@@ -17,8 +17,9 @@ const DEFAULT_DAY = {
   dinner: "",
 };
 
-export const DailyMenuCard = ({ day, img, dayIndex, data, dispatch }) => {
+export const DailyMenuCard = ({ day, img, dayIndex, data, dispatch, forceEditing = false, shouldAutoFocus = false, }) => {
   const [editing, setEditing] = useState(false);
+  const isEditing = forceEditing || editing;
   const model = { ...DEFAULT_DAY, ...(data || {}) };
 
   const onDragStart = (e, mealKey) => {
@@ -62,7 +63,7 @@ export const DailyMenuCard = ({ day, img, dayIndex, data, dispatch }) => {
 
   return (
     <div
-      className={`card ${editing ? "is-editing" : ""}`}
+      className={`card ${isEditing ? "is-editing" : ""}`}
       role="region"
       aria-label={`Denní plán: ${day}`}
     >
@@ -71,7 +72,7 @@ export const DailyMenuCard = ({ day, img, dayIndex, data, dispatch }) => {
       <h1 className="card__title">{day}</h1>
 
       <div className="card__toolbar">
-        {editing && (
+        {isEditing && (
           <span className="chip chip--edit" aria-live="polite">
             ✏️
           </span>
@@ -79,8 +80,10 @@ export const DailyMenuCard = ({ day, img, dayIndex, data, dispatch }) => {
         <button
           className="button button--ghost"
           onClick={() => setEditing((v) => !v)}
+          disabled={forceEditing}                                 // ⬅️ lokální vypneme
+          title={forceEditing ? 'Řízeno tlačítkem „Upravit vše“' : ''}
         >
-          {editing ? "Hotovo" : "Upravit"}
+          {isEditing ? "Hotovo" : "Upravit"}
         </button>
         <button
           className="button button--danger"
@@ -101,7 +104,7 @@ export const DailyMenuCard = ({ day, img, dayIndex, data, dispatch }) => {
           >
             <p className="card__subtitle">{label}:</p>
 
-            {editing ? (
+            {isEditing ? (
   <div className="slot">
     <textarea
       className="card__slot card__slot--input card__slot--withClear"
@@ -116,7 +119,7 @@ export const DailyMenuCard = ({ day, img, dayIndex, data, dispatch }) => {
       onFocus={(e) => autoGrow(e.currentTarget)}
       rows={1}
       autoComplete="off"
-      autoFocus={i === 0}
+      autoFocus={i === 0 && shouldAutoFocus}
     />
     {!!model[key] && (
       <button

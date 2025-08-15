@@ -1,8 +1,9 @@
 import { useState, useRef, useLayoutEffect } from "react";
 import "./style.css"; // jen shopping-card styly
 
-export const ShoppingList = ({ value = "", onChange }) => {
+export const ShoppingList = ({ value = "", onChange, forceEditing = false,shouldAutoFocus = false }) => {
   const [editing, setEditing] = useState(false);
+  const isEditing = forceEditing || editing;
   const contentRef = useRef(null);   // .card__content (okno karty)
   const taRef = useRef(null);        // <textarea>
 
@@ -39,7 +40,7 @@ export const ShoppingList = ({ value = "", onChange }) => {
 
   // Po zapnutí editace: dorovnej výšku, focusni a skoč kurzorem na konec
   useLayoutEffect(() => {
-    if (!editing) return;
+    if (!isEditing || !shouldAutoFocus) return;
     const ta = taRef.current;
     if (!ta) return;
     autosize(ta);
@@ -50,7 +51,7 @@ export const ShoppingList = ({ value = "", onChange }) => {
     if (contentRef.current) {
       contentRef.current.scrollTop = contentRef.current.scrollHeight;
     }
-  }, [editing]);
+  }, [isEditing, shouldAutoFocus]);
 
   return (
     <div className={`card shopping-card ${editing ? "is-editing" : ""}`}>
@@ -58,9 +59,13 @@ export const ShoppingList = ({ value = "", onChange }) => {
       <h1 className="card__title">Nákupní seznam</h1>
 
       <div className="card__toolbar">
-        {editing && <span className="chip chip--edit" aria-live="polite">✏️</span>}
-        <button className="button button--ghost" onClick={toggleEditing}>
-          {editing ? "Hotovo" : "Upravit"}
+        {isEditing && <span className="chip chip--edit" aria-live="polite">✏️</span>}
+        <button className="button button--ghost" 
+         onClick={() => setEditing(v => !v)}
+          disabled={forceEditing}                                 // ⬅️
+          title={forceEditing ? 'Řízeno tlačítkem „Upravit vše“' : ''}
+          >
+          {isEditing ? "Hotovo" : "Upravit"}
         </button>
         <button className="button button--danger" onClick={clearList} title="Vymazat seznam">
           Vymazat
@@ -68,7 +73,7 @@ export const ShoppingList = ({ value = "", onChange }) => {
       </div>
 
       <div className="card__content" ref={contentRef}>
-        {editing ? (
+        {isEditing ? (
           <div className="shopping-card__field">
             <textarea
               ref={taRef}
@@ -80,7 +85,7 @@ export const ShoppingList = ({ value = "", onChange }) => {
               onFocus={(e) => autosize(e.currentTarget)}
               rows={1}
               autoComplete="off"
-              autoFocus
+              autoFocus={shouldAutoFocus}
             />
             {!!value && (
               <button

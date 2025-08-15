@@ -6,7 +6,10 @@
 
 .cards__toolbar {
   text-align: end; 
-  margin-bottom: .8rem;          
+  margin-bottom: .8rem; 
+  display: flex;
+  justify-content: flex-end;
+  gap: .8rem;
 }
 
 
