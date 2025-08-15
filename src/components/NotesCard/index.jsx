@@ -54,7 +54,7 @@ export const NotesCard = ({ value = "", onChange,forceEditing = false, shouldAut
   }, [isEditing, shouldAutoFocus]);
 
   return (
-    <div className={`card notes-card ${editing ? "is-editing" : ""}`}>
+    <div className={`card notes-card ${isEditing ? "is-editing" : ""}`}>
       <img className="card__image" src="./notes.webp" alt="" />
       <h1 className="card__title">Poznámky</h1>
 
@@ -82,6 +82,16 @@ export const NotesCard = ({ value = "", onChange,forceEditing = false, shouldAut
               onChange={(e) => { onChange(e.target.value); autosize(e.currentTarget); }}
               onInput={(e) => autosize(e.currentTarget)}
               onFocus={(e) => autosize(e.currentTarget)}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") {
+                  e.currentTarget.blur();
+                  if (!forceEditing) setEditing(false);
+                }
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  if (!forceEditing) setEditing(false);
+                }
+              }}
               rows={1}
               autoComplete="off"
               autoFocus={shouldAutoFocus}
