@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./style.css";
 
+const KEYS = { ENTER: "Enter", ESC: "Escape", SPACE: " ", SPACE_FALLBACK: "Spacebar" };
+
 const MEAL_KEYS = [
   { key: "breakfast", label: "Snídaně" },
   { key: "snack1",    label: "Svačina" },
@@ -25,11 +27,16 @@ export const DailyMenuCard = ({
   dispatch,
   forceEditing = false,
   shouldAutoFocus = false,
+  // props pro klávesnicový přesun (přijdou z parentu)
+  kbdDrag,
+  setKbdDrag,
+  announce,
 }) => {
   const [editing, setEditing] = useState(false);
   const isEditing = forceEditing || editing;
   const model = { ...DEFAULT_DAY, ...(data || {}) };
 
+  // myší drag start
   const onDragStart = (e, mealKey) => {
     const value = model[mealKey];
     if (!value) return e.preventDefault();
@@ -40,6 +47,7 @@ export const DailyMenuCard = ({
     e.dataTransfer.effectAllowed = "move";
   };
 
+  // myší drop
   const onDropTo = (e, toKey) => {
     e.preventDefault();
     let payload = null;
@@ -63,9 +71,10 @@ export const DailyMenuCard = ({
     );
   };
 
+  // autosize pro textarea
   const autoGrow = (el) => {
     if (!el) return;
-    el.style.height = "0px";                 // přesný scrollHeight
+    el.style.height = "0px"; // přesný scrollHeight
     el.style.height = el.scrollHeight + "px";
     el.style.overflowY = "hidden";
   };
@@ -103,8 +112,10 @@ export const DailyMenuCard = ({
 
       <div className="card__content" id={`day-${dayIndex}`}>
         {MEAL_KEYS.map(({ key, label }, i) => {
-         
-          const hintId = `hint-${dayIndex}-${key}`; //pro přístupnost
+          const hintId = `hint-${dayIndex}-${key}`; // pro čtečky
+          const carrying = !!kbdDrag;
+          const isSource =
+            carrying && kbdDrag.fromDay === dayIndex && kbdDrag.fromKey === key;
 
           return (
             <div
@@ -133,14 +144,13 @@ export const DailyMenuCard = ({
                     rows={1}
                     autoComplete="off"
                     autoFocus={i === 0 && shouldAutoFocus}
-                    
                     onKeyDown={(e) => {
-                      if (e.key === "Escape") {
+                      if (e.key === KEYS.ESC) {
                         e.currentTarget.blur();
                         if (!forceEditing) setEditing(false);
                       }
-                      // U textarea: Enter bez Shift = potvrdit (ukončit edit)
-                      if (e.key === "Enter" && !e.shiftKey) {
+                      // textarea: Enter bez Shift = potvrdit (ukončit edit)
+                      if (e.key === KEYS.ENTER && !e.shiftKey) {
                         e.preventDefault();
                         if (!forceEditing) setEditing(false);
                       }
@@ -167,11 +177,16 @@ export const DailyMenuCard = ({
                 </div>
               ) : (
                 <p
-                  className="card__slot"
+                  className={`card__slot ${isSource ? "is-kbd-source" : ""}`}
                   tabIndex={0}
                   role="button"
                   aria-describedby={hintId}
-                  aria-label={`${label}: ${model[key] ? model[key] : "prázdné"}`}
+                  aria-label={
+                    carrying
+                      ? `${label}: ${model[key] || "prázdné"}. Cíl přesunu — stiskni mezerník pro položení, Esc zruší.`
+                      : `${label}: ${model[key] ? model[key] : "prázdné"}. Enter: upravit.`
+                  }
+                  // myší DnD
                   draggable={!!model[key]}
                   onDragStart={(e) => onDragStart(e, key)}
                   onDragOver={(e) => e.preventDefault()}
@@ -181,10 +196,53 @@ export const DailyMenuCard = ({
                     e.currentTarget.classList.remove("is-drop-target");
                     onDropTo(e, key);
                   }}
+                  // klávesnicový DnD
+                  onFocus={(e) => {
+                    if (carrying) e.currentTarget.classList.add("is-drop-target");
+                  }}
+                  onBlur={(e) => e.currentTarget.classList.remove("is-drop-target")}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") {
+                    // Enter = otevřít editaci (pokud neběží „Upravit vše“)
+                    if (e.key === KEYS.ENTER) {
                       e.preventDefault();
                       if (!forceEditing) setEditing(true);
+                      return;
+                    }
+
+                    // Esc = zrušit přesun (když něco neseme)
+                    if (e.key === KEYS.ESC && carrying) {
+                      setKbdDrag(null);
+                      announce && announce("Přesun zrušen.");
+                      e.currentTarget.classList.remove("is-drop-target");
+                      return;
+                    }
+
+                    // Space = zvednout/položit
+                    if (e.key === KEYS.SPACE || e.key === KEYS.SPACE_FALLBACK) {
+                      e.preventDefault(); // jinak stránka scrolluje
+
+                      // 1) nic nenesu → zvedni (jen když je co)
+                      if (!carrying) {
+                        if (!model[key]) {
+                          announce && announce("Slot je prázdný, není co přesouvat.");
+                          return;
+                        }
+                        setKbdDrag({ fromDay: dayIndex, fromKey: key, value: model[key] });
+                        announce && announce(`Zvednuto: ${model[key]} z ${day} – ${label}. Přejdi na cílový slot a stiskni mezerník.`);
+                        return;
+                      }
+
+                      // 2) nesu → polož sem (MOVE_MEAL už umí i swap)
+                      dispatch({
+                        type: "MOVE_MEAL",
+                        fromDay: kbdDrag.fromDay,
+                        fromKey: kbdDrag.fromKey,
+                        toDay: dayIndex,
+                        toKey: key,
+                      });
+                      setKbdDrag(null);
+                      announce && announce(`Přesunuto do ${day} – ${label}.`);
+                      e.currentTarget.classList.remove("is-drop-target");
                     }
                   }}
                   title={
@@ -199,7 +257,7 @@ export const DailyMenuCard = ({
 
               {/* skrytá nápověda pro čtečky – přístupná přes aria-describedby */}
               <span id={hintId} className="sr-only">
-                Enter: upravit. Mezera: (přesun přidáme v dalším kroku). Esc: zavřít editaci.
+                Enter: upravit. Mezerník: zvednout/položit. Esc: zrušit přesun.
               </span>
             </div>
           );

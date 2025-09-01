@@ -1,5 +1,5 @@
 import { useState, useRef, useLayoutEffect } from "react";
-import "./style.css"; // jen shopping-card styly
+import "./style.css";
 
 export const ShoppingList = ({ value = "", onChange, forceEditing = false,shouldAutoFocus = false }) => {
   const [editing, setEditing] = useState(false);
@@ -26,9 +26,9 @@ export const ShoppingList = ({ value = "", onChange, forceEditing = false,should
     if (!el) return;
     el.style.height = "0px"; // reset pro přesný scrollHeight
 
-    const contentH = el.scrollHeight;                            // výška obsahu
-    const minVarPx = getCssVarPx("--shop-content-min-h", 0);     // např. 16rem => px
-    const winPx = contentRef.current?.clientHeight || 0;         // aktuální výška okna karty
+    const contentH = el.scrollHeight;                           
+    const minVarPx = getCssVarPx("--shop-content-min-h", 0);     
+    const winPx = contentRef.current?.clientHeight || 0;         
 
     const next = Math.max(contentH, minVarPx, winPx);
     el.style.height = next + "px";
@@ -62,7 +62,7 @@ export const ShoppingList = ({ value = "", onChange, forceEditing = false,should
         {isEditing && <span className="chip chip--edit" aria-live="polite">✏️</span>}
         <button className="button button--ghost" 
          onClick={() => setEditing(v => !v)}
-          disabled={forceEditing}                                 // ⬅️
+          disabled={forceEditing}                                
           title={forceEditing ? 'Řízeno tlačítkem „Upravit vše“' : ''}
           >
           {isEditing ? "Hotovo" : "Upravit"}

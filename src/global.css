@@ -75,3 +75,14 @@ h2 {
   outline: 3px solid #90caf9;
   outline-offset: 2px;
 }
+
+/* fokus cíl při klávesnicovém přesunu*/
+.card__slot.is-drop-target {
+  outline: 2px dashed #b8c6ff;
+  background: #eef3ff;
+}
+
+/* slot, odkud bylo „zvednuto“ klávesnicí (jemné zvýraznění) */
+.is-kbd-source {
+  box-shadow: inset 0 0 0 2px #ffd54f;
+}

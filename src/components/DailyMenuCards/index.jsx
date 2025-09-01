@@ -4,16 +4,9 @@ import { DailyMenuCard } from "../DailyMenuCard";
 import { ShoppingList } from "../ShoppingList";
 import { NotesCard } from "../NotesCard";
 
-const DAYS = [
-  "Pondělí",
-  "Úterý",
-  "Středa",
-  "Čtvrtek",
-  "Pátek",
-  "Sobota",
-  "Neděle",
-];
-const STORAGE_KEY = "weeklyMenu"; // používáme stejný klíč, ale s migrací
+const DAYS = ["Pondělí","Úterý","Středa","Čtvrtek","Pátek","Sobota","Neděle"];
+const STORAGE_KEY = "weeklyMenu";
+
 const DEFAULT_DAY = {
   breakfast: "",
   snack1: "",
@@ -24,18 +17,23 @@ const DEFAULT_DAY = {
 
 const makeEmptyWeek = () => DAYS.map(() => ({ ...DEFAULT_DAY }));
 
-const initialState = { week: makeEmptyWeek(),notes: "", shopping: "" };
+const initialState = { week: makeEmptyWeek(), notes: "", shopping: "" };
 
 function reducer(state, action) {
   switch (action.type) {
     case "INIT_FROM_STORAGE": {
       const payload = action.payload;
-      // MIGRACE: dříve byl uložen čistě Array; teď očekáváme {week, shopping}
+      // starý formát = čisté pole dnů
       if (Array.isArray(payload)) {
-        return { week: payload, shopping: "" };
+        return { week: payload, notes: "", shopping: "" };
       }
+      // nový formát = {week, notes?, shopping?}
       if (payload && Array.isArray(payload.week)) {
-        return { week: payload.week, shopping: payload.shopping ?? "" };
+        return {
+          week: payload.week,
+          notes: payload.notes ?? "",
+          shopping: payload.shopping ?? "",
+        };
       }
       return state;
     }
@@ -75,15 +73,12 @@ function reducer(state, action) {
       }
       return { ...state, week: next };
     }
-    case "UPDATE_NOTES": {
+    case "UPDATE_NOTES":
       return { ...state, notes: action.value };
-    }
-    case "UPDATE_SHOPPING": {
+    case "UPDATE_SHOPPING":
       return { ...state, shopping: action.value };
-    }
-    case "RESET_WEEK": {
-      return { week: makeEmptyWeek(),notes: "", shopping: "" };
-    }
+    case "RESET_WEEK":
+      return { week: makeEmptyWeek(), notes: "", shopping: "" };
     default:
       return state;
   }
@@ -93,6 +88,10 @@ export const DailyMenuCards = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [editAll, setEditAll] = useState(false);
 
+  // ⬇️ keyboard DnD stav + live region MUSÍ být uvnitř komponenty
+  const [kbdDrag, setKbdDrag] = useState(null);          // {fromDay, fromKey, value} | null
+  const [liveMsg, setLiveMsg] = useState("");
+  const announce = (msg) => setLiveMsg(msg);
 
   // init from localStorage (s migrací)
   useEffect(() => {
@@ -105,7 +104,7 @@ export const DailyMenuCards = () => {
     } catch {}
   }, []);
 
-  // persist to localStorage (nově ukládáme {week, shopping})
+  // persist to localStorage (ukládáme {week, notes, shopping})
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -113,13 +112,8 @@ export const DailyMenuCards = () => {
   }, [state]);
 
   const images = [
-    "1-menu.webp",
-    "2-menu.webp",
-    "3-menu.webp",
-    "4-menu.webp",
-    "5-menu.webp",
-    "6-menu.webp",
-    "7-menu.webp",
+    "1-menu.webp","2-menu.webp","3-menu.webp","4-menu.webp",
+    "5-menu.webp","6-menu.webp","7-menu.webp",
   ];
 
   return (
@@ -128,7 +122,7 @@ export const DailyMenuCards = () => {
       <div className="cards__toolbar">
         <button
           className="button button--ghost"
-          onClick={() => setEditAll(v => !v)}
+          onClick={() => setEditAll((v) => !v)}
           title={editAll ? "Vypnout úpravy na všech kartách" : "Zapnout úpravy na všech kartách"}
         >
           {editAll ? "Hotovo (vypnout úpravy)" : "Upravit vše"}
@@ -153,7 +147,11 @@ export const DailyMenuCards = () => {
             data={state.week[i]}
             dispatch={dispatch}
             forceEditing={editAll}
-            shouldAutoFocus={editAll && i === 0}   // ⬅️ focus na Pondělí vreřimu editAll
+            shouldAutoFocus={editAll && i === 0}  // focus Pondělí v režimu „Upravit vše“
+            //keyboard DnD + live region
+            kbdDrag={kbdDrag}
+            setKbdDrag={setKbdDrag}
+            announce={announce}
           />
         ))}
 
@@ -161,7 +159,7 @@ export const DailyMenuCards = () => {
           value={state.notes}
           onChange={(v) => dispatch({ type: "UPDATE_NOTES", value: v })}
           forceEditing={editAll}
-          shouldAutoFocus={false} // aby nekradl focus 
+          shouldAutoFocus={false}
         />
 
         <ShoppingList
@@ -171,6 +169,9 @@ export const DailyMenuCards = () => {
           shouldAutoFocus={false}
         />
       </div>
+
+      {/* Live region pro čtečky */}
+      <div className="sr-only" aria-live="polite">{liveMsg}</div>
     </>
   );
 };
