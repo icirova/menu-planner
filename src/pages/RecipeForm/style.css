@@ -1,47 +1,44 @@
+/* =========================
+   ZÁKLAD FORMULÁŘE (beze změn)
+   ========================= */
+.form {
+  background-color: rgb(220, 220, 220);
+  border-radius: 0 0 20px 20px;
+  padding: 1rem;
+  margin: 0 auto;
+}
 
-  .form {
-    background-color: rgb(220, 220, 220);
-     border-radius: 0 0 20px 20px;
-     padding: 1rem;
-     margin: 0 auto;
-   }
-   
-   .form__img {
-     width: 100%;
-     display: block;
-     border-radius: 20px 20px 0 0;
-   }
-   
-   .form__item {
-     margin-bottom: 1rem;
-   }
-   
-   .form__item--2 {
-     display: flex;
-     justify-content: space-between;
-     gap: 2rem;
-   }
-   
-   .form__item--2 > * {
-     flex: 1;
-   }
-   
-   .form__label {
-     display: block;
-     margin-bottom: 5px;
-    
-   }
-   
-   .form__input {
-     width: 100%;
-     padding: 0.5rem;
-     border: 2px solid white;
-     border-radius: 0.25rem;
-     outline: none;
-     font-family: monospace;
-   }
+.form__img {
+  width: 100%;
+  display: block;
+  border-radius: 20px 20px 0 0;
+}
 
-   .visually-hidden {
+.form__item { margin-bottom: 1rem; }
+
+.form__item--2 {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.form__item--2 > * { flex: 1; }
+
+.form__label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form__input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 2px solid white;
+  border-radius: 0.25rem;
+  outline: none;
+  font-family: monospace;
+}
+
+/* skrytý input pro upload */
+.visually-hidden {
   position: absolute !important;
   width: 1px; height: 1px;
   padding: 0; margin: -1px;
@@ -49,11 +46,10 @@
   white-space: nowrap; border: 0;
 }
 
-/* hezké přidávací tlačítko */
+/* tlačítko „+“ pro upload (vzhled zachován) */
 .button--file {
   display: inline-block;
   cursor: pointer;
-  
   border-radius: 50%;
   box-shadow: 0 6px 20px rgba(0,0,0,.08);
   border: 1px solid rgba(0,0,0,.1);
@@ -64,25 +60,18 @@
 .button--file:active { transform: translateY(0); }
 .file-count { margin-left: .5rem; opacity: .75; font-size: .9rem; }
 
-   .form__input--file {
-    background-color: white ;
-   }
- 
-   .form__input:focus {
-     outline: 2px solid black;
-   }
-   
-   .form__textarea {
-     height: 100px;
-   }
-   
-   .form__button--div {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-   }
+.form__input--file { background-color: white; }
 
-   .form__checkbox-group {
+.form__textarea { height: 100px; }
+
+.form__button--div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* skupiny checkboxů */
+.form__checkbox-group {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -101,18 +90,18 @@
 }
 
 .form__checkbox-label:hover {
-  border-color: black;
+  border-color: #90caf9;         /* (jen vizuální efekt při hoveru) */
   background-color: rgb(245, 245, 245);
 }
 
 .form__checkbox {
-  accent-color: black; /* Moderní prohlížeče */
+  accent-color: black;
   width: 16px;
   height: 16px;
   cursor: pointer;
 }
 
-   
+/* náhledy fotek */
 .form__previews {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px,1fr));
@@ -127,9 +116,7 @@
   border-radius: 8px;
   box-shadow: 0 6px 20px rgba(0,0,0,.08);
 }
-.form__preview--cover {
-  outline: 2px solid rgba(0,0,0,.2);
-}
+.form__preview--cover { outline: 2px solid #90caf9; }
 .form__preview-meta {
   display: flex;
   justify-content: space-between;
@@ -152,19 +139,63 @@
   margin-top: 10px;
 }
 
-
-
 .form__filenames {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
   margin-top: 0.5rem;
 }
-
 .form__filename {
-
   border-radius: 6px;
-  font-size: 0.85rem;    
-  overflow-wrap: anywhere;  /* zalamuje dlouhá slova */
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
 }
 
+/* fieldset bez defaultního rámečku */
+.form__fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  min-inline-size: 0; /* Safari fix */
+}
+
+/* pokud používáš <legend class="form__label">, bude sedět s ostatními labely */
+.form__fieldset > legend.form__label {
+  display: block;
+  margin-bottom: .5rem;
+}
+
+/* =========================
+   A11y FOCUS (nezasahuje do vzhledu)
+   ========================= */
+
+/* Inputs: preferuj :focus-visible, zachovej černý outline */
+.form__input:focus-visible,
+select.form__input:focus-visible,
+textarea.form__input:focus-visible {
+  outline: 2px solid #90caf9;
+  outline-offset: 2px;
+}
+
+/* Checkbox (vstup sám má focus), zviditelni okraj */
+.form__checkbox:focus-visible {
+  outline: 2px solid #90caf9;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Tlačítka – sjednocený focus ring (použije se i na .button--file a remove křížek) */
+.button:focus-visible,
+.button--file:focus-visible,
+.form__preview-remove:focus-visible {
+  outline: 3px solid #90caf9;
+  outline-offset: 3px;
+  border-radius: 8px; /* pro pěkný obrys u malých tlačítek */
+}
+
+/* volitelný jemný hover na tlačítkách (zůstává decentní) */
+.button:hover,
+.button--file:hover,
+.form__preview-remove:hover {
+  filter: brightness(0.98);
+}

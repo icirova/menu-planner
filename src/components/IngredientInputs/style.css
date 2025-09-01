@@ -22,6 +22,7 @@
 }
 
 .ingredient-list {
+  list-style: none;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -64,3 +65,4 @@
 .button--remove:hover {
   color: #800;
 }
+
