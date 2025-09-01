@@ -1,24 +1,47 @@
+/* UL se seznamem karet */
+.recipes {
+    list-style: none;
+    /* bez puntíků */
+    padding: 0;
+    /* zruší levé odsazení ul */
+    margin: 0;
+    /* zruší defaultní margin nahoře/dole */
+}
+
+/* KARTA (obal) */
 .recipe {
+    list-style: none;
     background-color: rgb(238, 238, 238);
     border-radius: 20px;
     cursor: pointer;
 }
 
-.recipe__title {
-    text-align: center;
-    margin: 1rem 
+/* INTERAKTIVNÍ VRSTVA uvnitř karty (Link nebo "div[role=link]") */
+.recipe__link,
+.recipe__linkLike {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    border-radius: 20px;
+    /* zarovná focus ring s kartou */
+    cursor: pointer;
 }
 
+/* FOCUS RING pro klávesnici – viditelný, ale nenaruší layout */
+.recipe__link:focus-visible,
+.recipe__linkLike:focus-visible {
+    outline: 3px solid #90caf9;
+    outline-offset: 3px;
+    border-radius: 20px;
+}
+
+/* OBRÁZEK */
 .recipe__img {
     height: 300px;
     overflow: hidden;
-    margin-bottom: 0.5rem;  
+    margin-bottom: 0.5rem;
     position: relative;
     border-radius: 20px 20px 0 0;
-}
-
-.recipe:hover .img {
-    transform: scale(1.05); /* mírné přiblížení */
 }
 
 .img {
@@ -26,9 +49,23 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease; /* plynulý přechod */
+    transition: transform 0.3s ease;
 }
 
+/* ZOOM efekt při hoveru – funguje jak pro Link, tak pro starý wrapper */
+.recipe__link:hover .img,
+.recipe__linkLike:hover .img,
+.recipe:hover .img {
+    transform: scale(1.05);
+}
+
+/* NADPIS */
+.recipe__title {
+    text-align: center;
+    margin: 1rem;
+}
+
+/* GRID – beze změny */
 @media screen and (min-width: 680px) {
     .recipe {
         flex-basis: calc((100% - 1rem) / 2);
@@ -36,9 +73,7 @@
 }
 
 @media screen and (min-width: 1024px) {
-    .recipe{
+    .recipe {
         flex-basis: calc((100% - (1rem * 2)) / 3);
     }
-   
 }
-
