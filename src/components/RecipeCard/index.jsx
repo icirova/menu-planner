@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./style.css";
 
-export const RecipeCard = ({ id, title, photo_urls = [], servings, calories }) => {
+export const RecipeCard = ({ id, title, photo_urls = [] }) => {
   const cover = photo_urls[0] || "/image/placeholder.png";
   const titleId = `recipe-title-${id}`;
 
