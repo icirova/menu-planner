@@ -4,6 +4,78 @@ import { DailyMenuCard } from "../DailyMenuCard";
 import { ShoppingList } from "../ShoppingList";
 import { NotesCard } from "../NotesCard";
 
+/* ====== mapování slotů → preferované tagy ====== */
+const SLOT_TAGS = {
+  breakfast: ["snídaně", "svačiny"],
+  snack1:    ["svačiny", "moučníky"],
+  lunch:     ["obědy", "polévky"],
+  snack2:    ["svačiny", "moučníky"],
+  dinner:    ["večeře", "obědy"],
+};
+
+/* ====== util funkce pro auto-fill ====== */
+const shuffle = (arr) => {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+const byAnyTag = (recipe, tags) => recipe.tags?.some((t) => tags.includes(t));
+
+const pickForSlot = (recipes, preferredTags, usedIds) => {
+  for (const tag of preferredTags) {
+    const pool = recipes.filter((r) => byAnyTag(r, [tag]) && !usedIds.has(r.id));
+    if (pool.length) {
+      const r = shuffle(pool)[0];
+      usedIds.add(r.id);
+      return r;
+    }
+  }
+  return null;
+};
+
+const autoFillWeekByTags = ({
+  week,
+  recipes,
+  slotTagsMap,
+  fillOnlyEmpty = true,
+}) => {
+  const slotKeys = Object.keys(slotTagsMap);
+  const used = new Set();
+  const titleToId = new Map(recipes.map((r) => [r.title, r.id]));
+
+  // označ už obsazené recepty v týdnu jako použité (prevence duplicit)
+  for (const day of week) {
+    for (const key of slotKeys) {
+      const val = day[key];
+      if (!val) continue;
+      if (typeof val === "string" && titleToId.has(val)) used.add(titleToId.get(val));
+    }
+  }
+
+  return week.map((origDay) => {
+    const day = { ...origDay };
+    for (const slotKey of slotKeys) {
+      const current = day[slotKey];
+      const isEmpty =
+        current === null ||
+        current === undefined ||
+        (typeof current === "string" && current.trim() === "");
+
+      if (!isEmpty && fillOnlyEmpty) continue;
+
+      const recipe = pickForSlot(recipes, slotTagsMap[slotKey], used);
+      if (recipe) {
+        day[slotKey] = recipe.title; // ukládáme NÁZEV (sedí k tvému stavu)
+      }
+    }
+    return day;
+  });
+};
+/* ====== /NOVÉ ====== */
+
 const DAYS = ["Pondělí","Úterý","Středa","Čtvrtek","Pátek","Sobota","Neděle"];
 const STORAGE_KEY = "weeklyMenu";
 
@@ -79,6 +151,19 @@ function reducer(state, action) {
       return { ...state, shopping: action.value };
     case "RESET_WEEK":
       return { week: makeEmptyWeek(), notes: "", shopping: "" };
+
+    /* ====== automatické vyplnění ====== */
+    case "AUTO_FILL_WEEK": {
+      const { recipes, fillOnlyEmpty = true } = action.payload;
+      const weekFilled = autoFillWeekByTags({
+        week: state.week,
+        recipes,
+        slotTagsMap: SLOT_TAGS,
+        fillOnlyEmpty,
+      });
+      return { ...state, week: weekFilled };
+    }
+
     default:
       return state;
   }
@@ -88,7 +173,7 @@ export const DailyMenuCards = ({ recipes = [] }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [editAll, setEditAll] = useState(false);
 
-  // ⬇️ keyboard DnD stav + live region MUSÍ být uvnitř komponenty
+  // ⬇️ keyboard DnD stav + live region
   const [kbdDrag, setKbdDrag] = useState(null);          // {fromDay, fromKey, value} | null
   const [liveMsg, setLiveMsg] = useState("");
   const announce = (msg) => setLiveMsg(msg);
@@ -129,6 +214,20 @@ export const DailyMenuCards = ({ recipes = [] }) => {
         </button>
 
         <button
+          className="button"
+          onClick={() =>
+            dispatch({
+              type: "AUTO_FILL_WEEK",
+              payload: { recipes, fillOnlyEmpty: true }, // jen prázdné sloty
+            })
+          }
+          title="Automaticky vyplnit prázdné sloty podle tagů"
+        >
+          Automaticky vyplnit
+        </button>
+
+      
+        <button
           className="button button--danger"
           onClick={() => dispatch({ type: "RESET_WEEK" })}
         >
@@ -147,12 +246,12 @@ export const DailyMenuCards = ({ recipes = [] }) => {
             data={state.week[i]}
             dispatch={dispatch}
             forceEditing={editAll}
-            shouldAutoFocus={editAll && i === 0}  // focus Pondělí v režimu „Upravit vše“
-            //keyboard DnD + live region
+            shouldAutoFocus={editAll && i === 0}  // fokus Pondělí v režimu „Upravit vše“
+            // keyboard DnD + live region
             kbdDrag={kbdDrag}
             setKbdDrag={setKbdDrag}
             announce={announce}
-            recipes={recipes} 
+            recipes={recipes}
           />
         ))}
 
