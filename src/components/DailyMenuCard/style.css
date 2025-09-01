@@ -153,3 +153,33 @@
 
 
 .slot__clear:focus-visible { outline: 2px solid #99b7ff; outline-offset: 2px; }
+
+/* našeptávač */
+.suggest{
+  margin-top: .25rem;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  max-height: 220px;
+  overflow: auto;
+  padding: .25rem;
+  list-style: none;
+}
+.suggest__item{
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  padding: .45rem .55rem;
+  border-radius: 6px;
+  font: inherit;
+  cursor: pointer;
+}
+.suggest__item:hover,
+.suggest__item:focus-visible,
+.suggest__item.is-active{
+  background: #eef3ff;
+}
+

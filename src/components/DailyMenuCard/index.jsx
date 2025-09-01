@@ -1,7 +1,11 @@
 import { useState } from "react";
 import "./style.css";
 
-const KEYS = { ENTER: "Enter", ESC: "Escape", SPACE: " ", SPACE_FALLBACK: "Spacebar" };
+const KEYS = {
+  ENTER: "Enter", ESC: "Escape",
+  SPACE: " ", SPACE_FALLBACK: "Spacebar",
+  UP: "ArrowUp", DOWN: "ArrowDown"
+};
 
 const MEAL_KEYS = [
   { key: "breakfast", label: "Snídaně" },
@@ -11,12 +15,16 @@ const MEAL_KEYS = [
   { key: "dinner",    label: "Večeře" },
 ];
 
-const DEFAULT_DAY = {
-  breakfast: "",
-  snack1: "",
-  lunch: "",
-  snack2: "",
-  dinner: "",
+const DEFAULT_DAY = { breakfast: "", snack1: "", lunch: "", snack2: "", dinner: "" };
+
+const getTitle = (r) => (r?.title ?? r?.name ?? "").trim();
+
+const getSuggestions = (recipes = [], query = "", limit = 6) => {
+  const q = query.trim().toLowerCase();
+  if (!q || q.length < 2) return [];
+  return recipes
+    .filter((r) => getTitle(r).toLowerCase().includes(q))
+    .slice(0, limit);
 };
 
 export const DailyMenuCard = ({
@@ -27,42 +35,38 @@ export const DailyMenuCard = ({
   dispatch,
   forceEditing = false,
   shouldAutoFocus = false,
-  // props pro klávesnicový přesun (přijdou z parentu)
+  // klávesnicový přesun
   kbdDrag,
   setKbdDrag,
   announce,
+  // našeptávač
+  recipes = [],
 }) => {
   const [editing, setEditing] = useState(false);
   const isEditing = forceEditing || editing;
   const model = { ...DEFAULT_DAY, ...(data || {}) };
 
-  // myší drag start
+  // stav pro aktivní návrh a skrytí dropdownu po výběru (per-slot)
+  const [activeIdx, setActiveIdx] = useState({
+    breakfast: -1, snack1: -1, lunch: -1, snack2: -1, dinner: -1,
+  });
+  const [hideSuggest, setHideSuggest] = useState({
+    breakfast: false, snack1: false, lunch: false, snack2: false, dinner: false,
+  });
+
   const onDragStart = (e, mealKey) => {
     const value = model[mealKey];
     if (!value) return e.preventDefault();
-    e.dataTransfer.setData(
-      "text/plain",
-      JSON.stringify({ dayIndex, mealKey, value })
-    );
+    e.dataTransfer.setData("text/plain", JSON.stringify({ dayIndex, mealKey, value }));
     e.dataTransfer.effectAllowed = "move";
   };
 
-  // myší drop
   const onDropTo = (e, toKey) => {
     e.preventDefault();
     let payload = null;
-    try {
-      payload = JSON.parse(e.dataTransfer.getData("text/plain"));
-    } catch {}
+    try { payload = JSON.parse(e.dataTransfer.getData("text/plain")); } catch {}
     if (!payload) return;
-
-    dispatch({
-      type: "MOVE_MEAL",
-      fromDay: payload.dayIndex,
-      fromKey: payload.mealKey,
-      toDay: dayIndex,
-      toKey,
-    });
+    dispatch({ type: "MOVE_MEAL", fromDay: payload.dayIndex, fromKey: payload.mealKey, toDay: dayIndex, toKey });
   };
 
   const clearDay = () => {
@@ -71,28 +75,45 @@ export const DailyMenuCard = ({
     );
   };
 
-  // autosize pro textarea
   const autoGrow = (el) => {
     if (!el) return;
-    el.style.height = "0px"; // přesný scrollHeight
+    el.style.height = "0px";
     el.style.height = el.scrollHeight + "px";
     el.style.overflowY = "hidden";
   };
 
+  const moveActive = (slotKey, dir, listId) => {
+    setActiveIdx((prev) => {
+      const list = document.getElementById(listId);
+      const items = list ? Array.from(list.querySelectorAll('[role="option"]')) : [];
+      if (!items.length) return prev;
+
+      const cur = prev[slotKey] ?? -1;
+      const next = dir === "down"
+        ? (cur + 1) % items.length
+        : (cur <= 0 ? items.length - 1 : cur - 1);
+
+      const el = items[next];
+      if (el?.scrollIntoView) el.scrollIntoView({ block: "nearest" });
+
+      return { ...prev, [slotKey]: next };
+    });
+  };
+
+  const pickSuggestion = (slotKey, name) => {
+    dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: slotKey, value: name });
+    setActiveIdx((s) => ({ ...s, [slotKey]: -1 }));
+    setHideSuggest((s) => ({ ...s, [slotKey]: true })); // zavři dropdown až po vložení
+  };
+
   return (
-    <div
-      className={`card ${isEditing ? "is-editing" : ""}`}
-      role="region"
-      aria-label={`Denní plán: ${day}`}
-    >
+    <div className={`card ${isEditing ? "is-editing" : ""}`} role="region" aria-label={`Denní plán: ${day}`}>
       {img && <img className="card__image" src={`./image/${img}`} alt="" />}
 
       <h1 className="card__title">{day}</h1>
 
       <div className="card__toolbar">
-        {isEditing && (
-          <span className="chip chip--edit" aria-live="polite">✏️</span>
-        )}
+        {isEditing && <span className="chip chip--edit" aria-live="polite">✏️</span>}
         <button
           className="button button--ghost"
           onClick={() => setEditing((v) => !v)}
@@ -101,27 +122,30 @@ export const DailyMenuCard = ({
         >
           {isEditing ? "Hotovo" : "Upravit"}
         </button>
-        <button
-          className="button button--danger"
-          onClick={clearDay}
-          title="Vymazat celý den"
-        >
+        <button className="button button--danger" onClick={clearDay} title="Vymazat celý den">
           Vymazat den
         </button>
       </div>
 
       <div className="card__content" id={`day-${dayIndex}`}>
         {MEAL_KEYS.map(({ key, label }, i) => {
-          const hintId = `hint-${dayIndex}-${key}`; // pro čtečky
+          const hintId = `hint-${dayIndex}-${key}`;
+          const listId = `suggest-${dayIndex}-${key}`;
+          const optId = (idx) => `opt-${dayIndex}-${key}-${idx}`;
+
           const carrying = !!kbdDrag;
           const isSource =
             carrying && kbdDrag.fromDay === dayIndex && kbdDrag.fromKey === key;
 
+          // našeptávač – výpočet uvnitř map (key existuje)
+          const suggestions = hideSuggest[key]
+            ? []
+            : getSuggestions(recipes, model[key]);
+          const hasSuggest = suggestions.length > 0;
+          const active = Math.max(-1, Math.min(activeIdx[key] ?? -1, suggestions.length - 1));
+
           return (
-            <div
-              key={key}
-              className={`card__text ${key === "dinner" ? "card__text--dinner" : ""}`}
-            >
+            <div key={key} className={`card__text ${key === "dinner" ? "card__text--dinner" : ""}`}>
               <p className="card__subtitle">{label}:</p>
 
               {isEditing ? (
@@ -130,29 +154,44 @@ export const DailyMenuCard = ({
                     className="card__slot card__slot--input card__slot--withClear"
                     placeholder="Napiš…"
                     value={model[key]}
-                    onChange={(e) =>
-                      dispatch({
-                        type: "UPDATE_MEAL",
-                        dayIndex,
-                        mealKey: key,
-                        value: e.target.value,
-                      })
-                    }
+                    onChange={(e) => {
+                      dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: key, value: e.target.value });
+                      autoGrow(e.currentTarget);
+                      setActiveIdx((s) => ({ ...s, [key]: -1 }));
+                      setHideSuggest((s) => ({ ...s, [key]: false })); // znovu povol návrhy při psaní
+                    }}
                     ref={autoGrow}
                     onInput={(e) => autoGrow(e.currentTarget)}
                     onFocus={(e) => autoGrow(e.currentTarget)}
                     rows={1}
                     autoComplete="off"
                     autoFocus={i === 0 && shouldAutoFocus}
+                    aria-controls={hasSuggest ? listId : undefined}
+                    aria-activedescendant={hasSuggest && active >= 0 ? optId(active) : undefined}
                     onKeyDown={(e) => {
                       if (e.key === KEYS.ESC) {
                         e.currentTarget.blur();
                         if (!forceEditing) setEditing(false);
+                        return;
                       }
-                      // textarea: Enter bez Shift = potvrdit (ukončit edit)
                       if (e.key === KEYS.ENTER && !e.shiftKey) {
                         e.preventDefault();
-                        if (!forceEditing) setEditing(false);
+                        if (hasSuggest && active >= 0) {
+                          pickSuggestion(key, getTitle(suggestions[active]));
+                        } else if (!forceEditing) {
+                          setEditing(false);
+                        }
+                        return;
+                      }
+                      if (hasSuggest && e.key === KEYS.DOWN) {
+                        e.preventDefault();
+                        moveActive(key, "down", listId);
+                        return;
+                      }
+                      if (hasSuggest && e.key === KEYS.UP) {
+                        e.preventDefault();
+                        moveActive(key, "up", listId);
+                        return;
                       }
                     }}
                   />
@@ -162,17 +201,32 @@ export const DailyMenuCard = ({
                       className="button button--icon slot__clear"
                       title="Smazat obsah"
                       aria-label={`Smazat ${label}`}
-                      onClick={() =>
-                        dispatch({
-                          type: "UPDATE_MEAL",
-                          dayIndex,
-                          mealKey: key,
-                          value: "",
-                        })
-                      }
+                      onClick={() => {
+                        dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: key, value: "" });
+                        setActiveIdx((s) => ({ ...s, [key]: -1 }));
+                        setHideSuggest((s) => ({ ...s, [key]: false }));
+                      }}
                     >
                       ✕
                     </button>
+                  )}
+
+                  {hasSuggest && (
+                    <ul id={listId} className="suggest" role="listbox" aria-label={`Návrhy pro ${label}`}>
+                      {suggestions.map((r, idx) => (
+                        <li key={r.id ?? getTitle(r) ?? idx} role="option" id={optId(idx)} aria-selected={active === idx}>
+                          <button
+                            type="button"
+                            className={`suggest__item ${active === idx ? "is-active" : ""}`}
+                            onMouseEnter={() => setActiveIdx((s) => ({ ...s, [key]: idx }))}
+                            onMouseLeave={() => setActiveIdx((s) => ({ ...s, [key]: -1 }))}
+                            onClick={() => pickSuggestion(key, getTitle(r))}
+                          >
+                            {getTitle(r)}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
                   )}
                 </div>
               ) : (
@@ -186,76 +240,46 @@ export const DailyMenuCard = ({
                       ? `${label}: ${model[key] || "prázdné"}. Cíl přesunu — stiskni mezerník pro položení, Esc zruší.`
                       : `${label}: ${model[key] ? model[key] : "prázdné"}. Enter: upravit.`
                   }
-                  // myší DnD
                   draggable={!!model[key]}
                   onDragStart={(e) => onDragStart(e, key)}
                   onDragOver={(e) => e.preventDefault()}
                   onDragEnter={(e) => e.currentTarget.classList.add("is-drop-target")}
                   onDragLeave={(e) => e.currentTarget.classList.remove("is-drop-target")}
-                  onDrop={(e) => {
-                    e.currentTarget.classList.remove("is-drop-target");
-                    onDropTo(e, key);
-                  }}
-                  // klávesnicový DnD
-                  onFocus={(e) => {
-                    if (carrying) e.currentTarget.classList.add("is-drop-target");
-                  }}
+                  onDrop={(e) => { e.currentTarget.classList.remove("is-drop-target"); onDropTo(e, key); }}
+                  onFocus={(e) => { if (kbdDrag) e.currentTarget.classList.add("is-drop-target"); }}
                   onBlur={(e) => e.currentTarget.classList.remove("is-drop-target")}
                   onKeyDown={(e) => {
-                    // Enter = otevřít editaci (pokud neběží „Upravit vše“)
                     if (e.key === KEYS.ENTER) {
                       e.preventDefault();
                       if (!forceEditing) setEditing(true);
                       return;
                     }
-
-                    // Esc = zrušit přesun (když něco neseme)
-                    if (e.key === KEYS.ESC && carrying) {
+                    if (e.key === KEYS.ESC && kbdDrag) {
                       setKbdDrag(null);
                       announce && announce("Přesun zrušen.");
                       e.currentTarget.classList.remove("is-drop-target");
                       return;
                     }
-
-                    // Space = zvednout/položit
                     if (e.key === KEYS.SPACE || e.key === KEYS.SPACE_FALLBACK) {
-                      e.preventDefault(); // jinak stránka scrolluje
-
-                      // 1) nic nenesu → zvedni (jen když je co)
-                      if (!carrying) {
-                        if (!model[key]) {
-                          announce && announce("Slot je prázdný, není co přesouvat.");
-                          return;
-                        }
+                      e.preventDefault();
+                      if (!kbdDrag) {
+                        if (!model[key]) { announce && announce("Slot je prázdný, není co přesouvat."); return; }
                         setKbdDrag({ fromDay: dayIndex, fromKey: key, value: model[key] });
                         announce && announce(`Zvednuto: ${model[key]} z ${day} – ${label}. Přejdi na cílový slot a stiskni mezerník.`);
                         return;
                       }
-
-                      // 2) nesu → polož sem (MOVE_MEAL už umí i swap)
-                      dispatch({
-                        type: "MOVE_MEAL",
-                        fromDay: kbdDrag.fromDay,
-                        fromKey: kbdDrag.fromKey,
-                        toDay: dayIndex,
-                        toKey: key,
-                      });
+                      dispatch({ type: "MOVE_MEAL", fromDay: kbdDrag.fromDay, fromKey: kbdDrag.fromKey, toDay: dayIndex, toKey: key });
                       setKbdDrag(null);
                       announce && announce(`Přesunuto do ${day} – ${label}.`);
                       e.currentTarget.classList.remove("is-drop-target");
                     }
                   }}
-                  title={
-                    model[key]
-                      ? "Přetáhni na jiný slot/den"
-                      : "Sem můžeš přetáhnout jídlo"
-                  }
+                  title={model[key] ? "Přetáhni na jiný slot/den" : "Sem můžeš přetáhnout jídlo"}
                 >
                   {model[key] || ""}
                 </p>
               )}
 
-              {/* skrytá nápověda pro čtečky – přístupná přes aria-describedby */}
               <span id={hintId} className="sr-only">
                 Enter: upravit. Mezerník: zvednout/položit. Esc: zrušit přesun.
               </span>

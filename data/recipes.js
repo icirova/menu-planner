@@ -142,7 +142,7 @@ export const recipes = [
   },
   {
     id: 8,
-    title: "Smažený řízek",
+    title: "Řízek smažený",
     servings: 4,
     tags: ["obědy", "večeře"],
     photo_urls: ["/imgRecipe/smazeny-rizek.webp"],
@@ -162,7 +162,7 @@ export const recipes = [
   },
   {
     id: 9,
-    title: "Přírodní řízek",
+    title: "Řízek přírodní",
     servings: 4,
     tags: ["obědy", "večeře"],
     photo_urls: ["/imgRecipe/rizek-hranolky.webp"],

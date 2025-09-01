@@ -84,7 +84,7 @@ function reducer(state, action) {
   }
 }
 
-export const DailyMenuCards = () => {
+export const DailyMenuCards = ({ recipes = [] }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [editAll, setEditAll] = useState(false);
 
@@ -152,6 +152,7 @@ export const DailyMenuCards = () => {
             kbdDrag={kbdDrag}
             setKbdDrag={setKbdDrag}
             announce={announce}
+            recipes={recipes} 
           />
         ))}
 
