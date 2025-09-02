@@ -21,16 +21,15 @@ export const NotesCard = ({ value = "", onChange,forceEditing = false, shouldAut
     return Number.isFinite(n) ? n : fallback;
   };
 
-  // autosize: min = --notes-content-min-h, zároveň min = výška okna karty
+  // autosize: min = --notes-content-min-h; nepoužívat výšku okna karty (zabraňuje skoku ~10px při focusu)
   const autosize = (el) => {
     if (!el) return;
     el.style.height = "0px"; // reset pro přesný scrollHeight
 
     const contentH = el.scrollHeight;                          // výška obsahu
     const minVarPx = getCssVarPx("--notes-content-min-h", 0);  // např. 16rem => px
-    const winPx    = contentRef.current?.clientHeight || 0;    // aktuální výška okna karty
 
-    const next = Math.max(contentH, minVarPx, winPx);
+    const next = Math.max(contentH, minVarPx);
     el.style.height = next + "px";
     el.style.overflowY = "hidden"; // žádný vnitřní scrollbar (scrolluje okno karty)
   };

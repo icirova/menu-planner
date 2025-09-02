@@ -21,16 +21,15 @@ export const ShoppingList = ({ value = "", onChange, forceEditing = false,should
     return Number.isFinite(n) ? n : fallback;
   };
 
-  // autosize: min = --shop-content-min-h, zároveň min = výška okna karty
+  // autosize: min = --shop-content-min-h; nepoužívat výšku okna karty (zabraňuje skoku ~10px při focusu)
   const autosize = (el) => {
     if (!el) return;
     el.style.height = "0px"; // reset pro přesný scrollHeight
 
     const contentH = el.scrollHeight;                           
     const minVarPx = getCssVarPx("--shop-content-min-h", 0);     
-    const winPx = contentRef.current?.clientHeight || 0;         
 
-    const next = Math.max(contentH, minVarPx, winPx);
+    const next = Math.max(contentH, minVarPx);
     el.style.height = next + "px";
     el.style.overflowY = "hidden"; // žádný vnitřní scrollbar (scrolluje okno karty)
   };
