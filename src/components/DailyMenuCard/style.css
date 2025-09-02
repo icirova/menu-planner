@@ -9,6 +9,8 @@
 /* viditelný, ale jemný indikátor editace */
 .card.is-editing {
   box-shadow: inset 0 0 0 2px #cfe0ff;
+  /* Zajistí stabilní výšku karet v editačním módu */
+  min-height: fit-content;
 }
 
 /* Obrázek — pevná výška pro stejné karty */
@@ -33,6 +35,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  /* Zajistí stabilní layout i při zobrazení našeptávačů */
+  position: relative;
 }
 
 /* Toolbar v kartě (Upravit / Vymazat den) */
@@ -156,6 +160,11 @@
 
 /* našeptávač */
 .suggest{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
   margin-top: .25rem;
   background: #fff;
   border: 1px solid rgba(0,0,0,.1);

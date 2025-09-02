@@ -210,7 +210,7 @@ export const DailyMenuCards = ({ recipes = [] }) => {
           onClick={() => setEditAll((v) => !v)}
           title={editAll ? "Vypnout úpravy na všech kartách" : "Zapnout úpravy na všech kartách"}
         >
-          {editAll ? "Hotovo (vypnout úpravy)" : "Upravit vše"}
+          {editAll ? "Hotovo vše" : "Upravit vše"}
         </button>
 
         <button

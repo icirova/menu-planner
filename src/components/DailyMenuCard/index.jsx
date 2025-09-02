@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./style.css";
 
 const KEYS = {
@@ -51,8 +51,20 @@ export const DailyMenuCard = ({
     breakfast: -1, snack1: -1, lunch: -1, snack2: -1, dinner: -1,
   });
   const [hideSuggest, setHideSuggest] = useState({
-    breakfast: false, snack1: false, lunch: false, snack2: false, dinner: false,
+    breakfast: true, snack1: true, lunch: true, snack2: true, dinner: true,
   });
+
+  // Skryj všechny našeptávače při opuštění editačního módu
+  useEffect(() => {
+    if (!isEditing) {
+      setHideSuggest({
+        breakfast: true, snack1: true, lunch: true, snack2: true, dinner: true,
+      });
+      setActiveIdx({
+        breakfast: -1, snack1: -1, lunch: -1, snack2: -1, dinner: -1,
+      });
+    }
+  }, [isEditing]);
 
   const onDragStart = (e, mealKey) => {
     const value = model[mealKey];
@@ -103,7 +115,7 @@ export const DailyMenuCard = ({
   const pickSuggestion = (slotKey, name) => {
     dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: slotKey, value: name });
     setActiveIdx((s) => ({ ...s, [slotKey]: -1 }));
-    setHideSuggest((s) => ({ ...s, [slotKey]: true })); // zavři dropdown až po vložení
+    setHideSuggest((s) => ({ ...s, [slotKey]: true })); // zavři dropdown po vložení
   };
 
   return (
@@ -158,7 +170,12 @@ export const DailyMenuCard = ({
                       dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: key, value: e.target.value });
                       autoGrow(e.currentTarget);
                       setActiveIdx((s) => ({ ...s, [key]: -1 }));
-                      setHideSuggest((s) => ({ ...s, [key]: false })); // znovu povol návrhy při psaní
+                      // Zobraz našeptávače pouze když uživatel píše a má alespoň 2 znaky
+                      if (e.target.value.trim().length >= 2) {
+                        setHideSuggest((s) => ({ ...s, [key]: false }));
+                      } else {
+                        setHideSuggest((s) => ({ ...s, [key]: true }));
+                      }
                     }}
                     ref={autoGrow}
                     onInput={(e) => autoGrow(e.currentTarget)}
@@ -204,7 +221,7 @@ export const DailyMenuCard = ({
                       onClick={() => {
                         dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: key, value: "" });
                         setActiveIdx((s) => ({ ...s, [key]: -1 }));
-                        setHideSuggest((s) => ({ ...s, [key]: false }));
+                        setHideSuggest((s) => ({ ...s, [key]: true }));
                       }}
                     >
                       ✕
