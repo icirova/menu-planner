@@ -13,22 +13,6 @@
   min-height: fit-content;
 }
 
-/* Obrázek — pevná výška pro stejné karty */
-.card__image {
-  display: block;
-  width: 100%;
-  height: 160px;                /* můžeš změnit na 180px */
-  object-fit: cover;
-}
-
-/* Nadpis karty */
-.card__title {
-  text-align: center;
-  padding: 0.8rem 1rem 0;
-  margin: 0;
-  border-radius: 20px 20px 0 0;
-}
-
 /* Obsah karty */
 .card__content {
   padding: 1rem;
@@ -37,21 +21,6 @@
   gap: 0.8rem;
   /* Zajistí stabilní layout i při zobrazení našeptávačů */
   position: relative;
-}
-
-/* Toolbar v kartě (Upravit / Vymazat den) */
-.card__toolbar {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
-  padding: 0 1rem 0.5rem;
-  margin-top: 0.8rem;
-}
-
-/* Malý badge „Režim úprav“ */
-.chip {
-    margin: 0 auto;
-  margin-top: 6px;
 }
 
 
@@ -157,38 +126,4 @@
 
 
 .slot__clear:focus-visible { outline: 2px solid #99b7ff; outline-offset: 2px; }
-
-/* našeptávač */
-.suggest{
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  margin-top: .25rem;
-  background: #fff;
-  border: 1px solid rgba(0,0,0,.1);
-  border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0,0,0,.06);
-  max-height: 220px;
-  overflow: auto;
-  padding: .25rem;
-  list-style: none;
-}
-.suggest__item{
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: transparent;
-  border: 0;
-  padding: .45rem .55rem;
-  border-radius: 6px;
-  font: inherit;
-  cursor: pointer;
-}
-.suggest__item:hover,
-.suggest__item:focus-visible,
-.suggest__item.is-active{
-  background: #eef3ff;
-}
 

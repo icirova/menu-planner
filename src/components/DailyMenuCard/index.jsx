@@ -1,31 +1,14 @@
-import { useState, useEffect } from "react";
 import "./style.css";
-
-const KEYS = {
-  ENTER: "Enter", ESC: "Escape",
-  SPACE: " ", SPACE_FALLBACK: "Spacebar",
-  UP: "ArrowUp", DOWN: "ArrowDown"
-};
-
-const MEAL_KEYS = [
-  { key: "breakfast", label: "Snídaně" },
-  { key: "snack1",    label: "Svačina" },
-  { key: "lunch",     label: "Oběd" },
-  { key: "snack2",    label: "Svačina" },
-  { key: "dinner",    label: "Večeře" },
-];
-
-const DEFAULT_DAY = { breakfast: "", snack1: "", lunch: "", snack2: "", dinner: "" };
-
-const getTitle = (r) => (r?.title ?? r?.name ?? "").trim();
-
-const getSuggestions = (recipes = [], query = "", limit = 6) => {
-  const q = query.trim().toLowerCase();
-  if (!q || q.length < 2) return [];
-  return recipes
-    .filter((r) => getTitle(r).toLowerCase().includes(q))
-    .slice(0, limit);
-};
+import { useState, useEffect } from "react";
+import { KEYS } from "../../constants/keys";
+import { MEAL_KEYS } from "../../constants/mealKeys";
+import { DEFAULT_DAY } from "../../constants/defaultDay";
+import { getTitle } from "../../utils/getTitle";
+import { getSuggestions } from "../../utils/getSuggestions";
+import { autoGrow } from "../../utils/autoGrow";
+import { CardToolbar } from "../CardToolbar";
+import { CardHeader } from "../CardHeader";
+import { SuggestList } from "../SuggestList";
 
 export const DailyMenuCard = ({
   day,
@@ -87,12 +70,7 @@ export const DailyMenuCard = ({
     );
   };
 
-  const autoGrow = (el) => {
-    if (!el) return;
-    el.style.height = "0px";
-    el.style.height = el.scrollHeight + "px";
-    el.style.overflowY = "hidden";
-  };
+ 
 
   const moveActive = (slotKey, dir, listId) => {
     setActiveIdx((prev) => {
@@ -120,24 +98,9 @@ export const DailyMenuCard = ({
 
   return (
     <div className={`card ${isEditing ? "is-editing" : ""}`} role="region" aria-label={`Denní plán: ${day}`}>
-      {img && <img className="card__image" src={`./image/${img}`} alt="" />}
-
-      <h1 className="card__title">{day}</h1>
-
-      <div className="card__toolbar">
-        {isEditing && <span className="chip chip--edit" aria-live="polite">✏️</span>}
-        <button
-          className="button button--ghost"
-          onClick={() => setEditing((v) => !v)}
-          disabled={forceEditing}
-          title={forceEditing ? "Řízeno tlačítkem „Upravit vše“" : ""}
-        >
-          {isEditing ? "Hotovo" : "Upravit"}
-        </button>
-        <button className="button button--danger" onClick={clearDay} title="Vymazat celý den">
-          Vymazat den
-        </button>
-      </div>
+      
+      <CardHeader img={img} day={day} />
+      <CardToolbar isEditing={isEditing} setEditing={setEditing} forceEditing={forceEditing} clearDay={clearDay} />
 
       <div className="card__content" id={`day-${dayIndex}`}>
         {MEAL_KEYS.map(({ key, label }, i) => {
@@ -229,21 +192,16 @@ export const DailyMenuCard = ({
                   )}
 
                   {hasSuggest && (
-                    <ul id={listId} className="suggest" role="listbox" aria-label={`Návrhy pro ${label}`}>
-                      {suggestions.map((r, idx) => (
-                        <li key={r.id ?? getTitle(r) ?? idx} role="option" id={optId(idx)} aria-selected={active === idx}>
-                          <button
-                            type="button"
-                            className={`suggest__item ${active === idx ? "is-active" : ""}`}
-                            onMouseEnter={() => setActiveIdx((s) => ({ ...s, [key]: idx }))}
-                            onMouseLeave={() => setActiveIdx((s) => ({ ...s, [key]: -1 }))}
-                            onClick={() => pickSuggestion(key, getTitle(r))}
-                          >
-                            {getTitle(r)}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
+                    <SuggestList
+                    id={listId}
+                    items={suggestions}
+                    activeIndex={active}
+                    getKey={(r, idx) => r.id ?? getTitle(r) ?? idx}
+                    getLabel={(r) => getTitle(r)}
+                    getItemId={(idx) => optId(idx)}
+                    onPick={(item) => pickSuggestion(key, getTitle(item))}
+                    onHover={(idx) => setActiveIdx((s) => ({ ...s, [key]: idx }))}
+                   />
                   )}
                 </div>
               ) : (

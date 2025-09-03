@@ -3,15 +3,8 @@ import "./style.css";
 import { DailyMenuCard } from "../DailyMenuCard";
 import { ShoppingList } from "../ShoppingList";
 import { NotesCard } from "../NotesCard";
+import { SLOT_TAGS } from "../../constants/slotTags";
 
-/* ====== mapování slotů → preferované tagy ====== */
-const SLOT_TAGS = {
-  breakfast: ["snídaně", "svačiny"],
-  snack1:    ["svačiny", "moučníky"],
-  lunch:     ["obědy", "polévky"],
-  snack2:    ["svačiny", "moučníky"],
-  dinner:    ["večeře", "obědy"],
-};
 
 /* ====== util funkce pro auto-fill ====== */
 const shuffle = (arr) => {

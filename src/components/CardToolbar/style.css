@@ -1,0 +1,14 @@
+.card__toolbar {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    padding: 0 1rem 0.5rem;
+    margin-top: 0.8rem;
+  }
+  
+  /* Malý badge „Režim úprav“ */
+  .chip {
+      margin: 0 auto;
+    margin-top: 6px;
+  }
+  
