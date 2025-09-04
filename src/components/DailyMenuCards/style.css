@@ -8,7 +8,7 @@
   text-align: end; 
   margin-bottom: .8rem; 
   display: flex;
-  justify-content: center;
+  justify-content: end;
   gap: .8rem;
 }
 

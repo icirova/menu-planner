@@ -198,15 +198,8 @@ export const DailyMenuCards = ({ recipes = [] }) => {
     <>
       {/* Toolbar NAD gridem karet */}
       <div className="cards__toolbar">
-        <button
-          className="button button--ghost"
-          onClick={() => setEditAll((v) => !v)}
-          title={editAll ? "Vypnout úpravy na všech kartách" : "Zapnout úpravy na všech kartách"}
-        >
-          {editAll ? "Hotovo vše" : "Upravit vše"}
-        </button>
 
-        <button
+      <button
           className="button"
           onClick={() =>
             dispatch({
@@ -219,6 +212,14 @@ export const DailyMenuCards = ({ recipes = [] }) => {
           Automaticky vyplnit
         </button>
 
+        <button
+          className="button button--ghost"
+          onClick={() => setEditAll((v) => !v)}
+          title={editAll ? "Vypnout úpravy na všech kartách" : "Zapnout úpravy na všech kartách"}
+        >
+          {editAll ? "Hotovo vše" : "Upravit vše"}
+        </button>
+
       
         <button
           className="button button--danger"
@@ -226,6 +227,8 @@ export const DailyMenuCards = ({ recipes = [] }) => {
         >
           Vymazat plán
         </button>
+
+        
       </div>
 
       {/* GRID karet */}
