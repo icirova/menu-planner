@@ -90,7 +90,7 @@ export const RecipeForm = () => {
             name="name"
             required
             className="form__input"
-            defaultValue="Dýňová polévka"
+            defaultValue="Název receptu"
           />
         </div>
 
@@ -161,6 +161,7 @@ export const RecipeForm = () => {
           </fieldset>
         </div>
 
+        {/* Kalorie */}
         <div className="form__item">
           <label htmlFor="calories" className="form__label">Kalorie (kcal na 1 porci)</label>
           <input
@@ -168,7 +169,7 @@ export const RecipeForm = () => {
             id="calories"
             name="calories"
             className="form__input"
-            defaultValue="150"
+            defaultValue="0"
           />
         </div>
 

@@ -165,7 +165,7 @@ export const recipes = [
     title: "Řízek přírodní",
     servings: 4,
     tags: ["obědy", "večeře"],
-    photo_urls: ["/imgRecipe/rizek-hranolky.webp"],
+    photo_urls: ["/imgRecipe/rizek-prirodni.webp"],
     ingredients: [
       { amount: 600, unit: "g", item: "kuřecí nebo vepřové maso" },
       { amount: 1, unit: "lžíce", item: "olej" },
@@ -176,8 +176,6 @@ export const recipes = [
     calories: "200 - 300",
     workflow: "Osol a opeč na pánvi či v troubě."
   },
-
-  // ====== NOVÉ RECEPTY bez fotek ======
   {
     id: 10,
     title: "Ovesná kaše s ovocem",
@@ -583,6 +581,7 @@ export const recipes = [
     ingredients: [
       { amount: 800, unit: "g", item: "brambory" },
       { amount: 1, unit: "", item: "cibule" },
+      { amount: 1, unit: "", item: "paprika" },
       { amount: 1, unit: "lžíce", item: "mletá paprika" },
       { amount: 700, unit: "ml", item: "voda/vývar" }
     ],
@@ -596,7 +595,7 @@ export const recipes = [
     title: "Pečené brambory s tvarohem",
     servings: 4,
     tags: ["večeře"],
-    photo_urls: ["/imgRecipe/pečené-brambory-tvaroh.webp"],
+    photo_urls: ["/imgRecipe/brambory-tvaroh.webp"],
     ingredients: [
       { amount: 800, unit: "g", item: "brambory" },
       { amount: 250, unit: "g", item: "tvaroh" },
@@ -612,7 +611,7 @@ export const recipes = [
     title: "Tortilla s kuřetem a zeleninou",
     servings: 4,
     tags: ["obědy", "večeře"],
-    photo_urls: ["/imgRecipe/tortilla-kure.webp"],
+    photo_urls: ["/imgRecipe/tortilla.webp"],
     ingredients: [
       { amount: 4, unit: "ks", item: "pšeničné tortilly" },
       { amount: 400, unit: "g", item: "kuřecí maso" },
@@ -690,5 +689,166 @@ export const recipes = [
     suitableFor: [],
     calories: 380,
     workflow: "Smíchej suroviny, nalij do formy a peč cca 45–55 min na 170 °C."
+  },
+  {
+    id: 41,
+    title: "Muffiny s borůvkami",
+    servings: 12,
+    tags: ["moučníky", "svačiny", "snídaně"],
+    photo_urls: ["/imgRecipe/muffiny_boruvky.webp"],
+    ingredients: [
+      { amount: 250, unit: "g", item: "hladká mouka" },
+      { amount: 120, unit: "g", item: "cukr" },
+      { amount: 2, unit: "ks", item: "vejce" },
+      { amount: 150, unit: "ml", item: "mléko" },
+      { amount: 80, unit: "ml", item: "olej" },
+      { amount: 1, unit: "balení", item: "prášek do pečiva" },
+      { amount: 150, unit: "g", item: "borůvky" }
+    ],
+    allergens: ["lepek", "vejce", "mléko"],
+    suitableFor: [],
+    calories: 210,
+    workflow: "Smíchej suroviny, přidej borůvky, nalij do formiček a peč cca 20–25 min na 180 °C."
+  },
+  
+  {
+    id: 42,
+    title: "Celozrnné sušenky",
+    servings: 20,
+    tags: ["moučníky", "svačiny"],
+    photo_urls: ["/imgRecipe/susenky_celozrnne.webp"],
+    ingredients: [
+      { amount: 200, unit: "g", item: "celozrnná mouka" },
+      { amount: 100, unit: "g", item: "máslo" },
+      { amount: 80, unit: "g", item: "hnědý cukr" },
+      { amount: 1, unit: "ks", item: "vejce" },
+      { amount: 1, unit: "lžička", item: "skořice" }
+    ],
+    allergens: ["lepek", "vejce", "mléko"],
+    suitableFor: [],
+    calories: 150,
+    workflow: "Vypracuj těsto, vyválej a vykrajuj sušenky. Peč cca 12–15 min na 180 °C."
+  },
+  
+  {
+    id: 43,
+    title: "Domácí granola",
+    servings: 8,
+    tags: ["snídaně", "svačiny"],
+    photo_urls: ["/imgRecipe/domaci_granola.webp"],
+    ingredients: [
+      { amount: 300, unit: "g", item: "ovesné vločky" },
+      { amount: 80, unit: "g", item: "med nebo javorový sirup" },
+      { amount: 50, unit: "ml", item: "rostlinný olej" },
+      { amount: 80, unit: "g", item: "vlašské ořechy" },
+      { amount: 50, unit: "g", item: "mandle" },
+      { amount: 50, unit: "g", item: "sušené ovoce (rozinky, brusinky…)" },
+      { amount: 1, unit: "lžička", item: "skořice" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: ["lepek", "ořechy"],
+    suitableFor: ["veganské", "bez mléka"],
+    calories: 380,
+    workflow: "Smíchej vločky, ořechy, skořici a sůl. Přidej med a olej, promíchej. Rozprostři na plech s pečicím papírem a peč cca 25–30 min na 160 °C, občas promíchej. Po vychladnutí vmíchej sušené ovoce."
+  },
+  {
+    id: 44,
+    title: "Obložený sendvič se šunkou a zeleninou",
+    servings: 2,
+    tags: ["svačiny", "snídaně", "večeře"],
+    photo_urls: ["/imgRecipe/sendvic_sunka.webp"],
+    ingredients: [
+      { amount: 4, unit: "plátky", item: "celozrnný chléb" },
+      { amount: 100, unit: "g", item: "šunka" },
+      { amount: 2, unit: "plátky", item: "sýr" },
+      { amount: 1, unit: "ks", item: "rajče" },
+      { amount: 1, unit: "ks", item: "okurka" },
+      { amount: 2, unit: "listy", item: "hlávkový salát" },
+      { amount: 1, unit: "lžíce", item: "máslo" },
+      { amount: 1, unit: "špetka", item: "pepř" }
+    ],
+    allergens: ["lepek", "mléko"],
+    suitableFor: [],
+    calories: 320,
+    workflow: "Plátky chleba potřete máslem, navrstvěte šunku, sýr, rajče, okurku a list salátu. Ochuť pepřem a přiklop druhým plátkem chleba. Podávej čerstvé nebo lehce zapečené."
+  },
+  
+  {
+    id: 45,
+    title: "Shiro miso s tofu a řasou nori",
+    servings: 2,
+    tags: ["polévky", "snídaně"],
+    photo_urls: ["/imgRecipe/shiro_miso.webp"],
+    ingredients: [
+      { amount: 800, unit: "ml", item: "voda" },
+      { amount: 40, unit: "g", item: "shiro miso pasta" },
+      { amount: 100, unit: "g", item: "bílé tofu" },
+      { amount: 1, unit: "plát", item: "řasa nori" },
+      { amount: 2, unit: "ks", item: "jarní cibulka" }
+    ],
+    allergens: ["sója"],
+    suitableFor: ["veganské", "bez mléka", "bez lepku"],
+    calories: 120,
+    workflow: "Vodu přiveď k varu, přidej na kostičky nakrájené tofu a krátce povař. Odstav z ohně, vmíchej shiro miso pastu a sojovou omáčku. Podávej ozdobené nakrájenou jarní cibulkou a kousky řasy nori."
+  },
+  
+  {
+    id: 46,
+    title: "Banánový chlebíček",
+    servings: 10,
+    tags: ["moučníky", "svačiny", "snídaně"],
+    photo_urls: ["/imgRecipe/bananovy_chlebicek.webp"],
+    ingredients: [
+      { amount: 3, unit: "ks", item: "zralé banány" },
+      { amount: 200, unit: "g", item: "hladká mouka" },
+      { amount: 100, unit: "g", item: "třtinový cukr" },
+      { amount: 2, unit: "ks", item: "vejce" },
+      { amount: 80, unit: "ml", item: "rostlinný olej" },
+      { amount: 1, unit: "balení", item: "prášek do pečiva" },
+      { amount: 1, unit: "lžička", item: "skořice" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: ["lepek", "vejce"],
+    suitableFor: [],
+    calories: 340,
+    workflow: "Rozmačkej banány, smíchej s vejci, olejem a cukrem. Vmíchej mouku s práškem do pečiva, skořicí a solí. Těsto nalij do formy a peč cca 50–60 min na 170 °C."
+  },
+  {
+    id: 47,
+    title: "Hovězí guláš",
+    servings: 4,
+    tags: ["obědy", "maso", "česká kuchyně"],
+    photo_urls: ["/imgRecipe/hovezi_gulas.webp"],
+    ingredients: [
+      { amount: 600, unit: "g", item: "hovězí kližka" },
+      { amount: 2, unit: "ks", item: "cibule" },
+      { amount: 3, unit: "stroužky", item: "česnek" },
+      { amount: 2, unit: "lžíce", item: "sádlo" },
+      { amount: 1, unit: "lžíce", item: "sladká paprika" },
+      { amount: 1, unit: "lžička", item: "kmín" },
+      { amount: 500, unit: "ml", item: "hovězí vývar" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "špetka", item: "pepř" }
+    ],
+    allergens: [],
+    suitableFor: ["bez lepku"],
+    calories: 450,
+    workflow: "Na sádle osmaž cibuli dozlatova, přidej česnek, papriku a kmín. Vmíchej maso, osmahni a podlij vývarem. Duste přikryté cca 90 minut, dokud není maso měkké. Podávej s houskovým knedlíkem nebo chlebem."
+  },
+  {
+    id: 48,
+    title: "Banánové mléko",
+    servings: 4,
+    tags: ["svačina"],
+    photo_urls: ["/imgRecipe/mleko_bananove.webp"],
+    ingredients: [
+      { amount: 4, unit: "ks", item: "banán" },
+      { amount: 400, unit: "ml", item: "mléko" },
+      { amount: 4, unit: "špetka", item: "skořice" },
+    ],
+    allergens: ["mléko"],
+    suitableFor: ["bez lepku"],
+    calories: 0,
+    workflow: "Rozmixuj banány s mlékem, nalij do sklenic a posyp špetkou skořice."
   }
 ];
