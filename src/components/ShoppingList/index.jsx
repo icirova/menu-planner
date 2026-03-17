@@ -38,7 +38,10 @@ export const ShoppingList = ({ value = "", onChange, forceEditing = false,should
   };
 
   const toggleEditing = () => setEditing((v) => !v);
-  const clearList = () => onChange("");
+  const clearList = () => {
+    if (!window.confirm("Opravdu chceš smazat celý nákupní seznam?")) return;
+    onChange("");
+  };
 
   // Po zapnutí editace: nastav základní výšku bez změny layoutu, případně fokus a posun
   useLayoutEffect(() => {

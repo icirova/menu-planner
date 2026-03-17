@@ -65,9 +65,17 @@ export const DailyMenuCard = ({
   };
 
   const clearDay = () => {
+    if (!window.confirm(`Opravdu chceš vymazat všechna jídla pro ${day}?`)) return;
     MEAL_KEYS.forEach(({ key }) =>
       dispatch({ type: "CLEAR_MEAL", dayIndex, mealKey: key })
     );
+  };
+
+  const clearSlot = (slotKey, label) => {
+    if (!window.confirm(`Opravdu chceš smazat položku „${label}“?`)) return;
+    dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: slotKey, value: "" });
+    setActiveIdx((s) => ({ ...s, [slotKey]: -1 }));
+    setHideSuggest((s) => ({ ...s, [slotKey]: true }));
   };
 
  
@@ -181,11 +189,7 @@ export const DailyMenuCard = ({
                       className="button button--icon slot__clear"
                       title="Smazat obsah"
                       aria-label={`Smazat ${label}`}
-                      onClick={() => {
-                        dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: key, value: "" });
-                        setActiveIdx((s) => ({ ...s, [key]: -1 }));
-                        setHideSuggest((s) => ({ ...s, [key]: true }));
-                      }}
+                      onClick={() => clearSlot(key, label)}
                     >
                       ✕
                     </button>

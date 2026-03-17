@@ -38,7 +38,10 @@ export const NotesCard = ({ value = "", onChange,forceEditing = false, shouldAut
   };
 
   const toggleEditing = () => setEditing((v) => !v);
-  const clearNotes = () => onChange("");
+  const clearNotes = () => {
+    if (!window.confirm("Opravdu chceš smazat všechny poznámky?")) return;
+    onChange("");
+  };
 
   // Po zapnutí editace: nastav základní výšku bez změny layoutu, případně fokus a posun
   useLayoutEffect(() => {

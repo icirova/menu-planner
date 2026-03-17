@@ -49,6 +49,7 @@ export const RecipeForm = () => {
   };
 
   const removePhotoAt = (index) => {
+    if (!window.confirm("Opravdu chceš odebrat tento obrázek?")) return;
     setPhotos((prev) => {
       const copy = [...prev];
       copy.splice(index, 1);

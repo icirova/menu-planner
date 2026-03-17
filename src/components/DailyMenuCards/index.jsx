@@ -170,6 +170,12 @@ export const DailyMenuCards = ({ recipes = [] }) => {
   const [kbdDrag, setKbdDrag] = useState(null);          // {fromDay, fromKey, value} | null
   const [liveMsg, setLiveMsg] = useState("");
   const announce = (msg) => setLiveMsg(msg);
+  const confirmResetWeek = () => {
+    if (!window.confirm("Opravdu chceš vymazat celý plán, poznámky i nákupní seznam?")) {
+      return;
+    }
+    dispatch({ type: "RESET_WEEK" });
+  };
 
   // init from localStorage (s migrací)
   useEffect(() => {
@@ -223,7 +229,7 @@ export const DailyMenuCards = ({ recipes = [] }) => {
       
         <button
           className="button button--danger"
-          onClick={() => dispatch({ type: "RESET_WEEK" })}
+          onClick={confirmResetWeek}
         >
           Vymazat plán
         </button>
