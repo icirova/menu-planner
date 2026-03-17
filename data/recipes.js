@@ -850,5 +850,30 @@ export const recipes = [
     suitableFor: ["bez lepku"],
     calories: 0,
     workflow: "Rozmixuj banány s mlékem, nalij do sklenic a posyp špetkou skořice."
+  },
+  {
+    id: 49,
+    title: "Boršč",
+    servings: 6,
+    tags: ["polévky", "obědy"],
+    photo_urls: ["/image/placeholder.png"],
+    ingredients: [
+      { amount: 300, unit: "g", item: "hovězí maso" },
+      { amount: 2, unit: "ks", item: "červená řepa" },
+      { amount: 300, unit: "g", item: "bílé zelí" },
+      { amount: 2, unit: "ks", item: "brambory" },
+      { amount: 1, unit: "ks", item: "mrkev" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 2, unit: "lžíce", item: "rajčatový protlak" },
+      { amount: 1.5, unit: "l", item: "hovězí vývar" },
+      { amount: 2, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "lžíce", item: "ocet nebo citronová šťáva" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "špetka", item: "pepř" }
+    ],
+    allergens: [],
+    suitableFor: ["bez mléka"],
+    calories: 320,
+    workflow: "Maso uvař ve vývaru téměř doměkka. Na oleji orestuj cibuli a mrkev, přidej řepu a rajčatový protlak. Do vývaru vlož brambory a zelí, po chvíli přidej orestovanou zeleninu a maso. Vař do změknutí, dochuť octem, solí a pepřem."
   }
 ];
