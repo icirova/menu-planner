@@ -2,16 +2,34 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "../Header";
 import { Footer } from "../Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { recipes as defaultRecipes } from "../../../data/recipes";
+
+const CUSTOM_RECIPES_STORAGE_KEY = "customRecipes";
 
 
 export const App = () => {
-  const [recipeList, setRecipeList] = useState(defaultRecipes);
+  const [customRecipes, setCustomRecipes] = useState(() => {
+    try {
+      const raw = localStorage.getItem(CUSTOM_RECIPES_STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const recipeList = [...defaultRecipes, ...customRecipes];
 
   const addRecipe = (newRecipe) => {
-    setRecipeList((prev) => [...prev, newRecipe]);
+    setCustomRecipes((prev) => [...prev, newRecipe]);
   };
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(CUSTOM_RECIPES_STORAGE_KEY, JSON.stringify(customRecipes));
+    } catch {}
+  }, [customRecipes]);
 
   return (
     <div className="container">

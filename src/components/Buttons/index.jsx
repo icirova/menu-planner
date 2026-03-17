@@ -3,9 +3,6 @@ import "./style.css"
 
 
 export const Buttons = ({handleTagSelection, selectedTags}) => {
-
-  console.log(selectedTags)
-  
   return <div className="buttons">
     <Button name={"Snídaně"} 
       handleTagSelection={() => handleTagSelection("snídaně")} 
