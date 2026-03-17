@@ -356,7 +356,7 @@ export const recipes = [
   },
   {
     id: 21,
-    title: "Caprese (rajče, mozzarella, bazalka)",
+    title: "Caprese",
     servings: 2,
     tags: ["svačiny", "večeře"],
     photo_urls: ["/imgRecipe/caprese.webp"],

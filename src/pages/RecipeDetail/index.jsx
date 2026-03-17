@@ -1,5 +1,5 @@
 import "./style.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { AllergenTags } from "../../components/AllergenTags/index";
 import { SuitabilityTags } from "../../components/SuitabilityTags/index";
@@ -11,8 +11,9 @@ import { resolveImageSrc } from "../../utils/resolveImageSrc";
 
 export const RecipeDetail = () => {
   const { id } = useParams();
-  const { recipeList } = useOutletContext();
-  const [recipeDetail, setRecipeDetail] = useState(null);
+  const navigate = useNavigate();
+  const { recipeList, deleteRecipe } = useOutletContext();
+  const recipeDetail = recipeList.find((recipe) => recipe.id === Number(id)) ?? null;
   const [desiredServings, setDesiredServings] = useState(4);
   // Lightbox hooky
   const [lightboxIndex, setLightboxIndex] = useState(null); // null = zavřeno
@@ -34,19 +35,15 @@ export const RecipeDetail = () => {
   }, [lightboxIndex, galleryLength]);
 
   useEffect(() => {
-    const foundRecipe = recipeList.find((r) => r.id === parseInt(id, 10));
-    if (foundRecipe) {
-      setRecipeDetail(foundRecipe);
-      setDesiredServings(foundRecipe.servings || 4);
-    } else {
-      console.warn("Recept nebyl nalezen.");
+    if (recipeDetail) {
+      setDesiredServings(recipeDetail.servings || 4);
     }
-  }, [id, recipeList]);
+  }, [recipeDetail]);
 
   if (!recipeDetail) {
     return (
       <div className="main">
-        <p>Načítání...</p>
+        <p>Recept nebyl nalezen.</p>
         <Link to="/recipes" className="menu__item">Zpět</Link>
       </div>
     );
@@ -60,10 +57,29 @@ export const RecipeDetail = () => {
   const closeLightbox = () => setLightboxIndex(null);
   const prev = () => setLightboxIndex((i) => (i === 0 ? gallery.length - 1 : i - 1));
   const next = () => setLightboxIndex((i) => (i === gallery.length - 1 ? 0 : i + 1));
+  const isCustomRecipe = recipeDetail.source === "custom";
+  const handleDelete = () => {
+    if (!window.confirm(`Opravdu chceš smazat recept „${recipeDetail.title}“?`)) return;
+    deleteRecipe(recipeDetail.id);
+    navigate("/recipes");
+  };
 
   return (
     <div className="main">
-      <h1 className="title">{recipeDetail.title}</h1>
+      <div className="recipe-detail__header">
+        <h1 className="title">{recipeDetail.title}</h1>
+        {isCustomRecipe && <span className="recipe-detail__badge">Vlastní recept</span>}
+      </div>
+      {isCustomRecipe && (
+        <div className="card__toolbar recipe-detail__actions">
+          <Link to={`/recipe-form/${recipeDetail.id}/edit`} className="button button--ghost recipe-detail__action-link">
+            Upravit recept
+          </Link>
+          <button type="button" className="button button--danger" onClick={handleDelete}>
+            Smazat recept
+          </button>
+        </div>
+      )}
 
       <div className="recipe-detail">
         <div className="recipe-detail__img">

@@ -52,6 +52,7 @@ export const Recipes = () => {
             id={r.id}
             title={r.title}
             photo_urls={r.photo_urls}
+            source={r.source}
             servings={r.servings}
             calories={r.calories}
           />

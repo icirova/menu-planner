@@ -4,6 +4,7 @@ import { DailyMenuCard } from "../DailyMenuCard";
 import { ShoppingList } from "../ShoppingList";
 import { NotesCard } from "../NotesCard";
 import { SLOT_TAGS } from "../../constants/slotTags";
+import { MEAL_KEYS } from "../../constants/mealKeys";
 
 
 /* ====== util funkce pro auto-fill ====== */
@@ -44,6 +45,7 @@ const autoFillWeekByTags = ({
     for (const key of slotKeys) {
       const val = day[key];
       if (!val) continue;
+      if (typeof val === "number") used.add(val);
       if (typeof val === "string" && titleToId.has(val)) used.add(titleToId.get(val));
     }
   }
@@ -61,7 +63,7 @@ const autoFillWeekByTags = ({
 
       const recipe = pickForSlot(recipes, slotTagsMap[slotKey], used);
       if (recipe) {
-        day[slotKey] = recipe.title; // ukládáme NÁZEV (sedí k tvému stavu)
+        day[slotKey] = recipe.id;
       }
     }
     return day;
@@ -84,18 +86,41 @@ const makeEmptyWeek = () => DAYS.map(() => ({ ...DEFAULT_DAY }));
 
 const initialState = { week: makeEmptyWeek(), notes: "", shopping: "" };
 
+const migrateWeekToRecipeIds = (week, recipes) => {
+  if (!Array.isArray(week)) return makeEmptyWeek();
+
+  const titleToId = new Map(recipes.map((recipe) => [recipe.title, recipe.id]));
+  const validRecipeIds = new Set(recipes.map((recipe) => recipe.id));
+
+  return week.map((day) => {
+    const migratedDay = { ...DEFAULT_DAY, ...(day || {}) };
+
+    for (const { key } of MEAL_KEYS) {
+      const value = migratedDay[key];
+      if (typeof value === "number" && !validRecipeIds.has(value)) {
+        migratedDay[key] = "";
+      }
+      if (typeof value === "string" && titleToId.has(value)) {
+        migratedDay[key] = titleToId.get(value);
+      }
+    }
+
+    return migratedDay;
+  });
+};
+
 function reducer(state, action) {
   switch (action.type) {
     case "INIT_FROM_STORAGE": {
-      const payload = action.payload;
+      const { payload, recipes } = action;
       // starý formát = čisté pole dnů
       if (Array.isArray(payload)) {
-        return { week: payload, notes: "", shopping: "" };
+        return { week: migrateWeekToRecipeIds(payload, recipes), notes: "", shopping: "" };
       }
       // nový formát = {week, notes?, shopping?}
       if (payload && Array.isArray(payload.week)) {
         return {
-          week: payload.week,
+          week: migrateWeekToRecipeIds(payload.week, recipes),
           notes: payload.notes ?? "",
           shopping: payload.shopping ?? "",
         };
@@ -183,10 +208,10 @@ export const DailyMenuCards = ({ recipes = [] }) => {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
-        dispatch({ type: "INIT_FROM_STORAGE", payload: parsed });
+        dispatch({ type: "INIT_FROM_STORAGE", payload: parsed, recipes });
       }
     } catch {}
-  }, []);
+  }, [recipes]);
 
   // persist to localStorage (ukládáme {week, notes, shopping})
   useEffect(() => {

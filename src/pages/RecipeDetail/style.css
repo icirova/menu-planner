@@ -4,6 +4,33 @@
     margin-bottom: 2rem;
 }
 
+.recipe-detail__header {
+  position: relative;
+}
+
+.recipe-detail__badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: #24543e;
+  color: #f7fbf8;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.recipe-detail__actions {
+  margin-bottom: 1.5rem;
+}
+
+.recipe-detail__action-link {
+  text-decoration: none;
+}
+
 .recipe-detail__img {
     height: 300px;
     overflow: hidden;

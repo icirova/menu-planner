@@ -59,6 +59,23 @@
     transform: scale(1.05);
 }
 
+.recipe__badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(36, 84, 62, 0.92);
+    color: #f7fbf8;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
 /* NADPIS */
 .recipe__title {
     text-align: center;

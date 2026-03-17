@@ -49,6 +49,13 @@ export const DailyMenuCard = ({
     }
   }, [isEditing]);
 
+  const getSlotLabel = (slotValue) => {
+    if (typeof slotValue === "number") {
+      return recipes.find((recipe) => recipe.id === slotValue)?.title ?? "";
+    }
+    return slotValue ?? "";
+  };
+
   const onDragStart = (e, mealKey) => {
     const value = model[mealKey];
     if (!value) return e.preventDefault();
@@ -119,11 +126,12 @@ export const DailyMenuCard = ({
           const carrying = !!kbdDrag;
           const isSource =
             carrying && kbdDrag.fromDay === dayIndex && kbdDrag.fromKey === key;
+          const slotLabel = getSlotLabel(model[key]);
 
           // našeptávač – výpočet uvnitř map (key existuje)
           const suggestions = hideSuggest[key]
             ? []
-            : getSuggestions(recipes, model[key]);
+            : getSuggestions(recipes, slotLabel);
           const hasSuggest = suggestions.length > 0;
           const active = Math.max(-1, Math.min(activeIdx[key] ?? -1, suggestions.length - 1));
 
@@ -136,7 +144,7 @@ export const DailyMenuCard = ({
                   <textarea
                     className="card__slot card__slot--input card__slot--withClear"
                     placeholder="Napiš…"
-                    value={model[key]}
+                    value={slotLabel}
                     onChange={(e) => {
                       dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: key, value: e.target.value });
                       autoGrow(e.currentTarget);
@@ -165,7 +173,7 @@ export const DailyMenuCard = ({
                       if (e.key === KEYS.ENTER && !e.shiftKey) {
                         e.preventDefault();
                         if (hasSuggest && active >= 0) {
-                          pickSuggestion(key, getTitle(suggestions[active]));
+                          pickSuggestion(key, suggestions[active].id);
                         } else if (!forceEditing) {
                           setEditing(false);
                         }
@@ -216,8 +224,8 @@ export const DailyMenuCard = ({
                   aria-describedby={hintId}
                   aria-label={
                     carrying
-                      ? `${label}: ${model[key] || "prázdné"}. Cíl přesunu — stiskni mezerník pro položení, Esc zruší.`
-                      : `${label}: ${model[key] ? model[key] : "prázdné"}. Enter: upravit.`
+                      ? `${label}: ${slotLabel || "prázdné"}. Cíl přesunu — stiskni mezerník pro položení, Esc zruší.`
+                      : `${label}: ${slotLabel ? slotLabel : "prázdné"}. Enter: upravit.`
                   }
                   draggable={!!model[key]}
                   onDragStart={(e) => onDragStart(e, key)}
@@ -244,7 +252,7 @@ export const DailyMenuCard = ({
                       if (!kbdDrag) {
                         if (!model[key]) { announce && announce("Slot je prázdný, není co přesouvat."); return; }
                         setKbdDrag({ fromDay: dayIndex, fromKey: key, value: model[key] });
-                        announce && announce(`Zvednuto: ${model[key]} z ${day} – ${label}. Přejdi na cílový slot a stiskni mezerník.`);
+                        announce && announce(`Zvednuto: ${slotLabel} z ${day} – ${label}. Přejdi na cílový slot a stiskni mezerník.`);
                         return;
                       }
                       dispatch({ type: "MOVE_MEAL", fromDay: kbdDrag.fromDay, fromKey: kbdDrag.fromKey, toDay: dayIndex, toKey: key });
@@ -255,7 +263,7 @@ export const DailyMenuCard = ({
                   }}
                   title={model[key] ? "Přetáhni na jiný slot/den" : "Sem můžeš přetáhnout jídlo"}
                 >
-                  {model[key] || ""}
+                  {slotLabel}
                 </p>
               )}
 

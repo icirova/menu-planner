@@ -1,7 +1,7 @@
 import "./style.css";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { IngredientInputs } from "../../components/IngredientInputs/index";
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const TAG_OPTIONS = [
   { label: "Snídaně", value: "snídaně" },
@@ -13,9 +13,20 @@ const TAG_OPTIONS = [
 ];
 
 export const RecipeForm = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const { addRecipe } = useOutletContext();
+  const { recipeList, addRecipe, updateRecipe } = useOutletContext();
+  const recipeToEdit = id ? recipeList.find((recipe) => recipe.id === Number(id)) : null;
+  const isEditMode = Boolean(id);
+  const isEditableRecipe = !isEditMode || recipeToEdit?.source === "custom";
 
+  const [name, setName] = useState("Název receptu");
+  const [servings, setServings] = useState("4");
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedSuitableFor, setSelectedSuitableFor] = useState([]);
+  const [selectedAllergens, setSelectedAllergens] = useState([]);
+  const [calories, setCalories] = useState("0");
+  const [method, setMethod] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [photos, setPhotos] = useState([]); // { url: string, name: string }[]
 
@@ -48,6 +59,46 @@ export const RecipeForm = () => {
     e.target.value = "";
   };
 
+  useEffect(() => {
+    if (!isEditMode) {
+      setName("Název receptu");
+      setServings("4");
+      setSelectedTags([]);
+      setSelectedSuitableFor([]);
+      setSelectedAllergens([]);
+      setCalories("0");
+      setMethod("");
+      setIngredients([]);
+      setPhotos([]);
+      return;
+    }
+
+    if (!recipeToEdit || recipeToEdit.source !== "custom") return;
+
+    setName(recipeToEdit.title ?? "");
+    setServings(String(recipeToEdit.servings ?? 4));
+    setSelectedTags(recipeToEdit.tags ?? []);
+    setSelectedSuitableFor(recipeToEdit.suitableFor ?? []);
+    setSelectedAllergens(recipeToEdit.allergens ?? []);
+    setCalories(String(recipeToEdit.calories ?? 0));
+    setMethod(recipeToEdit.workflow ?? "");
+    setIngredients(recipeToEdit.ingredients ?? []);
+    setPhotos(
+      (recipeToEdit.photo_urls ?? []).map((url, index) => ({
+        url,
+        name: `obrazek-${index + 1}`,
+      })),
+    );
+  }, [isEditMode, recipeToEdit]);
+
+  const toggleSelection = (value, setter) => {
+    setter((prev) =>
+      prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value],
+    );
+  };
+
   const removePhotoAt = (index) => {
     if (!window.confirm("Opravdu chceš odebrat tento obrázek?")) return;
     setPhotos((prev) => {
@@ -59,32 +110,43 @@ export const RecipeForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-
-    const tags = formData.getAll("tags");
-    const suitableFor = formData.getAll("suitableFor");
-    const allergens = formData.getAll("allergens");
 
     const newRecipe = {
-      id: Date.now(),
-      title: formData.get("name"),
-      servings: Number(formData.get("servings")),
-      tags,
+      id: recipeToEdit?.id ?? Date.now(),
+      title: name.trim(),
+      servings: Number(servings),
+      tags: selectedTags,
       photo_urls: photos.map((p) => p.url), // první = cover
       ingredients: ingredients.filter((i) => i.item.trim() !== ""),
-      suitableFor,
-      calories: Number(formData.get("calories")),
-      workflow: String(formData.get("method") || "").trim(),
-      allergens,
+      suitableFor: selectedSuitableFor,
+      calories: Number(calories),
+      workflow: method.trim(),
+      allergens: selectedAllergens,
     };
+
+    if (isEditMode) {
+      updateRecipe(newRecipe);
+      navigate(`/recipe-detail/${newRecipe.id}`);
+      return;
+    }
 
     addRecipe(newRecipe);
     navigate("/recipes");
   };
 
+  if (isEditMode && !isEditableRecipe) {
+    return (
+      <div className="main">
+        <h1 className="title">Úprava receptu</h1>
+        <p>Tento recept nelze upravovat, protože je součástí vestavěného katalogu.</p>
+        <Link to="/recipes" className="menu__item button">Zpět</Link>
+      </div>
+    );
+  }
+
   return (
     <div className="main">
-      <h1 className="title">Nový recept</h1>
+      <h1 className="title">{isEditMode ? "Upravit recept" : "Nový recept"}</h1>
       <img className="form__img" src="./form.webp" alt="" />
 
       <form id="form" className="form" onSubmit={handleSubmit}>
@@ -96,7 +158,8 @@ export const RecipeForm = () => {
             name="name"
             required
             className="form__input"
-            defaultValue="Název receptu"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
 
@@ -107,7 +170,8 @@ export const RecipeForm = () => {
             id="servings"
             name="servings"
             className="form__input"
-            defaultValue="4"
+            value={servings}
+            onChange={(e) => setServings(e.target.value)}
           />
         </div>
 
@@ -123,6 +187,8 @@ export const RecipeForm = () => {
                     name="tags"
                     value={tag.value}
                     className="form__checkbox"
+                    checked={selectedTags.includes(tag.value)}
+                    onChange={() => toggleSelection(tag.value, setSelectedTags)}
                   />
                   {tag.label}
                 </label>
@@ -137,15 +203,36 @@ export const RecipeForm = () => {
             <legend className="form__label">Vhodné pro</legend>
             <div className="form__checkbox-group">
               <label className="form__checkbox-label">
-                <input type="checkbox" name="suitableFor" value="veganské" className="form__checkbox" />
+                <input
+                  type="checkbox"
+                  name="suitableFor"
+                  value="veganské"
+                  className="form__checkbox"
+                  checked={selectedSuitableFor.includes("veganské")}
+                  onChange={() => toggleSelection("veganské", setSelectedSuitableFor)}
+                />
                 Veganské
               </label>
               <label className="form__checkbox-label">
-                <input type="checkbox" name="suitableFor" value="bez lepku" className="form__checkbox" />
+                <input
+                  type="checkbox"
+                  name="suitableFor"
+                  value="bez lepku"
+                  className="form__checkbox"
+                  checked={selectedSuitableFor.includes("bez lepku")}
+                  onChange={() => toggleSelection("bez lepku", setSelectedSuitableFor)}
+                />
                 Bez lepku
               </label>
               <label className="form__checkbox-label">
-                <input type="checkbox" name="suitableFor" value="bez mléka" className="form__checkbox" />
+                <input
+                  type="checkbox"
+                  name="suitableFor"
+                  value="bez mléka"
+                  className="form__checkbox"
+                  checked={selectedSuitableFor.includes("bez mléka")}
+                  onChange={() => toggleSelection("bez mléka", setSelectedSuitableFor)}
+                />
                 Bez mléka
               </label>
             </div>
@@ -159,7 +246,14 @@ export const RecipeForm = () => {
             <div className="form__checkbox-group">
               {["lepek","korýši","vejce","ryby","arašídy","sója","mléko","ořechy","celer","hořčice","sezam"].map((a) => (
                 <label key={a} className="form__checkbox-label">
-                  <input type="checkbox" name="allergens" value={a} className="form__checkbox" />
+                  <input
+                    type="checkbox"
+                    name="allergens"
+                    value={a}
+                    className="form__checkbox"
+                    checked={selectedAllergens.includes(a)}
+                    onChange={() => toggleSelection(a, setSelectedAllergens)}
+                  />
                   {a.charAt(0).toUpperCase() + a.slice(1)}
                 </label>
               ))}
@@ -175,7 +269,8 @@ export const RecipeForm = () => {
             id="calories"
             name="calories"
             className="form__input"
-            defaultValue="0"
+            value={calories}
+            onChange={(e) => setCalories(e.target.value)}
           />
         </div>
 
@@ -187,6 +282,8 @@ export const RecipeForm = () => {
             className="form__input form__textarea"
             placeholder="Popiš postup přípravy"
             required
+            value={method}
+            onChange={(e) => setMethod(e.target.value)}
           />
         </div>
 
@@ -260,7 +357,9 @@ export const RecipeForm = () => {
         </div>
 
         <div className="form__button--div">
-          <button type="submit" className="button button--new-recipe">Vytvořit</button>
+          <button type="submit" className="button button--new-recipe">
+            {isEditMode ? "Uložit změny" : "Vytvořit"}
+          </button>
         </div>
       </form>
     </div>
