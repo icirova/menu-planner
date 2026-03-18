@@ -1,5 +1,6 @@
 import "./style.css";
 import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { CheckboxGroup } from "../../components/CheckboxGroup";
 import { IngredientInputs } from "../../components/IngredientInputs/index";
 import {
   ALLERGEN_OPTIONS,
@@ -73,71 +74,29 @@ export const RecipeForm = () => {
           />
         </div>
 
-        {/* Tagy */}
-        <div className="form__item">
-          <fieldset className="form__fieldset">
-            <legend className="form__label">Tagy</legend>
-            <div className="form__checkbox-group">
-              {TAG_OPTIONS.map((tag) => (
-                <label key={tag.value} className="form__checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="tags"
-                    value={tag.value}
-                    className="form__checkbox"
-                    checked={form.selectedTags.includes(tag.value)}
-                    onChange={() => toggleSelection("selectedTags", tag.value)}
-                  />
-                  {tag.label}
-                </label>
-              ))}
-            </div>
-          </fieldset>
-        </div>
+        <CheckboxGroup
+          legend="Tagy"
+          name="tags"
+          options={TAG_OPTIONS}
+          selectedValues={form.selectedTags}
+          onToggle={(value) => toggleSelection("selectedTags", value)}
+        />
 
-        {/* Vhodné pro */}
-        <div className="form__item">
-          <fieldset className="form__fieldset">
-            <legend className="form__label">Vhodné pro</legend>
-            <div className="form__checkbox-group">
-              {SUITABILITY_OPTIONS.map((option) => (
-                <label key={option.value} className="form__checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="suitableFor"
-                    value={option.value}
-                    className="form__checkbox"
-                    checked={form.selectedSuitableFor.includes(option.value)}
-                    onChange={() => toggleSelection("selectedSuitableFor", option.value)}
-                  />
-                  {option.label}
-                </label>
-              ))}
-            </div>
-          </fieldset>
-        </div>
+        <CheckboxGroup
+          legend="Vhodné pro"
+          name="suitableFor"
+          options={SUITABILITY_OPTIONS}
+          selectedValues={form.selectedSuitableFor}
+          onToggle={(value) => toggleSelection("selectedSuitableFor", value)}
+        />
 
-        {/* Alergeny */}
-        <div className="form__item">
-          <fieldset className="form__fieldset">
-            <legend className="form__label">Alergeny</legend>
-            <div className="form__checkbox-group">
-              {ALLERGEN_OPTIONS.map((allergen) => (
-                <label key={allergen.value} className="form__checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="allergens"
-                    value={allergen.value}
-                    className="form__checkbox"
-                    checked={form.selectedAllergens.includes(allergen.value)}
-                    onChange={() => toggleSelection("selectedAllergens", allergen.value)}
-                  />
-                  {allergen.label}
-                </label>
-              ))}
-            </div>
-          </fieldset>
-        </div>
+        <CheckboxGroup
+          legend="Alergeny"
+          name="allergens"
+          options={ALLERGEN_OPTIONS}
+          selectedValues={form.selectedAllergens}
+          onToggle={(value) => toggleSelection("selectedAllergens", value)}
+        />
 
         {/* Kalorie */}
         <div className="form__item">
