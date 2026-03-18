@@ -1,12 +1,12 @@
 import "./style.css";
 import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { IngredientInputs } from "../../components/IngredientInputs/index";
-import { useEffect, useRef, useState } from "react";
 import {
   ALLERGEN_OPTIONS,
   SUITABILITY_OPTIONS,
   TAG_OPTIONS,
 } from "../../constants/recipeMetadata";
+import { useRecipeForm } from "../../hooks/useRecipeForm";
 
 export const RecipeForm = () => {
   const { id } = useParams();
@@ -15,120 +15,22 @@ export const RecipeForm = () => {
   const recipeToEdit = id ? recipeList.find((recipe) => recipe.id === Number(id)) : null;
   const isEditMode = Boolean(id);
   const isEditableRecipe = !isEditMode || recipeToEdit?.source === "custom";
-
-  const [name, setName] = useState("Název receptu");
-  const [servings, setServings] = useState("4");
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [selectedSuitableFor, setSelectedSuitableFor] = useState([]);
-  const [selectedAllergens, setSelectedAllergens] = useState([]);
-  const [calories, setCalories] = useState("0");
-  const [method, setMethod] = useState("");
-  const [ingredients, setIngredients] = useState([]);
-  const [photos, setPhotos] = useState([]); // { url: string, name: string }[]
-
-  const fileInputRef = useRef(null);
-
-  const readFileAsDataUrl = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = () => reject(reader.error);
-      reader.readAsDataURL(file);
-    });
-
-  const handlePhotosChange = async (e) => {
-    const files = Array.from(e.target.files || []);
-    if (files.length === 0) return;
-
-    try {
-      const newItems = await Promise.all(
-        files.map(async (file) => ({
-          url: await readFileAsDataUrl(file),
-          name: file.name,
-        })),
-      );
-      setPhotos((prev) => [...prev, ...newItems]);
-    } catch (error) {
-      console.error("Nepodařilo se načíst obrázek.", error);
-    }
-
-    e.target.value = "";
-  };
-
-  useEffect(() => {
-    if (!isEditMode) {
-      setName("Název receptu");
-      setServings("4");
-      setSelectedTags([]);
-      setSelectedSuitableFor([]);
-      setSelectedAllergens([]);
-      setCalories("0");
-      setMethod("");
-      setIngredients([]);
-      setPhotos([]);
-      return;
-    }
-
-    if (!recipeToEdit || recipeToEdit.source !== "custom") return;
-
-    setName(recipeToEdit.title ?? "");
-    setServings(String(recipeToEdit.servings ?? 4));
-    setSelectedTags(recipeToEdit.tags ?? []);
-    setSelectedSuitableFor(recipeToEdit.suitableFor ?? []);
-    setSelectedAllergens(recipeToEdit.allergens ?? []);
-    setCalories(String(recipeToEdit.calories ?? 0));
-    setMethod(recipeToEdit.workflow ?? "");
-    setIngredients(recipeToEdit.ingredients ?? []);
-    setPhotos(
-      (recipeToEdit.photo_urls ?? []).map((url, index) => ({
-        url,
-        name: `obrazek-${index + 1}`,
-      })),
-    );
-  }, [isEditMode, recipeToEdit]);
-
-  const toggleSelection = (value, setter) => {
-    setter((prev) =>
-      prev.includes(value)
-        ? prev.filter((item) => item !== value)
-        : [...prev, value],
-    );
-  };
-
-  const removePhotoAt = (index) => {
-    if (!window.confirm("Opravdu chceš odebrat tento obrázek?")) return;
-    setPhotos((prev) => {
-      const copy = [...prev];
-      copy.splice(index, 1);
-      return copy;
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const newRecipe = {
-      id: recipeToEdit?.id ?? Date.now(),
-      title: name.trim(),
-      servings: Number(servings),
-      tags: selectedTags,
-      photo_urls: photos.map((p) => p.url), // první = cover
-      ingredients: ingredients.filter((i) => i.item.trim() !== ""),
-      suitableFor: selectedSuitableFor,
-      calories: Number(calories),
-      workflow: method.trim(),
-      allergens: selectedAllergens,
-    };
-
-    if (isEditMode) {
-      updateRecipe(newRecipe);
-      navigate(`/recipe-detail/${newRecipe.id}`);
-      return;
-    }
-
-    addRecipe(newRecipe);
-    navigate("/recipes");
-  };
+  const {
+    fileInputRef,
+    form,
+    setField,
+    toggleSelection,
+    setIngredients,
+    handlePhotosChange,
+    removePhotoAt,
+    handleSubmit,
+  } = useRecipeForm({
+    recipeToEdit,
+    isEditMode,
+    addRecipe,
+    updateRecipe,
+    navigate,
+  });
 
   if (isEditMode && !isEditableRecipe) {
     return (
@@ -154,8 +56,8 @@ export const RecipeForm = () => {
             name="name"
             required
             className="form__input"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={form.name}
+            onChange={(e) => setField("name", e.target.value)}
           />
         </div>
 
@@ -166,8 +68,8 @@ export const RecipeForm = () => {
             id="servings"
             name="servings"
             className="form__input"
-            value={servings}
-            onChange={(e) => setServings(e.target.value)}
+            value={form.servings}
+            onChange={(e) => setField("servings", e.target.value)}
           />
         </div>
 
@@ -183,8 +85,8 @@ export const RecipeForm = () => {
                     name="tags"
                     value={tag.value}
                     className="form__checkbox"
-                    checked={selectedTags.includes(tag.value)}
-                    onChange={() => toggleSelection(tag.value, setSelectedTags)}
+                    checked={form.selectedTags.includes(tag.value)}
+                    onChange={() => toggleSelection("selectedTags", tag.value)}
                   />
                   {tag.label}
                 </label>
@@ -205,8 +107,8 @@ export const RecipeForm = () => {
                     name="suitableFor"
                     value={option.value}
                     className="form__checkbox"
-                    checked={selectedSuitableFor.includes(option.value)}
-                    onChange={() => toggleSelection(option.value, setSelectedSuitableFor)}
+                    checked={form.selectedSuitableFor.includes(option.value)}
+                    onChange={() => toggleSelection("selectedSuitableFor", option.value)}
                   />
                   {option.label}
                 </label>
@@ -227,8 +129,8 @@ export const RecipeForm = () => {
                     name="allergens"
                     value={allergen.value}
                     className="form__checkbox"
-                    checked={selectedAllergens.includes(allergen.value)}
-                    onChange={() => toggleSelection(allergen.value, setSelectedAllergens)}
+                    checked={form.selectedAllergens.includes(allergen.value)}
+                    onChange={() => toggleSelection("selectedAllergens", allergen.value)}
                   />
                   {allergen.label}
                 </label>
@@ -245,8 +147,8 @@ export const RecipeForm = () => {
             id="calories"
             name="calories"
             className="form__input"
-            value={calories}
-            onChange={(e) => setCalories(e.target.value)}
+            value={form.calories}
+            onChange={(e) => setField("calories", e.target.value)}
           />
         </div>
 
@@ -258,12 +160,12 @@ export const RecipeForm = () => {
             className="form__input form__textarea"
             placeholder="Popiš postup přípravy"
             required
-            value={method}
-            onChange={(e) => setMethod(e.target.value)}
+            value={form.method}
+            onChange={(e) => setField("method", e.target.value)}
           />
         </div>
 
-        <IngredientInputs ingredients={ingredients} setIngredients={setIngredients} />
+        <IngredientInputs ingredients={form.ingredients} setIngredients={setIngredients} />
 
         {/* Upload fotek */}
         <div className="form__item">
@@ -291,9 +193,9 @@ export const RecipeForm = () => {
             +
           </button>
 
-          {photos.length > 0 ? (
+          {form.photos.length > 0 ? (
             <div className="form__filenames" aria-live="polite">
-              {photos.map((p, i) => (
+              {form.photos.map((p, i) => (
                 <div key={`${p.name}-${i}`} className="form__filename">
                   {i === 0 ? "Obálka: " : ""}{p.name}
                 </div>
@@ -305,9 +207,9 @@ export const RecipeForm = () => {
             </p>
           )}
 
-          {photos.length > 0 && (
+          {form.photos.length > 0 && (
             <div className="form__previews">
-              {photos.map((p, i) => (
+              {form.photos.map((p, i) => (
                 <div key={`${p.url}-${i}`} className="form__preview-wrap">
                   <img
                     src={p.url}
