@@ -1,14 +1,12 @@
 import "./style.css";
 import { useState, useEffect } from "react";
-import { KEYS } from "../../constants/keys";
 import { MEAL_KEYS } from "../../constants/mealKeys";
 import { DEFAULT_DAY } from "../../constants/defaultDay";
-import { getTitle } from "../../utils/getTitle";
 import { getSuggestions } from "../../utils/getSuggestions";
-import { autoGrow } from "../../utils/autoGrow";
 import { CardToolbar } from "../CardToolbar";
 import { CardHeader } from "../CardHeader";
-import { SuggestList } from "../SuggestList";
+import { MealSlotEditor } from "../MealSlotEditor";
+import { MealSlotView } from "../MealSlotView";
 
 export const DailyMenuCard = ({
   day,
@@ -140,131 +138,51 @@ export const DailyMenuCard = ({
               <p className="card__subtitle">{label}:</p>
 
               {isEditing ? (
-                <div className="slot">
-                  <textarea
-                    className="card__slot card__slot--input card__slot--withClear"
-                    placeholder="Napiš…"
-                    value={slotLabel}
-                    onChange={(e) => {
-                      dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: key, value: e.target.value });
-                      autoGrow(e.currentTarget);
-                      setActiveIdx((s) => ({ ...s, [key]: -1 }));
-                      // Zobraz našeptávače pouze když uživatel píše a má alespoň 2 znaky
-                      if (e.target.value.trim().length >= 2) {
-                        setHideSuggest((s) => ({ ...s, [key]: false }));
-                      } else {
-                        setHideSuggest((s) => ({ ...s, [key]: true }));
-                      }
-                    }}
-                    ref={autoGrow}
-                    onInput={(e) => autoGrow(e.currentTarget)}
-                    onFocus={(e) => autoGrow(e.currentTarget)}
-                    rows={1}
-                    autoComplete="off"
-                    autoFocus={i === 0 && shouldAutoFocus}
-                    aria-controls={hasSuggest ? listId : undefined}
-                    aria-activedescendant={hasSuggest && active >= 0 ? optId(active) : undefined}
-                    onKeyDown={(e) => {
-                      if (e.key === KEYS.ESC) {
-                        e.currentTarget.blur();
-                        if (!forceEditing) setEditing(false);
-                        return;
-                      }
-                      if (e.key === KEYS.ENTER && !e.shiftKey) {
-                        e.preventDefault();
-                        if (hasSuggest && active >= 0) {
-                          pickSuggestion(key, suggestions[active].id);
-                        } else if (!forceEditing) {
-                          setEditing(false);
-                        }
-                        return;
-                      }
-                      if (hasSuggest && e.key === KEYS.DOWN) {
-                        e.preventDefault();
-                        moveActive(key, "down", listId);
-                        return;
-                      }
-                      if (hasSuggest && e.key === KEYS.UP) {
-                        e.preventDefault();
-                        moveActive(key, "up", listId);
-                        return;
-                      }
-                    }}
-                  />
-                  {!!model[key] && (
-                    <button
-                      type="button"
-                      className="button button--icon slot__clear"
-                      title="Smazat obsah"
-                      aria-label={`Smazat ${label}`}
-                      onClick={() => clearSlot(key, label)}
-                    >
-                      ✕
-                    </button>
-                  )}
-
-                  {hasSuggest && (
-                    <SuggestList
-                    id={listId}
-                    items={suggestions}
-                    activeIndex={active}
-                    getKey={(r, idx) => r.id ?? getTitle(r) ?? idx}
-                    getLabel={(r) => getTitle(r)}
-                    getItemId={(idx) => optId(idx)}
-                    onPick={(item) => pickSuggestion(key, getTitle(item))}
-                    onHover={(idx) => setActiveIdx((s) => ({ ...s, [key]: idx }))}
-                   />
-                  )}
-                </div>
-              ) : (
-                <p
-                  className={`card__slot ${isSource ? "is-kbd-source" : ""}`}
-                  tabIndex={0}
-                  role="button"
-                  aria-describedby={hintId}
-                  aria-label={
-                    carrying
-                      ? `${label}: ${slotLabel || "prázdné"}. Cíl přesunu — stiskni mezerník pro položení, Esc zruší.`
-                      : `${label}: ${slotLabel ? slotLabel : "prázdné"}. Enter: upravit.`
-                  }
-                  draggable={!!model[key]}
-                  onDragStart={(e) => onDragStart(e, key)}
-                  onDragOver={(e) => e.preventDefault()}
-                  onDragEnter={(e) => e.currentTarget.classList.add("is-drop-target")}
-                  onDragLeave={(e) => e.currentTarget.classList.remove("is-drop-target")}
-                  onDrop={(e) => { e.currentTarget.classList.remove("is-drop-target"); onDropTo(e, key); }}
-                  onFocus={(e) => { if (kbdDrag) e.currentTarget.classList.add("is-drop-target"); }}
-                  onBlur={(e) => e.currentTarget.classList.remove("is-drop-target")}
-                  onKeyDown={(e) => {
-                    if (e.key === KEYS.ENTER) {
-                      e.preventDefault();
-                      if (!forceEditing) setEditing(true);
-                      return;
-                    }
-                    if (e.key === KEYS.ESC && kbdDrag) {
-                      setKbdDrag(null);
-                      announce && announce("Přesun zrušen.");
-                      e.currentTarget.classList.remove("is-drop-target");
-                      return;
-                    }
-                    if (e.key === KEYS.SPACE || e.key === KEYS.SPACE_FALLBACK) {
-                      e.preventDefault();
-                      if (!kbdDrag) {
-                        if (!model[key]) { announce && announce("Slot je prázdný, není co přesouvat."); return; }
-                        setKbdDrag({ fromDay: dayIndex, fromKey: key, value: model[key] });
-                        announce && announce(`Zvednuto: ${slotLabel} z ${day} – ${label}. Přejdi na cílový slot a stiskni mezerník.`);
-                        return;
-                      }
-                      dispatch({ type: "MOVE_MEAL", fromDay: kbdDrag.fromDay, fromKey: kbdDrag.fromKey, toDay: dayIndex, toKey: key });
-                      setKbdDrag(null);
-                      announce && announce(`Přesunuto do ${day} – ${label}.`);
-                      e.currentTarget.classList.remove("is-drop-target");
+                <MealSlotEditor
+                  label={label}
+                  value={slotLabel}
+                  hasValue={!!model[key]}
+                  shouldAutoFocus={i === 0 && shouldAutoFocus}
+                  forceEditing={forceEditing}
+                  listId={listId}
+                  optId={optId}
+                  hasSuggest={hasSuggest}
+                  active={active}
+                  suggestions={suggestions}
+                  onChange={(e) => {
+                    dispatch({ type: "UPDATE_MEAL", dayIndex, mealKey: key, value: e.target.value });
+                    setActiveIdx((s) => ({ ...s, [key]: -1 }));
+                    if (e.target.value.trim().length >= 2) {
+                      setHideSuggest((s) => ({ ...s, [key]: false }));
+                    } else {
+                      setHideSuggest((s) => ({ ...s, [key]: true }));
                     }
                   }}
-                  title={model[key] ? "Přetáhni na jiný slot/den" : "Sem můžeš přetáhnout jídlo"}
-                >
-                  {slotLabel}
-                </p>
+                  onMoveActive={(dir) => moveActive(key, dir, listId)}
+                  onPickSuggestion={(value) => pickSuggestion(key, value)}
+                  onHoverSuggestion={(idx) => setActiveIdx((s) => ({ ...s, [key]: idx }))}
+                  onClear={() => clearSlot(key, label)}
+                  onDoneEditing={() => setEditing(false)}
+                />
+              ) : (
+                <MealSlotView
+                  label={label}
+                  day={day}
+                  dayIndex={dayIndex}
+                  mealKey={key}
+                  value={slotLabel}
+                  isSource={isSource}
+                  carrying={carrying}
+                  forceEditing={forceEditing}
+                  kbdDrag={kbdDrag}
+                  setKbdDrag={setKbdDrag}
+                  announce={announce}
+                  dispatch={dispatch}
+                  hintId={hintId}
+                  onDragStart={onDragStart}
+                  onDropTo={onDropTo}
+                  onStartEditing={() => setEditing(true)}
+                />
               )}
 
               <span id={hintId} className="sr-only">
