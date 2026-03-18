@@ -1,9 +1,12 @@
-import { Buttons } from "../../components/Buttons";
+import { FilterToggleGroup } from "../../components/FilterToggleGroup";
 import { RecipeCard } from "../../components/RecipeCard";
 import "./style.css";
 import { useOutletContext } from "react-router-dom";
 import { useState } from "react";
-import { SuitabilityButtons } from "../../components/SuitabilityButtons";
+import {
+  SUITABILITY_OPTIONS,
+  TAG_OPTIONS,
+} from "../../constants/recipeMetadata";
 
 export const Recipes = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -34,14 +37,17 @@ export const Recipes = () => {
     <div className="main">
       <h1 className="title">Recepty</h1>
 
-      <Buttons
-        handleTagSelection={handleTagSelection}
-        selectedTags={selectedTags}
+      <FilterToggleGroup
+        options={TAG_OPTIONS}
+        selectedValues={selectedTags}
+        onToggle={handleTagSelection}
       />
 
-      <SuitabilityButtons
-        handleSuitabilitySelection={handleSuitabilitySelection}
-        selectedSuitabilities={selectedSuitabilities}
+      <FilterToggleGroup
+        options={SUITABILITY_OPTIONS}
+        selectedValues={selectedSuitabilities}
+        onToggle={handleSuitabilitySelection}
+        className="buttons--suitability"
       />
 
       {/* Semanticky je to seznam karet */}
