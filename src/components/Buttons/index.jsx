@@ -1,34 +1,18 @@
-import { Button } from "../Button"
-import "./style.css"
+import { Button } from "../Button";
+import { TAG_OPTIONS } from "../../constants/recipeMetadata";
+import "./style.css";
 
-
-export const Buttons = ({handleTagSelection, selectedTags}) => {
-  return <div className="buttons">
-    <Button name={"Snídaně"} 
-      handleTagSelection={() => handleTagSelection("snídaně")} 
-      active={selectedTags && selectedTags.includes("snídaně")}
-    />
-
-    <Button name={"Svačiny"} 
-      handleTagSelection={() => handleTagSelection("svačiny")} 
-      active={selectedTags && selectedTags.includes("svačiny")}
-    />
-    <Button name={"Polévky"} 
-      handleTagSelection={handleTagSelection}
-      active={selectedTags && selectedTags.includes("polévky")}
-    />
-    <Button name={"Obědy"} 
-      handleTagSelection={handleTagSelection}
-      active={selectedTags && selectedTags.includes("obědy")}
-      />
-    <Button name={"Večeře"} 
-      handleTagSelection={handleTagSelection}
-      active={selectedTags && selectedTags.includes("večeře")}
-    />
-    <Button name={"Moučníky"} 
-      handleTagSelection={handleTagSelection}
-      active={selectedTags && selectedTags.includes("moučníky")}
-    />
-</div>
-  
-}
+export const Buttons = ({ handleTagSelection, selectedTags = [] }) => {
+  return (
+    <div className="buttons">
+      {TAG_OPTIONS.map((tag) => (
+        <Button
+          key={tag.value}
+          label={tag.label}
+          onClick={() => handleTagSelection(tag.value)}
+          active={selectedTags.includes(tag.value)}
+        />
+      ))}
+    </div>
+  );
+};

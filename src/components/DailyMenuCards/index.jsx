@@ -4,9 +4,9 @@ import { DailyMenuCard } from "../DailyMenuCard";
 import { ShoppingList } from "../ShoppingList";
 import { NotesCard } from "../NotesCard";
 import { initialMenuState, menuReducer } from "../../reducers/menuReducer";
+import { loadStoredMenuState, saveMenuState } from "../../storage/menuStorage";
 
 const DAYS = ["Pondělí","Úterý","Středa","Čtvrtek","Pátek","Sobota","Neděle"];
-const STORAGE_KEY = "weeklyMenu";
 
 export const DailyMenuCards = ({ recipes = [] }) => {
   const [state, dispatch] = useReducer(menuReducer, initialMenuState);
@@ -23,22 +23,17 @@ export const DailyMenuCards = ({ recipes = [] }) => {
     dispatch({ type: "RESET_WEEK" });
   };
 
-  // init from localStorage (s migrací)
+  // init ze storage (s migrací přes reducer)
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        dispatch({ type: "INIT_FROM_STORAGE", payload: parsed, recipes });
-      }
-    } catch {}
+    const storedState = loadStoredMenuState();
+    if (storedState) {
+      dispatch({ type: "INIT_FROM_STORAGE", payload: storedState, recipes });
+    }
   }, [recipes]);
 
-  // persist to localStorage (ukládáme {week, notes, shopping})
+  // persist menu state do storage
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch {}
+    saveMenuState(state);
   }, [state]);
 
   const images = [

@@ -2,15 +2,11 @@ import "./style.css";
 import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { IngredientInputs } from "../../components/IngredientInputs/index";
 import { useEffect, useRef, useState } from "react";
-
-const TAG_OPTIONS = [
-  { label: "Snídaně", value: "snídaně" },
-  { label: "Svačina", value: "svačiny" },
-  { label: "Polévky", value: "polévky" },
-  { label: "Oběd", value: "obědy" },
-  { label: "Večeře", value: "večeře" },
-  { label: "Moučníky", value: "moučníky" },
-];
+import {
+  ALLERGEN_OPTIONS,
+  SUITABILITY_OPTIONS,
+  TAG_OPTIONS,
+} from "../../constants/recipeMetadata";
 
 export const RecipeForm = () => {
   const { id } = useParams();
@@ -202,39 +198,19 @@ export const RecipeForm = () => {
           <fieldset className="form__fieldset">
             <legend className="form__label">Vhodné pro</legend>
             <div className="form__checkbox-group">
-              <label className="form__checkbox-label">
-                <input
-                  type="checkbox"
-                  name="suitableFor"
-                  value="veganské"
-                  className="form__checkbox"
-                  checked={selectedSuitableFor.includes("veganské")}
-                  onChange={() => toggleSelection("veganské", setSelectedSuitableFor)}
-                />
-                Veganské
-              </label>
-              <label className="form__checkbox-label">
-                <input
-                  type="checkbox"
-                  name="suitableFor"
-                  value="bez lepku"
-                  className="form__checkbox"
-                  checked={selectedSuitableFor.includes("bez lepku")}
-                  onChange={() => toggleSelection("bez lepku", setSelectedSuitableFor)}
-                />
-                Bez lepku
-              </label>
-              <label className="form__checkbox-label">
-                <input
-                  type="checkbox"
-                  name="suitableFor"
-                  value="bez mléka"
-                  className="form__checkbox"
-                  checked={selectedSuitableFor.includes("bez mléka")}
-                  onChange={() => toggleSelection("bez mléka", setSelectedSuitableFor)}
-                />
-                Bez mléka
-              </label>
+              {SUITABILITY_OPTIONS.map((option) => (
+                <label key={option.value} className="form__checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="suitableFor"
+                    value={option.value}
+                    className="form__checkbox"
+                    checked={selectedSuitableFor.includes(option.value)}
+                    onChange={() => toggleSelection(option.value, setSelectedSuitableFor)}
+                  />
+                  {option.label}
+                </label>
+              ))}
             </div>
           </fieldset>
         </div>
@@ -244,17 +220,17 @@ export const RecipeForm = () => {
           <fieldset className="form__fieldset">
             <legend className="form__label">Alergeny</legend>
             <div className="form__checkbox-group">
-              {["lepek","korýši","vejce","ryby","arašídy","sója","mléko","ořechy","celer","hořčice","sezam"].map((a) => (
-                <label key={a} className="form__checkbox-label">
+              {ALLERGEN_OPTIONS.map((allergen) => (
+                <label key={allergen.value} className="form__checkbox-label">
                   <input
                     type="checkbox"
                     name="allergens"
-                    value={a}
+                    value={allergen.value}
                     className="form__checkbox"
-                    checked={selectedAllergens.includes(a)}
-                    onChange={() => toggleSelection(a, setSelectedAllergens)}
+                    checked={selectedAllergens.includes(allergen.value)}
+                    onChange={() => toggleSelection(allergen.value, setSelectedAllergens)}
                   />
-                  {a.charAt(0).toUpperCase() + a.slice(1)}
+                  {allergen.label}
                 </label>
               ))}
             </div>

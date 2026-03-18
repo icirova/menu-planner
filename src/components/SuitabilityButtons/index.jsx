@@ -1,17 +1,16 @@
 import { Button } from "../Button";
+import { SUITABILITY_OPTIONS } from "../../constants/recipeMetadata";
 import "./style.css";
 
 export const SuitabilityButtons = ({ handleSuitabilitySelection, selectedSuitabilities }) => {
-  const options = ["bez lepku", "bez mléka", "veganské"];
-
   return (
     <div className="buttons buttons--suitability">
-      {options.map((label) => (
+      {SUITABILITY_OPTIONS.map((option) => (
         <Button
-          key={label}
-          name={label}
-          handleTagSelection={() => handleSuitabilitySelection(label)}
-          active={selectedSuitabilities.includes(label)}
+          key={option.value}
+          label={option.label}
+          onClick={() => handleSuitabilitySelection(option.value)}
+          active={selectedSuitabilities.includes(option.value)}
         />
       ))}
     </div>

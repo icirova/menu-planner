@@ -856,7 +856,7 @@ export const recipes = [
     title: "Boršč",
     servings: 6,
     tags: ["polévky", "obědy"],
-    photo_urls: ["/image/placeholder.png"],
+    photo_urls: ["/imgRecipe/borsc.webp"],
     ingredients: [
       { amount: 300, unit: "g", item: "hovězí maso" },
       { amount: 2, unit: "ks", item: "červená řepa" },
