@@ -15,7 +15,7 @@ export const recipes = [
       { amount: 1, unit: "špetka", item: "muškátový oříšek" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    suitableFor: ["veganské", "bez lepku"],
     calories: 150,
     workflow: "Oloupej a nakrájej dýni a cibuli. Na oleji orestuj cibuli, přidej dýni a zalij vývarem. Vař do změknutí. Rozmixuj dohladka a dochuť."
   },
@@ -78,7 +78,7 @@ export const recipes = [
       { amount: 1, unit: "lžička", item: "balzamikový ocet" }
     ],
     allergens: [],
-    suitableFor: ["vegetariánské", "bez lepku", "bez mléka"],
+    suitableFor: ["veganské", "bez lepku"],
     calories: 320,
     workflow: "Nakrájej zeleninu, promíchej s olejem a dochuť."
   },
@@ -188,7 +188,7 @@ export const recipes = [
       { amount: 1, unit: "hrst", item: "ovoce" }
     ],
     allergens: ["lepek", "mléko"],
-    suitableFor: ["vegetariánské"],
+    suitableFor: [],
     calories: 350,
     workflow: "Povař vločky v mléce do zhoustnutí, podávej s ovocem."
   },
@@ -284,7 +284,7 @@ export const recipes = [
       { amount: 250, unit: "ml", item: "kokosové mléko" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    suitableFor: ["veganské", "bez lepku"],
     calories: 280,
     workflow: "Zamíchej a nech přes noc nabobtnat v lednici."
   },
@@ -300,7 +300,7 @@ export const recipes = [
       { amount: 100, unit: "ml", item: "rostlinný nápoj" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    suitableFor: ["veganské", "bez lepku"],
     calories: 260,
     workflow: "Rozmixuj do husté konzistence a dozdob ovocem."
   },
@@ -318,7 +318,7 @@ export const recipes = [
       { amount: 1, unit: "ks", item: "citron (šťáva)" }
     ],
     allergens: ["sezam"],
-    suitableFor: ["veganské", "bez mléka"],
+    suitableFor: ["veganské"],
     calories: 420,
     workflow: "Rozmixuj dohladka, podávej s pitou či zeleninou."
   },
@@ -334,7 +334,7 @@ export const recipes = [
       { amount: 1, unit: "hrst", item: "čerstvá máta" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    suitableFor: ["veganské", "bez lepku"],
     calories: 180,
     workflow: "Nakrájej ovoce, promíchej s medem a mátou."
   },
@@ -384,7 +384,7 @@ export const recipes = [
       { amount: 150, unit: "g", item: "kukuřičné chipsy" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    suitableFor: ["veganské", "bez lepku"],
     calories: 420,
     workflow: "Avokádo rozmačkej s limetou a solí, podávej s chipsy."
   },
@@ -401,7 +401,7 @@ export const recipes = [
       { amount: 500, unit: "ml", item: "zeleninový vývar" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    suitableFor: ["veganské", "bez lepku"],
     calories: 120,
     workflow: "Orestuj cibuli, přidej rajčata, vývar, provař a rozmixuj."
   },
@@ -436,7 +436,7 @@ export const recipes = [
       { amount: 1, unit: "špetka", item: "majoránka" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    suitableFor: ["veganské", "bez lepku"],
     calories: 120,
     workflow: "Povař brambory, přidej česnek a majoránku, dochuť."
   },
@@ -452,7 +452,7 @@ export const recipes = [
       { amount: 700, unit: "ml", item: "vývar" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    suitableFor: ["veganské", "bez lepku"],
     calories: 140,
     workflow: "Uvař brokolici s cibulí ve vývaru a rozmixuj."
   },
@@ -468,7 +468,7 @@ export const recipes = [
       { amount: 1, unit: "l", item: "voda" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez mléka"],
+    suitableFor: ["veganské"],
     calories: 190,
     workflow: "Namoc hrách, uvař doměkka s cibulí a rozmixuj."
   },
@@ -551,7 +551,7 @@ export const recipes = [
       { amount: 300, unit: "g", item: "zelenina (mrkev, hrášek...)" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez mléka", "bez lepku"],
+    suitableFor: ["veganské", "bez lepku"],
     calories: 520,
     workflow: "Opékej rýži, postupně dolévej vývar, vmíchej zeleninu."
   },
@@ -586,7 +586,7 @@ export const recipes = [
       { amount: 700, unit: "ml", item: "voda/vývar" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez mléka", "bez lepku"],
+    suitableFor: ["veganské", "bez lepku"],
     calories: 450,
     workflow: "Orestuj cibuli, přidej papriku, brambory a vař do měkka."
   },
@@ -651,7 +651,7 @@ export const recipes = [
       { amount: 200, unit: "g", item: "bulgur" }
     ],
     allergens: ["lepek (bulgur)"],
-    suitableFor: ["veganské", "bez mléka"],
+    suitableFor: ["veganské"],
     calories: 720,
     workflow: "Rozmixuj cizrnu s bylinkami, vytvaruj kuličky, usmaž/upeč, podávej s bulgurem."
   },
@@ -667,7 +667,7 @@ export const recipes = [
       { amount: 2, unit: "lžíce", item: "kari pasta" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    suitableFor: ["veganské", "bez lepku"],
     calories: 620,
     workflow: "Společně provař do zhoustnutí, podávej s rýží či plackou."
   },
@@ -747,7 +747,7 @@ export const recipes = [
       { amount: 1, unit: "špetka", item: "sůl" }
     ],
     allergens: ["lepek", "ořechy"],
-    suitableFor: ["veganské", "bez mléka"],
+    suitableFor: ["veganské"],
     calories: 380,
     workflow: "Smíchej vločky, ořechy, skořici a sůl. Přidej med a olej, promíchej. Rozprostři na plech s pečicím papírem a peč cca 25–30 min na 160 °C, občas promíchej. Po vychladnutí vmíchej sušené ovoce."
   },
@@ -787,7 +787,7 @@ export const recipes = [
       { amount: 2, unit: "ks", item: "jarní cibulka" }
     ],
     allergens: ["sója"],
-    suitableFor: ["veganské", "bez mléka", "bez lepku"],
+    suitableFor: ["veganské", "bez lepku"],
     calories: 120,
     workflow: "Vodu přiveď k varu, přidej na kostičky nakrájené tofu a krátce povař. Odstav z ohně, vmíchej shiro miso pastu a sojovou omáčku. Podávej ozdobené nakrájenou jarní cibulkou a kousky řasy nori."
   },

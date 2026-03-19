@@ -1,21 +1,4 @@
-export const getAllergenIcon = (allergen) => {
-  const map = {
-    "milk": "🥛",
-    "mléko": "🥛",
-    "eggs": "🥚",
-    "vejce": "🥚",
-    "gluten": "🌾",
-    "lepek": "🌾",
-    "nuts": "🥜",
-    "ořechy": "🥜",
-    "arašídy": "🥜",
-    "peanuts": "🥜",
-    "soy": "🌱",
-    "sója": "🌱",
-    "fish": "🐟",
-    "ryby": "🐟"
-  };
+import { getAllergenMetadata } from "../constants/recipeMetadata";
 
-  return map[allergen.toLowerCase()] || "⚠️";
-};
-
+export const getAllergenIcon = (allergen) =>
+  getAllergenMetadata(allergen)?.icon ?? "⚠️";

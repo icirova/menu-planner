@@ -1,29 +1,4 @@
-export const getTagIcon = (label) => {
-  const map = {
-    "snídaně": "🍳",
-    "snidane": "🍳",
-    "breakfast": "🍳",
+import { getTagMetadata } from "../constants/recipeMetadata";
 
-    "svačina": "🥪",
-    "svacina": "🥪",
-    "snack": "🥪",
-
-    "polévky": "🥣",
-    "polevky": "🥣",
-    "soup": "🥣",
-
-    "oběd": "🍲",
-    "obed": "🍲",
-    "lunch": "🍲",
-
-    "večeře": "🍽️",
-    "vecere": "🍽️",
-    "dinner": "🍽️",
-
-    "moučníky": "🍰",
-    "moucniky": "🍰",
-    "dessert": "🍰"
-  };
-
-  return map[label.toLowerCase()] || "🏷️";
-};
+export const getTagIcon = (label) =>
+  getTagMetadata(label)?.icon ?? "🏷️";

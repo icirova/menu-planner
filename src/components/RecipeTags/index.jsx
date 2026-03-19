@@ -1,5 +1,4 @@
 import "./style.css";
-import { getTagIcon } from "../../utils/getTagIcon";
 
 export const RecipeTags = ({ tags }) => {
   return (
@@ -8,7 +7,7 @@ export const RecipeTags = ({ tags }) => {
     <div className="tags">
       {tags.map((tag, i) => (
         <span key={i} className="tag">
-          {getTagIcon(tag)} {tag}
+          {tag}
         </span>
       ))}
     </div>

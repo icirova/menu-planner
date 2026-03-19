@@ -4,6 +4,7 @@ import "./style.css";
 import { useOutletContext } from "react-router-dom";
 import { useState } from "react";
 import {
+  getRecipeSuitableForFilterValues,
   SUITABILITY_OPTIONS,
   TAG_OPTIONS,
 } from "../../constants/recipeMetadata";
@@ -29,11 +30,12 @@ export const Recipes = () => {
   const filteredRecipes = recipeList.filter(
     (recipe) => {
       const normalizedRecipeTags = normalizeRecipeTags(recipe.tags);
+      const suitabilityFilterValues = getRecipeSuitableForFilterValues(recipe.suitableFor);
 
       return (
         selectedTags.every((tag) => normalizedRecipeTags.includes(tag)) &&
         selectedSuitabilities.every((suit) =>
-          recipe.suitableFor?.includes(suit)
+          suitabilityFilterValues.includes(suit)
         )
       );
     }

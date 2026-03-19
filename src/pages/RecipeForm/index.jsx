@@ -32,6 +32,12 @@ export const RecipeForm = () => {
     updateRecipe,
     navigate,
   });
+  const isVeganSelected = form.selectedSuitableFor.includes("veganské");
+
+  const suitabilityOptions = SUITABILITY_OPTIONS.map((option) => ({
+    ...option,
+    disabled: option.value === "bez mléka" && isVeganSelected,
+  }));
 
   if (isEditMode && !isEditableRecipe) {
     return (
@@ -88,7 +94,7 @@ export const RecipeForm = () => {
         <CheckboxGroup
           legend="Vhodné pro"
           name="suitableFor"
-          options={SUITABILITY_OPTIONS}
+          options={suitabilityOptions}
           selectedValues={form.selectedSuitableFor}
           onToggle={(value) => toggleSelection("selectedSuitableFor", value)}
         />

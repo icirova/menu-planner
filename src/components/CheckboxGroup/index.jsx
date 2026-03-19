@@ -18,6 +18,7 @@ export const CheckboxGroup = ({
                 value={option.value}
                 className="form__checkbox"
                 checked={selectedValues.includes(option.value)}
+                disabled={option.disabled}
                 onChange={() => onToggle(option.value)}
               />
               {option.label}

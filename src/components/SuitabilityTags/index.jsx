@@ -1,5 +1,4 @@
 import "./style.css"
-import { getSuitabilityIcon } from "../../utils/getSuitabilityIcon";
 
 
 export const SuitabilityTags = ({ suitability }) => {
@@ -11,7 +10,7 @@ export const SuitabilityTags = ({ suitability }) => {
       <div className="recipe-detail__suitable-tags">
         {suitability.map((s, idx) => (
           <span key={idx} className="recipe-detail__tag">
-            {getSuitabilityIcon(s)} {s}
+            {s}
           </span>
         ))}
       </div>
