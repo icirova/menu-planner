@@ -875,5 +875,25 @@ export const recipes = [
     suitableFor: ["bez mléka"],
     calories: 320,
     workflow: "Maso uvař ve vývaru téměř doměkka. Na oleji orestuj cibuli a mrkev, přidej řepu a rajčatový protlak. Do vývaru vlož brambory a zelí, po chvíli přidej orestovanou zeleninu a maso. Vař do změknutí, dochuť octem, solí a pepřem."
+  },
+  {
+    id: 50,
+    title: "Suši se zeleninou",
+    servings: 4,
+    tags: ["obědy", "večeře"],
+    photo_urls: ["/imgRecipe/susi-maki.webp"],
+    ingredients: [
+      { amount: 300, unit: "g", item: "sushi rýže" },
+      { amount: 4, unit: "lžíce", item: "rýžový ocet" },
+      { amount: 1, unit: "ks", item: "okurka" },
+      { amount: 1, unit: "ks", item: "mrkev" },
+      { amount: 1, unit: "ks", item: "avokádo" },
+      { amount: 4, unit: "pláty", item: "řasa nori" },
+      { amount: 2, unit: "lžíce", item: "sójová omáčka" }
+    ],
+    allergens: ["sója"],
+    suitableFor: ["veganské", "bez lepku"],
+    calories: 430,
+    workflow: "Rýži uvař podle návodu a dochuť rýžovým octem. Zeleninu nakrájej na tenké hranolky. Na plát nori rozprostři vrstvu rýže, doprostřed dej zeleninu a avokádo a pevně zaroluj. Rolku nakrájej na kousky a podávej se sójovou omáčkou."
   }
 ];
