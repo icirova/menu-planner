@@ -817,7 +817,7 @@ export const recipes = [
     id: 47,
     title: "Hovězí guláš",
     servings: 4,
-    tags: ["obědy", "maso", "česká kuchyně"],
+    tags: ["obědy"],
     photo_urls: ["/imgRecipe/hovezi_gulas.webp"],
     ingredients: [
       { amount: 600, unit: "g", item: "hovězí kližka" },
@@ -839,7 +839,7 @@ export const recipes = [
     id: 48,
     title: "Banánové mléko",
     servings: 4,
-    tags: ["svačina"],
+    tags: ["svačiny"],
     photo_urls: ["/imgRecipe/mleko_bananove.webp"],
     ingredients: [
       { amount: 4, unit: "ks", item: "banán" },

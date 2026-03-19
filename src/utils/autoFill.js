@@ -1,3 +1,5 @@
+import { normalizeRecipeTags } from "./normalizeRecipeTag";
+
 const shuffle = (arr) => {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -7,7 +9,11 @@ const shuffle = (arr) => {
   return a;
 };
 
-const byAnyTag = (recipe, tags) => recipe.tags?.some(t => tags.includes(t));
+const byAnyTag = (recipe, tags) => {
+  const normalizedRecipeTags = normalizeRecipeTags(recipe.tags);
+  const normalizedTags = normalizeRecipeTags(tags);
+  return normalizedRecipeTags.some((tag) => normalizedTags.includes(tag));
+};
 
 /**
  * pickForSlot: vybere recept pro slot podle preferovaných tagů a množiny 'usedIds'

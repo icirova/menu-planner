@@ -7,6 +7,7 @@ import {
   SUITABILITY_OPTIONS,
   TAG_OPTIONS,
 } from "../../constants/recipeMetadata";
+import { normalizeRecipeTags } from "../../utils/normalizeRecipeTag";
 
 export const Recipes = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -26,11 +27,16 @@ export const Recipes = () => {
   };
 
   const filteredRecipes = recipeList.filter(
-    (recipe) =>
-      selectedTags.every((tag) => recipe.tags.includes(tag)) &&
-      selectedSuitabilities.every((suit) =>
-        recipe.suitableFor?.includes(suit)
-      )
+    (recipe) => {
+      const normalizedRecipeTags = normalizeRecipeTags(recipe.tags);
+
+      return (
+        selectedTags.every((tag) => normalizedRecipeTags.includes(tag)) &&
+        selectedSuitabilities.every((suit) =>
+          recipe.suitableFor?.includes(suit)
+        )
+      );
+    }
   );
 
   return (
