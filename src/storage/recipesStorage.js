@@ -1,3 +1,6 @@
+import { normalizeSuitableForValues } from "../constants/recipeMetadata";
+import { normalizeRecipeTags } from "../utils/normalizeRecipeTag";
+
 const CUSTOM_RECIPES_STORAGE_KEY = "customRecipes";
 
 export const normalizeBuiltinRecipe = (recipe) => ({
@@ -7,6 +10,8 @@ export const normalizeBuiltinRecipe = (recipe) => ({
 
 export const normalizeCustomRecipe = (recipe) => ({
   ...recipe,
+  tags: normalizeRecipeTags(recipe.tags ?? []),
+  suitableFor: normalizeSuitableForValues(recipe.suitableFor ?? []),
   source: "custom",
 });
 
