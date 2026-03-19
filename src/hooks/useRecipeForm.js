@@ -110,11 +110,17 @@ export const useRecipeForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const servings = Number(form.servings);
+
+    if (!Number.isFinite(servings) || servings < 1) {
+      window.alert("Počet porcí musí být alespoň 1.");
+      return;
+    }
 
     const newRecipe = {
       id: recipeToEdit?.id ?? Date.now(),
       title: form.name.trim(),
-      servings: Number(form.servings),
+      servings,
       tags: form.selectedTags,
       photo_urls: form.photos.map((photo) => photo.url),
       ingredients: form.ingredients.filter((ingredient) => ingredient.item.trim() !== ""),

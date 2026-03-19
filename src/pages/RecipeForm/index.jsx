@@ -68,6 +68,9 @@ export const RecipeForm = () => {
             type="number"
             id="servings"
             name="servings"
+            required
+            min="1"
+            step="1"
             className="form__input"
             value={form.servings}
             onChange={(e) => setField("servings", e.target.value)}
