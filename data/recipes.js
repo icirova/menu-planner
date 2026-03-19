@@ -173,7 +173,7 @@ export const recipes = [
     ],
     allergens: [],
     suitableFor: [],
-    calories: "200 - 300",
+    calories: 250,
     workflow: "Osol a opeč na pánvi či v troubě."
   },
   {
