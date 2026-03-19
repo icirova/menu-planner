@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { normalizeSuitableForValues } from "../constants/recipeMetadata";
 
 const createEmptyFormState = () => ({
   name: "Název receptu",
@@ -43,16 +44,6 @@ const toggleInArray = (items, value) =>
     ? items.filter((item) => item !== value)
     : [...items, value];
 
-const normalizeSuitableFor = (items) => {
-  const values = [...items];
-
-  if (values.includes("veganské")) {
-    return values.filter((item) => item !== "bez mléka");
-  }
-
-  return values;
-};
-
 export const useRecipeForm = ({
   recipeToEdit,
   isEditMode,
@@ -82,7 +73,7 @@ export const useRecipeForm = ({
     setForm((prev) => ({
       ...prev,
       [field]: field === "selectedSuitableFor"
-        ? normalizeSuitableFor(toggleInArray(prev[field], value))
+        ? normalizeSuitableForValues(toggleInArray(prev[field], value))
         : toggleInArray(prev[field], value),
     }));
   };
@@ -136,7 +127,7 @@ export const useRecipeForm = ({
       tags: form.selectedTags,
       photo_urls: form.photos.map((photo) => photo.url),
       ingredients: form.ingredients.filter((ingredient) => ingredient.item.trim() !== ""),
-      suitableFor: normalizeSuitableFor(form.selectedSuitableFor),
+      suitableFor: normalizeSuitableForValues(form.selectedSuitableFor),
       calories: Number(form.calories),
       workflow: form.method.trim(),
       allergens: form.selectedAllergens,

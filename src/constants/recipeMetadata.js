@@ -44,10 +44,20 @@ const SUITABILITY_IMPLICATIONS = {
   "veganské": ["bez mléka"],
 };
 
-export const getRecipeSuitableForFilterValues = (suitability = []) => {
-  const values = new Set(suitability);
+export const normalizeSuitableForValues = (suitability = []) => {
+  const values = [...suitability];
 
-  suitability.forEach((value) => {
+  if (values.includes("veganské")) {
+    return values.filter((value) => value !== "bez mléka");
+  }
+
+  return values;
+};
+
+export const getRecipeSuitableForFilterValues = (suitability = []) => {
+  const values = new Set(normalizeSuitableForValues(suitability));
+
+  values.forEach((value) => {
     (SUITABILITY_IMPLICATIONS[value] ?? []).forEach((derivedValue) => {
       values.add(derivedValue);
     });
@@ -55,6 +65,9 @@ export const getRecipeSuitableForFilterValues = (suitability = []) => {
 
   return [...values];
 };
+
+export const isSuitabilityOptionDisabled = (optionValue, selectedValues = []) =>
+  optionValue === "bez mléka" && normalizeSuitableForValues(selectedValues).includes("veganské");
 
 export const ALLERGEN_DEFINITIONS = [
   { label: "Lepek", value: "lepek", icon: "🌾", aliases: ["gluten"] },

@@ -4,6 +4,7 @@ import { CheckboxGroup } from "../../components/CheckboxGroup";
 import { IngredientInputs } from "../../components/IngredientInputs/index";
 import {
   ALLERGEN_OPTIONS,
+  isSuitabilityOptionDisabled,
   SUITABILITY_OPTIONS,
   TAG_OPTIONS,
 } from "../../constants/recipeMetadata";
@@ -32,11 +33,10 @@ export const RecipeForm = () => {
     updateRecipe,
     navigate,
   });
-  const isVeganSelected = form.selectedSuitableFor.includes("veganské");
 
   const suitabilityOptions = SUITABILITY_OPTIONS.map((option) => ({
     ...option,
-    disabled: option.value === "bez mléka" && isVeganSelected,
+    disabled: isSuitabilityOptionDisabled(option.value, form.selectedSuitableFor),
   }));
 
   if (isEditMode && !isEditableRecipe) {
