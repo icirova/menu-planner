@@ -1,0 +1,62 @@
+.recipes__sort {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+}
+
+.recipes__sort-label {
+  color: #1b4332;
+  font-family: 'Sorts Mill Goudy', serif;
+  font-size: 1rem;
+}
+
+.recipes__sort-select {
+  border: 1px solid #c8c8c8;
+  border-radius: 999px;
+  background-color: #fff;
+  color: #333;
+  padding: 0.45rem 2rem 0.45rem 0.9rem;
+  font-family: 'Sorts Mill Goudy', serif;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  text-align-last: center;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  min-width: 10rem;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #666 50%),
+    linear-gradient(135deg, #666 50%, transparent 50%);
+  background-position: calc(100% - 1.1rem) calc(50% - 0.12rem),
+    calc(100% - 0.8rem) calc(50% - 0.12rem);
+  background-size: 0.35rem 0.35rem, 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+}
+
+.recipes__sort-select:focus {
+  outline: none;
+}
+
+.recipes__sort-select:hover {
+  background-color: #f7f7f7;
+  color: #333;
+  transform: scale(1.05);
+}
+
+.recipes__sort-select:focus-visible {
+  background-color: #f7f7f7;
+  color: #333;
+  transform: none;
+  outline: 3px solid #90caf9;
+  outline-offset: 2px;
+}
+
+@media screen and (max-width: 679px) {
+  .recipes__sort {
+    flex-direction: column;
+    align-items: center;
+  }
+}

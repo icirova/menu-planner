@@ -13,6 +13,7 @@ import { normalizeRecipeTags } from "../../utils/normalizeRecipeTag";
 export const Recipes = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedSuitabilities, setSelectedSuitabilities] = useState([]);
+  const [sortOrder, setSortOrder] = useState("alpha");
   const { recipeList } = useOutletContext();
 
   const handleSuitabilitySelection = (label) => {
@@ -27,8 +28,8 @@ export const Recipes = () => {
     );
   };
 
-  const filteredRecipes = recipeList.filter(
-    (recipe) => {
+  const filteredRecipes = recipeList
+    .filter((recipe) => {
       const normalizedRecipeTags = normalizeRecipeTags(recipe.tags);
       const suitabilityFilterValues = getRecipeSuitableForFilterValues(recipe.suitableFor);
 
@@ -38,8 +39,14 @@ export const Recipes = () => {
           suitabilityFilterValues.includes(suit)
         )
       );
-    }
-  );
+    })
+    .sort((a, b) => {
+      if (sortOrder === "newest") {
+        return b.id - a.id;
+      }
+
+      return a.title.localeCompare(b.title, "cs");
+    });
 
   return (
     <div className="main">
@@ -57,6 +64,19 @@ export const Recipes = () => {
         onToggle={handleSuitabilitySelection}
         className="buttons--suitability"
       />
+
+      <div className="recipes__sort">
+        <label htmlFor="recipe-sort" className="recipes__sort-label">Řazení</label>
+        <select
+          id="recipe-sort"
+          className="recipes__sort-select"
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+        >
+          <option value="alpha">A–Z</option>
+          <option value="newest">Nově přidané</option>
+        </select>
+      </div>
 
       {/* Semanticky je to seznam karet */}
       <ul className="recipes section--grid" role="list">
