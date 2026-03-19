@@ -58,6 +58,7 @@ export const RecipeDetail = () => {
   const prev = () => setLightboxIndex((i) => (i === 0 ? gallery.length - 1 : i - 1));
   const next = () => setLightboxIndex((i) => (i === gallery.length - 1 ? 0 : i + 1));
   const isCustomRecipe = recipeDetail.source === "custom";
+  const caloriesLabel = recipeDetail.calories == null ? "-" : recipeDetail.calories;
   const handleDelete = () => {
     if (!window.confirm(`Opravdu chceš smazat recept „${recipeDetail.title}“?`)) return;
     deleteRecipe(recipeDetail.id);
@@ -91,11 +92,9 @@ export const RecipeDetail = () => {
         </div>
 
         <div className="recipe-detail__text">
-          {recipeDetail.calories && (
-            <p className="recipe-detail__description">
-              ⚖️ {recipeDetail.calories} kcal na 1 porci
-            </p>
-          )}
+          <p className="recipe-detail__description">
+            ⚖️ {caloriesLabel} kcal na 1 porci
+          </p>
 
           <ServingsControl
             value={desiredServings}

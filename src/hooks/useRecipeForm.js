@@ -7,7 +7,7 @@ const createEmptyFormState = () => ({
   selectedTags: [],
   selectedSuitableFor: [],
   selectedAllergens: [],
-  calories: "0",
+  calories: "",
   method: "",
   ingredients: [],
   photos: [],
@@ -25,7 +25,7 @@ const mapRecipeToFormState = (recipe) => ({
   selectedTags: recipe.tags ?? [],
   selectedSuitableFor: recipe.suitableFor ?? [],
   selectedAllergens: recipe.allergens ?? [],
-  calories: String(recipe.calories ?? 0),
+  calories: recipe.calories == null ? "" : String(recipe.calories),
   method: recipe.workflow ?? "",
   ingredients: recipe.ingredients ?? [],
   photos: mapRecipePhotos(recipe),
@@ -114,9 +114,16 @@ export const useRecipeForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     const servings = Number(form.servings);
+    const trimmedCalories = form.calories.trim();
+    const calories = trimmedCalories === "" ? null : Number(trimmedCalories);
 
     if (!Number.isFinite(servings) || servings < 1) {
       window.alert("Počet porcí musí být alespoň 1.");
+      return;
+    }
+
+    if (trimmedCalories !== "" && (!Number.isFinite(calories) || calories < 0)) {
+      window.alert("Kalorie musí být 0 nebo kladné číslo.");
       return;
     }
 
@@ -128,7 +135,7 @@ export const useRecipeForm = ({
       photo_urls: form.photos.map((photo) => photo.url),
       ingredients: form.ingredients.filter((ingredient) => ingredient.item.trim() !== ""),
       suitableFor: normalizeSuitableForValues(form.selectedSuitableFor),
-      calories: Number(form.calories),
+      calories,
       workflow: form.method.trim(),
       allergens: form.selectedAllergens,
     };
