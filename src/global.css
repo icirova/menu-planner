@@ -88,11 +88,6 @@ h2 {
   width: 100%;
 }
 
-.app-message--info {
-  background-color: #eef7f1;
-  color: #1f4a34;
-}
-
 .app-message--warning {
   background-color: #fff4e5;
   color: #7a4d00;

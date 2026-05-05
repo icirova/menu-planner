@@ -96,28 +96,6 @@
   border-color: #e5c8c3;
 }
 
-/* DailyMenuCard/editační políčko menu - červený křížek */
-.button--icon {
-  width: 36px; height: 36px; padding: 0;
-  display: inline-flex; align-items: center; justify-content: center;
-  min-height: 36px;
-  border-radius: 8px;
-  background: none;
-  border: none;
-  color: #b33;
-  cursor: pointer;
-  font-size: 1rem;
-  line-height: 1;
-  padding: 0;
-  transition: color 0.2s ease;
-}
-
-.button--icon:hover {
-  color: #800;
-  border: none;
-  background-color: transparent;
-}
-
 .button[disabled] {
   opacity: .55;
   cursor: not-allowed;

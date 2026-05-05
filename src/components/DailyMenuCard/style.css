@@ -59,10 +59,8 @@
   color: #6e695d;
 }
 
-/* pravý sloupec (pole) – společné pro zobrazení i editaci
-   (ponechávám kompatibilitu i s .card__description, kdybys ho někde používala) */
-.card__slot,
-.card__description {
+/* pravý sloupec (pole) */
+.card__slot {
   flex-basis: 75%;
   min-height: 64px;
   padding: .4rem .5rem;
@@ -85,14 +83,12 @@
 }
 
 /* odlišené pozadí večeře (p i textarea) */
-.card__text--dinner .card__slot,
-.card__text--dinner .card__description {
+.card__text--dinner .card__slot {
   background: #f3f7ff;
 }
 
 /* DnD highlight v zobrazení */
-.card__slot.is-drop-target,
-.card__description.is-drop-target {
+.card__slot.is-drop-target {
   outline: 2px dashed #b8c6ff;
   background: #eef3ff;
 }
@@ -102,7 +98,6 @@
 }
 
 /* kurzor, pokud je slot draggable */
-.card__description[draggable="true"],
 .card__slot[draggable="true"] {
   cursor: grab;
 }
@@ -258,25 +253,6 @@
   flex: 1;
 }
 
-/* EDITAČNÍ POLE (textarea) – stejné rozměry, řízený růst */
-.card__slot--input {
-  background: #fff;
-  box-shadow: inset 0 0 0 2px #cfe0ff;
-  border: none;
-  width: 100%;
-  resize: none;         /* auto-resize děláme v JS, viz onInput */
-  overflow: auto;       /* pokud překročí max-height, objeví se scrollbar */
-  max-height: 96px;     /* cca 4 řádky  */
-  min-height: 36px;
-  line-height: 1.4;
-
-  /* textarea nepotřebuje -webkit-line-clamp */
-  display: block;
-}
-.card__slot--input:focus {
-  box-shadow: inset 0 0 0 2px #99b7ff;
-}
-
 .card__shopping {
   display: grid;
   gap: 0.7rem;
@@ -348,23 +324,4 @@
   opacity: 0.58;
 }
 
-
-.slot {
-  position: relative;
-  flex-basis: 75%;
-}
-
-/* ať text nepodjíždí pod ikonku */
-.card__slot--withClear { padding-right: 2.5rem; } /* ~ 40px */
-
-/* pozice ikonového tlačítka ✕ */
-.slot__clear {
-  position: absolute;
-  top: 3px;
-  right: 6px;
-  z-index: 1;
-}
-
-
-.slot__clear:focus-visible { outline: 2px solid #99b7ff; outline-offset: 2px; }
 

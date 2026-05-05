@@ -4,16 +4,6 @@
   grid-template-columns: 1fr;            /* mobily */
 }
 
-.cards__toolbar {
-  text-align: end; 
-  margin-bottom: .8rem; 
-  display: flex;
-  justify-content: end;
-  gap: .8rem;
-}
-
-
-
 @media (min-width: 680px) {
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }  /* tablet */
 }

@@ -396,9 +396,7 @@
 }
 
 .home-page__panel--today .card__text--dinner .card__slot--overview,
-.home-page__panel--today .card__text--optional .card__slot--overview,
-.home-page__panel--today .card__text--dinner .card__description,
-.home-page__panel--today .card__text--optional .card__description {
+.home-page__panel--today .card__text--optional .card__slot--overview {
   background: transparent;
   box-shadow: none;
 }
