@@ -1,14 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { normalizeSuitableForValues } from "../constants/recipeMetadata";
+import { prepareCustomRecipeForRuntime } from "../storage/recipesStorage";
+import { createNumericId } from "../utils/createId";
+import { normalizeRecipePreTasks } from "../utils/normalizeRecipePreTasks";
+
+const DEFAULT_SERVINGS = 4;
 
 const createEmptyFormState = () => ({
-  name: "Název receptu",
-  servings: "4",
+  name: "",
+  servings: "",
   selectedTags: [],
   selectedSuitableFor: [],
   selectedAllergens: [],
   calories: "",
   method: "",
+  preTasksText: "",
   ingredients: [],
   photos: [],
 });
@@ -21,12 +27,13 @@ const mapRecipePhotos = (recipe) =>
 
 const mapRecipeToFormState = (recipe) => ({
   name: recipe.title ?? "",
-  servings: String(recipe.servings ?? 4),
+  servings: String(recipe.servings ?? DEFAULT_SERVINGS),
   selectedTags: recipe.tags ?? [],
   selectedSuitableFor: recipe.suitableFor ?? [],
   selectedAllergens: recipe.allergens ?? [],
   calories: recipe.calories == null ? "" : String(recipe.calories),
   method: recipe.workflow ?? "",
+  preTasksText: normalizeRecipePreTasks(recipe.preTasks).join("\n"),
   ingredients: recipe.ingredients ?? [],
   photos: mapRecipePhotos(recipe),
 });
@@ -53,6 +60,7 @@ export const useRecipeForm = ({
 }) => {
   const [form, setForm] = useState(createEmptyFormState);
   const fileInputRef = useRef(null);
+  const ingredientInputsRef = useRef(null);
 
   useEffect(() => {
     if (!isEditMode) {
@@ -60,7 +68,7 @@ export const useRecipeForm = ({
       return;
     }
 
-    if (!recipeToEdit || recipeToEdit.source !== "custom") return;
+    if (!recipeToEdit) return;
 
     setForm(mapRecipeToFormState(recipeToEdit));
   }, [isEditMode, recipeToEdit]);
@@ -102,8 +110,6 @@ export const useRecipeForm = ({
   };
 
   const removePhotoAt = (index) => {
-    if (!window.confirm("Opravdu chceš odebrat tento obrázek?")) return;
-
     setForm((prev) => {
       const nextPhotos = [...prev.photos];
       nextPhotos.splice(index, 1);
@@ -111,7 +117,7 @@ export const useRecipeForm = ({
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const servings = Number(form.servings);
     const trimmedCalories = form.calories.trim();
@@ -127,31 +133,47 @@ export const useRecipeForm = ({
       return;
     }
 
-    const newRecipe = {
-      id: recipeToEdit?.id ?? Date.now(),
+    const nextIngredients =
+      ingredientInputsRef.current?.flushDraftIngredient(form.ingredients) ?? form.ingredients;
+
+    const draftRecipe = {
+      id: recipeToEdit?.id ?? createNumericId(),
+      createdAt: recipeToEdit?.createdAt ?? new Date().toISOString(),
       title: form.name.trim(),
       servings,
       tags: form.selectedTags,
       photo_urls: form.photos.map((photo) => photo.url),
-      ingredients: form.ingredients.filter((ingredient) => ingredient.item.trim() !== ""),
+      ingredients: nextIngredients.filter((ingredient) => ingredient.item.trim() !== ""),
       suitableFor: normalizeSuitableForValues(form.selectedSuitableFor),
       calories,
       workflow: form.method.trim(),
+      preTasks: normalizeRecipePreTasks(form.preTasksText),
       allergens: form.selectedAllergens,
     };
 
-    if (isEditMode) {
-      updateRecipe(newRecipe);
-      navigate(`/recipe-detail/${newRecipe.id}`);
-      return;
-    }
+    try {
+      const newRecipe = await prepareCustomRecipeForRuntime(draftRecipe);
 
-    addRecipe(newRecipe);
-    navigate("/recipes");
+      if (isEditMode) {
+        updateRecipe(newRecipe);
+        navigate(`/recipe-detail/${newRecipe.id}`);
+        return;
+      }
+
+      addRecipe(newRecipe);
+      navigate("/recipes");
+    } catch (error) {
+      const message =
+        error instanceof Error && error.message
+          ? error.message
+          : "Nepodařilo se připravit recept k uložení.";
+      window.alert(message);
+    }
   };
 
   return {
     fileInputRef,
+    ingredientInputsRef,
     form,
     setField,
     toggleSelection,

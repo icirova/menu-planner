@@ -1,29 +1,14 @@
+.header {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(122, 113, 93, 0.18);
+}
 
-.header__title {
- 
-    margin: 20px auto;
-    text-align: center;
-    font-size: 3rem;
- }
-
- @media screen and (min-width: 680px) {
-    .header{
-        display: flex;
-        justify-content: space-between; 
-        align-items: baseline;
-    }
-
-    .header__title{
-        margin: 0;
-        font-size: 4rem;
-    } 
- }
-
- @media screen and (min-width: 1024) {
-    
-    .header__title{
-        font-size: 6rem;
-    } 
- }
+@media screen and (min-width: 680px) {
+  .header {
+    justify-content: center;
+  }
+}
 
 

@@ -3,21 +3,21 @@ export const recipes = [
     id: 1,
     title: "Dýňová polévka",
     servings: 4,
-    tags: ["polévky"],
-    photo_urls: ["/imgRecipe/dynova-polevka.webp", "/imgRecipe/dynova-polevka.webp"],
+    tags: ["polévky", "obědy"],
+    photo_urls: ["/imgRecipe/dynova-polevka.webp"],
     ingredients: [
       { amount: 500, unit: "g", item: "dýně" },
-      { amount: 1, unit: "", item: "cibule" },
+      { amount: 1, unit: "ks", item: "cibule" },
       { amount: 2, unit: "lžíce", item: "olej" },
       { amount: 1, unit: "l", item: "zeleninový vývar" },
       { amount: 1, unit: "špetka", item: "sůl" },
-      { amount: 1, unit: "špetka", item: "pepř" },
-      { amount: 1, unit: "špetka", item: "muškátový oříšek" }
+     
     ],
     allergens: [],
     suitableFor: ["veganské", "bez lepku"],
+    preTasks: [],
     calories: 150,
-    workflow: "Oloupej a nakrájej dýni a cibuli. Na oleji orestuj cibuli, přidej dýni a zalij vývarem. Vař do změknutí. Rozmixuj dohladka a dochuť."
+    workflow: "Oloupej a nakrájej dýni a cibuli. Na oleji orestuj cibuli, přidej dýni, krátce orestuj a zalij vodou nebo vývarem. Vař asi 15 minut do změknutí. Rozmixuj dohladka a dochuť."
   },
   {
     id: 2,
@@ -26,18 +26,19 @@ export const recipes = [
     tags: ["snídaně", "svačiny", "moučníky"],
     photo_urls: ["/imgRecipe/livance.webp"],
     ingredients: [
-      { amount: 200, unit: "g", item: "hladká mouka" },
-      { amount: 300, unit: "ml", item: "mléko" },
-      { amount: 1, unit: "", item: "vejce" },
-      { amount: 1, unit: "lžička", item: "cukr" },
+      { amount: 250, unit: "g", item: "hladká mouka" },
+      { amount: 250, unit: "ml", item: "mléko" },
+      { amount: 1, unit: "ks", item: "vejce" },
+      { amount: 1, unit: "lžíce", item: "cukr" },
       { amount: 1, unit: "špetka", item: "sůl" },
-      { amount: 1, unit: "lžička", item: "prášek do pečiva" },
-      { amount: 2, unit: "lžíce", item: "olej na smažení" }
+      { amount: 6, unit: "g", item: "prášek do pečiva" },
+      { amount: 25, unit: "g", item: "olej" }
     ],
     allergens: ["lepek", "mléko", "vejce"],
     suitableFor: [],
+    preTasks: [],
     calories: 430,
-    workflow: "Smíchej těsto, nech chvilku odpočinout a smaž dozlatova."
+    workflow: "Smíchej všechny suroviny a vytvoř hustší těsto, nech chvilku odpočinout a smaž dozlatova na mírném ohni."
   },
   {
     id: 3,
@@ -46,29 +47,30 @@ export const recipes = [
     tags: ["obědy", "večeře"],
     photo_urls: ["/imgRecipe/pizza.webp"],
     ingredients: [
-      { amount: 250, unit: "g", item: "hladká mouka" },
-      { amount: 150, unit: "ml", item: "mléko" },
-      { amount: 1, unit: "", item: "vejce" },
-      { amount: 2, unit: "lžíce", item: "olej" },
-      { amount: 0.5, unit: "kostka", item: "droždí" },
+      { amount: 300, unit: "g", item: "hladká mouka" },
+      { amount: 175, unit: "ml", item: "mléko nebo voda" },
+      { amount: 2, unit: "lžíce", item: "olivový olej" },
+      { amount: 7, unit: "g", item: "prášek do pečiva" },
       { amount: 0.5, unit: "lžička", item: "sůl" },
-      { amount: 3, unit: "lžíce", item: "rajčatový protlak" },
-      { amount: 100, unit: "g", item: "sýr" },
-      { amount: 100, unit: "g", item: "šunka nebo zelenina" }
+      { amount: 250, unit: "ml", item: "rajčatová omáčka" },
+      { amount: 125, unit: "g", item: "mozzarella" },
+      { amount: 100, unit: "g", item: "šunka" },
+      { amount: 2, unit: "ks", item: "červená cibule" }
     ],
-    allergens: ["lepek", "mléko", "vejce"],
+    allergens: ["lepek", "mléko"],
     suitableFor: [],
+    preTasks: [],
     calories: 700,
-    workflow: "Z kvásku a surovin vypracuj těsto, nech kynout, oblož a peč 15–20 min na 220 °C."
+    workflow: "Vypracuj nelepivé těsto, rozválej na plech, oblož a peč 15–20 min na 200 °C."
   },
   {
     id: 4,
     title: "Zeleninový salát",
     servings: 4,
-    tags: ["obědy", "večeře", "svačiny"],
-    photo_urls: ["/imgRecipe/salat.webp"],
+    tags: ["večeře", "svačiny", "obědy"],
+    photo_urls: ["/imgRecipe/zeleninovy-salat.webp"],
     ingredients: [
-      { amount: 100, unit: "g", item: "salát (ledový/římský/mix)" },
+      { amount: 100, unit: "g", item: "salát (mix)" },
       { amount: 1, unit: "", item: "rajče" },
       { amount: 0.5, unit: "", item: "okurka" },
       { amount: 0.5, unit: "", item: "červená paprika" },
@@ -79,6 +81,7 @@ export const recipes = [
     ],
     allergens: [],
     suitableFor: ["veganské", "bez lepku"],
+    preTasks: [],
     calories: 320,
     workflow: "Nakrájej zeleninu, promíchej s olejem a dochuť."
   },
@@ -86,18 +89,19 @@ export const recipes = [
     id: 5,
     title: "Špagety carbonara",
     servings: 4,
-    tags: ["obědy", "večeře"],
+    tags: ["obědy"],
     photo_urls: ["/imgRecipe/carbonara.webp"],
     ingredients: [
-      { amount: 200, unit: "g", item: "špagety" },
+      { amount: 500, unit: "g", item: "špagety" },
       { amount: 100, unit: "g", item: "slanina" },
-      { amount: 2, unit: "", item: "žloutky" },
+      { amount: 4, unit: "ks", item: "žloutky" },
       { amount: 30, unit: "g", item: "parmezán" },
       { amount: 1, unit: "špetka", item: "sůl" },
       { amount: 1, unit: "špetka", item: "pepř" }
     ],
     allergens: ["lepek", "vejce", "mléko"],
     suitableFor: [],
+    preTasks: [],
     calories: 600,
     workflow: "Uvař špagety, smíchej se slaninou a žloutkovou směsí mimo plotnu."
   },
@@ -105,49 +109,57 @@ export const recipes = [
     id: 6,
     title: "Boloňské špagety",
     servings: 4,
-    tags: ["obědy", "večeře"],
+    tags: ["obědy"],
     photo_urls: ["/imgRecipe/bolonske.webp"],
     ingredients: [
-      { amount: 200, unit: "g", item: "špagety" },
-      { amount: 200, unit: "g", item: "mleté hovězí maso" },
-      { amount: 1, unit: "", item: "mrkev" },
-      { amount: 1, unit: "", item: "cibule" },
+      { amount: 500, unit: "g", item: "špagety" },
+      { amount: 300, unit: "g", item: "mleté hovězí maso" },
+      { amount: 1, unit: "ks", item: "mrkev" },
+      { amount: 1, unit: "ks", item: "cibule" },
       { amount: 2, unit: "lžíce", item: "rajský protlak" },
       { amount: 2, unit: "lžíce", item: "olej" },
       { amount: 1, unit: "špetka", item: "sůl" },
-      { amount: 1, unit: "špetka", item: "pepř" }
+      { amount: 1, unit: "špetka", item: "pepř" },
+      { amount: 1, unit: "lžíce", item: "sušená bazalka" },
+      { amount: 1, unit: "lžíce", item: "sušená petrželka" },
+      { amount: 1, unit: "lžíce", item: "strouhaný parmezán" }
     ],
     allergens: ["lepek"],
     suitableFor: [],
+    preTasks: ["Vyndat maso z mrazáku."],
     calories: 550,
-    workflow: "Orestuj zeleninu, přidej maso, protlak, poduš a smíchej s těstovinami."
+    workflow: "Orestuj zeleninu se solí, přidej maso a restuj, dokud se nevypaří všechna voda, přidej koření, protlak, podlij vodou a dus do měkka. Na talíř dej špagety, přelij masovou směsí a posyp parmezánem."
   },
   {
     id: 7,
-    title: "Makronky",
+    title: "Donuty",
     servings: 4,
     tags: ["moučníky"],
-    photo_urls: ["/imgRecipe/makronky.webp"],
+    photo_urls: ["/imgRecipe/donuty.webp"],
     ingredients: [
-      { amount: 100, unit: "g", item: "hladká mouka" },
-      { amount: 100, unit: "g", item: "cukr" },
-      { amount: 2, unit: "", item: "vejce" },
-      { amount: 50, unit: "ml", item: "mléko" },
-      { amount: 2, unit: "lžíce", item: "olej" }
+      { amount: 250, unit: "g", item: "hladká mouka" },
+      { amount: 125, unit: "ml", item: "mléko" },
+      { amount: 1, unit: "ks", item: "vejce" },
+      { amount: 40, unit: "g", item: "cukr" },
+      { amount: 40, unit: "g", item: "máslo" },
+      { amount: 15, unit: "g", item: "čerstvé droždí" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 300, unit: "ml", item: "olej na smažení" }
     ],
     allergens: ["lepek", "mléko", "vejce"],
     suitableFor: [],
-    calories: 350,
-    workflow: "Vyšlehej vejce s cukrem, přidej mouku, mléko, olej a upeč malé tvary."
+    preTasks: [],
+    calories: 430,
+    workflow: "Z droždí, části vlažného mléka a trochy cukru připrav kvásek. Do mouky přidej zbytek cukru, vejce, rozpuštěné máslo, sůl, kvásek a zbytek mléka a vypracuj hladké těsto. Nech ho asi hodinu vykynout, potom vyválej plát silný asi 1,5 cm a vykrajuj donuty. Nech je ještě krátce nakynout a smaž v rozpáleném oleji z obou stran dozlatova. Po usmažení je nech okapat a ozdob podle chuti."
   },
   {
     id: 8,
     title: "Řízek smažený",
     servings: 4,
-    tags: ["obědy", "večeře"],
-    photo_urls: ["/imgRecipe/smazeny-rizek.webp"],
+    tags: ["obědy"],
+    photo_urls: ["/imgRecipe/rizek-smazeny.webp"],
     ingredients: [
-      { amount: 500, unit: "g", item: "vepřové maso" },
+      { amount: 500, unit: "g", item: "maso na řízek" },
       { amount: 80, unit: "g", item: "hladká mouka" },
       { amount: 2, unit: "", item: "vejce" },
       { amount: 80, unit: "ml", item: "mléko" },
@@ -157,6 +169,7 @@ export const recipes = [
     ],
     allergens: ["lepek", "mléko", "vejce"],
     suitableFor: [],
+    preTasks: ["Vyndat maso z mrazáku."],
     calories: 680,
     workflow: "Obal a usmaž dozlatova."
   },
@@ -167,190 +180,212 @@ export const recipes = [
     tags: ["obědy", "večeře"],
     photo_urls: ["/imgRecipe/rizek-prirodni.webp"],
     ingredients: [
-      { amount: 600, unit: "g", item: "kuřecí nebo vepřové maso" },
+      { amount: 600, unit: "g", item: "kuřecí/krůtí maso" },
       { amount: 1, unit: "lžíce", item: "olej" },
       { amount: 1, unit: "lžička", item: "sůl" }
     ],
     allergens: [],
     suitableFor: [],
+    preTasks: ["Vyndat maso z mrazáku."],
     calories: 250,
-    workflow: "Osol a opeč na pánvi či v troubě."
+    workflow: "Osol a opeč na pánvi, grilu či v troubě."
   },
   {
     id: 10,
     title: "Ovesná kaše s ovocem",
     servings: 2,
-    tags: ["snídaně"],
+    tags: ["snídaně", "svačiny"],
     photo_urls: ["/imgRecipe/ovesna-kase.webp"],
     ingredients: [
-      { amount: 80, unit: "g", item: "ovesné vločky" },
-      { amount: 250, unit: "ml", item: "mléko nebo rostlinný nápoj" },
-      { amount: 1, unit: "hrst", item: "ovoce" }
+      { amount: 100, unit: "g", item: "ovesné vločky" },
+      { amount: 250, unit: "ml", item: "rostlinný nápoj" },
+      { amount: 1, unit: "hrst", item: "ovoce" },
+      { amount: 1, unit: "lžíce", item: "rozinky" },
+      { amount: 1, unit: "lžíce", item: "chia semínka" }
     ],
     allergens: ["lepek", "mléko"],
     suitableFor: [],
+    preTasks: [],
     calories: 350,
-    workflow: "Povař vločky v mléce do zhoustnutí, podávej s ovocem."
+    workflow: "Povař vločky, s rozinkami a chia semínky v mléce do zhoustnutí, podávej s ovocem."
   },
   {
     id: 11,
-    title: "Míchaná vejce s toastem",
+    title: "Míchaná vejce",
     servings: 2,
-    tags: ["snídaně"],
+    tags: ["snídaně", "večeře"],
     photo_urls: ["/imgRecipe/michana-vejce.webp"],
     ingredients: [
-      { amount: 4, unit: "", item: "vejce" },
-      { amount: 1, unit: "lžíce", item: "máslo" },
-      { amount: 2, unit: "ks", item: "toast" },
+      { amount: 4, unit: "ks", item: "vejce" },
+      { amount: 0.5, unit: "lžíce", item: "máslo" },
       { amount: 1, unit: "špetka", item: "sůl" }
     ],
-    allergens: ["vejce", "mléko", "lepek"],
+    allergens: ["vejce", "mléko"],
     suitableFor: [],
+    preTasks: [],
     calories: 420,
-    workflow: "Na másle krátce míchej vejce, podávej s opečeným toastem."
+    workflow: "Na másle krátce míchej vejce."
   },
   {
     id: 12,
-    title: "Jogurt s granolou a medem",
+    title: "Jogurt s granolou",
     servings: 2,
     tags: ["snídaně", "svačiny"],
     photo_urls: ["/imgRecipe/jogurt-granola.webp"],
     ingredients: [
       { amount: 300, unit: "g", item: "bílý jogurt" },
       { amount: 60, unit: "g", item: "granola" },
-      { amount: 1, unit: "lžíce", item: "med" }
+      { amount: 1, unit: "lžíce", item: "javorový sirup" }
     ],
     allergens: ["mléko", "lepek (dle granoly)"],
     suitableFor: [],
+    preTasks: [],
     calories: 320,
-    workflow: "Do misky dej jogurt, zasyp granolou a pokapej medem."
+    workflow: "Do misky dej jogurt, zasyp granolou a pokapej javorovým sirupem."
   },
   {
     id: 13,
     title: "Tvaroh s ovocem",
     servings: 2,
-    tags: ["snídaně", "svačiny"],
+    tags: [ "svačiny"],
     photo_urls: ["/imgRecipe/tvaroh-ovoce.webp"],
     ingredients: [
       { amount: 250, unit: "g", item: "měkký tvaroh" },
-      { amount: 1, unit: "lžíce", item: "med" },
+      { amount: 1, unit: "lžíce", item: "javorový sirup" },
       { amount: 1, unit: "hrst", item: "ovoce" }
     ],
     allergens: ["mléko"],
     suitableFor: [],
+    preTasks: [],
     calories: 280,
-    workflow: "Tvaroh promíchej s medem a podávej s ovocem."
+    workflow: "Tvaroh promíchej s javorovým sirupem a podávej s ovocem."
   },
   {
     id: 14,
-    title: "Avokádový toast",
+    title: "Zapečený toast",
     servings: 2,
-    tags: ["snídaně", "svačiny"],
-    photo_urls: ["/imgRecipe/avokadovy-toast.webp"],
+    tags: ["snídaně", "svačiny", "večeře"],
+    photo_urls: ["/imgRecipe/toast.webp"],
     ingredients: [
-      { amount: 2, unit: "ks", item: "plátky chleba" },
-      { amount: 1, unit: "ks", item: "avokádo" },
-      { amount: 1, unit: "špetka", item: "sůl" },
-      { amount: 1, unit: "špetka", item: "pepř" }
+      { amount: 4, unit: "ks", item: "toastový chléb" },
+      { amount: 2, unit: "ks", item: "sýr" },
+      { amount: 2, unit: "ks", item: "šunka" },
+      { amount: 1, unit: "", item: "cibule" },
+      { amount: 1, unit: "lžíce", item: "kečup" }
     ],
     allergens: ["lepek"],
-    suitableFor: ["veganské"],
+    suitableFor: ["bez mléka"],
+    preTasks: [],
     calories: 350,
-    workflow: "Rozmačkej avokádo, namaž na opečený chléb a dochuť."
+    workflow: "Mezi dva plátky chleba namaž kečup, vlož sýr, šunku a cibuli na tenké proužky, pokryj horním plátkem a opeč v sendvičovači."
   },
   {
     id: 15,
-    title: "Banánové palačinky (bez mouky)",
+    title: "Banánové lívance",
     servings: 2,
-    tags: ["snídaně", "moučníky"],
-    photo_urls: ["/imgRecipe/bananove-palacinky.webp"],
+    tags: ["snídaně", "svačiny", "moučníky"],
+    photo_urls: ["/imgRecipe/bananove-livance.webp"],
     ingredients: [
-      { amount: 2, unit: "", item: "banány" },
-      { amount: 2, unit: "", item: "vejce" }
+      { amount: 2, unit: "ks", item: "banány" },
+      { amount: 70, unit: "g", item: "polohrubá mouka" },
+      { amount: 50, unit: "ml", item: "mléko" },
+      { amount: 1, unit: "", item: "vejce" },
+      { amount: 1, unit: "lžička", item: "prášek do pečení" }
     ],
-    allergens: ["vejce"],
-    suitableFor: ["bez lepku"],
+    allergens: ["lepek", "mléko", "vejce"],
+    suitableFor: [],
+    preTasks: [],
     calories: 300,
-    workflow: "Rozmačkej banány s vejci a opeč malé placičky."
+    workflow: "Rozmixuj banány s mlékem a vejcem, přidej mouku smíchanou s práškem do pečiva a smaž."
   },
   {
     id: 16,
-    title: "Chia pudink s kokosovým mlékem",
-    servings: 2,
+    title: "Pudink s piškoty a pyré",
+    servings: 4,
     tags: ["snídaně", "svačiny", "moučníky"],
-    photo_urls: ["/imgRecipe/chia-pudink.webp"],
+    photo_urls: ["/imgRecipe/pudink.webp"],
     ingredients: [
-      { amount: 3, unit: "lžíce", item: "chia semínka" },
-      { amount: 250, unit: "ml", item: "kokosové mléko" }
+      { amount: 1, unit: "ks", item: "pudink v prášku" },
+      { amount: 500, unit: "ml", item: "mléko" },
+      { amount: 20, unit: "ks", item: "piškoty" },
+      { amount: 1, unit: "hrst", item: "pyré" }
     ],
-    allergens: [],
-    suitableFor: ["veganské", "bez lepku"],
+    allergens: ["lepek"],
+    suitableFor: ["bez mléka"],
+    preTasks: [],
     calories: 280,
-    workflow: "Zamíchej a nech přes noc nabobtnat v lednici."
+    workflow: "Uvař pudink podle návodu, do skleniček dej 5 piškotů, zalij horkým pudinkem, přidej ovoce nebo pyré a nech vychladit."
   },
   {
     id: 17,
-    title: "Smoothie bowl",
+    title: "Hruškový kompot se skořicí",
     servings: 2,
-    tags: ["snídaně"],
-    photo_urls: ["/imgRecipe/smoothie-bowl.webp"],
+    tags: ["svačiny"],
+    photo_urls: ["/imgRecipe/hruskovy-kompot.webp"],
     ingredients: [
-      { amount: 2, unit: "", item: "banány" },
-      { amount: 200, unit: "g", item: "mražené ovoce" },
-      { amount: 100, unit: "ml", item: "rostlinný nápoj" }
+      { amount: 4, unit: "ks", item: "hrušky" },
+      { amount: 400, unit: "ml", item: "voda" },
+      { amount: 2, unit: "lžíce", item: "cukr" },
+      { amount: 1, unit: "ks", item: "skořice celá nebo 1 lžička mleté" },
+      { amount: 0.5, unit: "ks", item: "citron" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez lepku"],
-    calories: 260,
-    workflow: "Rozmixuj do husté konzistence a dozdob ovocem."
+    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 140,
+    workflow: "Hrušky oloupej, zbav jadřinců a nakrájej na menší kusy. V hrnci přiveď k varu vodu s cukrem, skořicí a citronovou šťávou, přidej hrušky a vař je na mírném ohni asi 10-15 minut doměkka. Podávej vychlazené nebo lehce teplé."
   },
   {
     id: 18,
-    title: "Hummus s pita chlebem",
+    title: "Hummus",
     servings: 4,
-    tags: ["svačiny", "večeře"],
+    tags: ["snídaně", "večeře"],
     photo_urls: ["/imgRecipe/hummus.webp"],
     ingredients: [
       { amount: 400, unit: "g", item: "uvařená cizrna" },
-      { amount: 2, unit: "lžíce", item: "tahini" },
-      { amount: 2, unit: "lžíce", item: "olivový olej" },
+      { amount: 1, unit: "lžíce", item: "tahini" },
+      { amount: 1, unit: "lžíce", item: "olivový olej" },
       { amount: 1, unit: "stroužek", item: "česnek" },
-      { amount: 1, unit: "ks", item: "citron (šťáva)" }
+      { amount: 1, unit: "ks", item: "citron" },
+      { amount: 1, unit: "špetka", item: "římský kmín" }
     ],
     allergens: ["sezam"],
-    suitableFor: ["veganské"],
+    suitableFor: ["veganské", "bez lepku", "bez mléka"],
     calories: 420,
-    workflow: "Rozmixuj dohladka, podávej s pitou či zeleninou."
+    preTasks: ["Večer namočit cizrnu."],
+    workflow: "Rozmixuj dohladka, dozdob cizrnou a olivovým olejem."
   },
   {
     id: 19,
-    title: "Ovocný salát s mátou",
+    title: "Ovocný salát",
     servings: 4,
-    tags: ["svačiny", "moučníky"],
+    tags: ["svačiny"],
     photo_urls: ["/imgRecipe/ovocny-salat.webp"],
     ingredients: [
       { amount: 600, unit: "g", item: "mix ovoce" },
-      { amount: 1, unit: "lžíce", item: "med" },
-      { amount: 1, unit: "hrst", item: "čerstvá máta" }
+      { amount: 1, unit: "lžíce", item: "javorový sirup" },
+      { amount: 1, unit: "hrst", item: "máta" }
     ],
     allergens: [],
     suitableFor: ["veganské", "bez lepku"],
+    preTasks: [],
     calories: 180,
-    workflow: "Nakrájej ovoce, promíchej s medem a mátou."
+    workflow: "Nakrájej ovoce, promíchej s javorovým sirupem a mátou."
   },
   {
     id: 20,
     title: "Cottage s bylinkami",
     servings: 2,
-    tags: ["svačiny", "snídaně"],
+    tags: ["svačiny", "snídaně", "večeře"],
     photo_urls: ["/imgRecipe/cottage-bylinky.webp"],
     ingredients: [
       { amount: 200, unit: "g", item: "cottage sýr" },
-      { amount: 1, unit: "lžíce", item: "pažitka/petržel" },
+      { amount: 1, unit: "lžíce", item: "pažitka/petrželka" },
       { amount: 1, unit: "špetka", item: "sůl" }
     ],
     allergens: ["mléko"],
     suitableFor: [],
+    preTasks: [],
     calories: 210,
     workflow: "Smíchej s bylinkami a podávej s pečivem nebo zeleninou."
   },
@@ -361,189 +396,212 @@ export const recipes = [
     tags: ["svačiny", "večeře"],
     photo_urls: ["/imgRecipe/caprese.webp"],
     ingredients: [
-      { amount: 2, unit: "", item: "rajčata" },
+      { amount: 2, unit: "ks", item: "rajčata" },
       { amount: 125, unit: "g", item: "mozzarella" },
       { amount: 1, unit: "hrst", item: "bazalka" },
       { amount: 1, unit: "lžíce", item: "olivový olej" }
     ],
     allergens: ["mléko"],
     suitableFor: ["bez lepku"],
+    preTasks: [],
     calories: 350,
     workflow: "Nakrájej, poskládej na talíř, zakápni olejem a dochuť."
   },
   {
     id: 22,
-    title: "Guacamole s kukuřičnými chipsy",
+    title: "Adamova buchta",
     servings: 4,
-    tags: ["svačiny"],
-    photo_urls: ["/imgRecipe/guacamole.webp"],
+    tags: ["svačiny", "moučníky", "snídaně"],
+    photo_urls: ["/imgRecipe/adamova-buchta.webp"],
     ingredients: [
-      { amount: 2, unit: "ks", item: "avokádo" },
-      { amount: 0.5, unit: "", item: "limeta (šťáva)" },
+      { amount: 2, unit: "hrnek", item: "polohrubá mouka" },
+      { amount: 1, unit: "hrnek", item: "cukr" },
+      { amount: 0.5, unit: "hrnek", item: "olej" },
+      { amount: 12, unit: "g", item: "prášek do pečení" },
+      { amount: 1, unit: "hrnek", item: "mléko" },
       { amount: 1, unit: "špetka", item: "sůl" },
-      { amount: 150, unit: "g", item: "kukuřičné chipsy" }
+      { amount: 2, unit: "ks", item: "vejce" }
     ],
-    allergens: [],
-    suitableFor: ["veganské", "bez lepku"],
+    allergens: ["lepek", "mléko", "vejce"],
+    suitableFor: [],
+    preTasks: [],
     calories: 420,
-    workflow: "Avokádo rozmačkej s limetou a solí, podávej s chipsy."
+    workflow: "Všechno smíchej, nalij do vymazané a vysypané formy a peč 45-60 minut na 160-170 °C."
   },
   {
     id: 23,
-    title: "Rajčatová polévka",
+    title: "Rajská polévka",
     servings: 4,
-    tags: ["polévky"],
+    tags: ["polévky", "obědy"],
     photo_urls: ["/imgRecipe/rajcatova-polevka.webp"],
     ingredients: [
-      { amount: 800, unit: "g", item: "rajčata (nebo pasírovaná)" },
-      { amount: 1, unit: "", item: "cibule" },
-      { amount: 2, unit: "lžíce", item: "olivový olej" },
-      { amount: 500, unit: "ml", item: "zeleninový vývar" }
+      { amount: 140, unit: "g", item: "rajský protlak" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 2, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "l", item: "zeleninový vývar" },
+      { amount: 1, unit: "lžíce", item: "hladká mouka" },
+      { amount: 1, unit: "ks", item: "bobkový list" },
+      { amount: 3, unit: "ks", item: "pepř" },
+      { amount: 2, unit: "ks", item: "nové koření" }
     ],
-    allergens: [],
-    suitableFor: ["veganské", "bez lepku"],
+    allergens: ["lepek"],
+    suitableFor: [],
+    preTasks: [],
     calories: 120,
-    workflow: "Orestuj cibuli, přidej rajčata, vývar, provař a rozmixuj."
+    workflow: "Orestuj cibuli s moukou na oleji, přidej protlak, vývar, koření, provař a přeceď."
   },
   {
     id: 24,
     title: "Kuřecí vývar",
     servings: 6,
-    tags: ["polévky"],
+    tags: ["polévky", "obědy"],
     photo_urls: ["/imgRecipe/kureci-vyvar.webp"],
     ingredients: [
-      { amount: 500, unit: "g", item: "kuřecí kosti/stehna" },
-      { amount: 2, unit: "", item: "mrkev" },
-      { amount: 1, unit: "", item: "petržel" },
-      { amount: 1, unit: "", item: "celer" },
-      { amount: 2, unit: "l", item: "voda" }
+      { amount: 500, unit: "g", item: "kuřecí kosti" },
+      { amount: 2, unit: "ks", item: "mrkev" },
+      { amount: 1, unit: "ks", item: "petržel" },
+      { amount: 1, unit: "ks", item: "celer" },
+      { amount: 2, unit: "l", item: "voda" },
+      { amount: 2, unit: "ks", item: "bobkový list" },
+      { amount: 7, unit: "ks", item: "pepř" },
+      { amount: 5, unit: "ks", item: "nové koření" },
+      { amount: 1, unit: "ks", item: "cibule" },
     ],
     allergens: [],
     suitableFor: ["bez mléka"],
+    preTasks: ["Vyndat kuře z mrazáku."],
     calories: 80,
-    workflow: "Táhni na mírném ohni 2–3 h, osol až nakonec."
+    workflow: "Omyj maso, očisti zeleninu, přidej koření a táhni na mírném ohni 2–3 h."
   },
   {
     id: 25,
     title: "Česnečka",
     servings: 4,
-    tags: ["polévky"],
+    tags: ["polévky", "obědy"],
     photo_urls: ["/imgRecipe/cesnecka.webp"],
     ingredients: [
       { amount: 4, unit: "stroužky", item: "česnek" },
-      { amount: 1, unit: "l", item: "vývar nebo voda" },
+      { amount: 1, unit: "l", item: "zeleninový vývar" },
       { amount: 2, unit: "ks", item: "brambory" },
       { amount: 1, unit: "špetka", item: "majoránka" }
     ],
     allergens: [],
-    suitableFor: ["veganské", "bez lepku"],
+    suitableFor: ["veganské"],
+    preTasks: [],
     calories: 120,
     workflow: "Povař brambory, přidej česnek a majoránku, dochuť."
   },
   {
     id: 26,
-    title: "Krém z brokolice",
+    title: "Brokolicový krém",
     servings: 4,
-    tags: ["polévky"],
+    tags: ["polévky", "obědy"],
     photo_urls: ["/imgRecipe/brokolicovy-krem.webp"],
     ingredients: [
       { amount: 400, unit: "g", item: "brokolice" },
-      { amount: 1, unit: "", item: "cibule" },
-      { amount: 700, unit: "ml", item: "vývar" }
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 700, unit: "ml", item: "zeleninový vývar" }
     ],
     allergens: [],
     suitableFor: ["veganské", "bez lepku"],
+    preTasks: [],
     calories: 140,
     workflow: "Uvař brokolici s cibulí ve vývaru a rozmixuj."
   },
   {
     id: 27,
-    title: "Hrachová polévka",
+    title: "Hráškový krém",
     servings: 4,
-    tags: ["polévky"],
+    tags: ["polévky", "obědy"],
     photo_urls: ["/imgRecipe/hrachova-polevka.webp"],
     ingredients: [
-      { amount: 250, unit: "g", item: "suchý hrách" },
+      { amount: 500, unit: "g", item: "mražený hrášek" },
       { amount: 1, unit: "", item: "cibule" },
-      { amount: 1, unit: "l", item: "voda" }
+      { amount: 1, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "l", item: "zeleninový vývar" }
     ],
     allergens: [],
     suitableFor: ["veganské"],
+    preTasks: [],
     calories: 190,
-    workflow: "Namoc hrách, uvař doměkka s cibulí a rozmixuj."
+    workflow: "Na oleji orestuj cibuli, přidej hrášek, uvař doměkka a rozmixuj."
   },
   {
     id: 28,
     title: "Gulášová polévka",
     servings: 4,
-    tags: ["polévky"],
+    tags: ["polévky", "obědy"],
     photo_urls: ["/imgRecipe/gulasova-polevka.webp"],
     ingredients: [
       { amount: 200, unit: "g", item: "hovězí kližka" },
       { amount: 1, unit: "", item: "cibule" },
+      { amount: 2, unit: "ks", item: "větší brambora" },
       { amount: 1, unit: "lžíce", item: "mletá paprika" },
-      { amount: 800, unit: "ml", item: "vývar" }
+      { amount: 1, unit: "lžíce", item: "majoránka" },
+      { amount: 800, unit: "ml", item: "voda" }
     ],
     allergens: [],
     suitableFor: ["bez mléka"],
-    calories: 230,
-    workflow: "Orestuj cibuli a maso, přisyp papriku, zalij vývarem a provař."
+    calories: 220,
+    preTasks: ["Vyndat maso z mrazáku."],
+    workflow: "Orestuj cibuli s kmínem a maso nakrájené na drobné kostičky, přidej brambory, přisyp papriku, zalij vývarem, osol a provař do měkka. Přidej majoránku a dosol."
   },
   {
     id: 29,
-    title: "Pečené kuře s brambory",
+    title: "Kuře pečené",
     servings: 4,
-    tags: ["obědy", "večeře"],
+    tags: ["obědy"],
     photo_urls: ["/imgRecipe/pecene-kure.webp"],
     ingredients: [
       { amount: 1.2, unit: "kg", item: "kuře" },
-      { amount: 800, unit: "g", item: "brambory" },
+      { amount: 1, unit: "lžíce", item: "grilovací koření" },
       { amount: 2, unit: "lžíce", item: "olej" },
       { amount: 1, unit: "lžička", item: "sůl" }
     ],
     allergens: [],
     suitableFor: ["bez mléka", "bez lepku"],
-    calories: 520,
-    workflow: "Osol, potřeme olejem a peč s bramborami do zlatova."
+    calories: 500,
+    preTasks: ["Vyndat kuře z mrazáku."],
+    workflow: "Na dno pekáče polož okořeněné kuře, potři olejem a peč na 200 °C asi 90 minut dozlatova."
   },
   {
     id: 30,
-    title: "Kuřecí stir-fry s rýží",
+    title: "Kuřecí stir-fry",
     servings: 4,
-    tags: ["obědy", "večeře"],
+    tags: ["obědy"],
     photo_urls: ["/imgRecipe/stirfry.webp"],
     ingredients: [
       { amount: 400, unit: "g", item: "kuřecí prsa" },
       { amount: 400, unit: "g", item: "mix zeleniny" },
-      { amount: 2, unit: "lžíce", item: "sojová omáčka" },
-      { amount: 300, unit: "g", item: "rýže" }
+      { amount: 2, unit: "lžíce", item: "sójová omáčka" },
     ],
     allergens: ["sója"],
     suitableFor: ["bez mléka"],
     calories: 580,
+    preTasks: ["Vyndat maso z mrazáku."],
     workflow: "Orestuj maso, přidej zeleninu a omáčku, podávej s rýží."
   },
   {
     id: 31,
-    title: "Losos pečený s citronem",
+    title: "Losos pečený",
     servings: 4,
-    tags: ["obědy", "večeře"],
+    tags: ["obědy"],
     photo_urls: ["/imgRecipe/losos.webp"],
     ingredients: [
       { amount: 600, unit: "g", item: "filet z lososa" },
-      { amount: 1, unit: "", item: "citron" },
       { amount: 1, unit: "lžička", item: "sůl" }
     ],
     allergens: ["ryby"],
     suitableFor: ["bez lepku", "bez mléka"],
+    preTasks: ["Vyndat lososa z mrazáku."],
     calories: 480,
-    workflow: "Osol, pokapej citronem a peč 12–15 min na 200 °C."
+    workflow: "Osol a peč 12–15 min na 200 °C."
   },
   {
     id: 32,
-    title: "Zeleninové rizoto",
+    title: "Rizoto",
     servings: 4,
-    tags: ["obědy", "večeře"],
+    tags: ["obědy"],
     photo_urls: ["/imgRecipe/rizoto.webp"],
     ingredients: [
       { amount: 300, unit: "g", item: "rýže" },
@@ -552,25 +610,29 @@ export const recipes = [
     ],
     allergens: [],
     suitableFor: ["veganské", "bez lepku"],
+    preTasks: [],
     calories: 520,
-    workflow: "Opékej rýži, postupně dolévej vývar, vmíchej zeleninu."
+    workflow: "Na troše oleje orestuj zeleninu, přisyp rýži a krátce promíchej. Postupně zalévej vývarem a za občasného míchání vař, dokud rýže nezměkne a tekutina se nevstřebá. Podávej ihned."
   },
   {
     id: 33,
-    title: "Kuřecí kari s rýží",
+    title: "Cizrnové kari",
     servings: 4,
-    tags: ["obědy", "večeře"],
-    photo_urls: ["/imgRecipe/kureci-kari.webp"],
+    tags: ["obědy"],
+    photo_urls: ["/imgRecipe/cizrnove-kari.webp"],
     ingredients: [
-      { amount: 500, unit: "g", item: "kuřecí prsa" },
-      { amount: 400, unit: "ml", item: "kokosové mléko" },
-      { amount: 2, unit: "lžíce", item: "kari pasta" },
-      { amount: 300, unit: "g", item: "rýže" }
+      { amount: 110, unit: "g", item: "cizrna" },
+      { amount: 600, unit: "ml", item: "vývar" },
+      { amount: 1, unit: "lžíce", item: "škrob" },
+      { amount: 2, unit: "ks", item: "brambory" },
+      { amount: 4, unit: "ks", item: "mrkev" },
+      { amount: 2, unit: "lžičky", item: "kari koření" },
     ],
     allergens: [],
-    suitableFor: ["bez lepku", "bez mléka"],
+    suitableFor: ["bez lepku", "veganské"],
+    preTasks: ["Večer namočit cizrnu."],
     calories: 700,
-    workflow: "Opeč maso, přidej kari a kokos, podávej s rýží."
+    workflow: "Opeč zeleninu a brambory, přidej kari, zalij vývarem a vař do měkka, zahusti škrobem rozmíchaným ve studené vodě, přidej uvařenou cizrnu a podávej s rýží."
   },
   {
     id: 34,
@@ -580,21 +642,26 @@ export const recipes = [
     photo_urls: ["/imgRecipe/bramborovy-gulas.webp"],
     ingredients: [
       { amount: 800, unit: "g", item: "brambory" },
-      { amount: 1, unit: "", item: "cibule" },
-      { amount: 1, unit: "", item: "paprika" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 300, unit: "g", item: "uzené tofu" },
+      { amount: 1, unit: "lžička", item: "mletý kmín" },
       { amount: 1, unit: "lžíce", item: "mletá paprika" },
-      { amount: 700, unit: "ml", item: "voda/vývar" }
+      { amount: 700, unit: "ml", item: "zeleninový vývar" },
+      { amount: 1, unit: "ks", item: "bobkový list" },
+      { amount: 5, unit: "ks", item: "pepř" },
+      { amount: 3, unit: "ks", item: "nové koření" },
     ],
     allergens: [],
     suitableFor: ["veganské", "bez lepku"],
+    preTasks: [],
     calories: 450,
-    workflow: "Orestuj cibuli, přidej papriku, brambory a vař do měkka."
+    workflow: "Na oleji orestuj cibuli, přidej mletou papriku a krátce promíchej. Přisyp brambory, uzené tofu, kmín a další koření, zalij vývarem a vař asi 20-25 minut doměkka. Na závěr dochuť solí a pepřem."
   },
   {
     id: 35,
-    title: "Pečené brambory s tvarohem",
+    title: "Brambory na loupačku",
     servings: 4,
-    tags: ["večeře"],
+    tags: ["večeře", "obědy"],
     photo_urls: ["/imgRecipe/brambory-tvaroh.webp"],
     ingredients: [
       { amount: 800, unit: "g", item: "brambory" },
@@ -603,8 +670,9 @@ export const recipes = [
     ],
     allergens: ["mléko"],
     suitableFor: ["bez lepku"],
+    preTasks: [],
     calories: 520,
-    workflow: "Brambory upeč ve slupce, rozkroj a podávej s tvarohem a pažitkou."
+    workflow: "Brambory upeč/uvař ve slupce, rozkroj a podávej s tvarohem a pažitkou."
   },
   {
     id: 36,
@@ -613,89 +681,103 @@ export const recipes = [
     tags: ["obědy", "večeře"],
     photo_urls: ["/imgRecipe/tortilla.webp"],
     ingredients: [
-      { amount: 4, unit: "ks", item: "pšeničné tortilly" },
+      { amount: 4, unit: "ks", item: "tortilly" },
       { amount: 400, unit: "g", item: "kuřecí maso" },
-      { amount: 300, unit: "g", item: "zelenina (paprika, salát)" }
+      { amount: 300, unit: "g", item: "zelenina" }
     ],
     allergens: ["lepek"],
     suitableFor: [],
+    preTasks: ["Vyndat kuře z mrazáku."],
     calories: 680,
-    workflow: "Opeč maso, naplň tortilly zeleninou a zabal."
+    workflow: "Kuřecí maso nakrájej na menší kousky, osol a opeč dozlatova. Tortilly krátce nahřej, naplň je masem a zeleninou, pevně zabal a podávej teplé."
   },
   {
     id: 37,
-    title: "Čočka na kyselo s vejcem",
+    title: "Čočka na kyselo",
     servings: 4,
-    tags: ["obědy", "večeře"],
+    tags: ["obědy"],
     photo_urls: ["/imgRecipe/cocka-na-kyselo.webp"],
     ingredients: [
-      { amount: 400, unit: "g", item: "hnědá čočka" },
+      { amount: 400, unit: "g", item: "čočka" },
       { amount: 1, unit: "ks", item: "cibule" },
       { amount: 2, unit: "lžíce", item: "ocet" },
-      { amount: 4, unit: "", item: "vejce" }
     ],
     allergens: ["vejce"],
     suitableFor: ["bez mléka", "bez lepku"],
+    preTasks: ["Večer namočit čočku."],
     calories: 560,
     workflow: "Uvař čočku doměkka, dochuť octem a podávej s vařeným vejcem."
   },
   {
     id: 38,
-    title: "Falafel s bulgurem a salátem",
+    title: "Pečená zelenina",
     servings: 4,
     tags: ["obědy", "večeře"],
-    photo_urls: ["/imgRecipe/falafel.webp"],
+    photo_urls: ["/imgRecipe/pecena-zelenina.webp"],
     ingredients: [
-      { amount: 400, unit: "g", item: "suchá cizrna (namáčená)" },
-      { amount: 1, unit: "hrst", item: "petržel/koriandr" },
-      { amount: 200, unit: "g", item: "bulgur" }
+      { amount: 2, unit: "ks", item: "batáty" },
+      { amount: 0.5, unit: "ks", item: "dýně hokaido" },
+      { amount: 2, unit: "ks", item: "červená řepa" },
+      { amount: 2, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "špetka", item: "sůl" }
     ],
-    allergens: ["lepek (bulgur)"],
+    allergens: [],
     suitableFor: ["veganské"],
-    calories: 720,
-    workflow: "Rozmixuj cizrnu s bylinkami, vytvaruj kuličky, usmaž/upeč, podávej s bulgurem."
+    preTasks: [],
+    calories: 350,
+    workflow: "Zeleninu očisti a nakrájej na hranolky, osol, pokapej olejem a peč na 200 °C asi 30 min dozlatova."
   },
   {
     id: 39,
-    title: "Cizrnové kari",
+    title: "Paella s bílými fazolemi",
     servings: 4,
-    tags: ["obědy", "večeře"],
-    photo_urls: ["/imgRecipe/cizrnove-kari.webp"],
+    tags: ["obědy"],
+    photo_urls: ["/imgRecipe/paella.webp"],
     ingredients: [
-      { amount: 400, unit: "g", item: "uvařená cizrna" },
-      { amount: 400, unit: "ml", item: "kokosové mléko" },
-      { amount: 2, unit: "lžíce", item: "kari pasta" }
+      { amount: 3, unit: "ks", item: "červená paprika" },
+      { amount: 2, unit: "lžičky", item: "mletá paprika" },
+      { amount: 200, unit: "g", item: "bílé fazole" },
+      { amount: 1, unit: "špetka", item: "šafrán" },
+      { amount: 2, unit: "lžíce", item: "olej" },
+      { amount: 300, unit: "g", item: "kulatozrnná rýže" },
+      { amount: 900, unit: "ml", item: "zeleninový vývar" }
     ],
     allergens: [],
     suitableFor: ["veganské", "bez lepku"],
+    preTasks: ["Večer namočit bílé fazole."],
     calories: 620,
-    workflow: "Společně provař do zhoustnutí, podávej s rýží či plackou."
+    workflow: "Orestuj papriky nakrájené na kostičky, přidej koření a rýži, promíchej, zalij vývarem a vař do měkka. Nakonec vmíchej uvařené fazole."
   },
   {
     id: 40,
-    title: "Bábovka",
+    title: "Napařovaná bábovka",
     servings: 10,
-    tags: ["moučníky", "svačiny"],
-    photo_urls: ["/imgRecipe/babovka.webp"],
+    tags: ["moučníky", "svačiny", "snídaně"],
+    photo_urls: ["/imgRecipe/naparovana-babovka.webp"],
     ingredients: [
-      { amount: 300, unit: "g", item: "hladká mouka" },
-      { amount: 200, unit: "g", item: "cukr" },
-      { amount: 3, unit: "", item: "vejce" },
-      { amount: 200, unit: "ml", item: "mléko" },
-      { amount: 100, unit: "ml", item: "olej" },
-      { amount: 1, unit: "balení", item: "prášek do pečiva" }
+      { amount: 2, unit: "hrnek", item: "uvařená rýže natural" },
+      { amount: 1, unit: "hrnek", item: "kukuřičná mouka" },
+      { amount: 1, unit: "hrnek", item: "pohanková mouka" },
+      { amount: 1.5, unit: "hrnek", item: "voda" },
+      { amount: 4, unit: "lžíce", item: "olej" },
+      { amount: 0.5, unit: "hrnek", item: "nasekané ořechy" },
+      { amount: 1, unit: "hrnek", item: "rozinky" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 3, unit: "lžička", item: "jedlá soda" },
+      { amount: 4, unit: "lžíce", item: "datlový sirup" }
     ],
-    allergens: ["lepek", "vejce", "mléko"],
-    suitableFor: [],
+    allergens: ["ořechy"],
+    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    preTasks: [],
     calories: 380,
-    workflow: "Smíchej suroviny, nalij do formy a peč cca 45–55 min na 170 °C."
+    workflow: "Smíchej suroviny a nalij je do vymazané a vysypané formy. Formu vlož do hrnce s vodou a napařuj asi hodinu na mírném ohni pod pokličkou. Propečení zkontroluj špejlí a vyklápěj až po vychladnutí."
   },
   {
     id: 41,
     title: "Muffiny s borůvkami",
     servings: 12,
     tags: ["moučníky", "svačiny", "snídaně"],
-    photo_urls: ["/imgRecipe/muffiny_boruvky.webp"],
+    photo_urls: ["/imgRecipe/boruvkove-muffiny.webp"],
     ingredients: [
       { amount: 250, unit: "g", item: "hladká mouka" },
       { amount: 120, unit: "g", item: "cukr" },
@@ -707,27 +789,30 @@ export const recipes = [
     ],
     allergens: ["lepek", "vejce", "mléko"],
     suitableFor: [],
+    preTasks: [],
     calories: 210,
     workflow: "Smíchej suroviny, přidej borůvky, nalij do formiček a peč cca 20–25 min na 180 °C."
   },
   
   {
     id: 42,
-    title: "Celozrnné sušenky",
+    title: "Ovesné sušenky",
     servings: 20,
     tags: ["moučníky", "svačiny"],
-    photo_urls: ["/imgRecipe/susenky_celozrnne.webp"],
+    photo_urls: ["/imgRecipe/ovesne-susenky.webp"],
     ingredients: [
-      { amount: 200, unit: "g", item: "celozrnná mouka" },
+      { amount: 200, unit: "g", item: "ovesné vločky" },
       { amount: 100, unit: "g", item: "máslo" },
       { amount: 80, unit: "g", item: "hnědý cukr" },
       { amount: 1, unit: "ks", item: "vejce" },
-      { amount: 1, unit: "lžička", item: "skořice" }
+      { amount: 1, unit: "lžička", item: "skořice" },
+      { amount: 1, unit: "lžíce", item: "med" }
     ],
-    allergens: ["lepek", "vejce", "mléko"],
+    allergens: ["vejce", "mléko"],
     suitableFor: [],
-    calories: 150,
-    workflow: "Vypracuj těsto, vyválej a vykrajuj sušenky. Peč cca 12–15 min na 180 °C."
+    preTasks: [],
+    calories: 170,
+    workflow: "Smíchej vločky se skořicí a cukrem, přidej vejce, změklé máslo a med a vypracuj hutné těsto. Tvoř malé placičky na plech s pečicím papírem a peč asi 12-15 minut na 180 °C dozlatova."
   },
   
   {
@@ -735,10 +820,10 @@ export const recipes = [
     title: "Domácí granola",
     servings: 8,
     tags: ["snídaně", "svačiny"],
-    photo_urls: ["/imgRecipe/domaci_granola.webp"],
+    photo_urls: ["/imgRecipe/granola.webp"],
     ingredients: [
       { amount: 300, unit: "g", item: "ovesné vločky" },
-      { amount: 80, unit: "g", item: "med nebo javorový sirup" },
+      { amount: 80, unit: "g", item: "med/javorový sirup" },
       { amount: 50, unit: "ml", item: "rostlinný olej" },
       { amount: 80, unit: "g", item: "vlašské ořechy" },
       { amount: 50, unit: "g", item: "mandle" },
@@ -747,13 +832,14 @@ export const recipes = [
       { amount: 1, unit: "špetka", item: "sůl" }
     ],
     allergens: ["lepek", "ořechy"],
-    suitableFor: ["veganské"],
+    suitableFor: [],
+    preTasks: [],
     calories: 380,
     workflow: "Smíchej vločky, ořechy, skořici a sůl. Přidej med a olej, promíchej. Rozprostři na plech s pečicím papírem a peč cca 25–30 min na 160 °C, občas promíchej. Po vychladnutí vmíchej sušené ovoce."
   },
   {
     id: 44,
-    title: "Obložený sendvič se šunkou a zeleninou",
+    title: "Sendvič",
     servings: 2,
     tags: ["svačiny", "snídaně", "večeře"],
     photo_urls: ["/imgRecipe/sendvic_sunka.webp"],
@@ -763,33 +849,34 @@ export const recipes = [
       { amount: 2, unit: "plátky", item: "sýr" },
       { amount: 1, unit: "ks", item: "rajče" },
       { amount: 1, unit: "ks", item: "okurka" },
-      { amount: 2, unit: "listy", item: "hlávkový salát" },
+      { amount: 2, unit: "listy", item: "listový salát" },
       { amount: 1, unit: "lžíce", item: "máslo" },
-      { amount: 1, unit: "špetka", item: "pepř" }
     ],
     allergens: ["lepek", "mléko"],
     suitableFor: [],
+    preTasks: [],
     calories: 320,
-    workflow: "Plátky chleba potřete máslem, navrstvěte šunku, sýr, rajče, okurku a list salátu. Ochuť pepřem a přiklop druhým plátkem chleba. Podávej čerstvé nebo lehce zapečené."
+    workflow: "Plátky chleba potřete máslem, navrstvěte šunku, sýr, rajče, okurku a listový salát. Ochuť pepřem a přiklop druhým plátkem chleba. Podávej čerstvé nebo lehce zapečené."
   },
   
   {
     id: 45,
     title: "Shiro miso s tofu a řasou nori",
     servings: 2,
-    tags: ["polévky", "snídaně"],
+    tags: ["polévky", "obědy", "snídaně"],
     photo_urls: ["/imgRecipe/shiro_miso.webp"],
     ingredients: [
       { amount: 800, unit: "ml", item: "voda" },
-      { amount: 40, unit: "g", item: "shiro miso pasta" },
+      { amount: 40, unit: "g", item: "miso pasta" },
       { amount: 100, unit: "g", item: "bílé tofu" },
-      { amount: 1, unit: "plát", item: "řasa nori" },
+      { amount: 1, unit: "plát", item: "nori" },
       { amount: 2, unit: "ks", item: "jarní cibulka" }
     ],
-    allergens: ["sója"],
-    suitableFor: ["veganské", "bez lepku"],
+    allergens: ["lepek", "sója"],
+    suitableFor: ["veganské"],
+    preTasks: [],
     calories: 120,
-    workflow: "Vodu přiveď k varu, přidej na kostičky nakrájené tofu a krátce povař. Odstav z ohně, vmíchej shiro miso pastu a sojovou omáčku. Podávej ozdobené nakrájenou jarní cibulkou a kousky řasy nori."
+    workflow: "Vodu přiveď k varu, přidej na kostičky nakrájené tofu a krátce povař. Odstav z ohně a vmíchej shiro miso pastu. Podávej ozdobené nakrájenou jarní cibulkou a kousky řasy nori."
   },
   
   {
@@ -797,21 +884,25 @@ export const recipes = [
     title: "Banánový chlebíček",
     servings: 10,
     tags: ["moučníky", "svačiny", "snídaně"],
-    photo_urls: ["/imgRecipe/bananovy_chlebicek.webp"],
+    photo_urls: ["/imgRecipe/bananovy-chlebicek.webp"],
     ingredients: [
       { amount: 3, unit: "ks", item: "zralé banány" },
-      { amount: 200, unit: "g", item: "hladká mouka" },
-      { amount: 100, unit: "g", item: "třtinový cukr" },
+      { amount: 150, unit: "g", item: "hladká mouka" },
+      { amount: 100, unit: "g", item: "celozrnná mouka" },
       { amount: 2, unit: "ks", item: "vejce" },
-      { amount: 80, unit: "ml", item: "rostlinný olej" },
-      { amount: 1, unit: "balení", item: "prášek do pečiva" },
-      { amount: 1, unit: "lžička", item: "skořice" },
+      { amount: 50, unit: "ml", item: "rostlinný olej" },
+      { amount: 1, unit: "hrst", item: "rozinky" },
+      { amount: 1, unit: "lžíce", item: "chia semínka" },
+      { amount: 0.5, unit: "balení", item: "prášek do pečiva" },
+      { amount: 0.5, unit: "lžička", item: "jedlá soda" },
+      { amount: 1, unit: "lžíce", item: "skořice" },
       { amount: 1, unit: "špetka", item: "sůl" }
     ],
     allergens: ["lepek", "vejce"],
     suitableFor: [],
+    preTasks: [],
     calories: 340,
-    workflow: "Rozmačkej banány, smíchej s vejci, olejem a cukrem. Vmíchej mouku s práškem do pečiva, skořicí a solí. Těsto nalij do formy a peč cca 50–60 min na 170 °C."
+    workflow: "Rozmačkej banány, smíchej s vejci, olejem a rozinkami. Vmíchej chia, mouku s práškem do pečiva, sodou, skořicí a solí. Těsto nalij do formy a peč cca 50–60 min na 170 °C."
   },
   {
     id: 47,
@@ -832,6 +923,7 @@ export const recipes = [
     ],
     allergens: [],
     suitableFor: ["bez lepku"],
+    preTasks: ["Vyndat maso z mrazáku."],
     calories: 450,
     workflow: "Na sádle osmaž cibuli dozlatova, přidej česnek, papriku a kmín. Vmíchej maso, osmahni a podlij vývarem. Duste přikryté cca 90 minut, dokud není maso měkké. Podávej s houskovým knedlíkem nebo chlebem."
   },
@@ -843,11 +935,12 @@ export const recipes = [
     photo_urls: ["/imgRecipe/mleko_bananove.webp"],
     ingredients: [
       { amount: 4, unit: "ks", item: "banán" },
-      { amount: 400, unit: "ml", item: "mléko" },
+      { amount: 400, unit: "ml", item: "rostlinné mléko" },
       { amount: 4, unit: "špetka", item: "skořice" },
     ],
-    allergens: ["mléko"],
-    suitableFor: ["bez lepku"],
+    allergens: [],
+    suitableFor: ["bez lepku", "bez mléka", "veganské"],
+    preTasks: [],
     calories: 0,
     workflow: "Rozmixuj banány s mlékem, nalij do sklenic a posyp špetkou skořice."
   },
@@ -867,12 +960,13 @@ export const recipes = [
       { amount: 2, unit: "lžíce", item: "rajčatový protlak" },
       { amount: 1.5, unit: "l", item: "hovězí vývar" },
       { amount: 2, unit: "lžíce", item: "olej" },
-      { amount: 1, unit: "lžíce", item: "ocet nebo citronová šťáva" },
+      { amount: 1, unit: "lžíce", item: "ocet" },
       { amount: 1, unit: "špetka", item: "sůl" },
       { amount: 1, unit: "špetka", item: "pepř" }
     ],
     allergens: [],
     suitableFor: ["bez mléka"],
+    preTasks: ["Vyndat maso z mrazáku."],
     calories: 320,
     workflow: "Maso uvař ve vývaru téměř doměkka. Na oleji orestuj cibuli a mrkev, přidej řepu a rajčatový protlak. Do vývaru vlož brambory a zelí, po chvíli přidej orestovanou zeleninu a maso. Vař do změknutí, dochuť octem, solí a pepřem."
   },
@@ -891,9 +985,1140 @@ export const recipes = [
       { amount: 4, unit: "pláty", item: "řasa nori" },
       { amount: 2, unit: "lžíce", item: "sójová omáčka" }
     ],
-    allergens: ["sója"],
-    suitableFor: ["veganské", "bez lepku"],
-    calories: 430,
+    allergens: ["lepek", "sója"],
+    suitableFor: ["veganské"],
+    preTasks: [],
+    calories: 280,
     workflow: "Rýži uvař podle návodu a dochuť rýžovým octem. Zeleninu nakrájej na tenké hranolky. Na plát nori rozprostři vrstvu rýže, doprostřed dej zeleninu a avokádo a pevně zaroluj. Rolku nakrájej na kousky a podávej se sójovou omáčkou."
+  },
+  {
+    id: 51,
+    title: "Wafle",
+    servings: 4,
+    tags: ["snídaně", "svačiny", "moučníky"],
+    photo_urls: ["/imgRecipe/wafle.webp"],
+    ingredients: [
+      { amount: 250, unit: "g", item: "hladká mouka" },
+      { amount: 2, unit: "ks", item: "vejce" },
+      { amount: 300, unit: "ml", item: "mléko" },
+      { amount: 60, unit: "g", item: "máslo" },
+      { amount: 1, unit: "lžíce", item: "cukr" },
+      { amount: 1, unit: "lžička", item: "prášek do pečiva" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: ["lepek", "vejce", "mléko"],
+    suitableFor: [],
+    preTasks: [],
+    calories: 420,
+    workflow: "Smíchej sypké suroviny, vmíchej vejce, mléko a rozpuštěné máslo. Těsto nech krátce odpočinout a peč ve waflovači dozlatova."
+  },
+  {
+    id: 52,
+    title: "Cuketový perník",
+    servings: 10,
+    tags: ["snídaně", "moučníky", "svačiny"],
+    photo_urls: ["/imgRecipe/cuketovy-pernik.webp"],
+    ingredients: [
+      { amount: 500, unit: "g", item: "cuketa" },
+      { amount: 200, unit: "g", item: "voda" },
+      { amount: 150, unit: "g", item: "pohanková mouka" },
+      { amount: 150, unit: "g", item: "rýžová mouka" },
+      { amount: 100, unit: "g", item: "datlový sirup" },
+      { amount: 100, unit: "g", item: "ořechy" },
+      { amount: 100, unit: "g", item: "rozinky" },
+      { amount: 50, unit: "g", item: "brusinky" },
+      { amount: 2, unit: "lžíce", item: "karob" },
+      { amount: 15, unit: "g", item: "bezlepkový prášek do pečiva" },
+      { amount: 1, unit: "lžíce", item: "perníkové koření" },
+      { amount: 50, unit: "g", item: "olej" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "ks", item: "lesní marmeláda" },
+      { amount: 2, unit: "lžíce", item: "strouhaný kokos" }
+    ],
+    allergens: ["ořechy"],
+    suitableFor: ["veganské", "bez mléka", "bez lepku"],
+    preTasks: [],
+    calories: 280,
+    workflow: "Cuketu s vodou rozmixuj. Ořechy nahrubo nasekej.Smíchej suché suroviny, přidej cuketové pyré. Těsto nalij do menšího pekáčku a peč asi 50 minut na 180 °C. Zkus špejlí. Ještě horký potři marmeládou a posypej kokosem."
+  },
+  {
+    id: 53,
+    title: "Polentové hranolky",
+    servings: 4,
+    tags: ["večeře", "svačiny"],
+    photo_urls: ["/imgRecipe/polentove-hranolky.webp"],
+    ingredients: [
+      { amount: 250, unit: "g", item: "polenta" },
+      { amount: 1, unit: "l", item: "voda" },
+      { amount: 2, unit: "lžíce", item: "olivový olej" },
+      { amount: 1, unit: "lžička", item: "sůl" },
+      { amount: 1, unit: "lžička", item: "sušený česnek" },
+      { amount: 1, unit: "lžička", item: "uzená paprika" }
+    ],
+    allergens: [],
+    suitableFor: ["veganské", "bez lepku"],
+    preTasks: [],
+    calories: 260,
+    workflow: "Polentu uvař ve vodě se solí do husté kaše 30 – 40 minut, rozetři ji do pekáčku a nech ztuhnout. Nakrájej na hranolky, potřete olejem, okořeň a peč dozlatova."
+  },
+  {
+    id: 54,
+    title: "Jablečný chlebíček bez lepku",
+    servings: 10,
+    tags: ["moučníky", "svačiny", "snídaně"],
+    photo_urls: ["/imgRecipe/jablecny-chlebicek.webp"],
+    ingredients: [
+      { amount: 80, unit: "g", item: "čiroková mouka" },
+      { amount: 140, unit: "g", item: "rýžová mouka" },
+      { amount: 40, unit: "g", item: "škrob" },
+      { amount: 70, unit: "g", item: "rozinky" },
+      { amount: 40, unit: "g", item: "mandle" },
+      { amount: 150, unit: "g", item: "jablko" },
+      { amount: 50, unit: "g", item: "olej" },
+      { amount: 30, unit: "g", item: "datlový sirup" },
+      { amount: 220, unit: "g", item: "voda" },
+      { amount: 0.5, unit: "g", item: "prášek do pečiva" },
+      { amount: 1, unit: "lžička", item: "skořice" }
+    ],
+    allergens: ["ořechy"],
+    suitableFor: ["bez lepku", "veganské", "bez mléka"],
+    preTasks: [],
+    calories: 300,
+    workflow: "Jablka nastrouhej, mandle rozmixuj ne úplně na jemno. Těsto nalij do formy a peč asi 45 minut na 170 °C. Zkus špejlí."
+  },
+  {
+    id: 55,
+    title: "Jáhelník pro lenochy",
+    servings: 8,
+    tags: ["moučníky", "snídaně", "svačiny"],
+    photo_urls: ["/imgRecipe/jahelnik.webp"],
+    ingredients: [
+      { amount: 1, unit: "hrnek", item: "jáhly" },
+      { amount: 5, unit: "lžíce", item: "chia semínka" },
+      { amount: 1, unit: "lžíce", item: "olej" },
+      { amount: 2, unit: "hrst", item: "rozinky" },
+      { amount: 3, unit: "hrnky", item: "voda" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: [],
+    suitableFor: ["bez lepku", "veganské", "bez mléka"],
+    preTasks: [],
+    calories: 260,
+    workflow: "Vše promíchej v pekáčku, případně přidej ovoce (třešně, borůvky, jablka…) a peč asi 60 minut na 170 °C. Během pečení párkrát promíchej."
+  },
+  {
+    id: 56,
+    title: "Štrůdl",
+    servings: 8,
+    tags: ["moučníky", "svačiny", "snídaně"],
+    photo_urls: ["/imgRecipe/strudl.webp"],
+    ingredients: [
+      { amount: 220, unit: "g", item: "hladká mouka" },
+      { amount: 100, unit: "g", item: "vlažná voda" },
+      { amount: 1, unit: "ks", item: "vejce" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 4, unit: "ks", item: "jablko" },
+      { amount: 1, unit: "hrst", item: "rozinky" },
+      { amount: 1, unit: "hrst", item: "vlašské ořechy" },
+      { amount: 1, unit: "lžička", item: "skořice" },
+    ],
+    allergens: ["lepek", "ořechy", "vejce"],
+    suitableFor: [],
+    preTasks: [],
+    calories: 310,
+    workflow: "Do mísy nasyp mouku, přidej vejce, sůl a vodu. Vypracuj hladké těsto, které nech odpočinout v lednici. Mezitím nastrouhej jablka, smíchej je s rozinkami, ořechy a skořicí. Těsto rozválej na tenký plát, naplň jablečnou směsí a pevně zaroluj. Peč asi 40 minut na 170 °C dozlatova."
+  },
+  {
+    id: 57,
+    title: "Bezlepkový perník",
+    servings: 10,
+    tags: ["moučníky", "svačiny", "snídaně"],
+    photo_urls: ["/imgRecipe/bezlepkovy-pernik.webp"],
+    ingredients: [
+      { amount: 120, unit: "g", item: "pohanková mouka" },
+      { amount: 120, unit: "g", item: "rýžová mouka" },
+      { amount: 60, unit: "g", item: "škrob" },
+      { amount: 1, unit: "lžička", item: "jedlá soda" },
+      { amount: 2, unit: "lžičky", item: "karob" },
+      { amount: 1, unit: "lžíce", item: "perníkové koření" },
+      { amount: 70, unit: "g", item: "sušené švestky" },
+      { amount: 1, unit: "ks", item: "jablko" },
+      { amount: 100, unit: "g", item: "datlový sirup" },
+      { amount: 160, unit: "g", item: "voda" },
+      { amount: 50, unit: "g", item: "olej" },
+      { amount: 2, unit: "lžička", item: "jablečný ocet" }
+    ],
+    allergens: [],
+    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 270,
+    workflow: "Sušené švestky nasekej a jablko nastrouhej. Promíchej sypké suroviny, přidej jablko, datlový sirup, vodu, olej a jablečný ocet. Nalij do formy na chlebíček a peč zhruba 45 minut na 170 °C."
+  },
+  {
+    id: 58,
+    title: "Focaccia",
+    servings: 8,
+    tags: ["večeře", "svačiny"],
+    photo_urls: ["/imgRecipe/focaccia.webp"],
+    ingredients: [
+      { amount: 500, unit: "g", item: "hladká mouka" },
+      { amount: 300, unit: "ml", item: "voda" },
+      { amount: 21, unit: "g", item: "čerstvé droždí" },
+      { amount: 4, unit: "lžíce", item: "olivový olej" },
+      { amount: 1.5, unit: "lžička", item: "sůl" },
+      { amount: 1, unit: "lžíce", item: "rozmarýn" },
+      { amount: 1, unit: "hrst", item: "olivy" },
+      { amount: 1, unit: "hrst", item: "sušená rajčata" },
+      { amount: 4, unit: "ks", item: "česnek" },
+      { amount: 1, unit: "lžička", item: "hrubozrnná sůl" },
+    ],
+    allergens: ["lepek"],
+    suitableFor: ["veganské"],
+    preTasks: [],
+    calories: 290,
+    workflow: "Ve vlažné vodě rozmíchej droždí. Do mísy dej mouku, sůl, olej, vodu s rozmíchaným droždím, nasekaný rozmarýn a česnek. Nech vykynout, rozděl na dvě placky a přenes je na pečicí papír na plech. Rukama potřené olejem vytvaruj placky a nech je ještě 10 minut kynout. Prsty udělej dolíky, zatlač do nich rajčata a olivy, posyp snítkami rozmarýnu a hrubozrnnou solí. Peč 10-15 minut při 230 °C dozlatova."
+  },
+  {
+    id: 59,
+    title: "Bun cha",
+    servings: 4,
+    tags: ["obědy"],
+    photo_urls: ["/imgRecipe/bun-cha.webp"],
+    ingredients: [
+      { amount: 500, unit: "g", item: "vepřové maso" },
+      { amount: 4, unit: "lžíce", item: "třtinový cukr" },
+      { amount: 3, unit: "lžíce", item: "rybí omáčka" },
+      { amount: 2, unit: "lžíce", item: "rýžový ocet" },
+      { amount: 0.5, unit: "lžíce", item: "sójová omáčka" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 2, unit: "ks", item: "česnek" },
+      { amount: 0.5, unit: "ks", item: "mrkev" },
+      { amount: 400, unit: "g", item: "rýžové nudle" }
+    ],
+    allergens: ["lepek", "ryby", "sója"],
+    suitableFor: [],
+    preTasks: ["Vyndat maso z mrazáku."],
+    calories: 480,
+    workflow: "Nejlepší je bůček nebo krkovice. Maso nakrájej na tenké plátky, smíchej s marinádou (3 lžíce cukru, 2 lžíce rybí omáčky, 1 lžíce rýžového octa, 0.5 lžíce sojové omáčky, cibule na půlkolečka, nasekaný stroužek česneku). Nech marinovat aspoň 30 minut. Griluj dozlatova. Podávej s rýžovými nudlemi a omáčkou (1 lžíce cukru, 1 lžíce rýžového octa, 1 lžíce rybí omáčky, horká voda, kolečka mrkve a nasekaný stroužek česneku)."
+  },
+  {
+    id: 60,
+    title: "Oyakadon",
+    servings: 4,
+    tags: ["obědy"],
+    photo_urls: ["/imgRecipe/oyakadon.webp"],
+    ingredients: [
+      { amount: 400, unit: "g", item: "kuřecí maso" },
+      { amount: 4, unit: "ks", item: "vejce" },
+      { amount: 300, unit: "g", item: "jasmínová rýže" },
+      { amount: 2, unit: "ks", item: "cibule" },
+      { amount: 500, unit: "ml", item: "vývar" },
+      { amount: 3, unit: "lžíce", item: "sójová omáčka" },
+      { amount: 1, unit: "lžíce", item: "cukr" },
+      { amount: 2, unit: "ks", item: "jarní cibulka" }
+    ],
+    allergens: ["lepek", "vejce", "sója"],
+    suitableFor: [],
+    preTasks: ["Vyndat kuře z mrazáku."],
+    calories: 520,
+    workflow: "Rýži uvař zvlášť. Cibuli a kuře krátce povař ve vývaru se sójovou omáčkou a cukrem, přelij rozšlehanými vejci a nech jemně zatáhnout. Podávej na rýži."
+  },
+  {
+    id: 61,
+    title: "Pomazánka z tofu a řasy nori",
+    servings: 4,
+    tags: ["snídaně", "večeře", "pomazánky"],
+    photo_urls: ["/imgRecipe/nori-pomazanka.webp"],
+    ingredients: [
+      { amount: 180, unit: "g", item: "uzené tofu" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 1, unit: "lžíce", item: "nori vločky" },
+      { amount: 1, unit: "lžíce", item: "tahini" },
+      { amount: 1, unit: "lžička", item: "hořčice" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "špetka", item: "pepř" }
+    ],
+    allergens: ["lepek", "sója", "sezam"],
+    suitableFor: ["veganské", "bez mléka"],
+    preTasks: [],
+    calories: 190,
+    workflow: "Tofu rozmačkej nebo rozmixuj s tahini a hořčicí. Vmíchej nori, dochuť a nech chvíli odležet."
+  },
+  {
+    id: 62,
+    title: "Žampionová paštika s brusinkami",
+    servings: 6,
+    tags: ["snídaně", "večeře", "pomazánky"],
+    photo_urls: ["/imgRecipe/zampionova-pastika.webp"],
+    ingredients: [
+      { amount: 400, unit: "g", item: "žampiony" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 2, unit: "stroužky", item: "česnek" },
+      { amount: 100, unit: "g", item: "vlašské ořechy" },
+      { amount: 1, unit: "lžíce", item: "brusinky" },
+      { amount: 2, unit: "lžička", item: "olej" },
+      { amount: 1, unit: "lžička", item: "tymián" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "špetka", item: "pepř" },
+      { amount: 1, unit: "lžíce", item: "ovesné vločky" },
+    ],
+    allergens: ["ořechy", "lepek"],
+    suitableFor: ["veganské", "bez mléka"],
+    preTasks: [],
+    calories: 210,
+    workflow: "Na oleji orestuj cibuli, česnek a žampiony do odpaření tekutiny. Přidej ovesné vločky a koření. Přidej lžíci vody a podus do vstřebání tekutiny. Nakonec přidej ořechy a brusinky a vše rozmixuj do hrubší paštiky."
+  },
+  {
+    id: 63,
+    title: "Cizrnový krém",
+    servings: 4,
+    tags: ["polévky", "obědy"],
+    photo_urls: ["/imgRecipe/cizrna-krem.webp"],
+    ingredients: [
+      { amount: 1, unit: "hrnek", item: "uvařená cizrna" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 1, unit: "ks", item: "mrkev" },
+      { amount: 3, unit: "stroužky", item: "česnek" },
+      { amount: 1, unit: "lžička", item: "zázvorová šťáva" },
+      { amount: 1, unit: "l", item: "zeleninový vývar" },
+      { amount: 2, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "lžička", item: "kmín" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "špetka", item: "pepř" },
+      { amount: 1, unit: "špetka", item: "kurkuma" },
+      { amount: 1, unit: "lžíce", item: "sezamová semínka" },
+    ],
+    allergens: ["sezam"],
+    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 240,
+    workflow: "Na oleji orestuj cibuli a mrkev se solí, přidej česnek, kmín, kurkumu a cizrnu, zalij vývarem. Povař 30 minut a rozmixuj dohladka. Dochuť zázvorovou šťávou, solí a pepřem. Posyp sezamem."
+  },
+  {
+    id: 64,
+    title: "Mrkvovo-batátový krém s kokosovým mlékem",
+    servings: 4,
+    tags: ["polévky", "obědy"],
+    photo_urls: ["/imgRecipe/batat-krem.webp"],
+    ingredients: [
+      { amount: 400, unit: "g", item: "mrkev" },
+      { amount: 300, unit: "g", item: "batát" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 3, unit: "stroužky", item: "česnek" },
+      { amount: 100, unit: "ml", item: "kokosové mléko" },
+      { amount: 1, unit: "l", item: "zeleninový vývar" },
+      { amount: 1, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "špetka", item: "kurkuma" },
+      { amount: 1, unit: "lžíce", item: "sezamová semínka" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "lžička", item: "zázvorová šťáva" },
+
+    ],
+    allergens: ["sezam"],
+    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 260,
+    workflow: "Na oleji orestuj cibuli, přidej mrkev, batát a koření. Zalij vývarem, vař doměkka, přilij kokosové mléko a rozmixuj dohladka. Dochuť zázvorovou šťávou, solí a pepřem."
+  },
+  {
+    id: 65,
+    title: "Trhané vepřové maso",
+    servings: 4,
+    tags: ["obědy", "večeře"],
+    photo_urls: ["/imgRecipe/veprove-tacos.webp"],
+    ingredients: [
+      { amount: 800, unit: "g", item: "vepřová plec" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 1, unit: "ks", item: "jablko" },
+      { amount: 2, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "lžička", item: "mletý kmín" },
+      { amount: 0.5, unit: "lžička", item: "skořice" },
+      { amount: 1, unit: "lžička", item: "pepř" },
+      { amount: 1, unit: "lžička", item: "sůl" }
+    ],
+    allergens: [],
+    suitableFor: ["bez lepku", "bez mléka"],
+    preTasks: ["Vyndat maso z mrazáku."],
+    calories: 420,
+    workflow: "Vepřovou plec osol, opepři a promíchej s kmínem a skořicí. Na troše oleje orestuj cibuli nakrájenou najemno a jablko na drobné kostičky, přidej maso a krátce ho zatáhni. Pak vše pomalu peč nebo duste doměkka, až půjde maso snadno roztrhat vidličkami. Nakonec promíchej s výpekem a podávej jako náplň do tacos."
+  },
+  {
+    id: 66,
+    title: "Špaldový chléb",
+    servings: 8,
+    tags: ["přílohy"],
+    photo_urls: ["/imgRecipe/spaldovy-chleb.webp"],
+    ingredients: [
+      { amount: 200, unit: "g", item: "celozrnná špaldová mouka" },
+      { amount: 300, unit: "g", item: "hladká špaldová mouka" },
+      { amount: 320, unit: "ml", item: "voda" },
+      { amount: 8, unit: "g", item: "čerstvé droždí" },
+      { amount: 1, unit: "lžíce", item: "jablečný ocet" },
+      { amount: 1.5, unit: "lžičky", item: "sůl" },
+      { amount: 1, unit: "lžíce", item: "olej" }
+    ],
+    allergens: ["lepek"],
+    suitableFor: ["veganské", "bez mléka"],
+    preTasks: [],
+    calories: 210,
+    workflow: "Peč v domácí pekárně na program Rychlý celozrnný chléb."
+  },
+  {
+    id: 67,
+    title: "Toastový chléb",
+    servings: 10,
+    tags: ["přílohy"],
+    photo_urls: ["/imgRecipe/toastovy-chleb.webp"],
+    ingredients: [
+      { amount: 500, unit: "g", item: "hladká špaldová mouka" },
+      { amount: 200, unit: "ml", item: "mléko" },
+      { amount: 100, unit: "ml", item: "voda" },
+      { amount: 10, unit: "g", item: "čerstvé droždí" },
+      { amount: 1, unit: "lžička", item: "cukr" },
+      { amount: 2, unit: "lžičky", item: "sůl" },
+      { amount: 25, unit: "g", item: "máslo" }
+    ],
+    allergens: ["lepek", "mléko"],
+    suitableFor: [],
+    preTasks: [],
+    calories: 230,
+    workflow: "Peč v domácí pekárně na program Rychlý základní chléb."
+  },
+  {
+    id: 68,
+    title: "Housky",
+    servings: 8,
+    tags: ["přílohy"],
+    photo_urls: ["/imgRecipe/housky.webp"],
+    ingredients: [
+      { amount: 500, unit: "g", item: "hladká mouka" },
+      { amount: 250, unit: "ml", item: "voda" },
+      { amount: 21, unit: "g", item: "čerstvé droždí" },
+      { amount: 8, unit: "g", item: "sůl" },
+      { amount: 50, unit: "g", item: "olej" }
+    ],
+    allergens: ["lepek"],
+    suitableFor: ["veganské", "bez mléka"],
+    preTasks: [],
+    calories: 180,
+    workflow: "Vypracuj hladké těsto. Rozděl ho na 12 dílů, vytvaruj housky, nech je vykynout a peč 11 minut na 230 °C dozlatova."
+  },
+  {
+    id: 69,
+    title: "Celozrnný chléb s ořechy a brusinkami",
+    servings: 8,
+    tags: ["přílohy"],
+    photo_urls: ["/imgRecipe/chleb-brusinky.webp"],
+    ingredients: [
+      { amount: 200, unit: "g", item: "celozrnná špaldová mouka" },
+      { amount: 300, unit: "g", item: "hladká špaldová mouka" },
+      { amount: 320, unit: "ml", item: "voda" },
+      { amount: 8, unit: "g", item: "čerstvé droždí" },
+      { amount: 1, unit: "lžíce", item: "jablečný ocet" },
+      { amount: 1.5, unit: "lžičky", item: "sůl" },
+      { amount: 1, unit: "lžíce", item: "olej" },
+      { amount: 2, unit: "lžíce", item: "vlašské ořechy" },
+      { amount: 2, unit: "lžíce", item: "sušené brusinky" },
+    ],
+    allergens: ["lepek", "ořechy"],
+    suitableFor: ["veganské", "bez mléka"],
+    preTasks: [],
+    calories: 240,
+    workflow: "Vlašské ořechy nasekej nahrubo. Peč v domácí pekárně na program Rychlý celozrnný chléb."
+  },
+  {
+    id: 70,
+    title: "Houskový knedlík",
+    servings: 6,
+    tags: ["přílohy"],
+    photo_urls: ["/imgRecipe/houskovy-knedlik.webp"],
+    ingredients: [
+      { amount: 360, unit: "g", item: "hrubá mouka" },
+      { amount: 200, unit: "ml", item: "mléko" },
+      { amount: 8, unit: "g", item: "čerstvé droždí" },
+      { amount: 1, unit: "ks", item: "vejce" },
+      { amount: 1.4, unit: "g", item: "sůl" },
+    ],
+    allergens: ["lepek", "mléko", "vejce"],
+    suitableFor: [],
+    preTasks: [],
+    calories: 260,
+    workflow: "Z droždí a části vlažného mléka připrav kvásek. Do mouky přidej sůl, vejce, kvásek a zbytek mléka a vypracuj hladké těsto. Nakonec vmíchej rohlík nakrájený na kostičky. Nech vykynout, vytvaruj dva šišky, ještě krátce nech nakynout a vař ve vroucí vodě asi 20 minut. Po uvaření propíchej a krájej nití nebo ostrým nožem."
+  },
+  {
+    id: 71,
+    title: "Domácí těstoviny",
+    servings: 4,
+    tags: ["přílohy"],
+    photo_urls: ["/imgRecipe/domaci-testoviny.webp"],
+    ingredients: [
+      { amount: 300, unit: "g", item: "hladká mouka" },
+      { amount: 3, unit: "ks", item: "vejce" },
+      { amount: 1, unit: "lžíce", item: "olivový olej" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: ["lepek", "vejce"],
+    suitableFor: [],
+    preTasks: [],
+    calories: 340,
+    workflow: "Z mouky, vajec, oleje a soli vypracuj pevné hladké těsto. Zabal ho a nech alespoň 30 minut odpočinout. Poté těsto tence vyválej nebo projeď strojkem, nakrájej na požadovaný tvar a vař v osolené vroucí vodě 2 až 4 minuty podle tloušťky."
+  },
+  {
+    id: 72,
+    title: "Dušená rýže",
+    servings: 4,
+    tags: ["přílohy"],
+    photo_urls: ["/imgRecipe/dusena-ryze.webp"],
+    ingredients: [
+      { amount: 250, unit: "g", item: "dlouhozrnná rýže" },
+      { amount: 500, unit: "ml", item: "voda" },
+      { amount: 1, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: [],
+    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 180,
+    workflow: "Rýži několikrát propláchni. Na troše oleje ji krátce orestuj, zalij vodou, osol a přiveď k varu. Pak ztlum plamen, přiklop a nech dusit asi 15 až 18 minut, dokud se voda nevstřebá. Nakonec nech rýži ještě pár minut dojít pod pokličkou a načechrej ji vidličkou."
+  },
+  {
+    id: 73,
+    title: "Pečené brambory s bylinkami",
+    servings: 4,
+    tags: ["přílohy"],
+    photo_urls: ["/imgRecipe/pecene-brambory.webp"],
+    ingredients: [
+      { amount: 800, unit: "g", item: "brambory" },
+      { amount: 2, unit: "lžíce", item: "olivový olej" },
+      { amount: 1, unit: "lžička", item: "sušený rozmarýn" },
+      { amount: 1, unit: "lžička", item: "sušený tymián" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "špetka", item: "pepř" }
+    ],
+    allergens: [],
+    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 210,
+    workflow: "Brambory omyj a nakrájej na měsíčky nebo kostky. Promíchej je s olejem, rozmarýnem, tymiánem, solí a pepřem. Rozlož na plech v jedné vrstvě a peč asi 35 až 40 minut na 200 °C dozlatova. V polovině pečení brambory promíchej."
+  },
+  {
+    id: 74,
+    title: "Pomazánka z červených fazolí",
+    servings: 4,
+    tags: ["snídaně", "svačiny", "večeře", "pomazánky"],
+    photo_urls: ["/imgRecipe/fazolova-pomazanka.webp"],
+    ingredients: [
+      { amount: 400, unit: "g", item: "červené fazole" },
+      { amount: 0.5, unit: "lžíce", item: "sójová omáčka" },
+      { amount: 1, unit: "lžíce", item: "tahini" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: ["lepek", "sója", "sezam"],
+    suitableFor: ["veganské", "bez mléka"],
+    preTasks: [],
+    calories: 190,
+    workflow: "Uvařené nebo konzervované červené fazole slij a nech okapat. Rozmixuj je se sójovou omáčkou a tahini pastou dohladka nebo na hrubší pomazánku podle chuti. Nakonec podle potřeby přisol."
+  },
+  {
+    id: 75,
+    title: "Tuňáková pomazánka",
+    servings: 4,
+    tags: ["snídaně", "svačiny", "večeře", "pomazánky"],
+    photo_urls: ["/imgRecipe/pomazanka-tunakova.webp"],
+    ingredients: [
+      { amount: 1, unit: "konzerva", item: "tuňák ve vlastní šťávě" },
+      { amount: 250, unit: "g", item: "tvaroh" },
+      { amount: 1, unit: "lžička", item: "hořčice" },
+      { amount: 0.5, unit: "ks", item: "cibule" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: ["mléko", "ryby", "hořčice"],
+    suitableFor: ["bez lepku"],
+    preTasks: [],
+    calories: 170,
+    workflow: "Tuňáka nech okapat a smíchej ho s tvarohem, hořčicí a nadrobno nakrájenou cibulí. Dochuť solí a podle potřeby krátce promixuj nebo nech hrubší strukturu."
+  },
+  {
+    id: 76,
+    title: "Rajčatová pomazánka s bazalkou",
+    servings: 4,
+    tags: ["snídaně", "svačiny", "večeře", "pomazánky"],
+    photo_urls: ["/imgRecipe/rajcatova-pomazanka.webp"],
+    ingredients: [
+      { amount: 2, unit: "lžíce", item: "rajčatová pasta" },
+      { amount: 1, unit: "ks", item: "mrkev" },
+      { amount: 2, unit: "ks", item: "rajčata" },
+      { amount: 1, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "lžíce", item: "slunečnicová semínka" },
+      { amount: 1, unit: "lžíce", item: "sezamová semínka" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "lžička", item: "sušená bazalka" }
+    ],
+    allergens: ["sezam"],
+    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 160,
+    workflow: "Mrkev nastrouhej najemno a rajčata nakrájej na menší kousky. Na troše oleje krátce orestuj mrkev, přidej rajčatovou pastu a rajčata a nech směs chvíli zhoustnout. Vmíchej slunečnicová a sezamová semínka, osol a dochuť sušenou bazalkou. Nech vychladnout a podle chuti rozmixuj dohladka nebo nech hrubší strukturu."
+  },
+  {
+    id: 77,
+    title: "Bramborová kaše",
+    servings: 4,
+    tags: ["přílohy"],
+    photo_urls: ["/imgRecipe/bramborova-kase.webp"],
+    ingredients: [
+      { amount: 800, unit: "g", item: "brambory" },
+      { amount: 200, unit: "ml", item: "mléko" },
+      { amount: 40, unit: "g", item: "máslo" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: ["mléko"],
+    suitableFor: ["bez lepku"],
+    preTasks: [],
+    calories: 220,
+    workflow: "Brambory oloupej, nakrájej na menší kusy a uvař v osolené vodě doměkka. Sceď je, přidej máslo a postupně přilévej teplé mléko. Rozšťouchej nebo vyšlehej do hladké kaše a podle potřeby dochuť solí."
+  },
+  {
+    id: 78,
+    title: "Vařené brambory",
+    servings: 4,
+    tags: ["přílohy"],
+    photo_urls: ["/imgRecipe/varene-brambory.webp"],
+    ingredients: [
+      { amount: 800, unit: "g", item: "brambory" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: [],
+    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 160,
+    workflow: "Brambory oloupej a podle velikosti překroj. Vlož je do osolené vody a vař asi 15 až 20 minut doměkka. Sceď a podávej jako jednoduchou přílohu."
+  },
+  {
+    id: 79,
+    title: "Pomazánka z uzeného tofu",
+    servings: 4,
+    tags: ["snídaně", "svačiny", "večeře", "pomazánky"],
+    photo_urls: ["/imgRecipe/tofu-pomazanka.webp"],
+    ingredients: [
+      { amount: 180, unit: "g", item: "uzené tofu" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 3, unit: "lžíce", item: "ovesné vločky" },
+      { amount: 1, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: ["sója", "lepek"],
+    suitableFor: ["veganské", "bez mléka"],
+    preTasks: [],
+    calories: 190,
+    workflow: "Na troše oleje orestuj nadrobno nakrájenou cibuli. Přidej na kostky nakrájené uzené tofu a ovesné vločky, krátce promíchej a podlij trochou vody. Podus doměkka, potom rozmixuj na pomazánku a podle chuti dosol."
+  },
+  {
+    id: 80,
+    title: "Tvarohová pomazánka",
+    servings: 4,
+    tags: ["snídaně", "svačiny", "večeře", "pomazánky"],
+    photo_urls: ["/imgRecipe/tvarohova-pomazanka.webp"],
+    ingredients: [
+      { amount: 250, unit: "g", item: "tvaroh" },
+      { amount: 40, unit: "g", item: "máslo" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 2, unit: "lžíce", item: "čerstvé bylinky" }
+    ],
+    allergens: ["mléko"],
+    suitableFor: ["bez lepku"],
+    preTasks: [],
+    calories: 180,
+    workflow: "Tvaroh smíchej se změklým máslem, osol a vmíchej nasekané čerstvé bylinky. Pomazánku dobře promíchej do hladké konzistence a nech krátce odležet."
+  },
+  {
+    id: 81,
+    title: "Jahodový koktejl",
+    servings: 2,
+    tags: ["svačiny"],
+    photo_urls: ["/imgRecipe/koktejl-jahodovy.webp"],
+    ingredients: [
+      { amount: 250, unit: "g", item: "jahody" },
+      { amount: 400, unit: "ml", item: "rostlinné mléko" },
+      { amount: 1, unit: "lžíce", item: "med" }
+    ],
+    allergens: [],
+    suitableFor: ["bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 160,
+    workflow: "Jahody omyj, odstraň stopky a dej je do mixéru spolu s mlékem a medem. Rozmixuj dohladka a podávej vychlazené."
+  },
+  {
+    id: 82,
+    title: "Borůvkový koktejl",
+    servings: 2,
+    tags: ["svačiny"],
+    photo_urls: ["/imgRecipe/koktejl-boruvkovy.webp"],
+    ingredients: [
+      { amount: 200, unit: "g", item: "borůvky" },
+      { amount: 400, unit: "ml", item: "rostlinné mléko" },
+      { amount: 1, unit: "lžíce", item: "med" }
+    ],
+    allergens: [],
+    suitableFor: ["bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 155,
+    workflow: "Borůvky dej do mixéru spolu s mlékem a medem a rozmixuj dohladka. Podávej ihned, ideálně dobře vychlazené."
+  },
+  {
+    id: 83,
+    title: "Bramborové hranolky",
+    servings: 4,
+    tags: ["přílohy"],
+    photo_urls: ["/imgRecipe/bramborove-hranolky.webp"],
+    ingredients: [
+      { amount: 800, unit: "g", item: "brambory" },
+      { amount: 2, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "špetka", item: "pepř" }
+    ],
+    allergens: [],
+    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 230,
+    workflow: "Brambory nakrájej na hranolky, promíchej s olejem, solí a pepřem a rozlož na plech. Peč asi 35 až 40 minut na 210 °C dozlatova, v polovině pečení promíchej."
+  },
+  {
+    id: 84,
+    title: "Hovězí hamburger",
+    servings: 4,
+    tags: ["obědy", "večeře"],
+    photo_urls: ["/imgRecipe/hovezi-hamburger.webp"],
+    ingredients: [
+      { amount: 500, unit: "g", item: "hovězí mleté maso" },
+      { amount: 4, unit: "ks", item: "hamburgerová bulka" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 1, unit: "ks", item: "rajče" },
+      { amount: 4, unit: "listy", item: "salát" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "špetka", item: "pepř" }
+    ],
+    allergens: ["lepek"],
+    suitableFor: ["bez mléka"],
+    preTasks: ["Vyndat maso z mrazáku."],
+    calories: 520,
+    workflow: "Mleté maso osol a opepři, vytvaruj 4 placky a opeč je na pánvi nebo grilu z obou stran. Bulky rozkroj a krátce opeč. Hamburger sestav s masem, cibulí, rajčetem a salátem."
+  },
+  {
+    id: 85,
+    title: "Tofu burger",
+    servings: 4,
+    tags: ["obědy", "večeře"],
+    photo_urls: ["/imgRecipe/tofu-burger.webp"],
+    ingredients: [
+      { amount: 200, unit: "g", item: "tofu" },
+      { amount: 4, unit: "ks", item: "hamburgerová bulka" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 1, unit: "ks", item: "rajče" },
+      { amount: 4, unit: "listy", item: "salát" },
+      { amount: 2, unit: "lžíce", item: "sójová omáčka" },
+      { amount: 1, unit: "lžíce", item: "olej" }
+    ],
+    allergens: ["lepek", "sója"],
+    suitableFor: ["veganské", "bez mléka"],
+    preTasks: [],
+    calories: 430,
+    workflow: "Tofu nakrájej na silnější plátky a krátce nalož do sójové omáčky. Opeč ho na troše oleje dozlatova. Bulky rozkroj a krátce opeč. Burger sestav s tofu, cibulí, rajčetem a salátem."
+  },
+  {
+    id: 86,
+    title: "Bílý jogurt",
+    servings: 6,
+    tags: ["snídaně", "svačiny"],
+    photo_urls: ["/imgRecipe/bily-jogurt.webp"],
+    ingredients: [
+      { amount: 1, unit: "l", item: "mléko" },
+      { amount: 2, unit: "lžíce", item: "bílý jogurt" }
+    ],
+    allergens: ["mléko"],
+    suitableFor: ["bez lepku"],
+    preTasks: [],
+    calories: 105,
+    workflow: "Mléko zahřej přibližně na 40 až 45 °C, vmíchej bílý jogurt a nalij do skleniček. Vlož do jogurtovače a nech zrát asi 8 hodin. Potom vychlaď v lednici."
+  },
+  {
+    id: 87,
+    title: "Tempura",
+    servings: 4,
+    tags: ["obědy", "večeře"],
+    photo_urls: ["/imgRecipe/tempura.webp"],
+    ingredients: [
+      { amount: 200, unit: "g", item: "hladká mouka" },
+      { amount: 250, unit: "ml", item: "perlivá voda" },
+      { amount: 1, unit: "ks", item: "vejce" },
+      { amount: 1, unit: "ks", item: "cuketa" },
+      { amount: 1, unit: "ks", item: "mrkev" },
+      { amount: 1, unit: "l", item: "olej na smažení" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: ["lepek", "vejce"],
+    suitableFor: ["bez mléka"],
+    preTasks: [],
+    calories: 310,
+    workflow: "Z mouky, vejce a ledově studené perlivé vody připrav řídké těstíčko. Zeleninu nakrájej na hranolky nebo plátky, lehce osol a obal v těstíčku. Smaž v rozpáleném oleji dozlatova a nech okapat na papírové utěrce."
+  },
+  {
+    id: 88,
+    title: "Zelný salát",
+    servings: 4,
+    tags: ["svačiny", "večeře"],
+    photo_urls: ["/imgRecipe/zelny-salat.webp"],
+    ingredients: [
+      { amount: 300, unit: "g", item: "bílé zelí" },
+      { amount: 1, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "lžíce", item: "ocet" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "špetka", item: "cukr" }
+    ],
+    allergens: [],
+    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 55,
+    workflow: "Zelí nakrájej najemno. Promačkej, promíchej s olejem, octem, cukrem a solí a nech chvíli odležet, aby zelí změklo."
+  },
+  {
+    id: 89,
+    title: "Volské oko",
+    servings: 2,
+    tags: ["snídaně", "večeře"],
+    photo_urls: ["/imgRecipe/volske-oko.webp"],
+    ingredients: [
+      { amount: 2, unit: "ks", item: "vejce" },
+      { amount: 1, unit: "lžička", item: "máslo" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "špetka", item: "pepř" }
+    ],
+    allergens: ["vejce", "mléko"],
+    suitableFor: ["bez lepku"],
+    preTasks: [],
+    calories: 95,
+    workflow: "Na pánvi rozehřej máslo, vyklepni vejce a smaž je na mírném plameni, dokud bílek neztuhne a žloutek zůstane tekutý. Osol a opepři."
+  },
+  {
+    id: 90,
+    title: "Polenta",
+    servings: 4,
+    tags: ["přílohy"],
+    photo_urls: ["/imgRecipe/polenta.webp"],
+    ingredients: [
+      { amount: 250, unit: "g", item: "instantní polenta" },
+      { amount: 1, unit: "l", item: "voda" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: [],
+    suitableFor: ["veganské", "bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 225,
+    workflow: "Vodu osol a přiveď k varu. Za stálého míchání vsyp polentu a vař podle návodu do zhoustnutí. Podávej hned jako kaši nebo ji nech ztuhnout a dál používej."
+  },
+  {
+    id: 91,
+    title: "Vejce natvrdo",
+    servings: 2,
+    tags: ["snídaně", "svačiny"],
+    photo_urls: ["/imgRecipe/vejce-natvrdo.webp"],
+    ingredients: [
+      { amount: 2, unit: "ks", item: "vejce" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: ["vejce"],
+    suitableFor: ["bez lepku", "bez mléka"],
+    preTasks: [],
+    calories: 80,
+    workflow: "Vejce vlož do studené vody, přiveď k varu a vař asi 9 až 10 minut. Poté je zchlaď ve studené vodě a oloupej."
+  },
+  {
+    id: 92,
+    title: "Pizza muffiny",
+    servings: 6,
+    tags: ["snídaně", "svačiny", "večeře"],
+    photo_urls: ["/imgRecipe/pizza-muffin.webp"],
+    ingredients: [
+      { amount: 200, unit: "g", item: "hladká mouka" },
+      { amount: 2, unit: "ks", item: "vejce" },
+      { amount: 150, unit: "ml", item: "mléko" },
+      { amount: 80, unit: "g", item: "sýr" },
+      { amount: 80, unit: "g", item: "šunka" },
+      { amount: 2, unit: "lžíce", item: "rajčatová omáčka" },
+      { amount: 1, unit: "lžička", item: "prášek do pečiva" }
+    ],
+    allergens: ["lepek", "vejce", "mléko"],
+    suitableFor: [],
+    preTasks: [],
+    calories: 225,
+    workflow: "Smíchej vejce, mléko a rajčatovou omáčku, přidej mouku s práškem do pečiva a vmíchej nakrájenou šunku a sýr. Těsto rozděl do formy na muffiny a peč asi 20 minut na 180 °C."
+  },
+  {
+    id: 93,
+    title: "Ramen",
+    servings: 4,
+    tags: ["polévky", "obědy"],
+    photo_urls: ["/imgRecipe/ramen.webp"],
+    ingredients: [
+      { amount: 1.2, unit: "l", item: "vývar" },
+      { amount: 250, unit: "g", item: "ramen nudle" },
+      { amount: 2, unit: "ks", item: "vejce" },
+      { amount: 150, unit: "g", item: "houby" },
+      { amount: 2, unit: "ks", item: "jarní cibulka" },
+      { amount: 2, unit: "lžíce", item: "sójová omáčka" },
+      { amount: 1, unit: "lžička", item: "miso pasta" }
+    ],
+    allergens: ["lepek", "vejce", "sója"],
+    suitableFor: ["bez mléka"],
+    preTasks: [],
+    calories: 295,
+    workflow: "Vývar přiveď k varu a dochuť sójovou omáčkou a miso pastou. Přidej houby a krátce provař. Nudle uvař zvlášť podle návodu, rozděl do misek a zalij vývarem. Doplň půlkami vajec a jarní cibulkou."
+  },
+  {
+    id: 94,
+    title: "Pho-bo",
+    servings: 4,
+    tags: ["polévky", "obědy"],
+    photo_urls: ["/imgRecipe/pho-bo.webp"],
+    ingredients: [
+      { amount: 1.5, unit: "l", item: "hovězí vývar" },
+      { amount: 200, unit: "g", item: "rýžové nudle" },
+      { amount: 250, unit: "g", item: "hovězí maso" },
+      { amount: 1, unit: "ks", item: "červená cibule" },
+      { amount: 1, unit: "kousek", item: "zázvor" },
+      { amount: 2, unit: "lžíce", item: "rybí omáčka" },
+      { amount: 1, unit: "hrst", item: "čerstvý koriandr" }
+    ],
+    allergens: ["ryby"],
+    suitableFor: ["bez lepku", "bez mléka"],
+    preTasks: ["Vyndat maso z mrazáku."],
+    calories: 300,
+    workflow: "Vývar přiveď k varu s cibulí a zázvorem a dochuť rybí omáčkou. Rýžové nudle připrav podle návodu. Do misek rozděl nudle a tenké plátky hovězího masa, zalij vroucím vývarem a nech maso zatáhnout. Podávej s koriandrem."
+  },
+  {
+    id: 95,
+    title: "Pomazánka z nivy",
+    servings: 4,
+    tags: ["snídaně", "pomazánky", "večeře"],
+    photo_urls: ["/imgRecipe/pomazanka-niva.webp"],
+    ingredients: [
+      { amount: 120, unit: "g", item: "niva" },
+      { amount: 125, unit: "g", item: "máslo" },
+      { amount: 100, unit: "g", item: "pomazánkové máslo" },
+      { amount: 1, unit: "ks", item: "jarní cibulka" },
+      { amount: 1, unit: "špetka", item: "pepř" }
+    ],
+    allergens: ["mléko"],
+    suitableFor: ["bez lepku"],
+    preTasks: [],
+    calories: 390,
+    workflow: "Nivu nastrouhej nebo rozdrob najemno. Smíchej ji s povoleným máslem a pomazánkovým máslem, přidej najemno nakrájenou jarní cibulku a dochuť pepřem. Nech chvíli odležet v lednici a podávej s pečivem."
+  },
+  {
+    id: 96,
+    title: "Pečená vepřová panenka s pečenou mrkví",
+    servings: 4,
+    tags: ["obědy"],
+    photo_urls: ["/imgRecipe/pecena-panenka.webp"],
+    ingredients: [
+      { amount: 600, unit: "g", item: "vepřová panenka" },
+      { amount: 600, unit: "g", item: "mrkev" },
+      { amount: 2, unit: "lžíce", item: "olej" },
+      { amount: 2, unit: "stroužky", item: "česnek" },
+      { amount: 1, unit: "lžička", item: "sůl" },
+      { amount: 0.5, unit: "lžička", item: "pepř" },
+    ],
+    allergens: [],
+    suitableFor: ["bez lepku", "bez mléka"],
+    preTasks: ["Vyndat maso z mrazáku."],
+    calories: 360,
+    workflow: "Panenku osol, opepři a opeč ze všech stran na pánvi. Mrkev nakrájej na proužky, promíchej s olejem, solí, pepřem a česnekem a rozlož na plech. Peč v troubě na 180 °C 15 minut. Potom přidej na plech panenku a peč asi 20-25 minut na 180 °C. Pro výraznější kůrčičku nakonec zapni na 1-2 minuty gril. Po upečení nech maso 10-15 minut odpočinout a pak ho krájej na plátky."
+  },
+  {
+    id: 97,
+    title: "Hot dog",
+    servings: 4,
+    tags: ["večeře", "svačiny"],
+    photo_urls: ["/imgRecipe/hot-dog.webp"],
+    ingredients: [
+      { amount: 4, unit: "ks", item: "rohlík na hot dog" },
+      { amount: 4, unit: "ks", item: "párek" },
+      { amount: 4, unit: "lžíce", item: "kečup" },
+      { amount: 2, unit: "lžíce", item: "hořčice" },
+      { amount: 1, unit: "ks", item: "cibule" }
+    ],
+    allergens: ["lepek"],
+    suitableFor: ["bez mléka"],
+    preTasks: [],
+    calories: 420,
+    workflow: "Párky ohřej v horké vodě nebo je krátce opeč. Rohlíky nahřej, vlož do nich párky a doplň kečupem, hořčicí a nadrobno nakrájenou cibulí. Podávej ihned."
+  },
+  {
+    id: 98,
+    title: "Obložený chléb",
+    servings: 2,
+    tags: ["snídaně", "svačiny", "večeře"],
+    photo_urls: ["/imgRecipe/oblozeny-chleb.webp"],
+    ingredients: [
+      { amount: 2, unit: "plátky", item: "chléb" },
+      { amount: 80, unit: "g", item: "šunka" },
+      { amount: 60, unit: "g", item: "sýr" },
+      { amount: 0.5, unit: "ks", item: "rajče" },
+      { amount: 0.25, unit: "ks", item: "okurka" },
+      { amount: 2, unit: "listy", item: "salát" },
+      { amount: 20, unit: "g", item: "máslo" }
+    ],
+    allergens: ["lepek", "mléko"],
+    suitableFor: [],
+    preTasks: [],
+    calories: 340,
+    workflow: "Chléb namaž máslem. Oblož ho šunkou, sýrem, plátky rajčete, okurkou a salátem. Podávej ihned, případně doplň podle chuti vejcem nebo pomazánkou."
+  },
+  {
+    id: 99,
+    title: "Lasagne",
+    servings: 6,
+    tags: ["obědy", "večeře"],
+    photo_urls: ["/imgRecipe/lasagne.webp"],
+    ingredients: [
+      { amount: 250, unit: "g", item: "lasagne pláty" },
+      { amount: 500, unit: "g", item: "mleté hovězí maso" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 2, unit: "stroužky", item: "česnek" },
+      { amount: 500, unit: "ml", item: "rajčatová omáčka" },
+      { amount: 250, unit: "g", item: "bešamel" },
+      { amount: 150, unit: "g", item: "strouhaný sýr" },
+      { amount: 2, unit: "lžíce", item: "olej" },
+      { amount: 1, unit: "lžička", item: "sůl" },
+      { amount: 1, unit: "špetka", item: "pepř" }
+    ],
+    allergens: ["lepek", "mléko"],
+    suitableFor: [],
+    preTasks: ["Vyndat maso z mrazáku."],
+    calories: 620,
+    workflow: "Na oleji orestuj cibuli a česnek, přidej maso a restuj, dokud se nezatáhne. Vmíchej rajčatovou omáčku, osol, opepři a krátce povař. Do zapékací mísy vrstvi omáčku, lasagne pláty, ricottu nebo bešamel a část sýra, postup opakuj a nahoře zakonči sýrem. Peč asi 35-40 minut na 180 °C dozlatova a před krájením nech chvíli odpočinout."
+  },
+  {
+    id: 100,
+    title: "Smažený sýr",
+    servings: 4,
+    tags: ["obědy", "večeře"],
+    photo_urls: ["/imgRecipe/smazeny-syr.webp"],
+    ingredients: [
+      { amount: 4, unit: "plátky", item: "eidam" },
+      { amount: 80, unit: "g", item: "hladká mouka" },
+      { amount: 2, unit: "ks", item: "vejce" },
+      { amount: 120, unit: "g", item: "strouhanka" },
+      { amount: 200, unit: "ml", item: "olej na smažení" },
+      { amount: 1, unit: "špetka", item: "sůl" }
+    ],
+    allergens: ["lepek", "mléko", "vejce"],
+    suitableFor: [],
+    preTasks: [],
+    calories: 540,
+    workflow: "Plátky sýra obal nejprve v mouce, potom ve vejci a nakonec ve strouhance. Pro pevnější obal můžeš obalení ve vejci a strouhance ještě jednou zopakovat. Sýr smaž v rozpáleném oleji z obou stran dozlatova a nech krátce okapat na papírové utěrce."
+  },
+  {
+    id: 101,
+    title: "Smažený květák",
+    servings: 4,
+    tags: ["obědy", "večeře"],
+    photo_urls: ["/imgRecipe/smazeny-kvetak.webp"],
+    ingredients: [
+      { amount: 1, unit: "ks", item: "květák" },
+      { amount: 80, unit: "g", item: "hladká mouka" },
+      { amount: 2, unit: "ks", item: "vejce" },
+      { amount: 120, unit: "g", item: "strouhanka" },
+      { amount: 200, unit: "ml", item: "olej na smažení" },
+      { amount: 1, unit: "lžička", item: "sůl" }
+    ],
+    allergens: ["lepek", "vejce"],
+    suitableFor: ["bez mléka"],
+    preTasks: [],
+    calories: 390,
+    workflow: "Květák rozeber na růžičky a krátce ho povař v osolené vodě asi 5 minut. Nech okapat a vychladnout, potom růžičky obal v mouce, vejci a strouhance. Smaž je v rozpáleném oleji dozlatova ze všech stran a nech okapat na papírové utěrce."
+  },
+  {
+    id: 102,
+    title: "Květákový mozeček",
+    servings: 4,
+    tags: ["obědy", "večeře"],
+    photo_urls: ["/imgRecipe/kvetakovy-mozecek.webp"],
+    ingredients: [
+      { amount: 1, unit: "ks", item: "květák" },
+      { amount: 4, unit: "ks", item: "vejce" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 2, unit: "lžíce", item: "máslo nebo olej" },
+      { amount: 1, unit: "lžička", item: "sůl" },
+      { amount: 1, unit: "špetka", item: "pepř" }
+    ],
+    allergens: ["vejce", "mléko"],
+    suitableFor: ["bez lepku"],
+    preTasks: [],
+    calories: 260,
+    workflow: "Květák rozeber na růžičky a uvař ho v osolené vodě doměkka. Na pánvi orestuj nadrobno nakrájenou cibuli na másle nebo oleji, přidej rozmačkaný květák a krátce promíchej. Nakonec přilij rozšlehaná vejce, osol, opepři a za stálého míchání připrav směs do vláčné konzistence."
+  },
+  {
+    id: 103,
+    title: "Máslové sušenky",
+    servings: 20,
+    tags: ["moučníky", "svačiny"],
+    photo_urls: ["/imgRecipe/maslove-susenky.webp"],
+    ingredients: [
+      { amount: 220, unit: "g", item: "hladká mouka" },
+      { amount: 120, unit: "g", item: "máslo" },
+      { amount: 80, unit: "g", item: "cukr" },
+      { amount: 1, unit: "ks", item: "vejce" },
+      { amount: 1, unit: "lžička", item: "vanilkový cukr" }
+    ],
+    allergens: ["lepek", "mléko", "vejce"],
+    suitableFor: [],
+    preTasks: [],
+    calories: 165,
+    workflow: "Z mouky, změklého másla, cukru, vejce a vanilkového cukru vypracuj hladké těsto. Nech ho asi 20 minut odpočinout v lednici, potom vyválej plát a vykrajuj sušenky. Přendej je na plech s pečicím papírem a peč asi 10-12 minut na 180 °C dorůžova."
+  },
+  {
+    id: 104,
+    title: "Bublanina",
+    servings: 8,
+    tags: ["moučníky", "svačiny", "snídaně"],
+    photo_urls: ["/imgRecipe/bublanina.webp"],
+    ingredients: [
+      { amount: 250, unit: "g", item: "polohrubá mouka" },
+      { amount: 150, unit: "g", item: "cukr" },
+      { amount: 3, unit: "ks", item: "vejce" },
+      { amount: 200, unit: "ml", item: "mléko" },
+      { amount: 80, unit: "ml", item: "olej" },
+      { amount: 1, unit: "balení", item: "prášek do pečiva" },
+      { amount: 250, unit: "g", item: "ovoce" }
+    ],
+    allergens: ["lepek", "mléko", "vejce"],
+    suitableFor: [],
+    preTasks: [],
+    calories: 280,
+    workflow: "Vejce vyšlehej s cukrem, přidej mléko, olej a nakonec vmíchej mouku smíchanou s práškem do pečiva. Těsto nalij na vymazaný nebo pečicím papírem vyložený plech, rovnoměrně rozlož ovoce a peč asi 30-35 minut na 180 °C dozlatova. Po vychladnutí můžeš pocukrovat."
+  },
+  {
+    id: 105,
+    title: "Kuře na paprice",
+    servings: 4,
+    tags: ["obědy"],
+    photo_urls: ["/imgRecipe/kure-na-paprice.webp"],
+    ingredients: [
+      { amount: 600, unit: "g", item: "kuřecí stehna nebo prsa" },
+      { amount: 1, unit: "ks", item: "cibule" },
+      { amount: 2, unit: "lžíce", item: "olej" },
+      { amount: 2, unit: "lžičky", item: "sladká paprika" },
+      { amount: 250, unit: "ml", item: "kuřecí vývar nebo voda" },
+      { amount: 200, unit: "ml", item: "smetana na vaření" },
+      { amount: 1, unit: "lžíce", item: "hladká mouka" },
+      { amount: 1, unit: "špetka", item: "sůl" },
+      { amount: 1, unit: "špetka", item: "pepř" }
+    ],
+    allergens: ["mléko", "lepek"],
+    suitableFor: [],
+    preTasks: ["Vyndat kuře z mrazáku."],
+    calories: 420,
+    workflow: "Na oleji orestuj nadrobno nakrájenou cibuli dozlatova, stáhni plamen a vmíchej sladkou papriku. Hned přidej kuře, krátce opeč, osol, opepři a podlij vývarem. Dus doměkka asi 35-45 minut. Mouku rozmíchej ve smetaně, vlij do omáčky a ještě asi 10 minut provař do zhoustnutí. Podávej s těstovinami, knedlíkem nebo rýží."
   }
 ];

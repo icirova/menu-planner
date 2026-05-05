@@ -1,0 +1,547 @@
+.home-page {
+  width: 100%;
+  --home-main-column: minmax(0, 1fr);
+  --home-side-column: minmax(0, 1fr);
+  --home-plan-third-column: minmax(320px, 1.08fr);
+}
+
+.home-page__sheet {
+  padding: 2rem;
+  border-radius: 0;
+  background: var(--surface-main);
+  border: 0;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.home-page__hero {
+  min-width: 0;
+}
+
+.home-page__heroContent {
+  align-content: center;
+  min-height: 100%;
+}
+
+.home-page__heroAction,
+.home-page__heroAction.button--ghost {
+  justify-self: start;
+  width: fit-content;
+  margin-top: 0;
+  border-radius: var(--radius-control);
+}
+
+.home-page__heroAction:hover,
+.home-page__heroAction.button--ghost:hover {
+  transform: translateY(-1px);
+}
+
+.home-page__heroAside {
+  justify-items: end;
+  align-content: end;
+}
+
+.home-page__heroTime {
+  font-family: "Sorts Mill Goudy", serif;
+  font-size: clamp(2.1rem, 3vw, 2.9rem);
+  line-height: 0.95;
+  color: #fff9ef;
+  text-shadow: 0 4px 18px rgba(14, 22, 17, 0.34);
+}
+
+.home-page__panel {
+  padding: 1.25rem;
+  border-radius: var(--radius-panel);
+  background: var(--surface-panel);
+  border: 1px solid var(--border-soft);
+}
+
+.home-page__overview {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.home-page__topGrid {
+  display: grid;
+  grid-template-columns: var(--home-main-column) var(--home-side-column);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.home-page__panelHeader p {
+  margin-top: 0.35rem;
+  color: #6a655c;
+}
+
+.home-page__panelHeader h2 {
+  margin-top: 0;
+  font-family: "Amatic SC", cursive;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #444;
+}
+
+.home-page__panelHeader--withAction {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.home-page__panelAction {
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.home-page__panelText--empty {
+  font-style: italic;
+  color: #7a7368;
+}
+
+.home-page__panel--today,
+.home-page__panel--weeklyTasks,
+.home-page__panel--shopping {
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+}
+
+.home-page__cards {
+  margin-top: 1.25rem;
+}
+
+.home-page__topGrid > .home-page__panel--today,
+.home-page__topGrid > .home-page__panel--shopping {
+  align-self: stretch;
+}
+
+.home-page__cards .cards {
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.home-page__cards .card--overview {
+  min-height: 100%;
+  padding: 1rem;
+  background: rgba(248, 247, 243, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
+  border-radius: 0;
+}
+
+.home-page__cards .card__image {
+  height: 220px;
+}
+
+.home-page__cards .card__title {
+  text-align: left;
+  padding: 0 0 0.8rem;
+  font-size: 2.25rem;
+}
+
+.home-page__cards .card__content {
+  gap: 0;
+  padding: 1rem 0 0;
+}
+
+.home-page__cards .card__text {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, auto) minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: baseline;
+  margin: 0;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid rgba(122, 113, 93, 0.16);
+}
+
+.home-page__cards .card__text:first-child {
+  padding-top: 0;
+}
+
+.home-page__cards .card__slot--overview {
+  min-height: 1.55rem;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+}
+
+.home-page__cards .card__slot--overview.card__slot--filled,
+.home-page__cards .card__slot--optional.card__slot--overview.card__slot--filled {
+  padding: 0;
+}
+
+.home-page__cards .card__slot--overview.card__slot--empty {
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.home-page__cards .card__text--dinner .card__slot--overview,
+.home-page__cards .card__text--optional .card__slot--overview {
+  background: transparent;
+  box-shadow: none;
+}
+
+.home-page__cards .card__subtitle {
+  margin: 0;
+  flex-basis: auto;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6a655c;
+}
+
+.home-page__cards .card__slot-body,
+.home-page__cards .card__slot-actions {
+  gap: 0.35rem;
+}
+
+.home-page__cards .card__slot-title,
+.home-page__cards .card__slot-placeholder {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  font-family: "Sorts Mill Goudy", serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #2f372f;
+}
+
+.home-page__cards .card__slot-placeholder {
+  color: #7a7368;
+  justify-content: flex-start;
+}
+
+.home-page__cards .card__slot-iconButton {
+  width: 1.85rem;
+  height: 1.85rem;
+}
+
+.home-page__cards .card__slot-actions .card__slot-title {
+  order: -1;
+}
+
+.home-page__cards .card__emptyMessage {
+  margin: 0;
+  padding: 0.2rem 0 0;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: #7a7368;
+}
+
+.home-page__cards .card__shopping {
+  margin-top: 1rem;
+}
+
+.home-page__cards .card__shoppingList {
+  gap: 0.45rem;
+}
+
+.home-page__summaryCard {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--surface-panel);
+  border: 1px solid var(--border-soft);
+  border-radius: 0;
+}
+
+.home-page__summaryHeader {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.home-page__summaryHeader h3 {
+  margin: 0;
+  font-family: "Amatic SC", cursive;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #444;
+}
+
+.home-page__summaryHeader p {
+  margin: 0;
+  color: #6a655c;
+  line-height: 1.55;
+}
+
+.home-page__summaryGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+.home-page__summaryBox {
+  display: grid;
+  gap: 0.2rem;
+  min-height: 0;
+  padding: 0.95rem 1rem;
+  background: rgba(248, 247, 243, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
+}
+
+.home-page__summaryValue {
+  font-family: "Sorts Mill Goudy", serif;
+  font-size: 2rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: #2f372f;
+}
+
+.home-page__summaryLabel {
+  color: #6a655c;
+  line-height: 1.5;
+}
+
+.home-page__summaryMeta {
+  color: #6a655c;
+  line-height: 1.5;
+}
+
+.home-page__weeklyTasks {
+  margin-top: 1.15rem;
+}
+
+.home-page__panel--today .home-page__panelHeader,
+.home-page__panel--weeklyTasks .home-page__panelHeader,
+.home-page__panel--shopping .home-page__panelHeader {
+  min-height: 5.75rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(122, 113, 93, 0.18);
+}
+
+.home-page__panel--today .home-page__panelHeader {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.home-page__panel--shopping .home-page__panelHeader {
+  padding-bottom: 0.9rem;
+}
+
+.home-page__todayCard {
+  display: flex;
+  flex: 1;
+}
+
+.home-page__todayCard .card {
+  min-height: 0;
+  flex: 1;
+}
+
+.home-page__panel--today .card--overview {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.home-page__panel--today .card__image {
+  height: 220px;
+}
+
+.home-page__panel--shopping .card__image {
+  height: 220px;
+}
+
+.home-page__panel--today .card__content {
+  gap: 0;
+  padding: 1rem 0 0;
+}
+
+.home-page__panel--today .card__text {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, auto) minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: baseline;
+  margin: 0;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid rgba(122, 113, 93, 0.16);
+}
+
+.home-page__panel--today .card__text:first-child {
+  padding-top: 0;
+}
+
+.home-page__panel--today .card__text:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.home-page__panel--today .card__slot--overview {
+  min-height: 2.65rem;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+}
+
+.home-page__panel--today .card__slot--overview.card__slot--filled,
+.home-page__panel--today .card__slot--optional.card__slot--overview.card__slot--filled {
+  padding: 0;
+}
+
+.home-page__panel--today .card__slot--overview.card__slot--empty {
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.home-page__panel--today .card__text--dinner .card__slot--overview,
+.home-page__panel--today .card__text--optional .card__slot--overview,
+.home-page__panel--today .card__text--dinner .card__description,
+.home-page__panel--today .card__text--optional .card__description {
+  background: transparent;
+  box-shadow: none;
+}
+
+.home-page__panel--today .card__subtitle {
+  margin: 0;
+  flex-basis: auto;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.96rem;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6a655c;
+}
+
+.home-page__panel--today .card__text--optional .card__subtitle {
+  font-size: 0.92rem;
+  color: #6a655c;
+}
+
+.home-page__panel--today .card__slot-body,
+.home-page__panel--today .card__slot-actions {
+  gap: 0;
+}
+
+.home-page__panel--today .card__slot-title,
+.home-page__panel--today .card__slot-placeholder {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  font-family: "Sorts Mill Goudy", serif;
+  font-size: 1.06rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #2f372f;
+}
+
+.home-page__panel--today .card__slot-placeholder {
+  color: #7a7368;
+  justify-content: flex-start;
+}
+
+.home-page__panel--today .card__emptyMessage {
+  margin: 0;
+  padding: 0.2rem 0 0;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: #7a7368;
+}
+
+.home-page__panel--shopping .shopping-card {
+  flex: 1;
+}
+
+.home-page__panel--shopping .shopping-card--embedded {
+  margin-top: 1.15rem;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.home-page__panel--shopping .shopping-card--embedded {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.home-page__panel--shopping .shopping-card--embedded .card__content {
+  padding: 0;
+}
+
+.home-page__panel--shopping .shopping-card--embedded .card__content {
+  padding-top: 0.5rem;
+}
+
+.home-page__panel--shopping .shopping-card--embedded .card__content {
+  min-height: 0;
+}
+
+@media (max-width: 960px) {
+  .home-page__heroAside {
+    justify-items: start;
+    align-content: start;
+  }
+
+  .home-page__topGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-page__panel--today .home-page__panelHeader,
+  .home-page__panel--weeklyTasks .home-page__panelHeader,
+  .home-page__panel--shopping .home-page__panelHeader {
+    min-height: 0;
+  }
+
+  .home-page__panelHeader--withAction {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .home-page__panel--today .card__image {
+    height: 180px;
+  }
+
+  .home-page__cards .card__image {
+    height: 180px;
+  }
+
+  .home-page__summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (min-width: 680px) {
+  .home-page__cards .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-page__cards .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) var(--home-plan-third-column);
+  }
+}
+
+@media (max-width: 640px) {
+  .home-page__sheet,
+  .home-page__panel {
+    padding: 1rem;
+  }
+
+  .home-page__panel--today .card__image {
+    height: 150px;
+  }
+
+  .home-page__cards .card__image {
+    height: 150px;
+  }
+
+  .home-page__panel--shopping .shopping-card--embedded .card__content {
+    min-height: 9.5rem;
+  }
+}

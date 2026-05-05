@@ -1,0 +1,250 @@
+.weekly-tasks-panel {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.weekly-tasks-panel__column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.weekly-tasks-panel__column--prep {
+  min-width: 0;
+}
+
+.weekly-tasks-panel__column--side {
+  gap: 1.25rem;
+}
+
+.weekly-tasks-panel__block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.weekly-tasks-panel__subheader h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  color: #2e4134;
+}
+
+.weekly-tasks-panel__subheader p {
+  margin: 0.3rem 0 0;
+  color: #6a655c;
+}
+
+.weekly-tasks-panel .notes-card--embedded {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.weekly-tasks-panel .extra-card--embedded .card__content {
+  padding: 0;
+}
+
+.weekly-tasks-panel .extra-card--embedded .card__content {
+  min-height: 8rem;
+  max-height: 14rem;
+}
+
+.weekly-tasks-panel .extra-card--embedded .extra-card__item,
+.weekly-tasks-panel .extra-card--embedded .extra-card__empty,
+.weekly-tasks-panel__item,
+.weekly-tasks-panel__noteItem {
+  background: #f8f7f3;
+  box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
+  border-radius: 12px;
+}
+
+.weekly-tasks-panel__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.weekly-tasks-panel__empty {
+  margin: 0;
+  padding: 0.15rem 0;
+  color: #7a7368;
+  font-style: italic;
+}
+
+.weekly-tasks-panel__item {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.75rem 0.85rem;
+}
+
+.weekly-tasks-panel__tasks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.weekly-tasks-panel__taskItem {
+  display: grid;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(115, 103, 74, 0.16);
+}
+
+.weekly-tasks-panel__taskItem.is-complete,
+.weekly-tasks-panel__noteItem.is-complete {
+  opacity: 0.58;
+}
+
+.weekly-tasks-panel__taskItem:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.weekly-tasks-panel__day {
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #6f6757;
+}
+
+.weekly-tasks-panel__taskText {
+  font-family: "Sorts Mill Goudy", serif;
+  font-size: 1rem;
+  color: #2e4134;
+  overflow-wrap: anywhere;
+}
+
+.weekly-tasks-panel__toggle {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.7rem;
+  align-items: start;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.weekly-tasks-panel__check {
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-top: 0.06rem;
+  order: 2;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.28);
+}
+
+.weekly-tasks-panel__check.is-complete {
+  display: grid;
+  place-items: center;
+  background: #2f8f58;
+  box-shadow: none;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.weekly-tasks-panel__taskMain {
+  display: grid;
+  gap: 0.2rem;
+  order: 1;
+}
+
+.weekly-tasks-panel__recipe {
+  font-family: "Open Sans", sans-serif;
+  color: #6a655c;
+  font-size: 0.92rem;
+}
+
+.weekly-tasks-panel__notes {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.weekly-tasks-panel__noteForm {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.65rem;
+}
+
+.weekly-tasks-panel__noteInput {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(115, 103, 74, 0.18);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.72);
+  font: inherit;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.weekly-tasks-panel__noteInput:focus {
+  outline: none;
+  border-color: rgba(47, 93, 80, 0.38);
+  box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.08);
+  background: #fff;
+}
+
+.weekly-tasks-panel__noteInput::placeholder {
+  color: rgba(106, 101, 92, 0.62);
+}
+
+.weekly-tasks-panel__notesList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.weekly-tasks-panel__noteItem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 0.65rem;
+  align-items: center;
+  padding: 0.75rem 0.85rem;
+}
+
+.weekly-tasks-panel__noteItem.is-complete {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.weekly-tasks-panel__noteItem .weekly-tasks-panel__taskMain {
+  order: initial;
+  align-self: center;
+}
+
+.weekly-tasks-panel__noteItem .weekly-tasks-panel__check {
+  order: initial;
+  margin-top: 0;
+}
+
+.weekly-tasks-panel__remove {
+  align-self: center;
+}
+
+.weekly-tasks-panel__noteCheckButton {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  align-self: center;
+}
+
+@media (max-width: 860px) {
+  .weekly-tasks-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .weekly-tasks-panel__noteForm {
+    grid-template-columns: 1fr;
+  }
+}

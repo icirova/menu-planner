@@ -1,13 +1,14 @@
 import './global.css';
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider, } from 'react-router-dom';
+import { createHashRouter, RouterProvider, } from 'react-router-dom';
 import { App } from './components/App';
 import { HomePage } from './pages/HomePage/';
 import { Recipes } from './pages/Recipes';
+import { RecipeLibrary } from './pages/RecipeLibrary';
 import {RecipeForm} from './pages/RecipeForm';
 import {RecipeDetail} from './pages/RecipeDetail';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <App />,
@@ -17,8 +18,12 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: '/recipes',
+        path: '/planner',
         element: <Recipes />
+      },
+      {
+        path: '/recipes',
+        element: <RecipeLibrary />
       },
       {
         path: '/recipe-form',

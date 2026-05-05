@@ -15,19 +15,18 @@ const createMetadataIndex = (definitions) =>
 export const TAG_DEFINITIONS = [
   { label: "Snídaně", value: "snídaně", icon: "🍳", aliases: ["snidane", "breakfast"] },
   { label: "Svačiny", value: "svačiny", icon: "🥪", aliases: ["svačina", "svacina", "snack"] },
-  { label: "Polévky", value: "polévky", icon: "🥣", aliases: ["polévka", "polevky", "soup"] },
   { label: "Obědy", value: "obědy", icon: "🍲", aliases: ["oběd", "obed", "lunch"] },
   { label: "Večeře", value: "večeře", icon: "🍽️", aliases: ["vecere", "dinner"] },
   { label: "Moučníky", value: "moučníky", icon: "🍰", aliases: ["moučník", "moucniky", "dessert"] },
+  { label: "Polévky", value: "polévky", icon: "🥣", aliases: ["polévka", "polevky", "soup"] },
+  { label: "Pomazánky", value: "pomazánky", icon: "🫙", aliases: ["pomazanka", "pomazanky", "spread"] },
+  { label: "Přílohy", value: "přílohy", icon: "🥔", aliases: ["priloha", "prilohy", "side"] },
 ];
 
 const TAG_INDEX = createMetadataIndex(TAG_DEFINITIONS);
 
 export const normalizeTagValue = (value) =>
   TAG_INDEX[normalizeMetadataKey(value)]?.value ?? normalizeMetadataKey(value);
-
-export const getTagMetadata = (value) =>
-  TAG_INDEX[normalizeMetadataKey(value)] ?? null;
 
 export const TAG_OPTIONS = TAG_DEFINITIONS.map(({ label, value }) => ({
   label,
@@ -82,11 +81,6 @@ export const ALLERGEN_DEFINITIONS = [
   { label: "Hořčice", value: "hořčice", icon: "🟡", aliases: ["horcice", "mustard"] },
   { label: "Sezam", value: "sezam", icon: "⚪", aliases: ["sesame"] },
 ];
-
-const ALLERGEN_INDEX = createMetadataIndex(ALLERGEN_DEFINITIONS);
-
-export const getAllergenMetadata = (value) =>
-  ALLERGEN_INDEX[normalizeMetadataKey(value)] ?? null;
 
 export const ALLERGEN_OPTIONS = ALLERGEN_DEFINITIONS.map(({ label, value }) => ({
   label,

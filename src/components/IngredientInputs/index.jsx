@@ -1,9 +1,26 @@
-import { useState, useRef } from "react";
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import "./style.css";
 
-export const IngredientInputs = ({ ingredients, setIngredients }) => {
+const createEmptyIngredient = () => ({ amount: "", unit: "", item: "" });
+
+export const IngredientInputs = forwardRef(({ ingredients, setIngredients }, ref) => {
   const [newIngredient, setNewIngredient] = useState({ amount: "", unit: "", item: "" });
   const rowRef = useRef(null);
+
+  const getValidatedIngredient = () => {
+    const { amount, unit, item } = newIngredient;
+    const parsedAmount = parseFloat(amount);
+
+    if (!item.trim() || !unit || !Number.isFinite(parsedAmount) || parsedAmount <= 0) {
+      return null;
+    }
+
+    return {
+      amount: parsedAmount,
+      unit,
+      item: item.trim(),
+    };
+  };
 
   const handleChange = (field, value) => {
     // tiše převést , -> . u množství
@@ -12,16 +29,30 @@ export const IngredientInputs = ({ ingredients, setIngredients }) => {
   };
 
   const addIngredient = () => {
-    const { amount, unit, item } = newIngredient;
-    const a = parseFloat(amount);
-    if (!item.trim() || !unit || !Number.isFinite(a) || a <= 0) return;
+    const ingredient = getValidatedIngredient();
+    if (!ingredient) return;
 
-    setIngredients((prev) => [...prev, { amount: a, unit, item: item.trim() }]);
-    setNewIngredient({ amount: "", unit: "", item: "" });
+    setIngredients((prev) => [...prev, ingredient]);
+    setNewIngredient(createEmptyIngredient());
 
     // vrátit fokus na první pole pro rychlé zadávání
     rowRef.current?.querySelector('input[name="amount"]')?.focus();
   };
+
+  useImperativeHandle(ref, () => ({
+    flushDraftIngredient(currentIngredients = []) {
+      const ingredient = getValidatedIngredient();
+
+      if (!ingredient) {
+        return currentIngredients;
+      }
+
+      const nextIngredients = [...currentIngredients, ingredient];
+      setIngredients(nextIngredients);
+      setNewIngredient(createEmptyIngredient());
+      return nextIngredients;
+    },
+  }), [newIngredient, setIngredients]);
 
   const removeIngredient = (index) => {
     setIngredients((prev) => prev.filter((_, i) => i !== index));
@@ -64,6 +95,7 @@ export const IngredientInputs = ({ ingredients, setIngredients }) => {
           <option value="ml">ml</option>
           <option value="l">l</option>
           <option value="ks">ks</option>
+          <option value="hrnek">hrnek</option>
           <option value="lžíce">lžíce</option>
           <option value="lžička">lžička</option>
           <option value="špetka">špetka</option>
@@ -80,7 +112,7 @@ export const IngredientInputs = ({ ingredients, setIngredients }) => {
         />
 
         <button type="button" className="button button--add" onClick={addIngredient} aria-label="Přidat surovinu">
-          +
+          Přidat
         </button>
       </div>
 
@@ -93,16 +125,16 @@ export const IngredientInputs = ({ ingredients, setIngredients }) => {
             </span>
             <button
               type="button"
-              className="button button--icon button--danger"
+              className="button--remove-control"
               onClick={() => removeIngredient(i)}
               title="Odebrat surovinu"
               aria-label={`Odebrat ${ing.amount} ${ing.unit} ${ing.item}`}
             >
-              ✕
+              ×
             </button>
           </li>
         ))}
       </ul>
     </div>
   );
-};
+});

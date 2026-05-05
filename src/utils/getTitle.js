@@ -1,1 +1,0 @@
-export const getTitle = (r) => (r?.title ?? r?.name ?? "").trim();

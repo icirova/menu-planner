@@ -1,7 +1,7 @@
 {
-  "name": "react-starter-kit",
+  "name": "menu-planner",
   "version": "1.0.0",
-  "description": "Starter kit for React JavaScript project",
+  "description": "Web demo for a menu planner app",
   "type": "module",
   "scripts": {
     "run": "npm run dev",

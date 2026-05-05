@@ -6,11 +6,9 @@
   overflow: hidden;             /* drží zaoblení i pro obrázek */
 }
 
-/* viditelný, ale jemný indikátor editace */
-.card.is-editing {
-  box-shadow: inset 0 0 0 2px #cfe0ff;
-  /* Zajistí stabilní výšku karet v editačním módu */
-  min-height: fit-content;
+.card--overview {
+  background-color: rgb(238, 238, 238);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
 /* Obsah karty */
@@ -21,6 +19,11 @@
   gap: 0.8rem;
   /* Zajistí stabilní layout i při zobrazení našeptávačů */
   position: relative;
+}
+
+.card__emptyMessage {
+  margin: 0;
+  color: #6a655c;
 }
 
 
@@ -37,6 +40,10 @@
   margin-bottom: 0; /* volitelně */
 }
 
+.card__text--optional {
+  margin-top: 0.15rem;
+}
+
 /* levý sloupec (label) */
 .card__subtitle {
   flex-basis: 25%;
@@ -45,12 +52,19 @@
   font-family: 'Sorts Mill Goudy', serif;
 }
 
+.card__text--optional .card__subtitle {
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6e695d;
+}
+
 /* pravý sloupec (pole) – společné pro zobrazení i editaci
    (ponechávám kompatibilitu i s .card__description, kdybys ho někde používala) */
 .card__slot,
 .card__description {
   flex-basis: 75%;
-  min-height: 36px;
+  min-height: 64px;
   padding: .4rem .5rem;
   border-radius: 10px;
   box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
@@ -64,9 +78,10 @@
   overflow-wrap: anywhere;
   word-break: break-word;
   hyphens: auto;
-  display: block;     /* místo -webkit-box */
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   overflow: visible;  /* žádné ořezávání */
-
 }
 
 /* odlišené pozadí večeře (p i textarea) */
@@ -82,10 +97,165 @@
   background: #eef3ff;
 }
 
+.card__slot.is-kbd-source {
+  box-shadow: inset 0 0 0 2px #99b7ff;
+}
+
 /* kurzor, pokud je slot draggable */
 .card__description[draggable="true"],
 .card__slot[draggable="true"] {
   cursor: grab;
+}
+
+.card__slot--empty {
+  justify-content: center;
+  border: 2px dashed rgba(60, 122, 89, 0.28);
+  background: #f9fcf8;
+}
+
+.card__slot--filled {
+  align-items: stretch;
+  padding: 0.55rem;
+}
+
+.card__slot--overview {
+  min-height: 52px;
+  background: #fff;
+}
+
+.card__slot--optional {
+  min-height: 52px;
+  background: #fbfaf6;
+  box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
+}
+
+.card__slot--optional.card__slot--empty {
+  border-color: rgba(115, 103, 74, 0.2);
+  background: #fcfbf8;
+}
+
+.card__slot--optional.card__slot--filled {
+  padding: 0.45rem 0.55rem;
+}
+
+.card__slot--overview.card__slot--filled {
+  padding: 0.6rem 0.75rem;
+}
+
+.card__slot--optional.card__slot--overview {
+  min-height: 44px;
+}
+
+.card__slot--optional.card__slot--overview.card__slot--filled {
+  padding: 0.5rem 0.65rem;
+}
+
+.card__slot-image {
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.card__slot-body {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.card__slot-list {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.card__slot-title {
+  font-family: 'Sorts Mill Goudy', serif;
+  font-size: 0.96rem;
+}
+
+.card__slot--overview .card__slot-title {
+  font-size: 1rem;
+}
+
+.card__slot--optional .card__slot-title,
+.card__slot--optional.card__slot--overview .card__slot-title {
+  font-size: 0.95rem;
+}
+
+.card__slot--optional .card__slot-placeholder {
+  color: #7b7468;
+}
+
+.card__slot-placeholder {
+  color: #4c6c58;
+  text-align: center;
+}
+
+.card__slot-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.card__slot-actions[draggable="true"] {
+  cursor: grab;
+}
+
+.card__slot--overview .card__slot-actions {
+  gap: 0.4rem;
+}
+
+.card__slot-iconButton {
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 8px 18px rgba(19, 29, 21, 0.14);
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.card__slot-iconButton:hover {
+  transform: translateY(-1px);
+}
+
+.card__slot-iconButton--detail {
+  background: rgba(255, 250, 242, 0.94);
+  color: #284737;
+}
+
+.card__slot-iconButton--detail:hover {
+  background: #ffffff;
+}
+
+.card__slot-iconButton--remove {
+  box-shadow: 0 8px 18px rgba(19, 29, 21, 0.14);
+}
+
+.card__slot-iconButton--remove:hover {
+  box-shadow: 0 10px 20px rgba(19, 29, 21, 0.16);
+}
+
+.card__slot-detailIcon {
+  font-family: Georgia, serif;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.card__slot-actions .card__slot-title {
+  min-width: 0;
+  flex: 1;
 }
 
 /* EDITAČNÍ POLE (textarea) – stejné rozměry, řízený růst */
@@ -105,6 +275,77 @@
 }
 .card__slot--input:focus {
   box-shadow: inset 0 0 0 2px #99b7ff;
+}
+
+.card__shopping {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.4rem;
+  padding-top: 0.9rem;
+}
+
+.card__shoppingHeader {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.card__shoppingTitle {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6f6757;
+}
+
+.card__shoppingHint,
+.card__shoppingEmpty {
+  margin: 0;
+  color: #7a7368;
+  font-size: 0.9rem;
+}
+
+.card__shoppingEmpty {
+  font-style: italic;
+}
+
+.card__shoppingList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+}
+
+.card__shoppingChip {
+  max-width: 100%;
+  padding: 0.3rem 0.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
+  color: #2e4134;
+  font-family: "Sorts Mill Goudy", serif;
+  font-size: 0.84rem;
+  line-height: 1.35;
+  cursor: pointer;
+  transition: transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+}
+
+.card__shoppingChip:hover {
+  transform: translateY(-1px);
+}
+
+.card__shoppingChip.is-selected {
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
+  color: #2e4134;
+}
+
+.card__shoppingChip:not(.is-selected) {
+  opacity: 0.58;
 }
 
 

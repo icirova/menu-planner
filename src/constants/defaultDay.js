@@ -1,1 +1,9 @@
-export const DEFAULT_DAY = { breakfast: "", snack1: "", lunch: "", snack2: "", dinner: "" };
+export const DEFAULT_DAY = {
+  breakfast: "",
+  snack1: "",
+  lunch: "",
+  snack2: "",
+  dinner: "",
+  extra: "",
+  shoppingSelections: {},
+};

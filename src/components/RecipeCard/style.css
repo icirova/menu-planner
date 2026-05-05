@@ -1,47 +1,61 @@
 /* UL se seznamem karet */
 .recipes {
     list-style: none;
-    /* bez puntíků */
     padding: 0;
-    /* zruší levé odsazení ul */
     margin: 0;
-    /* zruší defaultní margin nahoře/dole */
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
 }
 
-/* KARTA (obal) */
 .recipe {
     list-style: none;
-    background-color: rgb(238, 238, 238);
-    border-radius: 20px;
-    cursor: pointer;
+    position: relative;
+    min-height: 0;
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(248, 247, 243, 0.72);
+    box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-/* INTERAKTIVNÍ VRSTVA uvnitř karty (Link nebo "div[role=link]") */
+.recipe--selected {
+    box-shadow:
+        inset 0 0 0 1px rgba(115, 103, 74, 0.14),
+        0 0 0 3px rgba(35, 71, 51, 0.3);
+}
+
 .recipe__link,
 .recipe__linkLike {
     display: block;
     color: inherit;
     text-decoration: none;
-    border-radius: 20px;
-    /* zarovná focus ring s kartou */
     cursor: pointer;
 }
 
-/* FOCUS RING pro klávesnici – viditelný, ale nenaruší layout */
+.recipe__linkButton {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    text-align: inherit;
+    position: relative;
+    display: grid;
+    align-content: start;
+    min-height: 100%;
+}
+
 .recipe__link:focus-visible,
 .recipe__linkLike:focus-visible {
     outline: 3px solid #90caf9;
     outline-offset: 3px;
-    border-radius: 20px;
 }
 
-/* OBRÁZEK */
 .recipe__img {
-    height: 300px;
-    overflow: hidden;
-    margin-bottom: 0.5rem;
     position: relative;
-    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+    background: #ece8de;
+    aspect-ratio: 1 / 0.82;
 }
 
 .img {
@@ -56,41 +70,63 @@
 .recipe__link:hover .img,
 .recipe__linkLike:hover .img,
 .recipe:hover .img {
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
-.recipe__badge {
+.recipe__title {
+    margin: 0;
+    padding: 0.95rem 1rem 1.05rem;
+    min-height: 5rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Sorts Mill Goudy', serif;
+    font-size: 1.18rem;
+    line-height: 1.2;
+    color: #2f372f;
+    overflow-wrap: anywhere;
+}
+
+.recipe__detail-link {
     position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    z-index: 1;
+    top: 0.6rem;
+    right: 0.6rem;
+    z-index: 2;
+    width: 2.2rem;
+    height: 2.2rem;
     display: inline-flex;
     align-items: center;
-    padding: 0.35rem 0.7rem;
+    justify-content: center;
     border-radius: 999px;
-    background: rgba(36, 84, 62, 0.92);
-    color: #f7fbf8;
-    font-size: 0.78rem;
+    background: rgba(255, 250, 242, 0.96);
+    color: #284737;
+    text-decoration: none;
+    box-shadow: 0 8px 18px rgba(19, 29, 21, 0.12);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.recipe__detail-link:hover {
+    transform: translateY(-1px);
+    background: #ffffff;
+}
+
+.recipe__detail-icon {
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    font-style: italic;
     font-weight: 700;
-    letter-spacing: 0.02em;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    line-height: 1;
 }
 
-/* NADPIS */
-.recipe__title {
-    text-align: center;
-    margin: 1rem;
-}
-
-/* GRID – beze změny */
 @media screen and (min-width: 680px) {
-    .recipe {
-        flex-basis: calc((100% - 1rem) / 2);
+    .recipes {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }
 
 @media screen and (min-width: 1024px) {
-    .recipe {
-        flex-basis: calc((100% - (1rem * 2)) / 3);
+    .recipes {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
     }
 }
