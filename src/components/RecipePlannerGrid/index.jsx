@@ -1,7 +1,8 @@
 import { Fragment } from "react";
+import { DAYS } from "../../constants/days";
 import { MEAL_KEYS, PLANNED_MEAL_KEYS } from "../../constants/mealKeys";
 import { getSlotRecipeIds, slotHasRecipes } from "../../utils/mealSlots";
-import { DAYS, MEAL_LABELS } from "../../hooks/useRecipePlanner";
+import { MEAL_LABELS } from "../../hooks/useRecipePlanner";
 
 export const RecipePlannerGrid = ({
   weeklyMenu,

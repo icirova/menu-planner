@@ -1,11 +1,10 @@
 import { useMemo, useState } from "react";
 import { ExtraSummaryCard } from "../ExtraSummaryCard";
+import { DAYS } from "../../constants/days";
 import { MEAL_KEYS } from "../../constants/mealKeys";
 import { normalizeRecipePreTasks } from "../../utils/normalizeRecipePreTasks";
 import { getSlotRecipeIds } from "../../utils/mealSlots";
 import "./style.css";
-
-const DAYS = ["Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota", "Neděle"];
 
 const getWeeklyGeneratedTasks = (week = [], recipes = []) => {
   const recipesById = new Map(recipes.map((recipe) => [recipe.id, recipe]));

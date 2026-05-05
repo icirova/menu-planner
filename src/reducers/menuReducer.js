@@ -4,6 +4,7 @@ import {
 } from "../utils/shoppingList";
 import { MEAL_KEYS } from "../constants/mealKeys";
 import { DEFAULT_DAY } from "../constants/defaultDay";
+import { DAYS } from "../constants/days";
 import {
   addRecipeIdToSlot,
   getSlotRecipeIds,
@@ -13,7 +14,6 @@ import {
 } from "../utils/mealSlots";
 import { createStableId } from "../utils/createId";
 
-const DAYS = ["Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota", "Neděle"];
 const isPlainObject = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
 
 const normalizeTaskItems = (value) => {

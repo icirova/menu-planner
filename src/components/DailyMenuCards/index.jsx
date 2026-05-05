@@ -1,9 +1,8 @@
 import { useState } from "react";
 import "./style.css";
 import { DailyMenuCard } from "../DailyMenuCard";
+import { DAYS } from "../../constants/days";
 import { DAY_IMAGE_FILES } from "../../constants/dayImages";
-
-const DAYS = ["Pondělí","Úterý","Středa","Čtvrtek","Pátek","Sobota","Neděle"];
 
 export const DailyMenuCards = ({
   recipes = [],

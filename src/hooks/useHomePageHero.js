@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { DAY_HERO_IMAGES, DAY_IMAGE_FILES } from "../constants/dayImages";
+import { DAYS, DAYS_IN_WEEK } from "../constants/days";
 
-const DAYS = ["Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota", "Neděle"];
 const SUNDAY_INDEX = 0;
-const LAST_DAY_INDEX = DAYS.length - 1;
+const LAST_DAY_INDEX = DAYS_IN_WEEK - 1;
 const CLOCK_REFRESH_INTERVAL_MS = 30_000;
 
 const getTodayIndex = () => {

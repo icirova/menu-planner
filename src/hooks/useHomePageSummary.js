@@ -1,9 +1,8 @@
 import { useMemo } from "react";
+import { DAYS_IN_WEEK } from "../constants/days";
 import { PLANNED_MEAL_KEYS } from "../constants/mealKeys";
 import { getShoppingListSummary } from "../utils/shoppingList";
 import { getSlotRecipeIds, getWeekRecipeIds } from "../utils/mealSlots";
-
-const DAYS_IN_WEEK = 7;
 
 export const useHomePageSummary = (weeklyMenu, recipeList) =>
   useMemo(() => {

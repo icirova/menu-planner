@@ -1,6 +1,5 @@
+import { DAYS_IN_WEEK } from "../../constants/days";
 import { PLANNED_MEAL_KEYS } from "../../constants/mealKeys";
-
-const DAYS_IN_WEEK = 7;
 
 export const HomePageWeekSummaryCard = ({
   completion,

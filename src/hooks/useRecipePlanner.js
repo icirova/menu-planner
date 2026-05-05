@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { DAYS } from "../constants/days";
 import { PLANNED_MEAL_KEYS } from "../constants/mealKeys";
 import { getSlotRecipeIds, slotHasRecipes } from "../utils/mealSlots";
-
-export const DAYS = ["Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota", "Neděle"];
 
 const TAG_TO_SLOT_KEY = {
   "snídaně": "breakfast",

@@ -1,8 +1,7 @@
 import { useMemo } from "react";
+import { DAYS } from "../../constants/days";
 import { getSlotRecipeIds } from "../../utils/mealSlots";
 import "./style.css";
-
-const DAYS = ["Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota", "Neděle"];
 
 const getExtraSummaryItems = (week = [], recipes = []) => {
   const recipesById = new Map(recipes.map((recipe) => [recipe.id, recipe]));

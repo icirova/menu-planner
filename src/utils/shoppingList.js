@@ -1,8 +1,7 @@
+import { DAYS } from "../constants/days";
 import { MEAL_KEYS } from "../constants/mealKeys";
 import { createStableId } from "./createId";
 import { getSlotRecipeIds } from "./mealSlots";
-
-const DAYS = ["Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota", "Neděle"];
 
 const isPlainObject = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
 
