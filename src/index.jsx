@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { createHashRouter, RouterProvider, } from 'react-router-dom';
 import { App } from './components/App';
 import { HomePage } from './pages/HomePage/';
-import { Recipes } from './pages/Recipes';
+import { WeeklyPlanner } from './pages/WeeklyPlanner';
 import { RecipeLibrary } from './pages/RecipeLibrary';
 import {RecipeForm} from './pages/RecipeForm';
 import {RecipeDetail} from './pages/RecipeDetail';
@@ -19,7 +19,7 @@ const router = createHashRouter([
       },
       {
         path: '/planner',
-        element: <Recipes />
+        element: <WeeklyPlanner />
       },
       {
         path: '/recipes',

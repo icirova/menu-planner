@@ -12,7 +12,7 @@ import {
 import { normalizeRecipeTags } from "../../utils/normalizeRecipeTag";
 import { useRecipePlanner } from "../../hooks/useRecipePlanner";
 
-export const Recipes = () => {
+export const WeeklyPlanner = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedSuitabilities, setSelectedSuitabilities] = useState([]);
   const { recipeList, weeklyMenu, menuDispatch } = useOutletContext();
