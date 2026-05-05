@@ -8,6 +8,7 @@ import {
   TAG_OPTIONS,
 } from "../../constants/recipeMetadata";
 import { normalizeRecipeTags } from "../../utils/normalizeRecipeTag";
+import { isSeedRecipe } from "../../utils/recipeSource";
 import { resolveImageSrc } from "../../utils/resolveImageSrc";
 
 const SORT_OPTIONS = [
@@ -270,11 +271,13 @@ export const RecipeLibrary = () => {
                       </div>
                     )}
 
-                    <div className="recipe-library__actions">
-                      <Link to={`/recipe-form/${recipe.id}/edit`} className="button recipe-library__link">
-                        Upravit
-                      </Link>
-                    </div>
+                    {!isSeedRecipe(recipe) && (
+                      <div className="recipe-library__actions">
+                        <Link to={`/recipe-form/${recipe.id}/edit`} className="button recipe-library__link">
+                          Upravit
+                        </Link>
+                      </div>
+                    )}
                     </div>
                   </Link>
                 </li>

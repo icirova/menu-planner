@@ -8,6 +8,7 @@ import { IngredientsList } from "../../components/IngredientsList/index";
 import { RecipeTags } from "../../components/RecipeTags/index";
 import { useOutletContext } from "react-router-dom";
 import { areRecipeIdsEqual, normalizeRecipeIdValue } from "../../utils/recipeIds";
+import { isSeedRecipe } from "../../utils/recipeSource";
 import { resolveImageSrc } from "../../utils/resolveImageSrc";
 
 const DEFAULT_SERVINGS = 4;
@@ -82,7 +83,12 @@ export const RecipeDetail = () => {
   const preTasks = recipeDetail.preTasks ?? [];
   const heroTags = (recipeDetail.tags ?? []).filter(Boolean).join(" • ");
   const heroSuitableFor = (recipeDetail.suitableFor ?? []).filter(Boolean).join(" • ");
+  const isLockedRecipe = isSeedRecipe(recipeDetail);
+  const canEditRecipe = !isLockedRecipe;
+  const canDeleteRecipe = !isLockedRecipe;
   const handleDelete = async () => {
+    if (!canDeleteRecipe) return;
+
     setIsDeleting(true);
     const deleted = await deleteRecipe(recipeDetail.id);
     setIsDeleting(false);
@@ -126,19 +132,23 @@ export const RecipeDetail = () => {
               )}
 
               <div className="recipe-detail__actions page-hero__actions">
-                <Link
-                  to={`/recipe-form/${recipeDetail.id}/edit`}
-                  className="button button--ghost"
-                >
-                  Upravit recept
-                </Link>
-                <button
-                  type="button"
-                  className="button button--danger"
-                  onClick={() => setIsDeleteDialogOpen(true)}
-                >
-                  Smazat recept
-                </button>
+                {canEditRecipe && (
+                  <Link
+                    to={`/recipe-form/${recipeDetail.id}/edit`}
+                    className="button button--ghost"
+                  >
+                    Upravit recept
+                  </Link>
+                )}
+                {canDeleteRecipe && (
+                  <button
+                    type="button"
+                    className="button button--danger"
+                    onClick={() => setIsDeleteDialogOpen(true)}
+                  >
+                    Smazat recept
+                  </button>
+                )}
               </div>
             </div>
           </div>

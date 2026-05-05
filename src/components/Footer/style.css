@@ -15,38 +15,9 @@
     border-top: 1px solid rgba(122, 113, 93, 0.16);
 }
 
-.footer__data-tools {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    align-items: center;
-    justify-content: center;
-}
-
-.footer__label,
-.footer__sep {
-    color: #8a8376;
-}
-
-.footer__link {
-    border: 0;
-    background: transparent;
-    color: #2b5c41;
-    text-decoration: none;
-    cursor: pointer;
-    font: inherit;
-    padding: 0;
-}
-
-.footer__link:hover {
-    color: #1f4632;
-    text-decoration: underline;
-}
-
 @media screen and (min-width: 680px) {
     .footer__meta {
         flex-direction: row;
-        justify-content: space-between;
-        text-align: left;
+        justify-content: center;
     }
 }

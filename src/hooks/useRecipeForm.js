@@ -3,6 +3,7 @@ import { normalizeSuitableForValues } from "../constants/recipeMetadata";
 import { prepareCustomRecipeForRuntime } from "../storage/recipesStorage";
 import { createNumericId } from "../utils/createId";
 import { normalizeRecipePreTasks } from "../utils/normalizeRecipePreTasks";
+import { isSeedRecipe } from "../utils/recipeSource";
 
 const DEFAULT_SERVINGS = 4;
 
@@ -119,6 +120,12 @@ export const useRecipeForm = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isEditMode && isSeedRecipe(recipeToEdit)) {
+      window.alert("Default recepty v demo projektu nejde upravovat.");
+      return;
+    }
+
     const servings = Number(form.servings);
     const trimmedCalories = form.calories.trim();
     const calories = trimmedCalories === "" ? null : Number(trimmedCalories);
