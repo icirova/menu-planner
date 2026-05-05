@@ -3,9 +3,7 @@ const isExternalImageUrl = (value) =>
   (
     value.startsWith("/") ||
     value.startsWith("http://") ||
-    value.startsWith("https://") ||
-    value.startsWith("asset:") ||
-    value.startsWith("http://asset.localhost")
+    value.startsWith("https://")
   );
 
 const isAppAssetPath = (value) =>
@@ -18,31 +16,13 @@ const isAppAssetPath = (value) =>
     value.startsWith("/shopping.webp")
   );
 
-export const materializeRecipeImageUrl = async (photoUrl) => {
+const normalizeRecipeImageUrl = (photoUrl) => {
   if (typeof photoUrl !== "string" || !photoUrl.trim()) return null;
-  return photoUrl;
+  return photoUrl.trim();
 };
 
-export const materializeRecipeImageUrls = async (photoUrls = []) => {
-  const materialized = await Promise.all(
-    photoUrls.map((photoUrl) => materializeRecipeImageUrl(photoUrl)),
-  );
-
-  return materialized.filter(Boolean);
-};
-
-export const serializeRecipeImageUrl = async (photoUrl) => {
-  if (typeof photoUrl !== "string" || !photoUrl.trim()) return null;
-  return photoUrl;
-};
-
-export const serializeRecipeImageUrls = async (photoUrls = []) => {
-  const serialized = await Promise.all(
-    photoUrls.map((photoUrl) => serializeRecipeImageUrl(photoUrl)),
-  );
-
-  return serialized.filter(Boolean);
-};
+export const normalizeRecipeImageUrls = (photoUrls = []) =>
+  photoUrls.map((photoUrl) => normalizeRecipeImageUrl(photoUrl)).filter(Boolean);
 
 export const resolveStoredImageSrc = (photoUrl) => {
   if (!photoUrl) return "/image/placeholder.png";
