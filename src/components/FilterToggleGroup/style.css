@@ -11,12 +11,14 @@
 }
 
 .buttons--suitability .button {
-  background-color: #d8f3dc;
-  color: #1b4332;
+  background-color: var(--button-meaning-bg);
+  border-color: var(--button-meaning-border);
+  color: var(--button-meaning-text);
 }
 
 .buttons--suitability .button:hover,
 .buttons--suitability .button--active {
-  background-color: #3d7958;
-  color: white;
+  background-color: var(--button-active-bg);
+  border-color: var(--button-active-border);
+  color: var(--button-active-text);
 }

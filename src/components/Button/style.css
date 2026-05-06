@@ -5,63 +5,63 @@
   min-height: 2.7rem;
   padding: 0.65rem 1rem;
   border-radius: var(--radius-control);
-  background-color: #eee8de;
-  color: #333;
+  background-color: var(--button-bg);
+  color: var(--button-text);
   font-family: 'Sorts Mill Goudy', serif;
   font-size: 0.98rem;
   line-height: 1.2;
-  border: 1px solid #d5ccbd;
+  border: 1px solid var(--button-border);
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease, border-color 0.25s ease, box-shadow 0.2s ease;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.2s ease;
 }
 
 .button:hover,
 .button--active {
-  background-color: #3f4f43;
-  border-color: #3f4f43;
-  color: white;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(19, 29, 21, 0.08);
+  background-color: var(--button-active-bg);
+  border-color: var(--button-active-border);
+  color: var(--button-active-text);
+  box-shadow: var(--button-shadow-hover);
 }
 
 
 /* RecipeForm/tlačítko pro přidání receptu */
 .button--new-recipe {
-  background-color: #dcebdc;
-  border-color: #b9d1ba;
-  color: #1b4332;
+  background-color: var(--button-soft-bg);
+  border-color: var(--button-soft-border);
+  color: var(--button-soft-text);
 }
 
 .button--new-recipe:hover {
-  background-color: #3d7958;
-  color: white;
+  background-color: var(--button-active-bg);
+  border-color: var(--button-active-border);
+  color: var(--button-active-text);
 }
 
 /* DailyMenuCard/tlačítko Upravit/hotovo */
 .button--ghost {
-  color: #1b4332;
-  background-color: #edf4ee;
-  border-color: #c9d8cb;
+  color: var(--button-soft-text);
+  background-color: var(--button-soft-bg);
+  border-color: var(--button-soft-border);
 }
 
 .button--ghost:hover {
-  color: white;
-  background-color: #3c7a59;
-  border-color: #3c7a59;
+  color: var(--button-active-text);
+  background-color: var(--button-active-bg);
+  border-color: var(--button-active-border);
 }
 
 .button--add {
-  color: #1b4332;
-  background-color: #edf4ee;
-  border-color: #c9d8cb;
+  color: var(--button-soft-text);
+  background-color: var(--button-soft-bg);
+  border-color: var(--button-soft-border);
 }
 
 .button--add:hover,
 .button--add.button--active {
-  color: white;
-  background-color: #3c7a59;
-  border-color: #3c7a59;
+  color: var(--button-active-text);
+  background-color: var(--button-active-bg);
+  border-color: var(--button-active-border);
 }
 
 .button--remove-control {
@@ -81,11 +81,10 @@
   font-size: 1rem;
   line-height: 1;
   text-decoration: none;
-  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .button--remove-control:hover {
-  transform: translateY(-1px);
   background: #f6d4d4;
   color: #7e1d1d;
 }

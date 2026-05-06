@@ -40,13 +40,12 @@
   background-color: transparent;
   border: 0;
   border-radius: 999px;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 
 .menu__item:hover {
   color: #2b5c41;
-  transform: translateY(-1px);
 }
 
 .active {
@@ -56,7 +55,6 @@
 .active:hover {
   background-color: #ffffff;
   color: #2b5c41;
-  transform: none;
 }
 
 @media screen and (max-width: 640px) {

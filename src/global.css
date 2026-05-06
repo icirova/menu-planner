@@ -9,6 +9,19 @@
   --border-soft: #d7d0c3;
   --border-subtle: rgba(122, 113, 93, 0.18);
   --shadow-soft: 0 10px 26px rgba(73, 61, 41, 0.07);
+  --button-bg: #eee8de;
+  --button-border: #d5ccbd;
+  --button-text: #333333;
+  --button-active-bg: #3f4f43;
+  --button-active-border: #3f4f43;
+  --button-active-text: #ffffff;
+  --button-soft-bg: #edf4ee;
+  --button-soft-border: #c9d8cb;
+  --button-soft-text: #1b4332;
+  --button-meaning-bg: #edf4ee;
+  --button-meaning-border: #c9d8cb;
+  --button-meaning-text: #1b4332;
+  --button-shadow-hover: 0 8px 18px rgba(19, 29, 21, 0.08);
   --radius-shell: 12px;
   --radius-panel: 14px;
   --radius-control: 10px;
@@ -140,6 +153,35 @@ h2 {
     linear-gradient(180deg, rgba(18, 26, 20, 0.22), rgba(18, 26, 20, 0.56)),
     radial-gradient(circle at top right, rgba(236, 209, 160, 0.18), transparent 36%),
     var(--page-hero-image) center / cover no-repeat;
+}
+
+.page-hero--imageLayer {
+  background: #263327;
+}
+
+.page-hero--imageLayer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(10, 14, 11, 0.5) 0%, rgba(10, 14, 11, 0.24) 34%, rgba(10, 14, 11, 0.05) 58%, transparent 78%),
+    linear-gradient(180deg, rgba(18, 26, 20, 0.22), rgba(18, 26, 20, 0.56)),
+    radial-gradient(circle at top right, rgba(236, 209, 160, 0.18), transparent 36%);
+}
+
+.page-hero__image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.page-hero--imageLayer > :not(.page-hero__image) {
+  position: relative;
+  z-index: 2;
 }
 
 .page-hero__content {
