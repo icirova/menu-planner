@@ -1,4 +1,5 @@
 import "./style.css";
+import { useState } from "react";
 import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { CheckboxGroup } from "../../components/CheckboxGroup";
 import { IngredientInputs } from "../../components/IngredientInputs/index";
@@ -9,11 +10,13 @@ import {
   TAG_OPTIONS,
 } from "../../constants/recipeMetadata";
 import { useRecipeForm } from "../../hooks/useRecipeForm";
+import { normalizeRecipePreTasks } from "../../utils/normalizeRecipePreTasks";
 import { areRecipeIdsEqual, normalizeRecipeIdValue } from "../../utils/recipeIds";
 import { isSeedRecipe } from "../../utils/recipeSource";
 import { resolveImageSrc } from "../../utils/resolveImageSrc";
 
 export const RecipeForm = () => {
+  const [preTaskDraft, setPreTaskDraft] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
   const { recipeList, addRecipe, updateRecipe } = useOutletContext();
@@ -45,17 +48,41 @@ export const RecipeForm = () => {
     ...option,
     disabled: isSuitabilityOptionDisabled(option.value, form.selectedSuitableFor),
   }));
+  const preTaskItems = normalizeRecipePreTasks(form.preTasksText);
+  const updatePreTasks = (items) => setField("preTasksText", items.join("\n"));
+  const addPreTask = () => {
+    const nextTask = preTaskDraft.trim();
+    if (!nextTask) return;
+    updatePreTasks([...preTaskItems, nextTask]);
+    setPreTaskDraft("");
+  };
+  const removePreTask = (indexToRemove) => {
+    updatePreTasks(preTaskItems.filter((_, index) => index !== indexToRemove));
+  };
+  const getSubmittedPreTasksText = () => {
+    const pendingTask = preTaskDraft.trim();
+    if (!pendingTask) return form.preTasksText;
+    return [...preTaskItems, pendingTask].join("\n");
+  };
+  const handleFormSubmit = (event) => {
+    handleSubmit(event, { preTasksText: getSubmittedPreTasksText() });
+  };
+  const handlePreTaskKeyDown = (event) => {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    addPreTask();
+  };
   const heroImageSrc =
     isEditMode && recipeToEdit
-      ? resolveImageSrc(recipeToEdit.photo_urls?.[0] || "/form.webp")
-      : "/form.webp";
+      ? resolveImageSrc(recipeToEdit.photo_urls?.[0] || "/notes.webp")
+      : "/notes.webp";
 
   if (isEditMode && !recipeToEdit) {
     return (
       <div className="main recipe-form-page">
         <section
           className="recipe-form-page__hero page-hero page-hero--split"
-          style={{ "--page-hero-image": 'url("/form.webp")' }}
+          style={{ "--page-hero-image": 'url("/notes.webp")' }}
         >
           <div className="recipe-form-page__heroContent page-hero__content">
             <p className="page-hero__eyebrow">Editor receptů</p>
@@ -76,9 +103,9 @@ export const RecipeForm = () => {
     return (
       <div className="main recipe-form-page">
         <section
-          className="recipe-form-page__hero page-hero page-hero--split"
-          style={{ "--page-hero-image": `url("${heroImageSrc}")` }}
+          className="recipe-form-page__hero page-hero page-hero--split page-hero--imageLayer"
         >
+          <img className="page-hero__image" src={heroImageSrc} alt="" aria-hidden="true" />
           <div className="recipe-form-page__heroContent page-hero__content">
             <p className="page-hero__eyebrow">Editor receptů</p>
             <h1 className="page-hero__title">Recept je zamčený</h1>
@@ -101,16 +128,16 @@ export const RecipeForm = () => {
   return (
     <div className="main recipe-form-page">
       <section
-        className="recipe-form-page__hero page-hero page-hero--split"
-        style={{ "--page-hero-image": `url("${heroImageSrc}")` }}
+        className="recipe-form-page__hero page-hero page-hero--split page-hero--imageLayer"
       >
+        <img className="page-hero__image" src={heroImageSrc} alt="" aria-hidden="true" />
         <div className="recipe-form-page__heroContent page-hero__content">
           <Link to="/recipes" className="recipe-form-page__backLink">
             <span aria-hidden="true">←</span>
             Zpět do katalogu
           </Link>
           <h1 className="page-hero__title">
-            {isEditMode ? "Upravit recept" : "Vložit recept"}
+            {isEditMode ? `Upravit: ${recipeToEdit.title}` : "Vložit recept"}
           </h1>
           <p className="page-hero__text">
             {isEditMode
@@ -120,59 +147,64 @@ export const RecipeForm = () => {
         </div>
       </section>
 
-      <form id="form" className="form recipe-form-page__form" onSubmit={handleSubmit}>
-        <div className="recipe-form-page__topGrid">
-          <section className="recipe-form-page__panel">
-            <div className="recipe-form-page__sectionHeader">
-              <h2>Základ</h2>
-              <p>Název, porce a stručné zařazení receptu.</p>
+      <form id="form" className="form recipe-form-page__form" onSubmit={handleFormSubmit}>
+        <section className="recipe-form-page__panel">
+          <div className="recipe-form-page__sectionHeader">
+            <h2>Základní údaje</h2>
+          </div>
+
+          <div className="recipe-form-page__fieldGrid recipe-form-page__fieldGrid--top">
+            <div className="recipe-form-page__subsection form__item">
+              <label htmlFor="name" className="form__label">Název</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                className="form__input"
+                placeholder="Např. Dýňová polévka"
+                value={form.name}
+                onChange={(e) => setField("name", e.target.value)}
+              />
             </div>
 
-            <div className="recipe-form-page__fieldGrid recipe-form-page__fieldGrid--top">
-              <div className="form__item">
-                <label htmlFor="name" className="form__label">Název</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  className="form__input"
-                  placeholder="Např. Dýňová polévka"
-                  value={form.name}
-                  onChange={(e) => setField("name", e.target.value)}
-                />
-              </div>
-
-              <div className="form__item">
-                <label htmlFor="servings" className="form__label">Počet porcí</label>
-                <input
-                  type="number"
-                  id="servings"
-                  name="servings"
-                  required
-                  min="1"
-                  step="1"
-                  className="form__input"
-                  placeholder="Např. 4"
-                  value={form.servings}
-                  onChange={(e) => setField("servings", e.target.value)}
-                />
-              </div>
-
-              <div className="form__item">
-                <label htmlFor="calories" className="form__label">Kalorie na porci</label>
-                <input
-                  type="number"
-                  id="calories"
-                  name="calories"
-                  className="form__input"
-                  placeholder="Např. 420"
-                  value={form.calories}
-                  onChange={(e) => setField("calories", e.target.value)}
-                />
-              </div>
+            <div className="recipe-form-page__subsection form__item">
+              <label htmlFor="servings" className="form__label">Počet porcí</label>
+              <input
+                type="number"
+                id="servings"
+                name="servings"
+                required
+                min="1"
+                step="1"
+                className="form__input"
+                placeholder="Např. 4"
+                value={form.servings}
+                onChange={(e) => setField("servings", e.target.value)}
+              />
             </div>
 
+            <div className="recipe-form-page__subsection form__item">
+              <label htmlFor="calories" className="form__label">Kalorie na porci</label>
+              <input
+                type="number"
+                id="calories"
+                name="calories"
+                className="form__input"
+                placeholder="Např. 420"
+                value={form.calories}
+                onChange={(e) => setField("calories", e.target.value)}
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="recipe-form-page__panel">
+          <div className="recipe-form-page__sectionHeader">
+            <h2>Zařazení</h2>
+          </div>
+
+          <div className="recipe-form-page__fieldGrid recipe-form-page__fieldGrid--classification">
             <CheckboxGroup
               legend="Tagy"
               name="tags"
@@ -196,63 +228,12 @@ export const RecipeForm = () => {
               selectedValues={form.selectedAllergens}
               onToggle={(value) => toggleSelection("selectedAllergens", value)}
             />
-          </section>
-
-          <aside className="recipe-form-page__panel recipe-form-page__panel--summary">
-            <div className="recipe-form-page__sectionHeader">
-              <h2>Přehled</h2>
-              <p>Rychlá kontrola před uložením.</p>
-            </div>
-
-            <div className="recipe-form-page__summaryList">
-              <article className="recipe-form-page__summaryItem">
-                <span className="recipe-form-page__summaryLabel">Režim</span>
-                <strong className="recipe-form-page__summaryValueText">
-                  {isEditMode ? "Upravit existující recept" : "Vytvořit nový recept"}
-                </strong>
-              </article>
-
-              <article className="recipe-form-page__summaryItem">
-                <span className="recipe-form-page__summaryLabel">Tagy</span>
-                <strong className="recipe-form-page__summaryValueText">
-                  {form.selectedTags.length > 0 ? form.selectedTags.join(" • ") : "Zatím nevybrané"}
-                </strong>
-              </article>
-
-              <article className="recipe-form-page__summaryItem">
-                <span className="recipe-form-page__summaryLabel">Vhodné pro</span>
-                <strong className="recipe-form-page__summaryValueText">
-                  {form.selectedSuitableFor.length > 0
-                    ? form.selectedSuitableFor.join(" • ")
-                    : "Bez omezení"}
-                </strong>
-              </article>
-
-              <article className="recipe-form-page__summaryItem">
-                <span className="recipe-form-page__summaryLabel">Fotky</span>
-                <strong className="recipe-form-page__summaryValueText">
-                  {form.photos.length > 0
-                    ? `${form.photos.length} souborů, první je obálka`
-                    : "Bez fotografie"}
-                </strong>
-              </article>
-            </div>
-
-            <div className="recipe-form-page__summaryActions">
-              <Link to="/recipes" className="button button--ghost">
-                Zrušit
-              </Link>
-              <button type="submit" className="button button--new-recipe">
-                {isEditMode ? "Uložit změny" : "Vytvořit recept"}
-              </button>
-            </div>
-          </aside>
-        </div>
+          </div>
+        </section>
 
         <section className="recipe-form-page__panel">
           <div className="recipe-form-page__sectionHeader">
             <h2>Suroviny</h2>
-            <p>Přidávej položky postupně. Enter vloží aktuální řádek bez odeslání formuláře.</p>
           </div>
 
           <IngredientInputs
@@ -265,11 +246,10 @@ export const RecipeForm = () => {
         <section className="recipe-form-page__panel">
           <div className="recipe-form-page__sectionHeader">
             <h2>Postup a příprava</h2>
-            <p>Texty, které se zobrazí na detailu receptu a v týdenních úkolech.</p>
           </div>
 
           <div className="recipe-form-page__fieldGrid recipe-form-page__fieldGrid--text">
-            <div className="form__item">
+            <div className="recipe-form-page__subsection form__item">
               <label htmlFor="method" className="form__label">Postup</label>
               <textarea
                 id="method"
@@ -282,16 +262,45 @@ export const RecipeForm = () => {
               />
             </div>
 
-            <div className="form__item">
-              <label htmlFor="preTasks" className="form__label">Předpříprava k receptu</label>
-              <textarea
-                id="preTasks"
-                name="preTasks"
-                className="form__input form__textarea"
-                placeholder={"Každý úkol na nový řádek\nNapř. Večer předem namočit cizrnu."}
-                value={form.preTasksText}
-                onChange={(e) => setField("preTasksText", e.target.value)}
-              />
+            <div className="recipe-form-page__subsection form__item">
+              <label htmlFor="preTasks" className="form__label">Příprava</label>
+              <div className="recipe-form-page__taskEditor">
+                <div className="recipe-form-page__taskForm">
+                  <input
+                    id="preTasks"
+                    type="text"
+                    className="form__input"
+                    placeholder="Např. Večer předem namočit cizrnu"
+                    value={preTaskDraft}
+                    onChange={(event) => setPreTaskDraft(event.target.value)}
+                    onKeyDown={handlePreTaskKeyDown}
+                  />
+                  <button type="button" className="button button--add" onClick={addPreTask}>
+                    Přidat
+                  </button>
+                </div>
+
+                {preTaskItems.length > 0 ? (
+                  <ul className="recipe-form-page__taskList" aria-live="polite">
+                    {preTaskItems.map((task, index) => (
+                      <li key={`${task}-${index}`} className="recipe-form-page__taskItem">
+                        <span className="recipe-form-page__taskText">{task}</span>
+                        <button
+                          type="button"
+                          className="button--remove-control"
+                          onClick={() => removePreTask(index)}
+                          aria-label={`Odebrat úkol ${task}`}
+                          title="Odebrat úkol"
+                        >
+                          ×
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="recipe-form-page__taskEmpty">Zatím bez úkolů přípravy.</p>
+                )}
+              </div>
             </div>
           </div>
         </section>
@@ -299,10 +308,9 @@ export const RecipeForm = () => {
         <section className="recipe-form-page__panel">
           <div className="recipe-form-page__sectionHeader">
             <h2>Fotogalerie</h2>
-            <p>První nahraná fotka se použije jako obálka v detailu a katalogu.</p>
           </div>
 
-          <div className="form__item form__item--photos">
+          <div className="recipe-form-page__subsection form__item form__item--photos">
             <input
               type="file"
               id="photos"

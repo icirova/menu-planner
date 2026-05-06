@@ -118,16 +118,17 @@ export const useRecipeForm = ({
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, formOverrides = {}) => {
     e.preventDefault();
+    const submittedForm = { ...form, ...formOverrides };
 
     if (isEditMode && isSeedRecipe(recipeToEdit)) {
       window.alert("Default recepty v demo projektu nejde upravovat.");
       return;
     }
 
-    const servings = Number(form.servings);
-    const trimmedCalories = form.calories.trim();
+    const servings = Number(submittedForm.servings);
+    const trimmedCalories = submittedForm.calories.trim();
     const calories = trimmedCalories === "" ? null : Number(trimmedCalories);
 
     if (!Number.isFinite(servings) || servings < 1) {
@@ -141,21 +142,21 @@ export const useRecipeForm = ({
     }
 
     const nextIngredients =
-      ingredientInputsRef.current?.flushDraftIngredient(form.ingredients) ?? form.ingredients;
+      ingredientInputsRef.current?.flushDraftIngredient(submittedForm.ingredients) ?? submittedForm.ingredients;
 
     const draftRecipe = {
       id: recipeToEdit?.id ?? createNumericId(),
       createdAt: recipeToEdit?.createdAt ?? new Date().toISOString(),
-      title: form.name.trim(),
+      title: submittedForm.name.trim(),
       servings,
-      tags: form.selectedTags,
-      photo_urls: form.photos.map((photo) => photo.url),
+      tags: submittedForm.selectedTags,
+      photo_urls: submittedForm.photos.map((photo) => photo.url),
       ingredients: nextIngredients.filter((ingredient) => ingredient.item.trim() !== ""),
-      suitableFor: normalizeSuitableForValues(form.selectedSuitableFor),
+      suitableFor: normalizeSuitableForValues(submittedForm.selectedSuitableFor),
       calories,
-      workflow: form.method.trim(),
-      preTasks: normalizeRecipePreTasks(form.preTasksText),
-      allergens: form.selectedAllergens,
+      workflow: submittedForm.method.trim(),
+      preTasks: normalizeRecipePreTasks(submittedForm.preTasksText),
+      allergens: submittedForm.selectedAllergens,
     };
 
     try {

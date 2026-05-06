@@ -3,10 +3,14 @@
   display: grid;
   gap: 1.5rem;
   background: var(--surface-main);
+  --page-card-bg: rgba(255, 255, 255, 0.84);
+  --page-card-border: rgba(122, 113, 93, 0.26);
+  --page-muted-text: #6f6757;
 }
 
 .recipe-form-page__hero {
   min-width: 0;
+  border-radius: 0;
 }
 
 .recipe-form-page__heroContent {
@@ -42,25 +46,12 @@
   gap: 1.5rem;
 }
 
-.recipe-form-page__topGrid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.8fr);
-  gap: 1.25rem;
-  align-items: start;
-}
-
 .recipe-form-page__panel {
-  padding: 1.25rem;
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius-panel);
-  background: var(--surface-panel);
-  box-shadow: var(--shadow-soft);
-}
-
-.recipe-form-page__panel--summary {
-  display: grid;
-  gap: 1rem;
-  align-content: start;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .recipe-form-page__panel--empty {
@@ -85,7 +76,7 @@
 
 .recipe-form-page__sectionHeader p {
   margin: 0;
-  color: #6a655c;
+  color: var(--page-muted-text);
   line-height: 1.5;
 }
 
@@ -94,51 +85,37 @@
   gap: 1rem;
 }
 
+.recipe-form-page__subsection {
+  container-type: inline-size;
+  padding: 1rem;
+  border: 1px solid var(--page-card-border);
+  border-radius: 0;
+  background: var(--page-card-bg);
+}
+
 .recipe-form-page__fieldGrid--top {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.recipe-form-page__fieldGrid--classification {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.recipe-form-page__fieldGrid--classification > .recipe-form-page__subsection {
+  height: 100%;
 }
 
 .recipe-form-page__fieldGrid--text {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.recipe-form-page__summaryList {
-  display: grid;
-  gap: 0.8rem;
-}
-
-.recipe-form-page__summaryItem {
-  display: grid;
-  gap: 0.2rem;
-  padding: 0.95rem 1rem;
-  background: rgba(248, 247, 243, 0.72);
-  box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
-}
-
-.recipe-form-page__summaryLabel {
-  color: #6a655c;
-  font-size: 0.84rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.recipe-form-page__summaryValueText {
-  font-family: "Sorts Mill Goudy", serif;
-  font-size: 1.08rem;
-  line-height: 1.35;
-  color: #2f372f;
-}
-
-.recipe-form-page__summaryActions,
 .recipe-form-page__footerActions {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
   align-items: center;
-}
-
-.recipe-form-page__summaryActions {
-  margin-top: auto;
+  justify-content: flex-end;
 }
 
 .recipe-form-page__uploadRow {
@@ -146,6 +123,51 @@
   flex-wrap: wrap;
   gap: 0.85rem;
   align-items: center;
+}
+
+.recipe-form-page__taskEditor {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.recipe-form-page__taskForm {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.65rem;
+}
+
+.recipe-form-page__taskList {
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.recipe-form-page__taskItem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  align-items: center;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-control);
+  background: #f8f7f3;
+  box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
+}
+
+.recipe-form-page__taskText {
+  font-family: "Sorts Mill Goudy", serif;
+  font-size: 1rem;
+  line-height: 1.35;
+  color: #2f372f;
+  overflow-wrap: anywhere;
+}
+
+.recipe-form-page__taskEmpty {
+  margin: 0;
+  color: var(--page-muted-text);
+  font-style: italic;
+  line-height: 1.45;
 }
 
 .form {
@@ -159,6 +181,10 @@
   margin-bottom: 1rem;
 }
 
+.form__item.recipe-form-page__subsection {
+  margin-bottom: 0;
+}
+
 .form__item:last-child {
   margin-bottom: 0;
 }
@@ -170,8 +196,12 @@
 .form__label {
   display: block;
   margin-bottom: 0.45rem;
-  color: #5f5b51;
+  color: var(--page-muted-text);
+  font-size: 0.9rem;
   font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .form__input {
@@ -212,36 +242,53 @@
 }
 
 .form__checkbox-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
 }
 
 .form__checkbox-label {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  min-height: 2.65rem;
-  padding: 0.6rem 0.8rem;
-  border-radius: 999px;
-  border: 1px solid #d9d2c7;
-  background: #f8f6f0;
-  color: #3a3a3a;
+  justify-content: center;
+  width: 100%;
+  min-height: 2.7rem;
+  padding: 0.55rem 0.45rem;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--button-border);
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  font-family: 'Sorts Mill Goudy', serif;
+  font-size: 0.98rem;
+  line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.2s ease;
+}
+
+.form__checkbox-label:hover,
+.form__checkbox-label.is-selected {
+  background-color: var(--button-active-bg);
+  border-color: var(--button-active-border);
+  color: var(--button-active-text);
 }
 
 .form__checkbox-label:hover {
-  background: #edf4ee;
-  border-color: #bdd0c0;
-  transform: translateY(-1px);
+  box-shadow: var(--button-shadow-hover);
+}
+
+.form__checkbox-label.is-disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
 }
 
 .form__checkbox {
-  accent-color: #3c7a59;
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .form__previews {
@@ -255,8 +302,9 @@
   display: grid;
   gap: 0.45rem;
   padding: 0.75rem;
-  background: rgba(248, 247, 243, 0.72);
-  box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
+  background: var(--page-card-bg);
+  border: 1px solid var(--page-card-border);
+  box-shadow: none;
 }
 
 .form__preview {
@@ -276,7 +324,7 @@
   justify-content: space-between;
   gap: 0.75rem;
   align-items: center;
-  color: #6a655c;
+  color: var(--page-muted-text);
   font-size: 0.84rem;
   line-height: 1.4;
 }
@@ -287,7 +335,7 @@
 
 .form__note {
   margin: 0;
-  color: #6a655c;
+  color: var(--page-muted-text);
   line-height: 1.5;
 }
 
@@ -299,8 +347,9 @@
 
 .form__filename {
   padding: 0.75rem 0.9rem;
-  background: rgba(248, 247, 243, 0.72);
-  box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
+  background: var(--page-card-bg);
+  border: 1px solid var(--page-card-border);
+  box-shadow: none;
   color: #4f4a41;
   overflow-wrap: anywhere;
 }
@@ -325,10 +374,15 @@ textarea.form__input:focus-visible {
   box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.08);
 }
 
-.form__checkbox:focus-visible {
-  outline: 2px solid #90caf9;
-  outline-offset: 2px;
-  border-radius: 4px;
+.form__checkbox-label:has(.form__checkbox:focus-visible) {
+  outline: 3px solid #90caf9;
+  outline-offset: 3px;
+}
+
+@container (max-width: 27rem) {
+  .form__checkbox-group {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .button:focus-visible,
@@ -339,8 +393,8 @@ textarea.form__input:focus-visible {
 }
 
 @media screen and (max-width: 959px) {
-  .recipe-form-page__topGrid,
   .recipe-form-page__fieldGrid--top,
+  .recipe-form-page__fieldGrid--classification,
   .recipe-form-page__fieldGrid--text {
     grid-template-columns: 1fr;
   }
@@ -353,5 +407,13 @@ textarea.form__input:focus-visible {
 
   .recipe-form-page__panel {
     padding: 1rem;
+  }
+
+  .form__checkbox-group {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .recipe-form-page__taskForm {
+    grid-template-columns: 1fr;
   }
 }

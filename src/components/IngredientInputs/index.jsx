@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import "./style.css";
+import { formatIngredient } from "../../utils/formatIngredient";
 
 const createEmptyIngredient = () => ({ amount: "", unit: "", item: "" });
 
@@ -66,75 +67,84 @@ export const IngredientInputs = forwardRef(({ ingredients, setIngredients }, ref
   };
 
   return (
-    <div className="form__item">
-      <label className="form__label">Přidat surovinu</label>
+    <div className="recipe-form-page__subsection form__item">
+      <div className="ingredient-editor">
+        <div className="ingredient-editor__add">
+          <label className="form__label">Přidat surovinu</label>
 
-      <div className="ingredient-row" ref={rowRef} onKeyDown={onRowKeyDown}>
-        <input
-          type="number"
-          name="amount"
-          placeholder="Množství"
-          min="0"
-          step="any"
-          inputMode="decimal"
-          value={newIngredient.amount}
-          onChange={(e) => handleChange("amount", e.target.value)}
-          className="form__input form__input--amount"
-          aria-label="Množství"
-        />
+          <div className="ingredient-row" ref={rowRef} onKeyDown={onRowKeyDown}>
+            <input
+              type="number"
+              name="amount"
+              placeholder="Množství"
+              min="0"
+              step="any"
+              inputMode="decimal"
+              value={newIngredient.amount}
+              onChange={(e) => handleChange("amount", e.target.value)}
+              className="form__input form__input--amount"
+              aria-label="Množství"
+            />
 
-        <select
-          value={newIngredient.unit}
-          onChange={(e) => handleChange("unit", e.target.value)}
-          className="form__input form__input--unit"
-          aria-label="Jednotka"
-        >
-          <option value="">-- Jednotka --</option>
-          <option value="g">g</option>
-          <option value="kg">kg</option>
-          <option value="ml">ml</option>
-          <option value="l">l</option>
-          <option value="ks">ks</option>
-          <option value="hrnek">hrnek</option>
-          <option value="lžíce">lžíce</option>
-          <option value="lžička">lžička</option>
-          <option value="špetka">špetka</option>
-        </select>
-
-        <input
-          type="text"
-          name="item"
-          placeholder="Název suroviny"
-          value={newIngredient.item}
-          onChange={(e) => handleChange("item", e.target.value)}
-          className="form__input form__input--item"
-          aria-label="Název suroviny"
-        />
-
-        <button type="button" className="button button--add" onClick={addIngredient} aria-label="Přidat surovinu">
-          Přidat
-        </button>
-      </div>
-
-      {/* Seznam surovin – oznamuj změny čtečce */}
-      <ul className="ingredient-list" role="list" aria-live="polite">
-        {ingredients.map((ing, i) => (
-          <li key={i} className="ingredient-item">
-            <span className="ingredient-text">
-              {ing.amount} {ing.unit} {ing.item}
-            </span>
-            <button
-              type="button"
-              className="button--remove-control"
-              onClick={() => removeIngredient(i)}
-              title="Odebrat surovinu"
-              aria-label={`Odebrat ${ing.amount} ${ing.unit} ${ing.item}`}
+            <select
+              value={newIngredient.unit}
+              onChange={(e) => handleChange("unit", e.target.value)}
+              className="form__input form__input--unit"
+              aria-label="Jednotka"
             >
-              ×
+              <option value="">-- Jednotka --</option>
+              <option value="g">g</option>
+              <option value="kg">kg</option>
+              <option value="ml">ml</option>
+              <option value="l">l</option>
+              <option value="ks">ks</option>
+              <option value="hrnek">hrnek</option>
+              <option value="lžíce">lžíce</option>
+              <option value="lžička">lžička</option>
+              <option value="špetka">špetka</option>
+            </select>
+
+            <input
+              type="text"
+              name="item"
+              placeholder="Název suroviny"
+              value={newIngredient.item}
+              onChange={(e) => handleChange("item", e.target.value)}
+              className="form__input form__input--item"
+              aria-label="Název suroviny"
+            />
+
+            <button type="button" className="button button--add" onClick={addIngredient} aria-label="Přidat surovinu">
+              Přidat
             </button>
-          </li>
-        ))}
-      </ul>
+          </div>
+        </div>
+
+        <div className="ingredient-editor__list">
+          {ingredients.length > 0 ? (
+            <ul className="ingredient-list" role="list" aria-live="polite">
+              {ingredients.map((ing, i) => (
+                <li key={i} className="ingredient-item">
+                  <span className="ingredient-text">
+                    {formatIngredient(ing, 1, 1)}
+                  </span>
+                  <button
+                    type="button"
+                    className="button--remove-control"
+                    onClick={() => removeIngredient(i)}
+                    title="Odebrat surovinu"
+                    aria-label={`Odebrat ${ing.amount} ${ing.unit} ${ing.item}`}
+                  >
+                    ×
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="ingredient-empty">Zatím bez surovin.</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 });

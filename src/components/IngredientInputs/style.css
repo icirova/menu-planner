@@ -1,9 +1,26 @@
+.ingredient-editor {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  align-items: stretch;
+}
+
+.ingredient-editor__add,
+.ingredient-editor__list {
+  min-width: 0;
+}
+
+.ingredient-editor__list {
+  display: grid;
+  align-content: start;
+  padding-top: calc(0.9rem * 1.35 + 0.45rem);
+}
+
 .ingredient-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 0.45fr) minmax(7rem, 0.55fr) minmax(12rem, 1fr) auto;
   gap: 0.5rem;
   align-items: center;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
 }
 
 .ingredient-row .form__input,
@@ -14,12 +31,10 @@
 }
 
 .form__input--amount {
-  width: 120px;
   min-width: 60px;
 }
 
 .form__input--unit {
-  width: 120px;
   min-width: 100px;
 }
 
@@ -29,28 +44,91 @@
 }
 
 .ingredient-list {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-  padding: 0;
+  display: block;
+  margin: 0;
+  padding-left: 1.2rem;
+  list-style-type: disc;
+  color: #4f4a41;
+  line-height: 1.7;
 }
 
 .ingredient-item {
+  padding-left: 0.1rem;
+}
+
+.ingredient-item + .ingredient-item {
+  margin-top: 0.35rem;
+}
+
+.ingredient-text {
+  margin-right: 0.5rem;
+}
+
+.ingredient-item .button--remove-control {
   display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.95rem;
-  color: #333;
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.25rem;
-  background-color: transparent; /* žádné pozadí */
-  border: none;
+  vertical-align: middle;
+}
+
+.ingredient-empty {
+  margin: 0;
+  color: var(--page-muted-text, #6f6757);
+  font-style: italic;
+  line-height: 1.45;
 }
 
 .button--add {
   min-width: 5.75rem;
   padding-inline: 1rem;
   font-weight: 400;
+}
+
+@container (max-width: 72rem) {
+  .ingredient-editor {
+    grid-template-columns: 1fr;
+  }
+
+  .ingredient-editor__list {
+    padding-top: 0;
+  }
+}
+
+@container (max-width: 42rem) {
+  .ingredient-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .form__input--item,
+  .ingredient-row .button--add {
+    grid-column: 1 / -1;
+  }
+
+  .ingredient-row .button--add {
+    justify-self: start;
+  }
+}
+
+@container (max-width: 30rem) {
+  .ingredient-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ingredient-row .button--add {
+    justify-self: stretch;
+  }
+}
+
+@media screen and (max-width: 959px) {
+  .ingredient-editor {
+    grid-template-columns: 1fr;
+  }
+
+  .ingredient-editor__list {
+    padding-top: 0;
+  }
+}
+
+@media screen and (max-width: 679px) {
+  .ingredient-row {
+    grid-template-columns: 1fr;
+  }
 }
