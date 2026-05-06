@@ -72,7 +72,7 @@ export const RecipeDetail = () => {
   }
 
   // Data pro obrázky (cover + galerie)
-  const coverSrc = resolveImageSrc(recipeDetail.photo_urls?.[0] || "/image/placeholder.png");
+  const coverSrc = resolveImageSrc(recipeDetail.photo_urls?.[0] || "/notes.webp");
   const gallery = (recipeDetail.photo_urls ?? []).slice(1).map(resolveImageSrc);
 
   const openLightbox = (i) => setLightboxIndex(i);
@@ -103,9 +103,9 @@ export const RecipeDetail = () => {
   return (
     <div className="main recipe-detail-page">
       <section
-        className="recipe-detail-page__hero page-hero page-hero--split"
-        style={{ "--page-hero-image": `url("${coverSrc}")` }}
+        className="recipe-detail-page__hero page-hero page-hero--split page-hero--imageLayer"
       >
+        <img className="page-hero__image" src={coverSrc} alt="" aria-hidden="true" />
         <div className="recipe-detail-page__heroContent page-hero__content">
           <Link to="/recipes" className="recipe-detail-page__heroBack">
             <span className="recipe-detail-page__heroBackArrow" aria-hidden="true">←</span>
@@ -161,11 +161,13 @@ export const RecipeDetail = () => {
             <h2>Suroviny</h2>
           </div>
 
-          <IngredientsList
-            ingredients={recipeDetail.ingredients}
-            baseServings={recipeDetail.servings}
-            desiredServings={desiredServings}
-          />
+          <div className="recipe-detail__subsection">
+            <IngredientsList
+              ingredients={recipeDetail.ingredients}
+              baseServings={recipeDetail.servings}
+              desiredServings={desiredServings}
+            />
+          </div>
         </section>
 
         <section className="recipe-detail-page__panel recipe-detail-page__panel--summary">
@@ -173,7 +175,7 @@ export const RecipeDetail = () => {
             <h2>Přehled</h2>
           </div>
 
-          <div className="recipe-detail__content">
+          <div className="recipe-detail__content recipe-detail__subsection">
             <div className="recipe-detail__section">
               <p className="recipe-detail__description recipe-detail__description--meta">
                 {caloriesLabel} kcal na 1 porci
@@ -212,7 +214,7 @@ export const RecipeDetail = () => {
         <div className="recipe-detail__sectionHeader">
           <h2>Postup</h2>
         </div>
-        <div className="recipe-detail__section">
+        <div className="recipe-detail__section recipe-detail__subsection">
           <p className="recipe-detail__description">{recipeDetail.workflow}</p>
         </div>
       </section>
@@ -220,9 +222,9 @@ export const RecipeDetail = () => {
       {preTasks.length > 0 && (
         <section className="recipe-detail-page__panel">
           <div className="recipe-detail__sectionHeader">
-            <h2>Předpříprava</h2>
+            <h2>Příprava</h2>
           </div>
-          <div className="recipe-detail__section">
+          <div className="recipe-detail__section recipe-detail__subsection">
             <ul className="recipe-detail__list">
               {preTasks.map((task) => (
                 <li key={task}>{task}</li>
@@ -237,7 +239,7 @@ export const RecipeDetail = () => {
           <div className="recipe-detail__sectionHeader">
             <h2>Galerie</h2>
           </div>
-          <div className="recipe-detail__gallery">
+          <div className="recipe-detail__gallery recipe-detail__subsection">
             {gallery.map((src, i) => (
               <button
                 key={`${recipeDetail.id}-${i}`}
