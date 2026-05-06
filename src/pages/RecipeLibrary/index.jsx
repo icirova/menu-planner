@@ -118,7 +118,7 @@ export const RecipeLibrary = () => {
           <p className="page-hero__eyebrow">Katalog receptů</p>
           <h1 className="page-hero__title">Recepty</h1>
           <p className="page-hero__text">
-            Vlastní katalog receptů pro plánování týdne. Tady recepty procházíš, hledáš a upravuješ.
+            Procházej, vkládej a upravuj.
           </p>
         </div>
         <div className="page-hero__actions">
@@ -133,7 +133,6 @@ export const RecipeLibrary = () => {
           <div className="recipe-library__panelHeader recipe-library__panelHeader--filters">
             <div>
               <h2>Hledání a filtry</h2>
-              <p>Vyber si jen recepty, se kterými chceš právě pracovat.</p>
             </div>
           </div>
 
@@ -152,6 +151,8 @@ export const RecipeLibrary = () => {
           </div>
 
           <div className="recipe-library__filters">
+            <h3 className="recipe-library__subheading">Filtrovat</h3>
+
             <FilterToggleGroup
               options={TAG_OPTIONS}
               selectedValues={selectedTags}
@@ -186,40 +187,41 @@ export const RecipeLibrary = () => {
           <div className="recipe-library__panelHeader">
             <div>
               <h2>Katalog v kostce</h2>
-              <p>Rychlý souhrn nad celou databází receptů.</p>
             </div>
           </div>
 
-          <div className="recipe-library__summaryGrid">
-            <article className="recipe-library__summaryBox">
-              <span className="recipe-library__summaryValue">{recipeList.length}</span>
-              <span className="recipe-library__summaryLabel">receptů celkem</span>
-            </article>
+          <div className="recipe-library__summaryContent">
+            <div className="recipe-library__summaryGrid">
+              <article className="recipe-library__summaryBox">
+                <span className="recipe-library__summaryValue">{recipeList.length}</span>
+                <span className="recipe-library__summaryLabel">receptů celkem</span>
+              </article>
 
-            <article className="recipe-library__summaryBox">
-              <span className="recipe-library__summaryValue">{glutenFreeRecipesCount}</span>
-              <span className="recipe-library__summaryLabel">bezlepkových receptů</span>
-            </article>
+              <article className="recipe-library__summaryBox">
+                <span className="recipe-library__summaryValue">{glutenFreeRecipesCount}</span>
+                <span className="recipe-library__summaryLabel">bezlepkových receptů</span>
+              </article>
 
-            <article className="recipe-library__summaryBox">
-              <span className="recipe-library__summaryValue">{veganRecipesCount}</span>
-              <span className="recipe-library__summaryLabel">veganských receptů</span>
-            </article>
+              <article className="recipe-library__summaryBox">
+                <span className="recipe-library__summaryValue">{veganRecipesCount}</span>
+                <span className="recipe-library__summaryLabel">veganských receptů</span>
+              </article>
+            </div>
           </div>
         </aside>
       </div>
 
       <section className="recipe-library__panel">
-        <div className="recipe-library__panelHeader recipe-library__panelHeader--catalog">
-          <div>
-            <h2>Katalog</h2>
+          <div className="recipe-library__panelHeader recipe-library__panelHeader--catalog">
+            <div>
+            <h2>Recepty</h2>
             <p>
               {filteredRecipes.length} {recipeCountLabel}
               {hasActiveFilters ? " po filtrování" : ""}
             </p>
           </div>
-          <div className="recipe-library__sort recipe-library__sort--header">
-            <label htmlFor="recipe-sort" className="recipe-library__sortLabel">
+          <div className="recipe-library__sort">
+            <label htmlFor="recipe-sort" className="sr-only">
               Řazení
             </label>
             <select
@@ -235,7 +237,6 @@ export const RecipeLibrary = () => {
               ))}
             </select>
           </div>
-          <div className="recipe-library__headerSpacer" aria-hidden="true" />
         </div>
 
         {filteredRecipes.length > 0 ? (

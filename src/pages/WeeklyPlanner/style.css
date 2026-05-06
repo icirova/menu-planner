@@ -3,11 +3,15 @@
   display: grid;
   gap: 1.5rem;
   background: var(--surface-main);
+  --page-card-bg: rgba(255, 255, 255, 0.84);
+  --page-card-border: rgba(122, 113, 93, 0.26);
+  --page-muted-text: #6f6757;
 }
 
 .recipes__hero {
   min-width: 0;
   align-content: start;
+  border-radius: 0;
 }
 
 .recipes__heroContent {
@@ -33,10 +37,10 @@
   display: grid;
   gap: 1rem;
   margin: 0;
-  padding: 1.25rem;
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius-panel);
-  background: var(--surface-panel);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .recipes__planner-header {
@@ -77,6 +81,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 14px;
+  border: 0;
   text-align: center;
   font-family: 'Sorts Mill Goudy', serif;
 }
@@ -134,7 +139,7 @@
   justify-content: space-between;
   gap: 0.75rem;
   position: relative;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .recipes__planner-cell--optional {
@@ -151,7 +156,6 @@
 }
 
 .recipes__planner-cell:hover {
-  transform: translateY(-2px);
   border-color: #89aa92;
 }
 
@@ -181,7 +185,6 @@
 .recipes__planner-cell.is-drop-target {
   border-color: #3c7a59;
   box-shadow: 0 0 0 4px rgba(60, 122, 89, 0.2);
-  transform: translateY(-2px);
 }
 
 .recipes__planner-cell.is-drag-source {
@@ -216,20 +219,19 @@
   font-size: 1rem;
   line-height: 1;
   box-shadow: none;
-  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .recipes__planner-copyButton:hover,
 .recipes__planner-moveButton:hover {
-  transform: translateY(-1px);
   background: #ffffff;
   border-color: rgba(47, 79, 60, 0.22);
 }
 
 .recipes__planner-copyButton.is-active {
-  background: #2c4a38;
-  border-color: #2c4a38;
-  color: #ffffff;
+  background: var(--button-active-bg);
+  border-color: var(--button-active-border);
+  color: var(--button-active-text);
 }
 
 .recipes__planner-cellState {
@@ -258,8 +260,9 @@
   gap: 0.45rem;
   min-width: 0;
   padding: 0.35rem 0.45rem;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.62);
+  border-radius: 0;
+  background: var(--page-card-bg);
+  border: 1px solid var(--page-card-border);
   cursor: grab;
 }
 
@@ -298,7 +301,7 @@
 
 .recipes__planner-text {
   margin: 0.25rem 0 0;
-  color: #355846;
+  color: var(--page-muted-text);
   line-height: 1.5;
 }
 
@@ -318,9 +321,10 @@
 .recipes__plan-message {
   margin: 0;
   padding: 0.85rem 1rem;
-  border-radius: 16px;
+  border-radius: 0;
   background: #eef7f1;
   color: #1f4a34;
+  border: 1px solid rgba(47, 93, 80, 0.18);
 }
 
 .recipes-page .title {
