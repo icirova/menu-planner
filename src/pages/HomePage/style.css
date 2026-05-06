@@ -1,5 +1,9 @@
 .home-page {
   width: 100%;
+  --home-heading-content-gap: 1rem;
+  --home-card-bg: rgba(255, 255, 255, 0.84);
+  --home-card-border: rgba(122, 113, 93, 0.26);
+  --home-muted-text: #6f6757;
   --home-main-column: minmax(0, 1fr);
   --home-side-column: minmax(0, 1fr);
   --home-plan-third-column: minmax(320px, 1.08fr);
@@ -16,6 +20,7 @@
 
 .home-page__hero {
   min-width: 0;
+  border-radius: 0;
 }
 
 .home-page__heroContent {
@@ -29,11 +34,6 @@
   width: fit-content;
   margin-top: 0;
   border-radius: var(--radius-control);
-}
-
-.home-page__heroAction:hover,
-.home-page__heroAction.button--ghost:hover {
-  transform: translateY(-1px);
 }
 
 .home-page__heroAside {
@@ -50,10 +50,10 @@
 }
 
 .home-page__panel {
-  padding: 1.25rem;
-  border-radius: var(--radius-panel);
-  background: var(--surface-panel);
-  border: 1px solid var(--border-soft);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .home-page__overview {
@@ -74,7 +74,7 @@
 }
 
 .home-page__panelHeader h2 {
-  margin-top: 0;
+  margin: 0;
   font-family: "Amatic SC", cursive;
   font-size: 2rem;
   font-weight: 400;
@@ -95,7 +95,7 @@
 
 .home-page__panelText--empty {
   font-style: italic;
-  color: #7a7368;
+  color: var(--home-muted-text);
 }
 
 .home-page__panel--today,
@@ -107,7 +107,7 @@
 }
 
 .home-page__cards {
-  margin-top: 1.25rem;
+  margin-top: var(--home-heading-content-gap);
 }
 
 .home-page__topGrid > .home-page__panel--today,
@@ -122,25 +122,32 @@
 
 .home-page__cards .card--overview {
   min-height: 100%;
-  padding: 1rem;
-  background: rgba(248, 247, 243, 0.72);
-  box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
+  padding: 0.85rem;
+  background: var(--home-card-bg);
+  border: 1px solid var(--home-card-border);
+  box-shadow: none;
   border-radius: 0;
 }
 
 .home-page__cards .card__image {
-  height: 220px;
+  height: 135px;
 }
 
 .home-page__cards .card__title {
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   text-align: left;
-  padding: 0 0 0.8rem;
-  font-size: 2.25rem;
+  padding: 0 0 var(--home-heading-content-gap);
+  color: #6f6757;
 }
 
 .home-page__cards .card__content {
   gap: 0;
-  padding: 1rem 0 0;
+  padding: 0.8rem 0 0;
 }
 
 .home-page__cards .card__text {
@@ -149,7 +156,7 @@
   gap: 0.5rem;
   align-items: baseline;
   margin: 0;
-  padding: 0.55rem 0;
+  padding: 0.45rem 0;
   border-bottom: 1px solid rgba(122, 113, 93, 0.16);
 }
 
@@ -188,10 +195,10 @@
   margin: 0;
   flex-basis: auto;
   font-family: "Open Sans", sans-serif;
-  font-size: 0.92rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 400;
   line-height: 1.45;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #6a655c;
 }
@@ -206,15 +213,21 @@
   margin: 0;
   padding: 0;
   text-align: left;
-  font-family: "Sorts Mill Goudy", serif;
-  font-size: 1rem;
-  font-weight: 400;
   line-height: 1.45;
   color: #2f372f;
 }
 
+.home-page__cards .card__slot-title {
+  font-family: "Sorts Mill Goudy", serif;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
 .home-page__cards .card__slot-placeholder {
-  color: #7a7368;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: var(--home-muted-text);
   justify-content: flex-start;
 }
 
@@ -231,8 +244,9 @@
   margin: 0;
   padding: 0.2rem 0 0;
   font-size: 1rem;
+  font-style: italic;
   line-height: 1.45;
-  color: #7a7368;
+  color: var(--home-muted-text);
 }
 
 .home-page__cards .card__shopping {
@@ -246,45 +260,39 @@
 .home-page__summaryCard {
   display: grid;
   align-content: start;
-  gap: 1rem;
+  min-height: 100%;
+}
+
+.home-page__summaryContent {
   padding: 1.25rem;
-  background: var(--surface-panel);
-  border: 1px solid var(--border-soft);
-  border-radius: 0;
-}
-
-.home-page__summaryHeader {
-  display: grid;
-  gap: 0.35rem;
-}
-
-.home-page__summaryHeader h3 {
-  margin: 0;
-  font-family: "Amatic SC", cursive;
-  font-size: 2rem;
-  font-weight: 400;
-  color: #444;
-}
-
-.home-page__summaryHeader p {
-  margin: 0;
-  color: #6a655c;
-  line-height: 1.55;
+  border: 1px solid var(--home-card-border);
+  background: var(--home-card-bg);
 }
 
 .home-page__summaryGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.85rem;
+  gap: 0;
 }
 
 .home-page__summaryBox {
   display: grid;
   gap: 0.2rem;
   min-height: 0;
-  padding: 0.95rem 1rem;
-  background: rgba(248, 247, 243, 0.72);
-  box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
+  padding: 0.85rem 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(122, 113, 93, 0.16);
+  box-shadow: none;
+}
+
+.home-page__summaryBox:first-child {
+  padding-top: 0;
+}
+
+.home-page__summaryBox:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
 }
 
 .home-page__summaryValue {
@@ -305,8 +313,19 @@
   line-height: 1.5;
 }
 
+.home-page__weekInsightsGrid {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: var(--home-heading-content-gap);
+}
+
+.home-page__weekInsightsGrid .home-page__summaryCard,
+.home-page__weekInsightsGrid .home-mood-card {
+  min-height: 100%;
+}
+
 .home-page__weeklyTasks {
-  margin-top: 1.15rem;
+  margin-top: var(--home-heading-content-gap);
 }
 
 .home-page__panel--today .home-page__panelHeader,
@@ -318,17 +337,27 @@
 }
 
 .home-page__panel--today .home-page__panelHeader {
+  min-height: 0;
   border-bottom: 0;
   padding-bottom: 0;
 }
 
+.home-page__panel--weeklyTasks .home-page__panelHeader {
+  min-height: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
 .home-page__panel--shopping .home-page__panelHeader {
-  padding-bottom: 0.9rem;
+  min-height: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
 }
 
 .home-page__todayCard {
   display: flex;
   flex: 1;
+  margin-top: var(--home-heading-content-gap);
 }
 
 .home-page__todayCard .card {
@@ -337,7 +366,9 @@
 }
 
 .home-page__panel--today .card--overview {
-  background: transparent;
+  padding: 1rem;
+  background: var(--home-card-bg);
+  border: 1px solid var(--home-card-border);
   box-shadow: none;
   border-radius: 0;
 }
@@ -405,16 +436,16 @@
   margin: 0;
   flex-basis: auto;
   font-family: "Open Sans", sans-serif;
-  font-size: 0.96rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 400;
   line-height: 1.45;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #6a655c;
 }
 
 .home-page__panel--today .card__text--optional .card__subtitle {
-  font-size: 0.92rem;
+  font-size: 0.8rem;
   color: #6a655c;
 }
 
@@ -428,15 +459,20 @@
   margin: 0;
   padding: 0;
   text-align: left;
-  font-family: "Sorts Mill Goudy", serif;
-  font-size: 1.06rem;
   font-weight: 400;
   line-height: 1.45;
   color: #2f372f;
 }
 
+.home-page__panel--today .card__slot-title {
+  font-family: "Sorts Mill Goudy", serif;
+  font-size: 1rem;
+}
+
 .home-page__panel--today .card__slot-placeholder {
-  color: #7a7368;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.92rem;
+  color: var(--home-muted-text);
   justify-content: flex-start;
 }
 
@@ -445,8 +481,9 @@
   padding: 0.2rem 0 0;
   font-family: inherit;
   font-size: 1rem;
+  font-style: italic;
   line-height: 1.45;
-  color: #7a7368;
+  color: var(--home-muted-text);
 }
 
 .home-page__panel--shopping .shopping-card {
@@ -454,8 +491,10 @@
 }
 
 .home-page__panel--shopping .shopping-card--embedded {
-  margin-top: 1.15rem;
-  background: transparent;
+  margin-top: var(--home-heading-content-gap);
+  padding: 1rem;
+  background: var(--home-card-bg);
+  border: 1px solid var(--home-card-border);
   box-shadow: none;
   border-radius: 0;
 }
@@ -471,7 +510,7 @@
 }
 
 .home-page__panel--shopping .shopping-card--embedded .card__content {
-  padding-top: 0.5rem;
+  padding-top: 0;
 }
 
 .home-page__panel--shopping .shopping-card--embedded .card__content {
@@ -517,17 +556,20 @@
   .home-page__cards .cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .home-page__weekInsightsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 1024px) {
   .home-page__cards .cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) var(--home-plan-third-column);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 640px) {
-  .home-page__sheet,
-  .home-page__panel {
+  .home-page__sheet {
     padding: 1rem;
   }
 

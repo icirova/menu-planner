@@ -16,7 +16,6 @@ export const HomePageTodayPanel = ({
   >
     <div className="home-page__panelHeader">
       <h2>{todayName}</h2>
-      <p>Rychlý denní přehled.</p>
     </div>
 
     <div className="home-page__todayCard">

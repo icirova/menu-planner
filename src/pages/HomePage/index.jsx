@@ -43,7 +43,6 @@ export const HomePage = () => {
         <section className="home-page__panel home-page__panel--weeklyTasks">
           <div className="home-page__panelHeader">
             <h2>Úkoly na týden</h2>
-            <p>Úkoly a připomínky k naplánovaným receptům.</p>
           </div>
 
           <div className="home-page__weeklyTasks">
@@ -75,7 +74,6 @@ export const HomePage = () => {
             />
 
             <HomePageShoppingPanel
-              shoppingSummary={shoppingSummary}
               weeklyMenu={weeklyMenu}
               recipeList={recipeList}
               onChange={(value) => menuDispatch({ type: "UPDATE_SHOPPING", value })}
@@ -87,7 +85,6 @@ export const HomePage = () => {
           <div className="home-page__panelHeader home-page__panelHeader--withAction">
             <div>
               <h2>Kompletní plán</h2>
-              <p>Celý týden pohromadě, s rychlým přehledem receptů a surovin k nákupu.</p>
             </div>
             <Link to="/planner" className="button button--ghost home-page__panelAction">
               Otevřít plánovač
@@ -106,23 +103,28 @@ export const HomePage = () => {
                 showShoppingSection: true,
                 titleAboveImage: true,
               }}
-              trailingContent={(
-                <>
-                  <HomePageWeekSummaryCard
-                    completion={completion}
-                    filledSlots={filledSlots}
-                    meatLunches={meatLunches}
-                    occupiedSlotCount={occupiedSlotCount}
-                    repeatedRecipes={repeatedRecipes}
-                    shoppingSummary={shoppingSummary}
-                    sweetMeals={sweetMeals}
-                    veganLunches={veganLunches}
-                  />
-
-                  <HomeMoodCard />
-                </>
-              )}
             />
+          </div>
+        </section>
+
+        <section className="home-page__panel home-page__panel--weekInsights">
+          <div className="home-page__panelHeader">
+            <h2>Týden v kostce</h2>
+          </div>
+
+          <div className="home-page__weekInsightsGrid">
+            <HomePageWeekSummaryCard
+              completion={completion}
+              filledSlots={filledSlots}
+              meatLunches={meatLunches}
+              occupiedSlotCount={occupiedSlotCount}
+              repeatedRecipes={repeatedRecipes}
+              shoppingSummary={shoppingSummary}
+              sweetMeals={sweetMeals}
+              veganLunches={veganLunches}
+            />
+
+            <HomeMoodCard />
           </div>
         </section>
       </div>

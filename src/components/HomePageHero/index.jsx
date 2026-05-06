@@ -14,7 +14,7 @@ export const HomePageHero = ({
       <p className="page-hero__eyebrow">{dateLabel}</p>
       <h1 className="page-hero__title">{todayName}</h1>
       <p className="page-hero__text">
-        Dashboard ti drží pohromadě dnešní menu, nákupní seznam i celý týdenní plán.
+        Vyber recepty, sestav týdenní plán a měj přehled o nákupu i přípravě.
       </p>
       <div className="page-hero__actions">
         <button

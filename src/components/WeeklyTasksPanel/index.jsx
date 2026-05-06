@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { ExtraSummaryCard } from "../ExtraSummaryCard";
 import { DAYS } from "../../constants/days";
 import { MEAL_KEYS } from "../../constants/mealKeys";
 import { normalizeRecipePreTasks } from "../../utils/normalizeRecipePreTasks";
@@ -39,6 +38,23 @@ const getWeeklyGeneratedTasks = (week = [], recipes = []) => {
   });
 };
 
+const getWeeklyExtraItems = (week = [], recipes = []) => {
+  const recipesById = new Map(recipes.map((recipe) => [recipe.id, recipe]));
+
+  return week.flatMap((day, dayIndex) =>
+    getSlotRecipeIds(day?.extra).flatMap((recipeId) => {
+      const recipe = recipesById.get(recipeId);
+      if (!recipe) return [];
+
+      return [{
+        id: `extra-${dayIndex}-${recipe.id}`,
+        dayLabel: DAYS[dayIndex],
+        recipeTitle: recipe.title,
+      }];
+    }),
+  );
+};
+
 export const WeeklyTasksPanel = ({
   value = "",
   week = [],
@@ -54,6 +70,10 @@ export const WeeklyTasksPanel = ({
   const [noteDraft, setNoteDraft] = useState("");
   const generatedTasks = useMemo(
     () => getWeeklyGeneratedTasks(week, recipes),
+    [recipes, week],
+  );
+  const extraItems = useMemo(
+    () => getWeeklyExtraItems(week, recipes),
     [recipes, week],
   );
   const groupedGeneratedTasks = useMemo(() => {
@@ -133,14 +153,29 @@ export const WeeklyTasksPanel = ({
             <h3>EXTRA</h3>
           </div>
 
-          <ExtraSummaryCard
-            title="EXTRA"
-            week={week}
-            recipes={recipes}
-            showVisualHeader={false}
-            completedMap={extraDone}
-            onToggleItem={onToggleExtraDone}
-          />
+          {extraItems.length ? (
+            <ul className="weekly-tasks-panel__list">
+              {extraItems.map(({ id, dayLabel, recipeTitle }) => (
+                <li key={id} className={`weekly-tasks-panel__item ${extraDone[id] ? "is-complete" : ""}`}>
+                  <span className="weekly-tasks-panel__day">{dayLabel}</span>
+                  <button
+                    type="button"
+                    className="weekly-tasks-panel__toggle"
+                    onClick={() => onToggleExtraDone?.(id)}
+                  >
+                    <span className={`weekly-tasks-panel__check ${extraDone[id] ? "is-complete" : ""}`} aria-hidden="true">
+                      {extraDone[id] ? "✓" : ""}
+                    </span>
+                    <span className="weekly-tasks-panel__taskMain">
+                      <strong className="weekly-tasks-panel__taskText">{recipeTitle}</strong>
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="weekly-tasks-panel__empty">Zatím bez naplánovaného EXTRA receptu.</p>
+          )}
         </section>
 
         <section className="weekly-tasks-panel__block">
@@ -149,17 +184,6 @@ export const WeeklyTasksPanel = ({
           </div>
 
           <div className="weekly-tasks-panel__notes">
-            <form className="weekly-tasks-panel__noteForm" onSubmit={handleAddNote}>
-              <input
-                type="text"
-                className="weekly-tasks-panel__noteInput"
-                placeholder="Přidat poznámku nebo úkol"
-                value={noteDraft}
-                onChange={(event) => setNoteDraft(event.target.value)}
-              />
-              <button type="submit" className="button button--add">Přidat</button>
-            </form>
-
             {noteItems.length ? (
               <ul className="weekly-tasks-panel__notesList">
                 {noteItems.map(({ id, text, done }) => (
@@ -193,6 +217,17 @@ export const WeeklyTasksPanel = ({
             ) : (
               <p className="weekly-tasks-panel__empty">Zatím bez vlastních poznámek.</p>
             )}
+
+            <form className="weekly-tasks-panel__noteForm" onSubmit={handleAddNote}>
+              <input
+                type="text"
+                className="weekly-tasks-panel__noteInput"
+                placeholder="Přidat poznámku nebo úkol"
+                value={noteDraft}
+                onChange={(event) => setNoteDraft(event.target.value)}
+              />
+              <button type="submit" className="button button--add">Přidat</button>
+            </form>
           </div>
         </section>
       </div>
