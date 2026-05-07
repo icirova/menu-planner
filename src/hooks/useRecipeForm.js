@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { normalizeSuitableForValues } from "../constants/recipeMetadata";
 import { prepareCustomRecipeForRuntime } from "../storage/recipesStorage";
 import { createNumericId } from "../utils/createId";
+import { getCanonicalIngredientName } from "../utils/ingredientNames";
 import { normalizeRecipePreTasks } from "../utils/normalizeRecipePreTasks";
 import { isSeedRecipe } from "../utils/recipeSource";
 
@@ -58,6 +59,7 @@ export const useRecipeForm = ({
   addRecipe,
   updateRecipe,
   navigate,
+  onValidationError,
 }) => {
   const [form, setForm] = useState(createEmptyFormState);
   const fileInputRef = useRef(null);
@@ -121,9 +123,20 @@ export const useRecipeForm = ({
   const handleSubmit = async (e, formOverrides = {}) => {
     e.preventDefault();
     const submittedForm = { ...form, ...formOverrides };
+    const reportValidationError = (message, fieldName) => {
+      onValidationError?.(message);
+      if (fieldName) {
+        e.currentTarget?.elements?.namedItem(fieldName)?.focus();
+      }
+    };
 
     if (isEditMode && isSeedRecipe(recipeToEdit)) {
-      window.alert("Default recepty v demo projektu nejde upravovat.");
+      reportValidationError("Default recepty v demo projektu nejde upravovat.");
+      return;
+    }
+
+    if (!submittedForm.name.trim()) {
+      reportValidationError("Vyplň název receptu.", "name");
       return;
     }
 
@@ -132,17 +145,36 @@ export const useRecipeForm = ({
     const calories = trimmedCalories === "" ? null : Number(trimmedCalories);
 
     if (!Number.isFinite(servings) || servings < 1) {
-      window.alert("Počet porcí musí být alespoň 1.");
+      reportValidationError("Počet porcí musí být alespoň 1.", "servings");
       return;
     }
 
     if (trimmedCalories !== "" && (!Number.isFinite(calories) || calories < 0)) {
-      window.alert("Kalorie musí být 0 nebo kladné číslo.");
+      reportValidationError("Kalorie musí být 0 nebo kladné číslo.", "calories");
       return;
     }
 
-    const nextIngredients =
-      ingredientInputsRef.current?.flushDraftIngredient(submittedForm.ingredients) ?? submittedForm.ingredients;
+    if (!submittedForm.method.trim()) {
+      reportValidationError("Vyplň postup přípravy.", "method");
+      return;
+    }
+
+    const flushedIngredients = ingredientInputsRef.current?.flushDraftIngredient(submittedForm.ingredients);
+    if (flushedIngredients === null) return;
+
+    const nextIngredients = flushedIngredients ?? submittedForm.ingredients;
+    const normalizedIngredients = nextIngredients
+      .map((ingredient) => ({
+        ...ingredient,
+        item: getCanonicalIngredientName(ingredient.item),
+      }))
+      .filter((ingredient) => ingredient.item !== "");
+
+    if (normalizedIngredients.length === 0) {
+      reportValidationError("Přidej alespoň jednu surovinu.");
+      ingredientInputsRef.current?.focusItemField();
+      return;
+    }
 
     const draftRecipe = {
       id: recipeToEdit?.id ?? createNumericId(),
@@ -151,7 +183,7 @@ export const useRecipeForm = ({
       servings,
       tags: submittedForm.selectedTags,
       photo_urls: submittedForm.photos.map((photo) => photo.url),
-      ingredients: nextIngredients.filter((ingredient) => ingredient.item.trim() !== ""),
+      ingredients: normalizedIngredients,
       suitableFor: normalizeSuitableForValues(submittedForm.selectedSuitableFor),
       calories,
       workflow: submittedForm.method.trim(),
@@ -175,7 +207,7 @@ export const useRecipeForm = ({
         error instanceof Error && error.message
           ? error.message
           : "Nepodařilo se připravit recept k uložení.";
-      window.alert(message);
+      reportValidationError(message);
     }
   };
 

@@ -63,6 +63,16 @@
   gap: 1.5rem;
 }
 
+.recipe-form-page__message {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid #f0d2a4;
+  border-radius: 0;
+  background: #fff4e5;
+  color: #7a4d00;
+  line-height: 1.5;
+}
+
 .recipe-form-page__panel {
   padding: 0;
   border: 0;
@@ -261,6 +271,10 @@
   line-height: 1.35;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.form__requiredMark {
+  color: #9f2f2f;
 }
 
 .form__input {

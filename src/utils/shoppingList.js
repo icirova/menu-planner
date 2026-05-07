@@ -1,6 +1,8 @@
 import { DAYS } from "../constants/days";
 import { MEAL_KEYS } from "../constants/mealKeys";
+import { PANTRY_ITEMS } from "../constants/pantry";
 import { createStableId } from "./createId";
+import { getCanonicalIngredientName, normalizeIngredientKey } from "./ingredientNames";
 import { getSlotRecipeIds } from "./mealSlots";
 
 const isPlainObject = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
@@ -9,13 +11,15 @@ const normalizeText = (value) => (typeof value === "string" ? value.trim() : "")
 
 const buildCustomItemId = () => createStableId("custom");
 
-const normalizeKey = (value) =>
-  normalizeText(value)
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+const normalizeKey = normalizeIngredientKey;
+
+const PANTRY_KEYS = new Set(
+  PANTRY_ITEMS.flatMap((item) => item.aliases ?? [item.label])
+    .map((name) => normalizeKey(getCanonicalIngredientName(name)))
+    .filter(Boolean),
+);
+
+const isPantryItemKey = (key) => PANTRY_KEYS.has(key);
 
 const formatLabel = (value) => {
   const text = normalizeText(value);
@@ -118,9 +122,10 @@ export const buildGeneratedShoppingItems = (week, recipes) => {
         recipe.ingredients.forEach((ingredient) => {
           if (!isPlainObject(ingredient)) return;
 
-          const itemName = normalizeText(ingredient.item);
+          const itemName = getCanonicalIngredientName(ingredient.item);
           const key = normalizeKey(itemName);
           if (!itemName || !key) return;
+          if (isPantryItemKey(key)) return;
           if (!isIngredientSelectedForDay(day, key)) return;
 
           if (!aggregated.has(key)) {
@@ -172,9 +177,10 @@ export const getDayShoppingItems = (day, recipes) => {
       recipe.ingredients.forEach((ingredient) => {
         if (!isPlainObject(ingredient)) return;
 
-        const itemName = normalizeText(ingredient.item);
+        const itemName = getCanonicalIngredientName(ingredient.item);
         const key = normalizeKey(itemName);
         if (!itemName || !key || aggregated.has(key)) return;
+        if (isPantryItemKey(key)) return;
 
         aggregated.set(key, {
           id: key,

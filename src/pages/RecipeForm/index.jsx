@@ -17,6 +17,7 @@ import { resolveImageSrc } from "../../utils/resolveImageSrc";
 
 export const RecipeForm = () => {
   const [preTaskDraft, setPreTaskDraft] = useState("");
+  const [formMessage, setFormMessage] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const { id } = useParams();
@@ -45,6 +46,7 @@ export const RecipeForm = () => {
     addRecipe,
     updateRecipe,
     navigate,
+    onValidationError: setFormMessage,
   });
 
   const suitabilityOptions = SUITABILITY_OPTIONS.map((option) => ({
@@ -82,6 +84,7 @@ export const RecipeForm = () => {
   }, [isDeleteDialogOpen, isDeleting]);
 
   const handleFormSubmit = (event) => {
+    setFormMessage("");
     handleSubmit(event, { preTasksText: getSubmittedPreTasksText() });
   };
   const handleDelete = async () => {
@@ -91,7 +94,7 @@ export const RecipeForm = () => {
     const deleted = await deleteRecipe(recipeToEdit.id);
     setIsDeleting(false);
     if (!deleted) {
-      window.alert("Recept se nepodařilo smazat. Zkus aplikaci obnovit.");
+      setFormMessage("Recept se nepodařilo smazat. Zkus aplikaci obnovit.");
       return;
     }
     setIsDeleteDialogOpen(false);
@@ -188,7 +191,13 @@ export const RecipeForm = () => {
         </div>
       </section>
 
-      <form id="form" className="form recipe-form-page__form" onSubmit={handleFormSubmit}>
+      {formMessage && (
+        <p className="recipe-form-page__message" role="alert">
+          {formMessage}
+        </p>
+      )}
+
+      <form id="form" className="form recipe-form-page__form" onSubmit={handleFormSubmit} noValidate>
         <section className="recipe-form-page__panel">
           <div className="recipe-form-page__sectionHeader">
             <h2>Základní údaje</h2>
@@ -196,12 +205,13 @@ export const RecipeForm = () => {
 
           <div className="recipe-form-page__fieldGrid recipe-form-page__fieldGrid--top">
             <div className="recipe-form-page__subsection form__item">
-              <label htmlFor="name" className="form__label">Název</label>
+              <label htmlFor="name" className="form__label">
+                Název <span className="form__requiredMark" aria-hidden="true">*</span>
+              </label>
               <input
                 type="text"
                 id="name"
                 name="name"
-                required
                 className="form__input"
                 placeholder="Např. Dýňová polévka"
                 value={form.name}
@@ -210,12 +220,13 @@ export const RecipeForm = () => {
             </div>
 
             <div className="recipe-form-page__subsection form__item">
-              <label htmlFor="servings" className="form__label">Počet porcí</label>
+              <label htmlFor="servings" className="form__label">
+                Počet porcí <span className="form__requiredMark" aria-hidden="true">*</span>
+              </label>
               <input
                 type="number"
                 id="servings"
                 name="servings"
-                required
                 min="1"
                 step="1"
                 className="form__input"
@@ -281,6 +292,7 @@ export const RecipeForm = () => {
             ref={ingredientInputsRef}
             ingredients={form.ingredients}
             setIngredients={setIngredients}
+            onValidationError={setFormMessage}
           />
         </section>
 
@@ -291,13 +303,14 @@ export const RecipeForm = () => {
 
           <div className="recipe-form-page__fieldGrid recipe-form-page__fieldGrid--text">
             <div className="recipe-form-page__subsection form__item">
-              <label htmlFor="method" className="form__label">Postup</label>
+              <label htmlFor="method" className="form__label">
+                Postup <span className="form__requiredMark" aria-hidden="true">*</span>
+              </label>
               <textarea
                 id="method"
                 name="method"
                 className="form__input form__textarea"
                 placeholder="Popiš postup přípravy"
-                required
                 value={form.method}
                 onChange={(e) => setField("method", e.target.value)}
               />

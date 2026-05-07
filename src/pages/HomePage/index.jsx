@@ -7,6 +7,7 @@ import { HomePageHero } from "../../components/HomePageHero";
 import { HomePageShoppingPanel } from "../../components/HomePageShoppingPanel";
 import { HomePageTodayPanel } from "../../components/HomePageTodayPanel";
 import { HomePageWeekSummaryCard } from "../../components/HomePageWeekSummaryCard";
+import { PantryCard } from "../../components/PantryCard";
 import { WeeklyTasksPanel } from "../../components/WeeklyTasksPanel";
 import { useHomePageHero } from "../../hooks/useHomePageHero";
 import { useHomePageSummary } from "../../hooks/useHomePageSummary";
@@ -103,6 +104,7 @@ export const HomePage = () => {
                 showShoppingSection: true,
                 titleAboveImage: true,
               }}
+              trailingContent={<PantryCard />}
             />
           </div>
         </section>

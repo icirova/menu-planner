@@ -1,26 +1,53 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import "./style.css";
 import { formatIngredient } from "../../utils/formatIngredient";
+import { getCanonicalIngredientName } from "../../utils/ingredientNames";
 
 const createEmptyIngredient = () => ({ amount: "", unit: "", item: "" });
 
-export const IngredientInputs = forwardRef(({ ingredients, setIngredients }, ref) => {
+export const IngredientInputs = forwardRef(({ ingredients, setIngredients, onValidationError }, ref) => {
   const [newIngredient, setNewIngredient] = useState({ amount: "", unit: "", item: "" });
   const rowRef = useRef(null);
 
-  const getValidatedIngredient = () => {
+  const focusDraftField = (fieldName) => {
+    rowRef.current?.querySelector(`[name="${fieldName}"]`)?.focus();
+  };
+
+  const getDraftValidation = () => {
     const { amount, unit, item } = newIngredient;
+    const hasDraft = amount.trim() !== "" || unit !== "" || item.trim() !== "";
     const parsedAmount = parseFloat(amount);
 
-    if (!item.trim() || !unit || !Number.isFinite(parsedAmount) || parsedAmount <= 0) {
-      return null;
+    if (!hasDraft) {
+      return { ingredient: null, isEmpty: true, errorField: null };
+    }
+
+    if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
+      return { ingredient: null, isEmpty: false, errorField: "amount" };
+    }
+
+    if (!unit) {
+      return { ingredient: null, isEmpty: false, errorField: "unit" };
+    }
+
+    if (!item.trim()) {
+      return { ingredient: null, isEmpty: false, errorField: "item" };
     }
 
     return {
-      amount: parsedAmount,
-      unit,
-      item: item.trim(),
+      ingredient: {
+        amount: parsedAmount,
+        unit,
+        item: getCanonicalIngredientName(item),
+      },
+      isEmpty: false,
+      errorField: null,
     };
+  };
+
+  const reportDraftError = (fieldName) => {
+    onValidationError?.("Rozpracovaná surovina musí mít množství, jednotku i název.");
+    focusDraftField(fieldName);
   };
 
   const handleChange = (field, value) => {
@@ -30,8 +57,13 @@ export const IngredientInputs = forwardRef(({ ingredients, setIngredients }, ref
   };
 
   const addIngredient = () => {
-    const ingredient = getValidatedIngredient();
-    if (!ingredient) return;
+    const { ingredient, isEmpty, errorField } = getDraftValidation();
+    if (isEmpty) return;
+
+    if (!ingredient) {
+      reportDraftError(errorField);
+      return;
+    }
 
     setIngredients((prev) => [...prev, ingredient]);
     setNewIngredient(createEmptyIngredient());
@@ -41,11 +73,20 @@ export const IngredientInputs = forwardRef(({ ingredients, setIngredients }, ref
   };
 
   useImperativeHandle(ref, () => ({
+    focusItemField() {
+      focusDraftField("item");
+    },
+
     flushDraftIngredient(currentIngredients = []) {
-      const ingredient = getValidatedIngredient();
+      const { ingredient, isEmpty, errorField } = getDraftValidation();
+
+      if (isEmpty) {
+        return currentIngredients;
+      }
 
       if (!ingredient) {
-        return currentIngredients;
+        reportDraftError(errorField);
+        return null;
       }
 
       const nextIngredients = [...currentIngredients, ingredient];
@@ -70,7 +111,9 @@ export const IngredientInputs = forwardRef(({ ingredients, setIngredients }, ref
     <div className="recipe-form-page__subsection form__item">
       <div className="ingredient-editor">
         <div className="ingredient-editor__add">
-          <label className="form__label">Přidat surovinu</label>
+          <label className="form__label">
+            Přidat surovinu <span className="form__requiredMark" aria-hidden="true">*</span>
+          </label>
 
           <div className="ingredient-row" ref={rowRef} onKeyDown={onRowKeyDown}>
             <input
