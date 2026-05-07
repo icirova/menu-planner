@@ -1,6 +1,6 @@
 import "./style.css";
-import { Link, useOutletContext } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { Link, useLocation, useNavigate, useOutletContext } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FilterToggleGroup } from "../../components/FilterToggleGroup";
 import {
   getRecipeSuitableForFilterValues,
@@ -26,11 +26,15 @@ const getRecipeSortTimestamp = (recipe) => {
 
 export const RecipeLibrary = () => {
   const { recipeList } = useOutletContext();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const catalogSectionRef = useRef(null);
   const [query, setQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedSuitabilities, setSelectedSuitabilities] = useState([]);
   const [sortOrder, setSortOrder] = useState("newest");
   const [visibleCount, setVisibleCount] = useState(RECIPES_BATCH_SIZE);
+  const [priorityRecipeId, setPriorityRecipeId] = useState(location.state?.focusRecipeId ?? null);
   const hasActiveFilters =
     query.trim() !== "" || selectedTags.length > 0 || selectedSuitabilities.length > 0;
   const activeFiltersCount =
@@ -54,6 +58,11 @@ export const RecipeLibrary = () => {
         );
       })
       .sort((a, b) => {
+        if (priorityRecipeId != null) {
+          if (String(a.id) === String(priorityRecipeId)) return -1;
+          if (String(b.id) === String(priorityRecipeId)) return 1;
+        }
+
         if (sortOrder === "title-asc") {
           return a.title.localeCompare(b.title, "cs");
         }
@@ -66,7 +75,7 @@ export const RecipeLibrary = () => {
         if (byDate !== 0) return byDate;
         return a.title.localeCompare(b.title, "cs");
       });
-  }, [query, recipeList, selectedSuitabilities, selectedTags, sortOrder]);
+  }, [priorityRecipeId, query, recipeList, selectedSuitabilities, selectedTags, sortOrder]);
   const glutenFreeRecipesCount = recipeList.filter((recipe) =>
     recipe.suitableFor?.includes("bez lepku"),
   ).length;
@@ -86,6 +95,27 @@ export const RecipeLibrary = () => {
   useEffect(() => {
     setVisibleCount(RECIPES_BATCH_SIZE);
   }, [query, selectedSuitabilities, selectedTags, sortOrder, recipeList.length]);
+
+  useEffect(() => {
+    const focusRecipeId = location.state?.focusRecipeId;
+    if (focusRecipeId == null) return;
+
+    setPriorityRecipeId(focusRecipeId);
+  }, [location.state]);
+
+  useEffect(() => {
+    const focusRecipeId = location.state?.focusRecipeId;
+    if (focusRecipeId == null) return;
+
+    const targetRecipe = visibleRecipes.find((recipe) => String(recipe.id) === String(focusRecipeId));
+    if (!targetRecipe) return;
+
+    catalogSectionRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
+
+    if (location.state?.focusRecipeId != null) {
+      navigate(location.pathname, { replace: true, state: null });
+    }
+  }, [location.pathname, location.state, navigate, visibleRecipes]);
 
   const handleTagSelection = (tag) => {
     setSelectedTags((prev) =>
@@ -222,7 +252,7 @@ export const RecipeLibrary = () => {
         </aside>
       </div>
 
-      <section className="recipe-library__panel">
+      <section className="recipe-library__panel" ref={catalogSectionRef}>
           <div className="recipe-library__panelHeader recipe-library__panelHeader--catalog">
             <div>
             <h2>Recepty</h2>

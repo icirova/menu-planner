@@ -164,12 +164,12 @@ export const useRecipeForm = ({
 
       if (isEditMode) {
         updateRecipe(newRecipe);
-        navigate(`/recipe-detail/${newRecipe.id}`);
+        navigate("/recipes", { state: { focusRecipeId: newRecipe.id } });
         return;
       }
 
       addRecipe(newRecipe);
-      navigate("/recipes");
+      navigate("/recipes", { state: { focusRecipeId: newRecipe.id } });
     } catch (error) {
       const message =
         error instanceof Error && error.message
