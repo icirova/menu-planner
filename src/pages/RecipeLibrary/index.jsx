@@ -70,6 +70,7 @@ export const RecipeLibrary = () => {
   const glutenFreeRecipesCount = recipeList.filter((recipe) =>
     recipe.suitableFor?.includes("bez lepku"),
   ).length;
+  const customRecipesCount = recipeList.filter((recipe) => !isSeedRecipe(recipe)).length;
   const veganRecipesCount = recipeList.filter((recipe) =>
     recipe.suitableFor?.includes("veganské"),
   ).length;
@@ -167,20 +168,25 @@ export const RecipeLibrary = () => {
             />
           </div>
 
-          {hasActiveFilters && (
-            <div className="recipe-library__filterSummary">
-              <p className="recipe-library__filterSummaryText">
-                Aktivní filtry: {activeFiltersCount}
-              </p>
-              <button
-                type="button"
-                className="button button--ghost recipe-library__clearButton"
-                onClick={resetFilters}
-              >
-                Vyčistit filtry
-              </button>
-            </div>
-          )}
+          <div
+            className={`recipe-library__filterSummary ${
+              hasActiveFilters ? "" : "recipe-library__filterSummary--empty"
+            }`}
+            aria-hidden={!hasActiveFilters}
+          >
+            <p className="recipe-library__filterSummaryText">
+              Aktivní filtry: {activeFiltersCount}
+            </p>
+            <button
+              type="button"
+              className="button button--ghost recipe-library__clearButton"
+              onClick={resetFilters}
+              disabled={!hasActiveFilters}
+              tabIndex={hasActiveFilters ? undefined : -1}
+            >
+              Vyčistit filtry
+            </button>
+          </div>
         </section>
 
         <aside className="recipe-library__panel recipe-library__panel--summary">
@@ -195,6 +201,11 @@ export const RecipeLibrary = () => {
               <article className="recipe-library__summaryBox">
                 <span className="recipe-library__summaryValue">{recipeList.length}</span>
                 <span className="recipe-library__summaryLabel">receptů celkem</span>
+              </article>
+
+              <article className="recipe-library__summaryBox">
+                <span className="recipe-library__summaryValue">{customRecipesCount}</span>
+                <span className="recipe-library__summaryLabel">vlastních receptů</span>
               </article>
 
               <article className="recipe-library__summaryBox">
