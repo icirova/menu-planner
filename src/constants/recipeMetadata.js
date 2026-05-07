@@ -12,7 +12,7 @@ const createMetadataIndex = (definitions) =>
     return index;
   }, {});
 
-export const TAG_DEFINITIONS = [
+const TAG_DEFINITIONS = [
   { label: "Snídaně", value: "snídaně", icon: "🍳", aliases: ["snidane", "breakfast"] },
   { label: "Svačiny", value: "svačiny", icon: "🥪", aliases: ["svačina", "svacina", "snack"] },
   { label: "Obědy", value: "obědy", icon: "🍲", aliases: ["oběd", "obed", "lunch"] },
@@ -68,7 +68,7 @@ export const getRecipeSuitableForFilterValues = (suitability = []) => {
 export const isSuitabilityOptionDisabled = (optionValue, selectedValues = []) =>
   optionValue === "bez mléka" && normalizeSuitableForValues(selectedValues).includes("veganské");
 
-export const ALLERGEN_DEFINITIONS = [
+const ALLERGEN_DEFINITIONS = [
   { label: "Lepek", value: "lepek", icon: "🌾", aliases: ["gluten"] },
   { label: "Korýši", value: "korýši", icon: "🦐", aliases: ["korysi", "crustaceans"] },
   { label: "Vejce", value: "vejce", icon: "🥚", aliases: ["eggs"] },

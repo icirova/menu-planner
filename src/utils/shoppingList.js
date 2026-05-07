@@ -1,9 +1,9 @@
-import { DAYS } from "../constants/days";
-import { MEAL_KEYS } from "../constants/mealKeys";
-import { PANTRY_ITEMS } from "../constants/pantry";
-import { createStableId } from "./createId";
-import { getCanonicalIngredientName, normalizeIngredientKey } from "./ingredientNames";
-import { getSlotRecipeIds } from "./mealSlots";
+import { DAYS } from "../constants/days.js";
+import { MEAL_KEYS } from "../constants/mealKeys.js";
+import { PANTRY_ITEMS } from "../constants/pantry.js";
+import { createStableId } from "./createId.js";
+import { getCanonicalIngredientName, normalizeIngredientKey } from "./ingredientNames.js";
+import { getSlotRecipeIds } from "./mealSlots.js";
 
 const isPlainObject = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
 
@@ -103,7 +103,7 @@ export const normalizeShoppingState = (value) => {
   };
 };
 
-export const buildGeneratedShoppingItems = (week, recipes) => {
+const buildGeneratedShoppingItems = (week, recipes) => {
   if (!Array.isArray(week) || !Array.isArray(recipes)) return [];
 
   const recipesById = new Map(recipes.map((recipe) => [recipe.id, recipe]));

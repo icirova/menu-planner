@@ -4,5 +4,3 @@ export const RECIPE_SOURCE = {
 };
 
 export const isSeedRecipe = (recipe) => recipe?.source === RECIPE_SOURCE.SEED;
-
-export const isCustomRecipe = (recipe) => recipe?.source === RECIPE_SOURCE.CUSTOM;

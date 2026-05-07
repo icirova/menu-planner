@@ -1,50 +1,22 @@
-import { normalizeSuitableForValues } from "../constants/recipeMetadata";
-import { normalizeRecipePreTasks } from "../utils/normalizeRecipePreTasks";
-import { normalizeRecipeTags } from "../utils/normalizeRecipeTag";
-import { createNumericId } from "../utils/createId";
-import { clampRecipeId } from "../utils/recipeIds";
-import { isSeedRecipe, RECIPE_SOURCE } from "../utils/recipeSource";
-import { normalizeRecipeImageUrls } from "./imageStorage";
-import { readSessionJson, writeSessionJson } from "./sessionJsonStorage";
-import { recipes as defaultRecipes } from "../../data/recipes";
+import { isSeedRecipe } from "../utils/recipeSource.js";
+import {
+  normalizeCustomRecipe,
+  normalizeRecipeForRuntime,
+  normalizeSeedRecipe,
+} from "./recipeNormalization.js";
+import { readSessionJson, writeSessionJson } from "./sessionJsonStorage.js";
+import { recipes as defaultRecipes } from "../../data/recipes.js";
 
 const CUSTOM_RECIPES_STORAGE_KEY = "customRecipes";
 
-const normalizeRecipeId = (value) => {
-  return clampRecipeId(value) ?? createNumericId();
-};
-
-const normalizeRecipe = (recipe, source) => ({
-  ...recipe,
-  id: normalizeRecipeId(recipe.id),
-  source: recipe.source ?? source,
-  createdAt:
-    typeof recipe.createdAt === "string" && recipe.createdAt.trim()
-      ? recipe.createdAt
-      : null,
-  tags: normalizeRecipeTags(recipe.tags ?? []),
-  suitableFor: normalizeSuitableForValues(recipe.suitableFor ?? []),
-  preTasks: normalizeRecipePreTasks(recipe.preTasks),
-});
-
-export const normalizeCustomRecipe = (recipe) => normalizeRecipe(recipe, RECIPE_SOURCE.CUSTOM);
+export { normalizeCustomRecipe };
 
 export const prepareCustomRecipeForRuntime = async (recipe) => {
-  const normalizedRecipe = normalizeCustomRecipe(recipe);
-
-  return {
-    ...normalizedRecipe,
-    photo_urls: normalizeRecipeImageUrls(normalizedRecipe.photo_urls ?? []),
-  };
+  return normalizeRecipeForRuntime(recipe);
 };
 
 const serializeCustomRecipe = async (recipe) => {
-  const normalizedRecipe = normalizeCustomRecipe(recipe);
-
-  return {
-    ...normalizedRecipe,
-    photo_urls: normalizeRecipeImageUrls(normalizedRecipe.photo_urls ?? []),
-  };
+  return normalizeRecipeForRuntime(recipe);
 };
 
 const mergeRecipeLists = (...recipeLists) => {
@@ -60,7 +32,7 @@ const mergeRecipeLists = (...recipeLists) => {
 export const loadCustomRecipes = async () => {
   const { value: storedRecipes, warning } = readSessionJson(CUSTOM_RECIPES_STORAGE_KEY, []);
   const normalizedDefaultRecipes = defaultRecipes.map((recipe) =>
-    normalizeRecipe(recipe, RECIPE_SOURCE.SEED),
+    normalizeSeedRecipe(recipe),
   );
   const normalizedStoredRecipes = Array.isArray(storedRecipes)
     ? await Promise.all(storedRecipes.map((recipe) => prepareCustomRecipeForRuntime(recipe)))

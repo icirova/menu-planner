@@ -1,5 +1,5 @@
-import { removeRecipeIdFromSlot, slotContainsRecipeId } from "../utils/mealSlots";
-import { readSessionJson, writeSessionJson } from "./sessionJsonStorage";
+import { removeRecipeIdFromSlot, slotContainsRecipeId } from "../utils/mealSlots.js";
+import { readSessionJson, writeSessionJson } from "./sessionJsonStorage.js";
 
 const WEEKLY_MENU_STORAGE_KEY = "weeklyMenu";
 

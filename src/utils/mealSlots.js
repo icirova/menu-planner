@@ -1,4 +1,4 @@
-import { MEAL_KEYS } from "../constants/mealKeys";
+import { MEAL_KEYS } from "../constants/mealKeys.js";
 
 const isValidRecipeId = (value) => typeof value === "number" && Number.isFinite(value);
 

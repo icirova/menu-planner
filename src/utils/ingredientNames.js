@@ -1,4 +1,4 @@
-export const COUNT_UNIT = "ks";
+const COUNT_UNIT = "ks";
 
 const INGREDIENT_NAME_GROUPS = [
   { canonical: "sůl", aliases: ["soli"], measuredName: "soli" },

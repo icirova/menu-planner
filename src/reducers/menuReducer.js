@@ -1,18 +1,18 @@
 import {
   createEmptyShoppingState,
   normalizeShoppingState,
-} from "../utils/shoppingList";
-import { MEAL_KEYS } from "../constants/mealKeys";
-import { DEFAULT_DAY } from "../constants/defaultDay";
-import { DAYS } from "../constants/days";
+} from "../utils/shoppingList.js";
+import { MEAL_KEYS } from "../constants/mealKeys.js";
+import { DEFAULT_DAY } from "../constants/defaultDay.js";
+import { DAYS } from "../constants/days.js";
 import {
   addRecipeIdToSlot,
   getSlotRecipeIds,
   normalizeSlotValue,
   removeRecipeIdFromSlot,
   slotContainsRecipeId,
-} from "../utils/mealSlots";
-import { createStableId } from "../utils/createId";
+} from "../utils/mealSlots.js";
+import { createStableId } from "../utils/createId.js";
 
 const isPlainObject = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
 
@@ -71,7 +71,7 @@ const normalizeShoppingSelections = (value) => {
   );
 };
 
-export const makeEmptyWeek = () => DAYS.map(() => ({ ...DEFAULT_DAY }));
+const makeEmptyWeek = () => DAYS.map(() => ({ ...DEFAULT_DAY }));
 
 export const initialMenuState = {
   week: makeEmptyWeek(),
@@ -81,14 +81,15 @@ export const initialMenuState = {
   shopping: createEmptyShoppingState(),
 };
 
-export const migrateWeekToRecipeIds = (week, recipes) => {
+const migrateWeekToRecipeIds = (week, recipes) => {
   if (!Array.isArray(week)) return makeEmptyWeek();
 
   const titleToId = new Map(recipes.map((recipe) => [recipe.title, recipe.id]));
   const validRecipeIds = new Set(recipes.map((recipe) => recipe.id));
 
-  return week.map((day) => {
-    const migratedDay = { ...DEFAULT_DAY, ...(day || {}) };
+  return makeEmptyWeek().map((emptyDay, index) => {
+    const day = week[index];
+    const migratedDay = { ...emptyDay, ...(day || {}) };
     migratedDay.shoppingSelections = normalizeShoppingSelections(migratedDay.shoppingSelections);
 
     for (const { key } of MEAL_KEYS) {

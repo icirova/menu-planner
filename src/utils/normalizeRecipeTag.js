@@ -1,6 +1,6 @@
-import { normalizeTagValue } from "../constants/recipeMetadata";
+import { normalizeTagValue } from "../constants/recipeMetadata.js";
 
-export const normalizeRecipeTag = (tag) => normalizeTagValue(tag);
+const normalizeRecipeTag = (tag) => normalizeTagValue(tag);
 
 export const normalizeRecipeTags = (tags = []) =>
   tags.map(normalizeRecipeTag);

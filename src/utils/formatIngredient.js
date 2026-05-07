@@ -1,4 +1,4 @@
-import { formatIngredientNameForAmount } from "./ingredientNames";
+import { formatIngredientNameForAmount } from "./ingredientNames.js";
 
 export const formatIngredient = (ingredient, baseServings, newServings) => {
   const safeBaseServings = Number(baseServings);
