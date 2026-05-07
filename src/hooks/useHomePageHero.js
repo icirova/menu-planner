@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { DAY_HERO_IMAGES, DAY_IMAGE_FILES } from "../constants/dayImages";
-import { DAYS, DAYS_IN_WEEK } from "../constants/days";
+import { DAY_IMAGES } from "../constants/dayImages.js";
+import { DAYS, DAYS_IN_WEEK } from "../constants/days.js";
 
 const SUNDAY_INDEX = 0;
 const LAST_DAY_INDEX = DAYS_IN_WEEK - 1;
@@ -39,9 +39,9 @@ export const useHomePageHero = () => {
 
     return {
       dateLabel: formatDateLabel(now),
-      heroImageSrc: DAY_HERO_IMAGES[todayIndex],
+      heroImageSrc: DAY_IMAGES[todayIndex],
       timeLabel: formatTimeLabel(now),
-      todayImageFile: DAY_IMAGE_FILES[todayIndex],
+      todayImageSrc: DAY_IMAGES[todayIndex],
       todayIndex,
       todayName: DAYS[todayIndex],
     };

@@ -21,7 +21,7 @@
   position: relative;
 }
 
-.card__emptyMessage {
+.card__empty-message {
   margin: 0;
   color: #6a655c;
   font-style: italic;
@@ -207,7 +207,7 @@
   gap: 0.4rem;
 }
 
-.card__slot-iconButton {
+.card__slot-icon-button {
   width: 2rem;
   height: 2rem;
   flex: 0 0 auto;
@@ -220,24 +220,24 @@
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.card__slot-iconButton--detail {
+.card__slot-icon-button--detail {
   background: rgba(255, 250, 242, 0.94);
   color: #284737;
 }
 
-.card__slot-iconButton--detail:hover {
+.card__slot-icon-button--detail:hover {
   background: #ffffff;
 }
 
-.card__slot-iconButton--remove {
+.card__slot-icon-button--remove {
   box-shadow: 0 8px 18px rgba(19, 29, 21, 0.14);
 }
 
-.card__slot-iconButton--remove:hover {
+.card__slot-icon-button--remove:hover {
   box-shadow: 0 10px 20px rgba(19, 29, 21, 0.16);
 }
 
-.card__slot-detailIcon {
+.card__slot-detail-icon {
   font-family: Georgia, serif;
   font-size: 1rem;
   font-style: italic;
@@ -257,12 +257,12 @@
   padding-top: 0.9rem;
 }
 
-.card__shoppingHeader {
+.card__shopping-header {
   display: grid;
   gap: 0.15rem;
 }
 
-.card__shoppingTitle {
+.card__shopping-title {
   margin: 0;
   font-family: "Open Sans", sans-serif;
   font-size: 0.82rem;
@@ -272,18 +272,18 @@
   color: #6f6757;
 }
 
-.card__shoppingHint,
-.card__shoppingEmpty {
+.card__shopping-hint,
+.card__shopping-empty {
   margin: 0;
   color: #7a7368;
   font-size: 0.9rem;
 }
 
-.card__shoppingEmpty {
+.card__shopping-empty {
   font-style: italic;
 }
 
-.card__shoppingList {
+.card__shopping-list {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
@@ -292,7 +292,7 @@
   padding: 0;
 }
 
-.card__shoppingChip {
+.card__shopping-chip {
   max-width: 100%;
   padding: 0.3rem 0.5rem;
   border: 0;
@@ -307,13 +307,13 @@
   transition: background-color 0.18s ease, box-shadow 0.18s ease, color 0.18s ease, opacity 0.18s ease;
 }
 
-.card__shoppingChip.is-selected {
+.card__shopping-chip.is-selected {
   background: #fff;
   box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
   color: #2e4134;
 }
 
-.card__shoppingChip:not(.is-selected) {
+.card__shopping-chip:not(.is-selected) {
   opacity: 0.58;
 }
 

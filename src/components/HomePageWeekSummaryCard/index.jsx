@@ -1,5 +1,5 @@
-import { DAYS_IN_WEEK } from "../../constants/days";
-import { PLANNED_MEAL_KEYS } from "../../constants/mealKeys";
+import { DAYS_IN_WEEK } from "../../constants/days.js";
+import { PLANNED_MEAL_KEYS } from "../../constants/mealKeys.js";
 
 export const HomePageWeekSummaryCard = ({
   completion,
@@ -11,38 +11,38 @@ export const HomePageWeekSummaryCard = ({
   sweetMeals,
   veganLunches,
 }) => (
-  <article className="home-page__summaryCard" aria-label="Souhrn týdne">
-    <div className="home-page__summaryContent">
-      <div className="home-page__summaryGrid">
-        <article className="home-page__summaryBox">
-          <span className="home-page__summaryValue">{completion} %</span>
-          <span className="home-page__summaryLabel">obsazenost slotů</span>
-          <span className="home-page__summaryMeta">
+  <article className="home-page__summary-card" aria-label="Souhrn týdne">
+    <div className="home-page__summary-content">
+      <div className="home-page__summary-grid">
+        <article className="home-page__summary-box">
+          <span className="home-page__summary-value">{completion} %</span>
+          <span className="home-page__summary-label">obsazenost slotů</span>
+          <span className="home-page__summary-meta">
             {occupiedSlotCount}/{DAYS_IN_WEEK * PLANNED_MEAL_KEYS.length} slotů
           </span>
         </article>
 
-        <article className="home-page__summaryBox">
-          <span className="home-page__summaryValue">{shoppingSummary.totalCount}</span>
-          <span className="home-page__summaryLabel">položek v nákupním seznamu</span>
-          <span className="home-page__summaryMeta">
+        <article className="home-page__summary-box">
+          <span className="home-page__summary-value">{shoppingSummary.totalCount}</span>
+          <span className="home-page__summary-label">položek v nákupním seznamu</span>
+          <span className="home-page__summary-meta">
             {shoppingSummary.toBuyCount} zbývá, {shoppingSummary.doneCount} koupeno
           </span>
         </article>
 
-        <article className="home-page__summaryBox">
-          <span className="home-page__summaryValue">{repeatedRecipes}</span>
-          <span className="home-page__summaryLabel">opakující se recepty v průběhu týdne</span>
+        <article className="home-page__summary-box">
+          <span className="home-page__summary-value">{repeatedRecipes}</span>
+          <span className="home-page__summary-label">opakující se recepty v průběhu týdne</span>
         </article>
 
-        <article className="home-page__summaryBox">
-          <span className="home-page__summaryValue">{sweetMeals}/{filledSlots.length}</span>
-          <span className="home-page__summaryLabel">počet sladkých jídel</span>
+        <article className="home-page__summary-box">
+          <span className="home-page__summary-value">{sweetMeals}/{filledSlots.length}</span>
+          <span className="home-page__summary-label">počet sladkých jídel</span>
         </article>
 
-        <article className="home-page__summaryBox">
-          <span className="home-page__summaryValue">{meatLunches}:{veganLunches}</span>
-          <span className="home-page__summaryLabel">maso vs. vegan obědy</span>
+        <article className="home-page__summary-box">
+          <span className="home-page__summary-value">{meatLunches}:{veganLunches}</span>
+          <span className="home-page__summary-label">maso vs. vegan obědy</span>
         </article>
       </div>
     </div>

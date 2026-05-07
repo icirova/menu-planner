@@ -1,16 +1,16 @@
 import "./style.css";
 
-export const CardHeader = ({ img, day, showTitle = true, titleAboveImage = false }) => {
+export const CardHeader = ({ imageSrc, day, showTitle = true, titleAboveImage = false }) => {
   return (
     <div className="card__header">
       {titleAboveImage ? (
         <>
           {showTitle && <h1 className="card__title">{day}</h1>}
-          {img && <img className="card__image card__image--afterTitle" src={`./image/${img}`} alt="" />}
+          {imageSrc && <img className="card__image card__image--after-title" src={imageSrc} alt="" />}
         </>
       ) : (
         <>
-          {img && <img className="card__image" src={`./image/${img}`} alt="" />}
+          {imageSrc && <img className="card__image" src={imageSrc} alt="" />}
           {showTitle && <h1 className="card__title">{day}</h1>}
         </>
       )}

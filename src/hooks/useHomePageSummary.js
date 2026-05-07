@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { DAYS_IN_WEEK } from "../constants/days";
-import { PLANNED_MEAL_KEYS } from "../constants/mealKeys";
-import { getShoppingListSummary } from "../utils/shoppingList";
-import { getSlotRecipeIds, getWeekRecipeIds } from "../utils/mealSlots";
+import { DAYS_IN_WEEK } from "../constants/days.js";
+import { PLANNED_MEAL_KEYS } from "../constants/mealKeys.js";
+import { getShoppingListSummary } from "../utils/shoppingList.js";
+import { getSlotRecipeIds, getWeekRecipeIds } from "../utils/mealSlots.js";
 
 export const useHomePageSummary = (weeklyMenu, recipeList) =>
   useMemo(() => {

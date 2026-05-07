@@ -12,7 +12,7 @@
   gap: 0.75rem;
 }
 
-.shopping-card__itemList {
+.shopping-card__item-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -69,27 +69,27 @@
   font-weight: 700;
 }
 
-.shopping-card__taskMain {
+.shopping-card__task-main {
   display: grid;
   gap: 0.14rem;
   order: 1;
   min-width: 0;
 }
 
-.shopping-card__taskText {
+.shopping-card__task-text {
   font-family: "Sorts Mill Goudy", serif;
   font-size: 0.84rem;
   color: #2e4134;
   overflow-wrap: anywhere;
 }
 
-.shopping-card__noteForm {
+.shopping-card__note-form {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 0.55rem;
 }
 
-.shopping-card__noteInput {
+.shopping-card__note-input {
   width: 100%;
   min-height: 2.35rem;
   padding: 0.45rem 0.7rem;
@@ -101,14 +101,14 @@
   transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
 }
 
-.shopping-card__noteInput:focus {
+.shopping-card__note-input:focus {
   outline: none;
   border-color: rgba(47, 93, 80, 0.38);
   box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.08);
   background: #fff;
 }
 
-.shopping-card__noteInput::placeholder {
+.shopping-card__note-input::placeholder {
   color: rgba(106, 101, 92, 0.62);
 }
 
@@ -133,7 +133,7 @@
 }
 
 @media (max-width: 860px) {
-  .shopping-card__noteForm {
+  .shopping-card__note-form {
     grid-template-columns: 1fr;
   }
 }

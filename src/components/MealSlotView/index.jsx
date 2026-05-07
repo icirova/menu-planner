@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { KEYS } from "../../constants/keys";
-import { resolveImageSrc } from "../../utils/resolveImageSrc";
+import { KEYS } from "../../constants/keys.js";
+import { resolveImageSrc } from "../../utils/resolveImageSrc.js";
 
 export const MealSlotView = ({
   label,
@@ -131,19 +131,19 @@ export const MealSlotView = ({
                   {showDetailLink && (
                     <Link
                       to={`/recipe-detail/${item.id}`}
-                      className="card__slot-iconButton card__slot-iconButton--detail"
+                      className="card__slot-icon-button card__slot-icon-button--detail"
                       aria-label={`Zobrazit detail receptu ${item.title}`}
                       title="Zobrazit detail receptu"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <span className="card__slot-detailIcon" aria-hidden="true">i</span>
+                      <span className="card__slot-detail-icon" aria-hidden="true">i</span>
                     </Link>
                   )}
                   <strong className="card__slot-title">{item.title}</strong>
                   {!readOnly && (
                     <button
                       type="button"
-                      className="button--remove-control card__slot-iconButton card__slot-iconButton--remove"
+                      className="button--remove-control card__slot-icon-button card__slot-icon-button--remove"
                       aria-label={`Odebrat recept ${item.title}`}
                       title="Odebrat recept"
                       onClick={(e) => {

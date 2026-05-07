@@ -1,6 +1,6 @@
-import { FilterToggleGroup } from "../../components/FilterToggleGroup";
-import { RecipePlannerGrid } from "../../components/RecipePlannerGrid";
-import { RecipeCard } from "../../components/RecipeCard";
+import { FilterToggleGroup } from "../../components/FilterToggleGroup/index.jsx";
+import { RecipePlannerGrid } from "../../components/RecipePlannerGrid/index.jsx";
+import { RecipeCard } from "../../components/RecipeCard/index.jsx";
 import "./style.css";
 import { useOutletContext } from "react-router-dom";
 import { useMemo, useState } from "react";
@@ -8,9 +8,9 @@ import {
   getRecipeSuitableForFilterValues,
   SUITABILITY_OPTIONS,
   TAG_OPTIONS,
-} from "../../constants/recipeMetadata";
-import { normalizeRecipeTags } from "../../utils/normalizeRecipeTag";
-import { useRecipePlanner } from "../../hooks/useRecipePlanner";
+} from "../../constants/recipeMetadata.js";
+import { normalizeRecipeTags } from "../../utils/normalizeRecipeTag.js";
+import { useRecipePlanner } from "../../hooks/useRecipePlanner.js";
 
 export const WeeklyPlanner = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -75,7 +75,7 @@ export const WeeklyPlanner = () => {
         className="recipes__hero page-hero page-hero--catalog"
         style={{ "--page-hero-image": 'url("/notes.webp")' }}
       >
-        <div className="recipes__heroContent page-hero__content">
+        <div className="recipes__hero-content page-hero__content">
           <p className="page-hero__eyebrow">Týdenní přehled</p>
           <h1 className="page-hero__title">Recepty a Plán</h1>
           <p className="page-hero__text">
@@ -94,7 +94,7 @@ export const WeeklyPlanner = () => {
           </div>
           <button
             type="button"
-            className="button button--ghost recipes__planner-clearAll"
+            className="button button--ghost recipes__planner-clear-all"
             onClick={clearWholePlan}
           >
             Vymazat celý plán

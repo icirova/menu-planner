@@ -1,16 +1,17 @@
 import "./style.css";
 import { useMemo } from "react";
-import { MEAL_KEYS } from "../../constants/mealKeys";
-import { DEFAULT_DAY } from "../../constants/defaultDay";
-import { CardToolbar } from "../CardToolbar";
-import { CardHeader } from "../CardHeader";
-import { MealSlotView } from "../MealSlotView";
-import { getDayShoppingItems } from "../../utils/shoppingList";
-import { getSlotRecipeIds } from "../../utils/mealSlots";
+import { MEAL_KEYS } from "../../constants/mealKeys.js";
+import { DEFAULT_DAY } from "../../constants/defaultDay.js";
+import { CardToolbar } from "../CardToolbar/index.jsx";
+import { CardHeader } from "../CardHeader/index.jsx";
+import { DailyMealSlots } from "../DailyMealSlots/index.jsx";
+import { DayShoppingPreview } from "../DayShoppingPreview/index.jsx";
+import { getDayShoppingItems } from "../../utils/shoppingList.js";
+import { getSlotRecipeIds } from "../../utils/mealSlots.js";
 
 export const DailyMenuCard = ({
   day,
-  img,
+  imageSrc,
   dayIndex,
   data,
   dispatch,
@@ -42,7 +43,7 @@ export const DailyMenuCard = ({
     : MEAL_KEYS;
   const dayShoppingItems = useMemo(() => getDayShoppingItems(model, recipes), [model, recipes]);
 
-  const onDragStart = (e, mealKey, options = {}) => {
+  const handleHtmlDragStart = (e, mealKey, options = {}) => {
     const { recipeId, moveAll = false } = options;
 
     if (!moveAll && typeof recipeId !== "number") {
@@ -54,7 +55,7 @@ export const DailyMenuCard = ({
     e.dataTransfer.effectAllowed = "move";
   };
 
-  const onDropTo = (e, toKey) => {
+  const handleHtmlDropTo = (e, toKey) => {
     e.preventDefault();
     let payload = null;
     try { payload = JSON.parse(e.dataTransfer.getData("text/plain")); } catch {}
@@ -87,98 +88,46 @@ export const DailyMenuCard = ({
     dispatch({ type: "CLEAR_MEAL", dayIndex, mealKey: slotKey, recipeId });
   };
 
+  const toggleDayShoppingItem = (itemDayIndex, itemKey) => {
+    dispatch({ type: "TOGGLE_DAY_SHOPPING_SELECTION", dayIndex: itemDayIndex, itemKey });
+  };
+
   return (
     <div
       className={`card ${variant === "overview" ? "card--overview" : ""}`}
       role="region"
       aria-label={`Denní plán: ${day}`}
     >
-      <CardHeader img={img} day={day} showTitle={showHeaderTitle} titleAboveImage={titleAboveImage} />
+      <CardHeader imageSrc={imageSrc} day={day} showTitle={showHeaderTitle} titleAboveImage={titleAboveImage} />
       {showDayReset && <CardToolbar clearDay={clearDay} />}
 
       <div className="card__content" id={`day-${dayIndex}`}>
-        {visibleMealKeys.length === 0 && (
-          <p className="card__emptyMessage">Na dnešek zatím není nic naplánováno.</p>
-        )}
-
-        {visibleMealKeys.map(({ key, label, optional }) => {
-          const hintId = `hint-${dayIndex}-${key}`;
-
-          const carrying = !!kbdDrag;
-          const isSource =
-            carrying && kbdDrag.fromDay === dayIndex && kbdDrag.fromKey === key;
-          const slotRecipes = getSlotRecipeIds(model[key])
-            .map((recipeId) => recipesById.get(recipeId))
-            .filter(Boolean);
-          const slotLabel = slotRecipes.map((recipe) => recipe.title).join(", ");
-
-          return (
-            <div
-              key={key}
-              className={`card__text ${key === "dinner" ? "card__text--dinner" : ""} ${optional ? "card__text--optional" : ""}`}
-            >
-              <p className="card__subtitle">{label}:</p>
-
-              <MealSlotView
-                label={label}
-                day={day}
-                dayIndex={dayIndex}
-                mealKey={key}
-                recipes={slotRecipes}
-                value={slotLabel}
-                isSource={isSource}
-                carrying={carrying}
-                kbdDrag={kbdDrag}
-                setKbdDrag={setKbdDrag}
-                announce={announce}
-                dispatch={dispatch}
-                hintId={hintId}
-                onDragStart={onDragStart}
-                onDropTo={onDropTo}
-                onClear={() => clearSlot(key, slotLabel || label)}
-                onClearRecipe={(recipeId, recipeTitle) => clearRecipeFromSlot(key, recipeId, recipeTitle)}
-                variant={variant}
-                isOptional={optional}
-                readOnly={readOnly}
-                showDetailLink={showDetailLink && slotRecipes.length > 0}
-              />
-
-              {!readOnly && (
-                <span id={hintId} className="sr-only">
-                  Mezerník: zvednout nebo položit recept. Esc: zrušit přesun.
-                </span>
-              )}
-            </div>
-          );
-        })}
+        <DailyMealSlots
+          announce={announce}
+          day={day}
+          dayIndex={dayIndex}
+          dispatch={dispatch}
+          kbdDrag={kbdDrag}
+          model={model}
+          onClearRecipeFromSlot={clearRecipeFromSlot}
+          onClearSlot={clearSlot}
+          onDragStart={handleHtmlDragStart}
+          onDropTo={handleHtmlDropTo}
+          readOnly={readOnly}
+          recipesById={recipesById}
+          setKbdDrag={setKbdDrag}
+          showDetailLink={showDetailLink}
+          visibleMealKeys={visibleMealKeys}
+          variant={variant}
+        />
 
         {showShoppingSection && (
-          <section className="card__shopping" aria-label={`Nákup pro ${day}`}>
-            <div className="card__shoppingHeader">
-              <h3 className="card__shoppingTitle">Nakoupit</h3>
-              <p className="card__shoppingHint">Klikem vypni položky, které už máš doma.</p>
-            </div>
-
-            {dayShoppingItems.length > 0 ? (
-              <ul className="card__shoppingList">
-                {dayShoppingItems.map((item) => (
-                  <li key={item.key}>
-                    <button
-                      type="button"
-                      className={`card__shoppingChip ${item.selected ? "is-selected" : ""}`}
-                      aria-pressed={item.selected}
-                      onClick={() =>
-                        dispatch({ type: "TOGGLE_DAY_SHOPPING_SELECTION", dayIndex, itemKey: item.key })}
-                    >
-                      {item.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="card__shoppingEmpty">Na tento den zatím není nic naplánováno.</p>
-            )}
-          </section>
+          <DayShoppingPreview
+            day={day}
+            dayIndex={dayIndex}
+            items={dayShoppingItems}
+            onToggleItem={toggleDayShoppingItem}
+          />
         )}
       </div>
     </div>

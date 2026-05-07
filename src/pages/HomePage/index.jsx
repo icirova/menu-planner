@@ -1,21 +1,21 @@
 import "./style.css";
 import { useRef } from "react";
 import { Link, useOutletContext } from "react-router-dom";
-import { DailyMenuCards } from "../../components/DailyMenuCards";
-import { HomeMoodCard } from "../../components/HomeMoodCard";
-import { HomePageHero } from "../../components/HomePageHero";
-import { HomePageShoppingPanel } from "../../components/HomePageShoppingPanel";
-import { HomePageTodayPanel } from "../../components/HomePageTodayPanel";
-import { HomePageWeekSummaryCard } from "../../components/HomePageWeekSummaryCard";
-import { PantryCard } from "../../components/PantryCard";
-import { WeeklyTasksPanel } from "../../components/WeeklyTasksPanel";
-import { useHomePageHero } from "../../hooks/useHomePageHero";
-import { useHomePageSummary } from "../../hooks/useHomePageSummary";
+import { DailyMenuCards } from "../../components/DailyMenuCards/index.jsx";
+import { HomeMoodCard } from "../../components/HomeMoodCard/index.jsx";
+import { HomePageHero } from "../../components/HomePageHero/index.jsx";
+import { HomePageShoppingPanel } from "../../components/HomePageShoppingPanel/index.jsx";
+import { HomePageTodayPanel } from "../../components/HomePageTodayPanel/index.jsx";
+import { HomePageWeekSummaryCard } from "../../components/HomePageWeekSummaryCard/index.jsx";
+import { PantryCard } from "../../components/PantryCard/index.jsx";
+import { WeeklyTasksPanel } from "../../components/WeeklyTasksPanel/index.jsx";
+import { useHomePageHero } from "../../hooks/useHomePageHero.js";
+import { useHomePageSummary } from "../../hooks/useHomePageSummary.js";
 
 export const HomePage = () => {
   const todayOverviewRef = useRef(null);
   const { recipeList, weeklyMenu, menuDispatch } = useOutletContext();
-  const { dateLabel, heroImageSrc, timeLabel, todayImageFile, todayIndex, todayName } = useHomePageHero();
+  const { dateLabel, heroImageSrc, timeLabel, todayImageSrc, todayIndex, todayName } = useHomePageHero();
   const {
     completion,
     filledSlots,
@@ -41,12 +41,12 @@ export const HomePage = () => {
           todayName={todayName}
         />
 
-        <section className="home-page__panel home-page__panel--weeklyTasks">
-          <div className="home-page__panelHeader">
+        <section className="home-page__panel home-page__panel--weekly-tasks">
+          <div className="home-page__panel-header">
             <h2>Úkoly na týden</h2>
           </div>
 
-          <div className="home-page__weeklyTasks">
+          <div className="home-page__weekly-tasks">
             <WeeklyTasksPanel
               value={weeklyMenu.tasks}
               week={weeklyMenu.week}
@@ -63,11 +63,11 @@ export const HomePage = () => {
         </section>
 
         <section className="home-page__overview">
-          <div className="home-page__topGrid">
+          <div className="home-page__top-grid">
             <HomePageTodayPanel
               panelRef={todayOverviewRef}
               recipeList={recipeList}
-              todayImageFile={todayImageFile}
+              todayImageSrc={todayImageSrc}
               todayIndex={todayIndex}
               todayName={todayName}
               weeklyMenu={weeklyMenu}
@@ -83,11 +83,11 @@ export const HomePage = () => {
         </section>
 
         <section className="home-page__panel">
-          <div className="home-page__panelHeader home-page__panelHeader--withAction">
+          <div className="home-page__panel-header home-page__panel-header--with-action">
             <div>
               <h2>Kompletní plán</h2>
             </div>
-            <Link to="/planner" className="button button--ghost home-page__panelAction">
+            <Link to="/planner" className="button button--ghost home-page__panel-action">
               Otevřít plánovač
             </Link>
           </div>
@@ -109,12 +109,12 @@ export const HomePage = () => {
           </div>
         </section>
 
-        <section className="home-page__panel home-page__panel--weekInsights">
-          <div className="home-page__panelHeader">
+        <section className="home-page__panel">
+          <div className="home-page__panel-header">
             <h2>Týden v kostce</h2>
           </div>
 
-          <div className="home-page__weekInsightsGrid">
+          <div className="home-page__week-insights-grid">
             <HomePageWeekSummaryCard
               completion={completion}
               filledSlots={filledSlots}

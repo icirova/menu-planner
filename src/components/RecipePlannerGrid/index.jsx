@@ -1,8 +1,8 @@
 import { Fragment } from "react";
-import { DAYS } from "../../constants/days";
-import { MEAL_KEYS, PLANNED_MEAL_KEYS } from "../../constants/mealKeys";
-import { getSlotRecipeIds, slotHasRecipes } from "../../utils/mealSlots";
-import { MEAL_LABELS } from "../../hooks/useRecipePlanner";
+import { DAYS } from "../../constants/days.js";
+import { MEAL_KEYS, PLANNED_MEAL_KEYS } from "../../constants/mealKeys.js";
+import { getSlotRecipeIds, slotHasRecipes } from "../../utils/mealSlots.js";
+import { MEAL_LABELS } from "../../hooks/plannerConstants.js";
 
 export const RecipePlannerGrid = ({
   weeklyMenu,
@@ -32,7 +32,7 @@ export const RecipePlannerGrid = ({
         {DAYS.map((day, dayIndex) => (
           <div key={day} className="recipes__planner-day">
             {day}
-            <span className="recipes__planner-dayCount">
+            <span className="recipes__planner-day-count">
               {PLANNED_MEAL_KEYS.filter(({ key }) => slotHasRecipes(weeklyMenu.week[dayIndex]?.[key])).length}/{PLANNED_MEAL_KEYS.length}
             </span>
           </div>
@@ -40,7 +40,7 @@ export const RecipePlannerGrid = ({
 
         {MEAL_KEYS.map(({ key, optional }) => (
           <Fragment key={key}>
-            <div className={`recipes__planner-slotLabel ${optional ? "recipes__planner-slotLabel--optional" : ""}`}>
+            <div className={`recipes__planner-slot-label ${optional ? "recipes__planner-slot-label--optional" : ""}`}>
               {MEAL_LABELS[key] ?? key}
             </div>
 
@@ -78,7 +78,7 @@ export const RecipePlannerGrid = ({
                   }}
                   role="button"
                   tabIndex={0}
-                  className={`recipes__planner-cell ${slotRecipes.length ? "is-filled" : "is-empty"} ${isActiveTarget ? "is-activeTarget" : ""} ${isDuplicateSource ? "is-duplicateSource" : ""} ${isPointerTarget ? "is-drop-target" : ""} ${isPointerSource ? "is-drag-source" : ""} ${optional ? "recipes__planner-cell--optional" : ""}`}
+                  className={`recipes__planner-cell ${slotRecipes.length ? "is-filled" : ""} ${isActiveTarget ? "is-active-target" : ""} ${isDuplicateSource ? "is-duplicate-source" : ""} ${isPointerTarget ? "is-drop-target" : ""} ${isPointerSource ? "is-drag-source" : ""} ${optional ? "recipes__planner-cell--optional" : ""}`}
                   onClick={() => handlePlannerCellClick(dayIndex, key)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
@@ -100,10 +100,10 @@ export const RecipePlannerGrid = ({
                   }
                 >
                   {slotRecipes.length > 0 && (
-                    <div className="recipes__planner-slotActions">
+                    <div className="recipes__planner-slot-actions">
                       <button
                         type="button"
-                        className="recipes__planner-moveButton"
+                        className="recipes__planner-move-button"
                         aria-label={`Přesunout celý slot ${day} – ${MEAL_LABELS[key] ?? key}`}
                         title="Přesunout celý slot"
                         onPointerDown={(event) => {
@@ -118,7 +118,7 @@ export const RecipePlannerGrid = ({
                       </button>
                       <button
                         type="button"
-                        className={`recipes__planner-copyButton ${isDuplicateSource ? "is-active" : ""}`}
+                        className={`recipes__planner-copy-button ${isDuplicateSource ? "is-active" : ""}`}
                         aria-label={`Duplikovat slot ${day} – ${MEAL_LABELS[key] ?? key}`}
                         title={isDuplicateSource ? "Zrušit duplikování slotu" : "Duplikovat slot"}
                         onClick={(e) => {
@@ -130,11 +130,11 @@ export const RecipePlannerGrid = ({
                       </button>
                     </div>
                   )}
-                  <span className="recipes__planner-cellState">
+                  <span className="recipes__planner-cell-state">
                     {slotRecipes.length ? `${slotRecipes.length}× recept` : "Volné"}
                   </span>
                   {slotRecipes.length > 0 && (
-                    <span className="recipes__planner-cellList">
+                    <span className="recipes__planner-cell-list">
                       {slotRecipes.map((recipe) => (
                         <span
                           key={recipe.id}
@@ -148,12 +148,12 @@ export const RecipePlannerGrid = ({
                           }}
                           title={`Přetáhni recept ${recipe.title} do jiného slotu`}
                         >
-                          <strong className="recipes__planner-cellTitle">
+                          <strong className="recipes__planner-cell-title">
                             {recipe.title}
                           </strong>
                           <button
                             type="button"
-                            className="button--remove-control recipes__planner-pillRemove"
+                            className="button--remove-control recipes__planner-pill-remove"
                             aria-label={`Odebrat ${recipe.title} ze slotu`}
                             onClick={(e) => {
                               e.stopPropagation();
@@ -174,7 +174,7 @@ export const RecipePlannerGrid = ({
       </div>
       {pointerDrag?.isActive && (
         <div
-          className="recipes__planner-dragGhost"
+          className="recipes__planner-drag-ghost"
           style={{
             left: `${pointerDrag.x + 16}px`,
             top: `${pointerDrag.y + 16}px`,

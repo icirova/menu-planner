@@ -45,7 +45,7 @@
 }
 
 .weekly-tasks-panel__item,
-.weekly-tasks-panel__noteItem {
+.weekly-tasks-panel__note-item {
   background: #f8f7f3;
   box-shadow: inset 0 0 0 1px rgba(115, 103, 74, 0.14);
   border-radius: 12px;
@@ -80,19 +80,19 @@
   gap: 0.7rem;
 }
 
-.weekly-tasks-panel__taskItem {
+.weekly-tasks-panel__task-item {
   display: grid;
   padding-top: 0.7rem;
   border-top: 1px solid rgba(115, 103, 74, 0.16);
 }
 
 .weekly-tasks-panel__item.is-complete,
-.weekly-tasks-panel__taskItem.is-complete,
-.weekly-tasks-panel__noteItem.is-complete {
+.weekly-tasks-panel__task-item.is-complete,
+.weekly-tasks-panel__note-item.is-complete {
   opacity: 0.58;
 }
 
-.weekly-tasks-panel__taskItem:first-child {
+.weekly-tasks-panel__task-item:first-child {
   padding-top: 0;
   border-top: 0;
 }
@@ -104,7 +104,7 @@
   color: #6f6757;
 }
 
-.weekly-tasks-panel__taskText {
+.weekly-tasks-panel__task-text {
   font-family: "Sorts Mill Goudy", serif;
   font-size: 1rem;
   color: #2e4134;
@@ -143,7 +143,7 @@
   font-weight: 700;
 }
 
-.weekly-tasks-panel__taskMain {
+.weekly-tasks-panel__task-main {
   display: grid;
   gap: 0.2rem;
   order: 1;
@@ -160,13 +160,13 @@
   gap: 0.75rem;
 }
 
-.weekly-tasks-panel__noteForm {
+.weekly-tasks-panel__note-form {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 0.65rem;
 }
 
-.weekly-tasks-panel__noteInput {
+.weekly-tasks-panel__note-input {
   width: 100%;
   padding: 0.75rem 0.9rem;
   border: 1px solid rgba(115, 103, 74, 0.18);
@@ -177,18 +177,18 @@
   transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
 }
 
-.weekly-tasks-panel__noteInput:focus {
+.weekly-tasks-panel__note-input:focus {
   outline: none;
   border-color: rgba(47, 93, 80, 0.38);
   box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.08);
   background: #fff;
 }
 
-.weekly-tasks-panel__noteInput::placeholder {
+.weekly-tasks-panel__note-input::placeholder {
   color: rgba(106, 101, 92, 0.62);
 }
 
-.weekly-tasks-panel__notesList {
+.weekly-tasks-panel__notes-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -196,7 +196,7 @@
   gap: 0.75rem;
 }
 
-.weekly-tasks-panel__noteItem {
+.weekly-tasks-panel__note-item {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto auto;
   gap: 0.65rem;
@@ -204,16 +204,16 @@
   padding: 0.75rem 0.85rem;
 }
 
-.weekly-tasks-panel__noteItem.is-complete {
+.weekly-tasks-panel__note-item.is-complete {
   grid-template-columns: minmax(0, 1fr) auto;
 }
 
-.weekly-tasks-panel__noteItem .weekly-tasks-panel__taskMain {
+.weekly-tasks-panel__note-item .weekly-tasks-panel__task-main {
   order: initial;
   align-self: center;
 }
 
-.weekly-tasks-panel__noteItem .weekly-tasks-panel__check {
+.weekly-tasks-panel__note-item .weekly-tasks-panel__check {
   order: initial;
   margin-top: 0;
 }
@@ -222,7 +222,7 @@
   align-self: center;
 }
 
-.weekly-tasks-panel__noteCheckButton {
+.weekly-tasks-panel__note-check-button {
   display: grid;
   place-items: center;
   padding: 0;
@@ -237,7 +237,7 @@
     grid-template-columns: 1fr;
   }
 
-  .weekly-tasks-panel__noteForm {
+  .weekly-tasks-panel__note-form {
     grid-template-columns: 1fr;
   }
 }

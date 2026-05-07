@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-import { DAYS } from "../../constants/days";
-import { MEAL_KEYS } from "../../constants/mealKeys";
-import { normalizeRecipePreTasks } from "../../utils/normalizeRecipePreTasks";
-import { getSlotRecipeIds } from "../../utils/mealSlots";
+import { DAYS } from "../../constants/days.js";
+import { MEAL_KEYS } from "../../constants/mealKeys.js";
+import { normalizeRecipePreTasks } from "../../utils/normalizeRecipePreTasks.js";
+import { getSlotRecipeIds } from "../../utils/mealSlots.js";
 import "./style.css";
 
 const getWeeklyGeneratedTasks = (week = [], recipes = []) => {
@@ -119,7 +119,7 @@ export const WeeklyTasksPanel = ({
                   {tasks.map(({ id, recipeTitle, task }) => (
                     <li
                       key={id}
-                      className={`weekly-tasks-panel__taskItem ${prepDone[id] ? "is-complete" : ""}`}
+                      className={`weekly-tasks-panel__task-item ${prepDone[id] ? "is-complete" : ""}`}
                     >
                       <button
                         type="button"
@@ -129,8 +129,8 @@ export const WeeklyTasksPanel = ({
                         <span className={`weekly-tasks-panel__check ${prepDone[id] ? "is-complete" : ""}`} aria-hidden="true">
                           {prepDone[id] ? "✓" : ""}
                         </span>
-                        <span className="weekly-tasks-panel__taskMain">
-                          <strong className="weekly-tasks-panel__taskText">{task}</strong>
+                        <span className="weekly-tasks-panel__task-main">
+                          <strong className="weekly-tasks-panel__task-text">{task}</strong>
                           <span className="weekly-tasks-panel__recipe">{recipeTitle}</span>
                         </span>
                       </button>
@@ -166,8 +166,8 @@ export const WeeklyTasksPanel = ({
                     <span className={`weekly-tasks-panel__check ${extraDone[id] ? "is-complete" : ""}`} aria-hidden="true">
                       {extraDone[id] ? "✓" : ""}
                     </span>
-                    <span className="weekly-tasks-panel__taskMain">
-                      <strong className="weekly-tasks-panel__taskText">{recipeTitle}</strong>
+                    <span className="weekly-tasks-panel__task-main">
+                      <strong className="weekly-tasks-panel__task-text">{recipeTitle}</strong>
                     </span>
                   </button>
                 </li>
@@ -185,11 +185,11 @@ export const WeeklyTasksPanel = ({
 
           <div className="weekly-tasks-panel__notes">
             {noteItems.length ? (
-              <ul className="weekly-tasks-panel__notesList">
+              <ul className="weekly-tasks-panel__notes-list">
                 {noteItems.map(({ id, text, done }) => (
-                  <li key={id} className={`weekly-tasks-panel__noteItem ${done ? "is-complete" : ""}`}>
-                    <span className="weekly-tasks-panel__taskMain">
-                      <strong className="weekly-tasks-panel__taskText">{text}</strong>
+                  <li key={id} className={`weekly-tasks-panel__note-item ${done ? "is-complete" : ""}`}>
+                    <span className="weekly-tasks-panel__task-main">
+                      <strong className="weekly-tasks-panel__task-text">{text}</strong>
                     </span>
                     {!done && (
                       <button
@@ -204,7 +204,7 @@ export const WeeklyTasksPanel = ({
                     )}
                     <button
                       type="button"
-                      className="weekly-tasks-panel__noteCheckButton"
+                      className="weekly-tasks-panel__note-check-button"
                       onClick={() => onToggleNote?.(id)}
                     >
                       <span className={`weekly-tasks-panel__check ${done ? "is-complete" : ""}`} aria-hidden="true">
@@ -218,10 +218,10 @@ export const WeeklyTasksPanel = ({
               <p className="weekly-tasks-panel__empty">Zatím bez vlastních poznámek.</p>
             )}
 
-            <form className="weekly-tasks-panel__noteForm" onSubmit={handleAddNote}>
+            <form className="weekly-tasks-panel__note-form" onSubmit={handleAddNote}>
               <input
                 type="text"
-                className="weekly-tasks-panel__noteInput"
+                className="weekly-tasks-panel__note-input"
                 placeholder="Přidat poznámku nebo úkol"
                 value={noteDraft}
                 onChange={(event) => setNoteDraft(event.target.value)}

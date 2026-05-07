@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./style.css";
-import { DailyMenuCard } from "../DailyMenuCard";
-import { DAYS } from "../../constants/days";
-import { DAY_IMAGE_FILES } from "../../constants/dayImages";
+import { DailyMenuCard } from "../DailyMenuCard/index.jsx";
+import { DAYS } from "../../constants/days.js";
+import { DAY_IMAGES } from "../../constants/dayImages.js";
 
 export const DailyMenuCards = ({
   recipes = [],
@@ -24,7 +24,7 @@ export const DailyMenuCards = ({
           <DailyMenuCard
             key={day}
             day={day}
-            img={DAY_IMAGE_FILES[i]}
+            imageSrc={DAY_IMAGES[i]}
             dayIndex={i}
             data={state.week[i]}
             dispatch={dispatch}

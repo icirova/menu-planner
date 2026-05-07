@@ -10,7 +10,7 @@ export const HomePageHero = ({
     aria-label="Dnešní přehled"
     style={{ "--home-hero-image": `url("${heroImageSrc}")` }}
   >
-    <div className="home-page__heroContent page-hero__content">
+    <div className="home-page__hero-content page-hero__content">
       <p className="page-hero__eyebrow">{dateLabel}</p>
       <h1 className="page-hero__title">{todayName}</h1>
       <p className="page-hero__text">
@@ -19,7 +19,7 @@ export const HomePageHero = ({
       <div className="page-hero__actions">
         <button
           type="button"
-          className="button button--ghost home-page__heroAction"
+          className="button button--ghost home-page__hero-action"
           onClick={onScrollToToday}
         >
           Dnešní menu
@@ -27,8 +27,8 @@ export const HomePageHero = ({
       </div>
     </div>
 
-    <div className="home-page__heroAside page-hero__aside">
-      <div className="home-page__heroTime" aria-label={`Aktuální čas ${timeLabel}`}>
+    <div className="home-page__hero-aside page-hero__aside">
+      <div className="home-page__hero-time" aria-label={`Aktuální čas ${timeLabel}`}>
         {timeLabel}
       </div>
     </div>

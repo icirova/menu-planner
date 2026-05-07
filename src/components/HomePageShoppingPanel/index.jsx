@@ -1,4 +1,4 @@
-import { ShoppingList } from "../ShoppingList";
+import { ShoppingList } from "../ShoppingList/index.jsx";
 
 export const HomePageShoppingPanel = ({
   weeklyMenu,
@@ -6,7 +6,7 @@ export const HomePageShoppingPanel = ({
   onChange,
 }) => (
   <section className="home-page__panel home-page__panel--shopping">
-    <div className="home-page__panelHeader">
+    <div className="home-page__panel-header">
       <h2>Nákupní seznam</h2>
     </div>
 

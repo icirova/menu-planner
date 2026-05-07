@@ -1,23 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { DAYS } from "../constants/days";
-import { PLANNED_MEAL_KEYS } from "../constants/mealKeys";
-import { getSlotRecipeIds, slotHasRecipes } from "../utils/mealSlots";
-
-const TAG_TO_SLOT_KEY = {
-  "snídaně": "breakfast",
-  "svačiny": "snack1",
-  "obědy": "lunch",
-  "večeře": "dinner",
-};
-
-export const MEAL_LABELS = {
-  breakfast: "Snídaně",
-  snack1: "Svačina 1",
-  lunch: "Oběd",
-  snack2: "Svačina 2",
-  dinner: "Večeře",
-  extra: "EXTRA",
-};
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { DAYS } from "../constants/days.js";
+import { PLANNED_MEAL_KEYS } from "../constants/mealKeys.js";
+import { getSlotRecipeIds, slotHasRecipes } from "../utils/mealSlots.js";
+import { MEAL_LABELS, TAG_TO_SLOT_KEY } from "./plannerConstants.js";
+import { usePlannerFocus } from "./usePlannerFocus.js";
+import { usePlannerPointerDrag } from "./usePlannerPointerDrag.js";
 
 export const useRecipePlanner = ({
   recipeList,
@@ -25,20 +12,12 @@ export const useRecipePlanner = ({
   menuDispatch,
   selectedTags,
 }) => {
-  const DRAG_START_DISTANCE = 6;
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
   const [selectedTarget, setSelectedTarget] = useState(null);
   const [duplicateSource, setDuplicateSource] = useState(null);
   const [planMessage, setPlanMessage] = useState(null);
   const [duplicateMessage, setDuplicateMessage] = useState(null);
-  const [pointerDrag, setPointerDrag] = useState(null);
-  const plannerCellRefs = useRef(new Map());
-  const plannerRef = useRef(null);
-  const dragPayloadRef = useRef(null);
-  const dragTargetRef = useRef(null);
-  const dropHandledRef = useRef(false);
-  const pointerDragRef = useRef(null);
-  const suppressPlannerClickRef = useRef(false);
+  const { focusPlannerCell, plannerCellRefs, plannerRef } = usePlannerFocus();
 
   const recipesById = useMemo(
     () => new Map(recipeList.map((recipe) => [recipe.id, recipe])),
@@ -49,30 +28,6 @@ export const useRecipePlanner = ({
   const selectedRecipe =
     typeof selectedRecipeId === "number" ? recipesById.get(selectedRecipeId) ?? null : null;
 
-  const clearPointerDrag = () => {
-    pointerDragRef.current = null;
-    setPointerDrag(null);
-  };
-
-  const resolvePlannerCellFromPoint = (clientX, clientY) => {
-    if (!Number.isFinite(clientX) || !Number.isFinite(clientY)) return null;
-
-    const target = document.elementFromPoint(clientX, clientY);
-    if (!(target instanceof Element)) return null;
-
-    const plannerCell = target.closest("[data-planner-cell='true']");
-    if (!(plannerCell instanceof HTMLElement)) return null;
-
-    const dayIndex = Number(plannerCell.dataset.dayIndex);
-    const slotKey = plannerCell.dataset.slotKey;
-
-    if (!Number.isFinite(dayIndex) || typeof slotKey !== "string" || !slotKey) {
-      return null;
-    }
-
-    return { dayIndex, slotKey };
-  };
-
   useEffect(() => {
     if (!selectedRecipeId && !selectedTarget && !duplicateSource) return undefined;
 
@@ -82,7 +37,7 @@ export const useRecipePlanner = ({
         event.target instanceof Element &&
         (
           event.target.closest(".recipes__filters .button") ||
-          event.target.closest(".recipe__linkButton") ||
+          event.target.closest(".recipe__link-button") ||
           event.target.closest(".recipe__detail-link")
         )
       ) {
@@ -106,13 +61,6 @@ export const useRecipePlanner = ({
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, [duplicateSource, selectedRecipeId, selectedTarget]);
-
-  const focusPlannerCell = (dayIndex, slotKey) => {
-    window.requestAnimationFrame(() => {
-      const refKey = `${dayIndex}-${slotKey}`;
-      plannerCellRefs.current.get(refKey)?.focus();
-    });
-  };
 
   const getSuggestedTarget = () => {
     const preferredSlotKey = selectedTags.length === 1 ? TAG_TO_SLOT_KEY[selectedTags[0]] : null;
@@ -259,7 +207,7 @@ export const useRecipePlanner = ({
     setDuplicateMessage(null);
   };
 
-  const commitDraggedPayload = (payload, toDayIndex, toSlotKey) => {
+  const commitDraggedPayload = useCallback((payload, toDayIndex, toSlotKey) => {
     if (
       !payload ||
       typeof payload.dayIndex !== "number" ||
@@ -284,90 +232,15 @@ export const useRecipePlanner = ({
 
     setDuplicateMessage(null);
     setSelectedTarget(null);
-    dragPayloadRef.current = null;
-    dragTargetRef.current = null;
     focusPlannerCell(toDayIndex, toSlotKey);
     return true;
-  };
+  }, [focusPlannerCell, menuDispatch]);
 
-  const handlePlannerPointerDown = (event, dayIndex, slotKey, options = {}) => {
-    if (event.button !== 0) return;
-
-    const { recipeId, moveAll = false, label = "" } = options;
-    if (!moveAll && typeof recipeId !== "number") return;
-
-    const payload = { dayIndex, slotKey, recipeId, moveAll };
-    const nextDrag = {
-      payload,
-      label,
-      startX: event.clientX,
-      startY: event.clientY,
-      x: event.clientX,
-      y: event.clientY,
-      isActive: false,
-      target: null,
-    };
-
-    pointerDragRef.current = nextDrag;
-    setPointerDrag(nextDrag);
-  };
-
-  useEffect(() => {
-    if (!pointerDrag) return undefined;
-
-    const handlePointerMove = (event) => {
-      const current = pointerDragRef.current;
-      if (!current) return;
-
-      const distance = Math.hypot(event.clientX - current.startX, event.clientY - current.startY);
-      const isActive = current.isActive || distance >= DRAG_START_DISTANCE;
-      const target = isActive ? resolvePlannerCellFromPoint(event.clientX, event.clientY) : null;
-
-      const nextDrag = {
-        ...current,
-        x: event.clientX,
-        y: event.clientY,
-        isActive,
-        target,
-      };
-
-      pointerDragRef.current = nextDrag;
-      setPointerDrag(nextDrag);
-
-      if (isActive) {
-        event.preventDefault();
-      }
-    };
-
-    const handlePointerUp = (event) => {
-      const current = pointerDragRef.current;
-      if (!current) return;
-
-      const target = resolvePlannerCellFromPoint(event.clientX, event.clientY) ?? current.target;
-      const didMove = Boolean(current.isActive && target);
-
-      if (didMove) {
-        commitDraggedPayload(current.payload, target.dayIndex, target.slotKey);
-        suppressPlannerClickRef.current = true;
-      }
-
-      clearPointerDrag();
-    };
-
-    const handlePointerCancel = () => {
-      clearPointerDrag();
-    };
-
-    window.addEventListener("pointermove", handlePointerMove, { passive: false });
-    window.addEventListener("pointerup", handlePointerUp);
-    window.addEventListener("pointercancel", handlePointerCancel);
-
-    return () => {
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerup", handlePointerUp);
-      window.removeEventListener("pointercancel", handlePointerCancel);
-    };
-  }, [pointerDrag]);
+  const {
+    handlePlannerPointerDown,
+    pointerDrag,
+    suppressPlannerClickRef,
+  } = usePlannerPointerDrag({ commitDraggedPayload });
 
   const clearPlannerCell = (dayIndex, slotKey, recipeId = null) => {
     const slotLabel = MEAL_LABELS[slotKey] ?? slotKey;

@@ -4,8 +4,8 @@ import {
   getShoppingListItems,
   getShoppingStateForWeek,
   normalizeShoppingState,
-} from "../../utils/shoppingList";
-import { createStableId } from "../../utils/createId";
+} from "../../utils/shoppingList.js";
+import { createStableId } from "../../utils/createId.js";
 
 const createEmptyCustomItem = () => ({
   label: "",
@@ -16,7 +16,6 @@ export const ShoppingList = ({
   week = [],
   recipes = [],
   onChange,
-  forceEditing = false,
   showTitle = true,
 }) => {
   const shopping = useMemo(
@@ -88,14 +87,14 @@ export const ShoppingList = ({
 
   return (
     <div
-      className={`card shopping-card ${forceEditing ? "is-editing" : ""} ${showTitle ? "" : "shopping-card--embedded"}`}
+      className={`card shopping-card ${showTitle ? "" : "shopping-card--embedded"}`}
     >
       {showTitle && <h1 className="card__title">Nákupní seznam</h1>}
 
       <div className="card__content">
         <section className="shopping-card__section">
           {hasShoppingItems ? (
-            <ul className="shopping-card__itemList">
+            <ul className="shopping-card__item-list">
               {generatedItems.map((item) => (
                 <li
                   key={item.id}
@@ -109,8 +108,8 @@ export const ShoppingList = ({
                     <span className={`shopping-card__check ${item.done ? "is-complete" : ""}`} aria-hidden="true">
                       {item.done ? "✓" : ""}
                     </span>
-                    <span className="shopping-card__taskMain">
-                      <strong className="shopping-card__taskText">{item.label}</strong>
+                    <span className="shopping-card__task-main">
+                      <strong className="shopping-card__task-text">{item.label}</strong>
                     </span>
                   </button>
                 </li>
@@ -126,8 +125,8 @@ export const ShoppingList = ({
                     <span className={`shopping-card__check ${item.done ? "is-complete" : ""}`} aria-hidden="true">
                       {item.done ? "✓" : ""}
                     </span>
-                    <span className="shopping-card__taskMain">
-                      <strong className="shopping-card__taskText">{item.label}</strong>
+                    <span className="shopping-card__task-main">
+                      <strong className="shopping-card__task-text">{item.label}</strong>
                     </span>
                   </button>
                   {!item.done && (
@@ -148,10 +147,10 @@ export const ShoppingList = ({
             <p className="shopping-card__empty">Zatím bez položek.</p>
           )}
 
-          <form className="shopping-card__noteForm" onSubmit={handleAddCustomItem}>
+          <form className="shopping-card__note-form" onSubmit={handleAddCustomItem}>
             <input
               type="text"
-              className="shopping-card__noteInput"
+              className="shopping-card__note-input"
               placeholder="Přidat vlastní položku"
               value={draftItem.label}
               onChange={(event) => setDraftItem((current) => ({ ...current, label: event.target.value }))}

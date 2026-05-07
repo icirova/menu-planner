@@ -1,9 +1,9 @@
-import { DailyMenuCard } from "../DailyMenuCard";
+import { DailyMenuCard } from "../DailyMenuCard/index.jsx";
 
 export const HomePageTodayPanel = ({
   panelRef,
   recipeList,
-  todayImageFile,
+  todayImageSrc,
   todayIndex,
   todayName,
   weeklyMenu,
@@ -14,14 +14,14 @@ export const HomePageTodayPanel = ({
     ref={panelRef}
     className="home-page__panel home-page__panel--today"
   >
-    <div className="home-page__panelHeader">
+    <div className="home-page__panel-header">
       <h2>{todayName}</h2>
     </div>
 
-    <div className="home-page__todayCard">
+    <div className="home-page__today-card">
       <DailyMenuCard
         day={todayName}
-        img={todayImageFile}
+        imageSrc={todayImageSrc}
         dayIndex={todayIndex}
         data={weeklyMenu.week[todayIndex]}
         dispatch={menuDispatch}

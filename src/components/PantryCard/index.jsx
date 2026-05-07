@@ -1,4 +1,4 @@
-import { PANTRY_ITEMS } from "../../constants/pantry";
+import { PANTRY_ITEMS } from "../../constants/pantry.js";
 import "./style.css";
 
 export const PantryCard = () => (
