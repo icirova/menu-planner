@@ -4,3 +4,16 @@
   gap: 0.5rem;
   margin-bottom: 2rem;
 }
+
+.recipe-detail__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background-color: #edf4ee;
+  color: #1b4332;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+}

@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { normalizeSuitableForValues } from "../constants/recipeMetadata";
-import { prepareCustomRecipeForRuntime } from "../storage/recipesStorage";
-import { createNumericId } from "../utils/createId";
-import { getCanonicalIngredientName } from "../utils/ingredientNames";
-import { normalizeRecipePreTasks } from "../utils/normalizeRecipePreTasks";
-import { isSeedRecipe } from "../utils/recipeSource";
+import { normalizeSuitableForValues } from "../constants/recipeMetadata.js";
+import { prepareCustomRecipeForRuntime } from "../storage/recipesStorage.js";
+import { createNumericId } from "../utils/createId.js";
+import { getCanonicalIngredientName } from "../utils/ingredientNames.js";
+import { normalizeRecipePreTasks } from "../utils/normalizeRecipePreTasks.js";
+import { isSeedRecipe } from "../utils/recipeSource.js";
 
 const DEFAULT_SERVINGS = 4;
 

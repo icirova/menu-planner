@@ -69,14 +69,6 @@ h2 {
   color: #444;
 }
 
-.title {
-  text-align: center;
-  font-size: 3.5rem;
-  margin-bottom: 2.5rem;
-  color: #3a3a3a;
-}
-
-
 .container {
   max-width: 1520px;
   margin: 0 auto;
@@ -156,11 +148,11 @@ h2 {
     var(--page-hero-image) center / cover no-repeat;
 }
 
-.page-hero--imageLayer {
+.page-hero--image-layer {
   background: #263327;
 }
 
-.page-hero--imageLayer::before {
+.page-hero--image-layer::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -180,7 +172,7 @@ h2 {
   object-fit: cover;
 }
 
-.page-hero--imageLayer > :not(.page-hero__image) {
+.page-hero--image-layer > :not(.page-hero__image) {
   position: relative;
   z-index: 2;
 }

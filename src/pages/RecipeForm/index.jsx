@@ -1,22 +1,26 @@
 import "./style.css";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
-import { CheckboxGroup } from "../../components/CheckboxGroup";
-import { IngredientInputs } from "../../components/IngredientInputs/index";
+import { IngredientInputs } from "../../components/IngredientInputs/index.jsx";
 import {
-  ALLERGEN_OPTIONS,
   isSuitabilityOptionDisabled,
   SUITABILITY_OPTIONS,
-  TAG_OPTIONS,
-} from "../../constants/recipeMetadata";
-import { useRecipeForm } from "../../hooks/useRecipeForm";
-import { normalizeRecipePreTasks } from "../../utils/normalizeRecipePreTasks";
-import { areRecipeIdsEqual, normalizeRecipeIdValue } from "../../utils/recipeIds";
-import { isSeedRecipe } from "../../utils/recipeSource";
-import { resolveImageSrc } from "../../utils/resolveImageSrc";
+} from "../../constants/recipeMetadata.js";
+import { useRecipeForm } from "../../hooks/useRecipeForm.js";
+import { areRecipeIdsEqual, normalizeRecipeIdValue } from "../../utils/recipeIds.js";
+import { isSeedRecipe } from "../../utils/recipeSource.js";
+import { resolveImageSrc } from "../../utils/resolveImageSrc.js";
+import { ConfirmDialog } from "../../components/ConfirmDialog/index.jsx";
+import { RecipeBasicFields } from "./RecipeBasicFields.jsx";
+import { RecipeClassificationFields } from "./RecipeClassificationFields.jsx";
+import { RecipeFormEmptyState } from "./RecipeFormEmptyState.jsx";
+import { RecipeFormHero } from "./RecipeFormHero.jsx";
+import { RecipeFormLockedState } from "./RecipeFormLockedState.jsx";
+import { RecipePhotoInputs } from "./RecipePhotoInputs.jsx";
+import { RecipeTextFields } from "./RecipeTextFields.jsx";
+import { useRecipePreTasks } from "./useRecipePreTasks.js";
 
 export const RecipeForm = () => {
-  const [preTaskDraft, setPreTaskDraft] = useState("");
   const [formMessage, setFormMessage] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -53,22 +57,18 @@ export const RecipeForm = () => {
     ...option,
     disabled: isSuitabilityOptionDisabled(option.value, form.selectedSuitableFor),
   }));
-  const preTaskItems = normalizeRecipePreTasks(form.preTasksText);
-  const updatePreTasks = (items) => setField("preTasksText", items.join("\n"));
-  const addPreTask = () => {
-    const nextTask = preTaskDraft.trim();
-    if (!nextTask) return;
-    updatePreTasks([...preTaskItems, nextTask]);
-    setPreTaskDraft("");
-  };
-  const removePreTask = (indexToRemove) => {
-    updatePreTasks(preTaskItems.filter((_, index) => index !== indexToRemove));
-  };
-  const getSubmittedPreTasksText = () => {
-    const pendingTask = preTaskDraft.trim();
-    if (!pendingTask) return form.preTasksText;
-    return [...preTaskItems, pendingTask].join("\n");
-  };
+  const {
+    addPreTask,
+    getSubmittedPreTasksText,
+    handlePreTaskKeyDown,
+    preTaskDraft,
+    preTaskItems,
+    removePreTask,
+    setPreTaskDraft,
+  } = useRecipePreTasks({
+    preTasksText: form.preTasksText,
+    setPreTasksText: (value) => setField("preTasksText", value),
+  });
 
   useEffect(() => {
     if (!isDeleteDialogOpen) return;
@@ -100,96 +100,28 @@ export const RecipeForm = () => {
     setIsDeleteDialogOpen(false);
     navigate("/recipes");
   };
-  const handlePreTaskKeyDown = (event) => {
-    if (event.key !== "Enter") return;
-    event.preventDefault();
-    addPreTask();
-  };
   const heroImageSrc =
     isEditMode && recipeToEdit
       ? resolveImageSrc(recipeToEdit.photo_urls?.[0] || "/notes.webp")
       : "/notes.webp";
 
   if (isEditMode && !recipeToEdit) {
-    return (
-      <div className="main recipe-form-page">
-        <section
-          className="recipe-form-page__hero page-hero page-hero--split"
-          style={{ "--page-hero-image": 'url("/notes.webp")' }}
-        >
-          <div className="recipe-form-page__heroContent page-hero__content">
-            <p className="page-hero__eyebrow">Editor receptů</p>
-            <h1 className="page-hero__title">Úprava receptu</h1>
-            <p className="page-hero__text">Požadovaný recept se v katalogu nenašel.</p>
-          </div>
-        </section>
-
-        <section className="recipe-form-page__panel recipe-form-page__panel--empty">
-          <p>Recept nebyl nalezen.</p>
-          <Link to="/recipes" className="button button--ghost">Zpět na recepty</Link>
-        </section>
-      </div>
-    );
+    return <RecipeFormEmptyState />;
   }
 
   if (isDefaultRecipeEdit) {
-    return (
-      <div className="main recipe-form-page">
-        <section
-          className="recipe-form-page__hero page-hero page-hero--split page-hero--imageLayer"
-        >
-          <img className="page-hero__image" src={heroImageSrc} alt="" aria-hidden="true" />
-          <div className="recipe-form-page__heroContent page-hero__content">
-            <p className="page-hero__eyebrow">Editor receptů</p>
-            <h1 className="page-hero__title">Recept je zamčený</h1>
-            <p className="page-hero__text">
-              Default recepty jsou v demo projektu jen pro prohlížení a plánování.
-            </p>
-          </div>
-        </section>
-
-        <section className="recipe-form-page__panel recipe-form-page__panel--empty">
-          <p>Tenhle vložený recept nejde upravovat.</p>
-          <Link to={`/recipe-detail/${recipeToEdit.id}`} className="button button--ghost">
-            Zpět na detail receptu
-          </Link>
-        </section>
-      </div>
-    );
+    return <RecipeFormLockedState heroImageSrc={heroImageSrc} recipeId={recipeToEdit.id} />;
   }
 
   return (
     <div className="main recipe-form-page">
-      <section
-        className="recipe-form-page__hero page-hero page-hero--split page-hero--imageLayer"
-      >
-        <img className="page-hero__image" src={heroImageSrc} alt="" aria-hidden="true" />
-        <div className="recipe-form-page__heroContent page-hero__content">
-          <Link to="/recipes" className="recipe-form-page__backLink">
-            <span aria-hidden="true">←</span>
-            Zpět do katalogu
-          </Link>
-          <h1 className="page-hero__title">
-            {isEditMode ? `Upravit: ${recipeToEdit.title}` : "Vložit recept"}
-          </h1>
-          <p className="page-hero__text">
-            {isEditMode
-              ? "Tady můžeš recept upravit, doplnit a připravit ho pro katalog i týdenní plán."
-              : "Tady můžeš vložit nový recept a připravit ho pro katalog i týdenní plán."}
-          </p>
-          {canDeleteRecipe && (
-            <div className="page-hero__actions recipe-form-page__heroActions">
-              <button
-                type="button"
-                className="button button--danger"
-                onClick={() => setIsDeleteDialogOpen(true)}
-              >
-                Smazat recept
-              </button>
-            </div>
-          )}
-        </div>
-      </section>
+      <RecipeFormHero
+        canDeleteRecipe={canDeleteRecipe}
+        heroImageSrc={heroImageSrc}
+        isEditMode={isEditMode}
+        onDeleteClick={() => setIsDeleteDialogOpen(true)}
+        recipeTitle={recipeToEdit?.title}
+      />
 
       {formMessage && (
         <p className="recipe-form-page__message" role="alert">
@@ -198,93 +130,16 @@ export const RecipeForm = () => {
       )}
 
       <form id="form" className="form recipe-form-page__form" onSubmit={handleFormSubmit} noValidate>
-        <section className="recipe-form-page__panel">
-          <div className="recipe-form-page__sectionHeader">
-            <h2>Základní údaje</h2>
-          </div>
+        <RecipeBasicFields form={form} setField={setField} />
 
-          <div className="recipe-form-page__fieldGrid recipe-form-page__fieldGrid--top">
-            <div className="recipe-form-page__subsection form__item">
-              <label htmlFor="name" className="form__label">
-                Název <span className="form__requiredMark" aria-hidden="true">*</span>
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                className="form__input"
-                placeholder="Např. Dýňová polévka"
-                value={form.name}
-                onChange={(e) => setField("name", e.target.value)}
-              />
-            </div>
-
-            <div className="recipe-form-page__subsection form__item">
-              <label htmlFor="servings" className="form__label">
-                Počet porcí <span className="form__requiredMark" aria-hidden="true">*</span>
-              </label>
-              <input
-                type="number"
-                id="servings"
-                name="servings"
-                min="1"
-                step="1"
-                className="form__input"
-                placeholder="Např. 4"
-                value={form.servings}
-                onChange={(e) => setField("servings", e.target.value)}
-              />
-            </div>
-
-            <div className="recipe-form-page__subsection form__item">
-              <label htmlFor="calories" className="form__label">Kalorie na porci</label>
-              <input
-                type="number"
-                id="calories"
-                name="calories"
-                className="form__input"
-                placeholder="Např. 420"
-                value={form.calories}
-                onChange={(e) => setField("calories", e.target.value)}
-              />
-            </div>
-          </div>
-        </section>
+        <RecipeClassificationFields
+          form={form}
+          suitabilityOptions={suitabilityOptions}
+          toggleSelection={toggleSelection}
+        />
 
         <section className="recipe-form-page__panel">
-          <div className="recipe-form-page__sectionHeader">
-            <h2>Zařazení</h2>
-          </div>
-
-          <div className="recipe-form-page__fieldGrid recipe-form-page__fieldGrid--classification">
-            <CheckboxGroup
-              legend="Tagy"
-              name="tags"
-              options={TAG_OPTIONS}
-              selectedValues={form.selectedTags}
-              onToggle={(value) => toggleSelection("selectedTags", value)}
-            />
-
-            <CheckboxGroup
-              legend="Vhodné pro"
-              name="suitableFor"
-              options={suitabilityOptions}
-              selectedValues={form.selectedSuitableFor}
-              onToggle={(value) => toggleSelection("selectedSuitableFor", value)}
-            />
-
-            <CheckboxGroup
-              legend="Alergeny"
-              name="allergens"
-              options={ALLERGEN_OPTIONS}
-              selectedValues={form.selectedAllergens}
-              onToggle={(value) => toggleSelection("selectedAllergens", value)}
-            />
-          </div>
-        </section>
-
-        <section className="recipe-form-page__panel">
-          <div className="recipe-form-page__sectionHeader">
+          <div className="recipe-form-page__section-header">
             <h2>Suroviny</h2>
           </div>
 
@@ -296,146 +151,25 @@ export const RecipeForm = () => {
           />
         </section>
 
-        <section className="recipe-form-page__panel">
-          <div className="recipe-form-page__sectionHeader">
-            <h2>Postup a příprava</h2>
-          </div>
+        <RecipeTextFields
+          addPreTask={addPreTask}
+          form={form}
+          handlePreTaskKeyDown={handlePreTaskKeyDown}
+          preTaskDraft={preTaskDraft}
+          preTaskItems={preTaskItems}
+          removePreTask={removePreTask}
+          setField={setField}
+          setPreTaskDraft={setPreTaskDraft}
+        />
 
-          <div className="recipe-form-page__fieldGrid recipe-form-page__fieldGrid--text">
-            <div className="recipe-form-page__subsection form__item">
-              <label htmlFor="method" className="form__label">
-                Postup <span className="form__requiredMark" aria-hidden="true">*</span>
-              </label>
-              <textarea
-                id="method"
-                name="method"
-                className="form__input form__textarea"
-                placeholder="Popiš postup přípravy"
-                value={form.method}
-                onChange={(e) => setField("method", e.target.value)}
-              />
-            </div>
+        <RecipePhotoInputs
+          fileInputRef={fileInputRef}
+          handlePhotosChange={handlePhotosChange}
+          photos={form.photos}
+          removePhotoAt={removePhotoAt}
+        />
 
-            <div className="recipe-form-page__subsection form__item">
-              <label htmlFor="preTasks" className="form__label">Příprava</label>
-              <div className="recipe-form-page__taskEditor">
-                <div className="recipe-form-page__taskForm">
-                  <input
-                    id="preTasks"
-                    type="text"
-                    className="form__input"
-                    placeholder="Např. Večer předem namočit cizrnu"
-                    value={preTaskDraft}
-                    onChange={(event) => setPreTaskDraft(event.target.value)}
-                    onKeyDown={handlePreTaskKeyDown}
-                  />
-                  <button type="button" className="button button--add" onClick={addPreTask}>
-                    Přidat
-                  </button>
-                </div>
-
-                {preTaskItems.length > 0 ? (
-                  <ul className="recipe-form-page__taskList" aria-live="polite">
-                    {preTaskItems.map((task, index) => (
-                      <li key={`${task}-${index}`} className="recipe-form-page__taskItem">
-                        <span className="recipe-form-page__taskText">{task}</span>
-                        <button
-                          type="button"
-                          className="button--remove-control"
-                          onClick={() => removePreTask(index)}
-                          aria-label={`Odebrat úkol ${task}`}
-                          title="Odebrat úkol"
-                        >
-                          ×
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="recipe-form-page__taskEmpty">Zatím bez úkolů přípravy.</p>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="recipe-form-page__panel">
-          <div className="recipe-form-page__sectionHeader">
-            <h2>Fotogalerie</h2>
-          </div>
-
-          <div className="recipe-form-page__subsection form__item form__item--photos">
-            <input
-              type="file"
-              id="photos"
-              name="photos"
-              accept="image/*"
-              multiple
-              onChange={handlePhotosChange}
-              className="visually-hidden"
-              aria-describedby="photos-note"
-              ref={fileInputRef}
-            />
-
-            <div className="recipe-form-page__uploadRow">
-              <button
-                type="button"
-                className="button button--add button--file"
-                onClick={() => fileInputRef.current?.click()}
-                aria-controls="photos"
-                aria-label="Vybrat obrázky"
-              >
-                Přidat fotky
-              </button>
-
-              <p id="photos-note" className="form__note">
-                Vyber jednu či více fotek. První bude hlavička.
-              </p>
-            </div>
-
-            {form.photos.length > 0 && (
-              <div className="form__filenames" aria-live="polite">
-                {form.photos.map((p, i) => (
-                  <div key={`${p.name}-${i}`} className="form__filename">
-                    {i === 0 ? "Obálka: " : ""}{p.name}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {form.photos.length > 0 && (
-              <div className="form__previews">
-                {form.photos.map((p, i) => (
-                  <div key={`${p.url}-${i}`} className="form__preview-wrap">
-                    <img
-                      src={resolveImageSrc(p.url)}
-                      alt={`Náhled ${i + 1}`}
-                      className={`form__preview ${i === 0 ? "form__preview--cover" : ""}`}
-                    />
-                    <div className="form__preview-meta">
-                      {i === 0 ? "Obálka (hlavička)" : `Galerie #${i}`}
-                      <button
-                        type="button"
-                        className="button--remove-control form__preview-remove"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          event.stopPropagation();
-                          removePhotoAt(i);
-                        }}
-                        aria-label={`Odebrat náhled ${i + 1}`}
-                        title="Odebrat náhled"
-                      >
-                        ×
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
-
-        <div className="form__button--div recipe-form-page__footerActions">
+        <div className="recipe-form-page__footer-actions">
           <Link to="/recipes" className="button button--ghost">Zrušit</Link>
           <button type="submit" className="button button--new-recipe">
             {isEditMode ? "Uložit změny" : "Vytvořit recept"}
@@ -444,44 +178,16 @@ export const RecipeForm = () => {
       </form>
 
       {isDeleteDialogOpen && (
-        <div
-          className="recipe-confirm"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="recipe-form-delete-title"
-          onClick={() => {
-            if (!isDeleting) {
-              setIsDeleteDialogOpen(false);
-            }
-          }}
-        >
-          <div className="recipe-confirm__panel" onClick={(event) => event.stopPropagation()}>
-            <h2 id="recipe-form-delete-title" className="recipe-confirm__title">
-              Smazat recept?
-            </h2>
-            <p className="recipe-confirm__text">
-              Opravdu chceš smazat recept „{recipeToEdit.title}“? Tato akce se nedá vrátit zpět.
-            </p>
-            <div className="recipe-confirm__actions">
-              <button
-                type="button"
-                className="button button--ghost"
-                onClick={() => setIsDeleteDialogOpen(false)}
-                disabled={isDeleting}
-              >
-                Zrušit
-              </button>
-              <button
-                type="button"
-                className="button button--danger"
-                onClick={handleDelete}
-                disabled={isDeleting}
-              >
-                {isDeleting ? "Mazání..." : "Smazat recept"}
-              </button>
-            </div>
-          </div>
-        </div>
+        <ConfirmDialog
+          busyLabel="Mazání..."
+          confirmLabel="Smazat recept"
+          id="recipe-form-delete-title"
+          isBusy={isDeleting}
+          onCancel={() => setIsDeleteDialogOpen(false)}
+          onConfirm={handleDelete}
+          text={`Opravdu chceš smazat recept „${recipeToEdit.title}“? Tato akce se nedá vrátit zpět.`}
+          title="Smazat recept?"
+        />
       )}
     </div>
   );

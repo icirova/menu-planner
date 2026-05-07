@@ -1,7 +1,7 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import "./style.css";
-import { formatIngredient } from "../../utils/formatIngredient";
-import { getCanonicalIngredientName } from "../../utils/ingredientNames";
+import { formatIngredient } from "../../utils/formatIngredient.js";
+import { getCanonicalIngredientName } from "../../utils/ingredientNames.js";
 
 const createEmptyIngredient = () => ({ amount: "", unit: "", item: "" });
 
@@ -112,7 +112,7 @@ export const IngredientInputs = forwardRef(({ ingredients, setIngredients, onVal
       <div className="ingredient-editor">
         <div className="ingredient-editor__add">
           <label className="form__label">
-            Přidat surovinu <span className="form__requiredMark" aria-hidden="true">*</span>
+            Přidat surovinu <span className="form__required-mark" aria-hidden="true">*</span>
           </label>
 
           <div className="ingredient-row" ref={rowRef} onKeyDown={onRowKeyDown}>

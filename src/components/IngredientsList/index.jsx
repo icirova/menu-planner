@@ -1,5 +1,5 @@
 import "./style.css"
-import { formatIngredient } from "../../utils/formatIngredient";
+import { formatIngredient } from "../../utils/formatIngredient.js";
 
 export const IngredientsList = ({ ingredients, baseServings, desiredServings }) => (
   <>

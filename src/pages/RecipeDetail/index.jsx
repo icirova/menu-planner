@@ -1,15 +1,16 @@
 import "./style.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { AllergenTags } from "../../components/AllergenTags/index";
-import { SuitabilityTags } from "../../components/SuitabilityTags/index";
-import { ServingsControl } from "../../components/ServingsControl/index";
-import { IngredientsList } from "../../components/IngredientsList/index";
-import { RecipeTags } from "../../components/RecipeTags/index";
+import { AllergenTags } from "../../components/AllergenTags/index.jsx";
+import { SuitabilityTags } from "../../components/SuitabilityTags/index.jsx";
+import { ServingsControl } from "../../components/ServingsControl/index.jsx";
+import { IngredientsList } from "../../components/IngredientsList/index.jsx";
+import { RecipeTags } from "../../components/RecipeTags/index.jsx";
 import { useOutletContext } from "react-router-dom";
-import { areRecipeIdsEqual, normalizeRecipeIdValue } from "../../utils/recipeIds";
-import { isSeedRecipe } from "../../utils/recipeSource";
-import { resolveImageSrc } from "../../utils/resolveImageSrc";
+import { areRecipeIdsEqual, normalizeRecipeIdValue } from "../../utils/recipeIds.js";
+import { isSeedRecipe } from "../../utils/recipeSource.js";
+import { resolveImageSrc } from "../../utils/resolveImageSrc.js";
+import { ConfirmDialog } from "../../components/ConfirmDialog/index.jsx";
 
 const DEFAULT_SERVINGS = 4;
 
@@ -65,7 +66,7 @@ export const RecipeDetail = () => {
       <div className="main recipe-detail-page">
         <section className="recipe-detail-page__panel">
           <p>Recept nebyl nalezen.</p>
-          <Link to="/recipes" className="button recipe-detail__backLink">Zpět na recepty</Link>
+          <Link to="/recipes" className="button">Zpět na recepty</Link>
         </section>
       </div>
     );
@@ -103,22 +104,22 @@ export const RecipeDetail = () => {
   return (
     <div className="main recipe-detail-page">
       <section
-        className="recipe-detail-page__hero page-hero page-hero--split page-hero--imageLayer"
+        className="recipe-detail-page__hero page-hero page-hero--split page-hero--image-layer"
       >
         <img className="page-hero__image" src={coverSrc} alt="" aria-hidden="true" />
-        <div className="recipe-detail-page__heroContent page-hero__content">
-          <Link to="/recipes" className="recipe-detail-page__heroBack">
-            <span className="recipe-detail-page__heroBackArrow" aria-hidden="true">←</span>
+        <div className="recipe-detail-page__hero-content page-hero__content">
+          <Link to="/recipes" className="recipe-detail-page__hero-back">
+            <span className="recipe-detail-page__hero-back-arrow" aria-hidden="true">←</span>
             Zpět na recepty
           </Link>
 
-          <div className="recipe-detail-page__heroHeader">
+          <div className="recipe-detail-page__hero-header">
             <h1 className="page-hero__title">{recipeDetail.title}</h1>
 
-            <div className="recipe-detail-page__heroAside page-hero__aside">
+            <div className="recipe-detail-page__hero-aside page-hero__aside">
               {(heroTags || heroSuitableFor) && (
-                <div className="recipe-detail-page__heroMeta">
-                  <div className="recipe-detail-page__heroMetaText">
+                <div className="recipe-detail-page__hero-meta">
+                  <div className="recipe-detail-page__hero-meta-text">
                     {heroTags && (
                       <p className="page-hero__text">{heroTags}</p>
                     )}
@@ -155,9 +156,9 @@ export const RecipeDetail = () => {
         </div>
       </section>
 
-      <div className="recipe-detail-page__topGrid">
+      <div className="recipe-detail-page__top-grid">
         <section className="recipe-detail-page__panel">
-          <div className="recipe-detail__sectionHeader">
+          <div className="recipe-detail__section-header">
             <h2>Suroviny</h2>
           </div>
 
@@ -170,8 +171,8 @@ export const RecipeDetail = () => {
           </div>
         </section>
 
-        <section className="recipe-detail-page__panel recipe-detail-page__panel--summary">
-          <div className="recipe-detail__sectionHeader">
+        <section className="recipe-detail-page__panel">
+          <div className="recipe-detail__section-header">
             <h2>Přehled</h2>
           </div>
 
@@ -211,7 +212,7 @@ export const RecipeDetail = () => {
       </div>
 
       <section className="recipe-detail-page__panel">
-        <div className="recipe-detail__sectionHeader">
+        <div className="recipe-detail__section-header">
           <h2>Postup</h2>
         </div>
         <div className="recipe-detail__section recipe-detail__subsection">
@@ -221,7 +222,7 @@ export const RecipeDetail = () => {
 
       {preTasks.length > 0 && (
         <section className="recipe-detail-page__panel">
-          <div className="recipe-detail__sectionHeader">
+          <div className="recipe-detail__section-header">
             <h2>Příprava</h2>
           </div>
           <div className="recipe-detail__section recipe-detail__subsection">
@@ -236,7 +237,7 @@ export const RecipeDetail = () => {
 
       {gallery.length > 0 && (
         <section className="recipe-detail-page__panel">
-          <div className="recipe-detail__sectionHeader">
+          <div className="recipe-detail__section-header">
             <h2>Galerie</h2>
           </div>
           <div className="recipe-detail__gallery recipe-detail__subsection">
@@ -302,44 +303,16 @@ export const RecipeDetail = () => {
       )}
 
       {isDeleteDialogOpen && (
-        <div
-          className="recipe-confirm"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="recipe-delete-title"
-          onClick={() => {
-            if (!isDeleting) {
-              setIsDeleteDialogOpen(false);
-            }
-          }}
-        >
-          <div className="recipe-confirm__panel" onClick={(event) => event.stopPropagation()}>
-            <h2 id="recipe-delete-title" className="recipe-confirm__title">
-              Smazat recept?
-            </h2>
-            <p className="recipe-confirm__text">
-              Opravdu chceš smazat recept „{recipeDetail.title}“? Tato akce se nedá vrátit zpět.
-            </p>
-            <div className="recipe-confirm__actions">
-              <button
-                type="button"
-                className="button button--ghost"
-                onClick={() => setIsDeleteDialogOpen(false)}
-                disabled={isDeleting}
-              >
-                Zrušit
-              </button>
-              <button
-                type="button"
-                className="button button--danger"
-                onClick={handleDelete}
-                disabled={isDeleting}
-              >
-                {isDeleting ? "Mazání..." : "Smazat recept"}
-              </button>
-            </div>
-          </div>
-        </div>
+        <ConfirmDialog
+          busyLabel="Mazání..."
+          confirmLabel="Smazat recept"
+          id="recipe-delete-title"
+          isBusy={isDeleting}
+          onCancel={() => setIsDeleteDialogOpen(false)}
+          onConfirm={handleDelete}
+          text={`Opravdu chceš smazat recept „${recipeDetail.title}“? Tato akce se nedá vrátit zpět.`}
+          title="Smazat recept?"
+        />
       )}
 
     </div>
