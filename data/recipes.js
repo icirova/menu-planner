@@ -409,7 +409,7 @@ export const recipes = [
   },
   {
     id: 22,
-    title: "Adamova buchta",
+    title: "Hrnková buchta",
     servings: 4,
     tags: ["svačiny", "moučníky", "snídaně"],
     photo_urls: ["/imgRecipe/adamova-buchta.webp"],
