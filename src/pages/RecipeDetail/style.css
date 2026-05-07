@@ -21,8 +21,9 @@
 }
 
 .recipe-detail-page__heroContent {
+  display: flex;
+  flex-direction: column;
   min-height: 100%;
-  align-content: start;
   min-width: 0;
 }
 
@@ -55,15 +56,20 @@
 }
 
 .recipe-detail-page__heroHeader {
-  display: grid;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   gap: var(--hero-content-gap);
+  min-height: 0;
 }
 
 .recipe-detail-page__heroAside {
-  display: grid;
-  justify-items: start;
-  align-content: start;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--hero-content-gap);
+  min-height: 0;
 }
 
 .recipe-detail-page__heroMeta {
@@ -79,6 +85,8 @@
 
 .recipe-detail__actions {
   justify-content: flex-start;
+  align-self: flex-start;
+  margin-top: auto;
 }
 
 .recipe-detail__actions .button--danger {

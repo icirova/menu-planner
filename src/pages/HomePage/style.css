@@ -24,6 +24,7 @@
 }
 
 .home-page__heroContent {
+  grid-template-rows: auto auto auto 1fr;
   align-content: start;
   min-height: 100%;
 }

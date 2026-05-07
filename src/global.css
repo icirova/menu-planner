@@ -134,7 +134,8 @@ h2 {
 
 .page-hero--catalog {
   display: grid;
-  align-content: end;
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-content: stretch;
   gap: 1rem;
   background:
     linear-gradient(90deg, rgba(10, 14, 11, 0.48) 0%, rgba(10, 14, 11, 0.22) 34%, rgba(10, 14, 11, 0.04) 58%, transparent 78%),
@@ -189,6 +190,10 @@ h2 {
   gap: var(--hero-content-gap);
 }
 
+.page-hero__content > .page-hero__actions {
+  margin-top: auto;
+}
+
 .page-hero__aside {
   display: grid;
 }
@@ -223,6 +228,7 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+  align-self: end;
 }
 
 .page-hero__actions .button {
