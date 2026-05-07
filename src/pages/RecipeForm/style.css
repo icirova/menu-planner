@@ -41,6 +41,23 @@
   color: #fff7eb;
 }
 
+.recipe-form-page__heroActions {
+  align-self: end;
+  margin-top: auto;
+}
+
+.recipe-form-page__heroActions .button--danger {
+  border-color: rgba(248, 208, 202, 0.72);
+  background: rgba(116, 35, 31, 0.72);
+  color: #fff7eb;
+}
+
+.recipe-form-page__heroActions .button--danger:hover {
+  border-color: rgba(255, 224, 219, 0.88);
+  background: rgba(139, 42, 37, 0.82);
+  color: #fff7eb;
+}
+
 .recipe-form-page__form {
   display: grid;
   gap: 1.5rem;
@@ -168,6 +185,48 @@
   color: var(--page-muted-text);
   font-style: italic;
   line-height: 1.45;
+}
+
+.recipe-confirm {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgba(18, 21, 18, 0.58);
+}
+
+.recipe-confirm__panel {
+  width: min(100%, 30rem);
+  display: grid;
+  gap: 1rem;
+  padding: 1.4rem;
+  border: 1px solid rgba(115, 103, 74, 0.18);
+  border-radius: var(--radius-panel);
+  background: var(--surface-panel);
+  box-shadow: var(--shadow-soft);
+}
+
+.recipe-confirm__title {
+  margin: 0;
+  font-family: "Amatic SC", cursive;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #444;
+}
+
+.recipe-confirm__text {
+  margin: 0;
+  color: #4f4a41;
+  line-height: 1.55;
+}
+
+.recipe-confirm__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .form {

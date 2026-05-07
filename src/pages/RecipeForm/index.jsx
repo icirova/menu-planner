@@ -1,5 +1,5 @@
 import "./style.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { CheckboxGroup } from "../../components/CheckboxGroup";
 import { IngredientInputs } from "../../components/IngredientInputs/index";
@@ -17,15 +17,18 @@ import { resolveImageSrc } from "../../utils/resolveImageSrc";
 
 export const RecipeForm = () => {
   const [preTaskDraft, setPreTaskDraft] = useState("");
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
-  const { recipeList, addRecipe, updateRecipe } = useOutletContext();
+  const { recipeList, addRecipe, updateRecipe, deleteRecipe } = useOutletContext();
   const routeRecipeId = normalizeRecipeIdValue(id);
   const recipeToEdit = id
     ? recipeList.find((recipe) => areRecipeIdsEqual(recipe.id, routeRecipeId ?? id))
     : null;
   const isEditMode = Boolean(id);
   const isDefaultRecipeEdit = isEditMode && isSeedRecipe(recipeToEdit);
+  const canDeleteRecipe = isEditMode && recipeToEdit && !isSeedRecipe(recipeToEdit);
   const {
     fileInputRef,
     ingredientInputsRef,
@@ -64,8 +67,35 @@ export const RecipeForm = () => {
     if (!pendingTask) return form.preTasksText;
     return [...preTaskItems, pendingTask].join("\n");
   };
+
+  useEffect(() => {
+    if (!isDeleteDialogOpen) return;
+
+    const onKey = (event) => {
+      if (event.key === "Escape" && !isDeleting) {
+        setIsDeleteDialogOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isDeleteDialogOpen, isDeleting]);
+
   const handleFormSubmit = (event) => {
     handleSubmit(event, { preTasksText: getSubmittedPreTasksText() });
+  };
+  const handleDelete = async () => {
+    if (!canDeleteRecipe) return;
+
+    setIsDeleting(true);
+    const deleted = await deleteRecipe(recipeToEdit.id);
+    setIsDeleting(false);
+    if (!deleted) {
+      window.alert("Recept se nepodařilo smazat. Zkus aplikaci obnovit.");
+      return;
+    }
+    setIsDeleteDialogOpen(false);
+    navigate("/recipes");
   };
   const handlePreTaskKeyDown = (event) => {
     if (event.key !== "Enter") return;
@@ -144,6 +174,17 @@ export const RecipeForm = () => {
               ? "Tady můžeš recept upravit, doplnit a připravit ho pro katalog i týdenní plán."
               : "Tady můžeš vložit nový recept a připravit ho pro katalog i týdenní plán."}
           </p>
+          {canDeleteRecipe && (
+            <div className="page-hero__actions recipe-form-page__heroActions">
+              <button
+                type="button"
+                className="button button--danger"
+                onClick={() => setIsDeleteDialogOpen(true)}
+              >
+                Smazat recept
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -388,6 +429,47 @@ export const RecipeForm = () => {
           </button>
         </div>
       </form>
+
+      {isDeleteDialogOpen && (
+        <div
+          className="recipe-confirm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="recipe-form-delete-title"
+          onClick={() => {
+            if (!isDeleting) {
+              setIsDeleteDialogOpen(false);
+            }
+          }}
+        >
+          <div className="recipe-confirm__panel" onClick={(event) => event.stopPropagation()}>
+            <h2 id="recipe-form-delete-title" className="recipe-confirm__title">
+              Smazat recept?
+            </h2>
+            <p className="recipe-confirm__text">
+              Opravdu chceš smazat recept „{recipeToEdit.title}“? Tato akce se nedá vrátit zpět.
+            </p>
+            <div className="recipe-confirm__actions">
+              <button
+                type="button"
+                className="button button--ghost"
+                onClick={() => setIsDeleteDialogOpen(false)}
+                disabled={isDeleting}
+              >
+                Zrušit
+              </button>
+              <button
+                type="button"
+                className="button button--danger"
+                onClick={handleDelete}
+                disabled={isDeleting}
+              >
+                {isDeleting ? "Mazání..." : "Smazat recept"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

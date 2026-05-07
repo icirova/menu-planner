@@ -81,6 +81,18 @@
   justify-content: flex-start;
 }
 
+.recipe-detail__actions .button--danger {
+  border-color: rgba(248, 208, 202, 0.72);
+  background: rgba(116, 35, 31, 0.72);
+  color: #fff7eb;
+}
+
+.recipe-detail__actions .button--danger:hover {
+  border-color: rgba(255, 224, 219, 0.88);
+  background: rgba(139, 42, 37, 0.82);
+  color: #fff7eb;
+}
+
 .recipe-detail-page__topGrid {
   display: grid;
   grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
