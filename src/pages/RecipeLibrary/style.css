@@ -20,13 +20,13 @@
   background: transparent;
 }
 
-.recipe-library__heroContent {
+.recipe-library__hero-content {
   min-width: 0;
   min-height: 100%;
   align-content: start;
 }
 
-.recipe-library__topGrid {
+.recipe-library__top-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.82fr);
   gap: 1.25rem;
@@ -63,7 +63,7 @@
   gap: 0.5rem;
 }
 
-.recipe-library__searchLabel {
+.recipe-library__search-label {
   color: #6f6757;
   font-size: 0.9rem;
   font-weight: 700;
@@ -83,7 +83,7 @@
   color: #6f6757;
 }
 
-.recipe-library__searchInput {
+.recipe-library__search-input {
   width: 100%;
   min-height: 48px;
   padding: 0.8rem 0.95rem;
@@ -93,7 +93,7 @@
   font: inherit;
 }
 
-.recipe-library__searchInput:focus {
+.recipe-library__search-input:focus {
   outline: none;
   border-color: rgba(47, 93, 80, 0.38);
   box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.08);
@@ -114,7 +114,7 @@
   margin: 0;
 }
 
-.recipe-library__panelHeader {
+.recipe-library__panel-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -122,39 +122,39 @@
   margin-bottom: 1rem;
 }
 
-.recipe-library__panelHeader--catalog {
+.recipe-library__panel-header--catalog {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
 }
 
-.recipe-library__panelHeader--filters {
+.recipe-library__panel-header--filters {
   margin-bottom: 1.4rem;
 }
 
-.recipe-library__panelHeader h2,
-.recipe-library__panelHeader p {
+.recipe-library__panel-header h2,
+.recipe-library__panel-header p {
   margin: 0;
 }
 
-.recipe-library__panelHeader h2 {
+.recipe-library__panel-header h2 {
   font-family: "Amatic SC", cursive;
   font-size: 2rem;
   font-weight: 400;
   color: #444;
 }
 
-.recipe-library__panelHeader p {
+.recipe-library__panel-header p {
   margin-top: 0.35rem;
   color: var(--page-muted-text);
 }
 
-.recipe-library__clearButton {
+.recipe-library__clear-button {
   flex-shrink: 0;
 }
 
-.recipe-library__filterSummary {
+.recipe-library__filter-summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -164,11 +164,11 @@
   border-top: 1px solid rgba(115, 103, 74, 0.12);
 }
 
-.recipe-library__filterSummary--empty {
+.recipe-library__filter-summary--empty {
   visibility: hidden;
 }
 
-.recipe-library__filterSummaryText {
+.recipe-library__filter-summary-text {
   margin: 0;
   color: var(--page-muted-text);
   font-size: 0.85rem;
@@ -181,7 +181,7 @@
   min-width: 180px;
 }
 
-.recipe-library__sortSelect {
+.recipe-library__sort-select {
   width: 100%;
   min-height: 2.35rem;
   padding: 0.45rem 0.65rem;
@@ -192,13 +192,13 @@
   font-size: 0.9rem;
 }
 
-.recipe-library__sortSelect:focus {
+.recipe-library__sort-select:focus {
   outline: none;
   border-color: rgba(47, 93, 80, 0.38);
   box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.08);
 }
 
-.recipe-library__summaryContent {
+.recipe-library__summary-content {
   flex: 1;
   display: flex;
   padding: 1.25rem;
@@ -206,14 +206,14 @@
   background: var(--page-card-bg);
 }
 
-.recipe-library__summaryGrid {
+.recipe-library__summary-grid {
   display: grid;
   gap: 0;
   width: 100%;
   margin-top: auto;
 }
 
-.recipe-library__summaryBox {
+.recipe-library__summary-box {
   display: grid;
   gap: 0.2rem;
   padding: 0.85rem 0;
@@ -223,23 +223,23 @@
   box-shadow: none;
 }
 
-.recipe-library__summaryBox:first-child {
+.recipe-library__summary-box:first-child {
   padding-top: 0;
 }
 
-.recipe-library__summaryBox:last-child {
+.recipe-library__summary-box:last-child {
   padding-bottom: 0;
   border-bottom: 0;
 }
 
-.recipe-library__summaryValue {
+.recipe-library__summary-value {
   font-family: "Sorts Mill Goudy", serif;
   font-size: 2rem;
   line-height: 1;
   color: #2f372f;
 }
 
-.recipe-library__summaryLabel {
+.recipe-library__summary-label {
   color: var(--page-muted-text);
   line-height: 1.5;
 }
@@ -255,12 +255,13 @@
 
 .recipe-library__card {
   display: grid;
+  grid-template-rows: 1fr auto;
   background: var(--page-card-bg);
   border: 1px solid var(--page-card-border);
   box-shadow: none;
 }
 
-.recipe-library__coverLink {
+.recipe-library__cover-link {
   display: grid;
   grid-template-rows: auto 1fr;
   color: inherit;
@@ -284,14 +285,14 @@
   min-height: 100%;
 }
 
-.recipe-library__bodyHeader {
+.recipe-library__body-header {
   display: grid;
   gap: 0.45rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid rgba(122, 113, 93, 0.16);
 }
 
-.recipe-library__cardTitle {
+.recipe-library__card-title {
   margin: 0;
   font-family: "Sorts Mill Goudy", serif;
   font-size: 1.2rem;
@@ -299,7 +300,7 @@
   color: #2f372f;
 }
 
-.recipe-library__metaGroup {
+.recipe-library__meta-group {
   display: grid;
   gap: 0.18rem;
   min-height: 1.5rem;
@@ -320,18 +321,18 @@
   display: flex;
   gap: 0.65rem;
   flex-wrap: wrap;
-  margin-top: auto;
-  padding-top: 0.45rem;
+  margin-top: 0;
+  padding: 0 1rem 1rem;
 }
 
-.recipe-library__loadMore {
+.recipe-library__load-more {
   display: grid;
   justify-items: center;
   gap: 0.75rem;
   margin-top: 1.5rem;
 }
 
-.recipe-library__loadMoreText {
+.recipe-library__load-more-text {
   margin: 0;
   color: var(--page-muted-text);
   text-align: center;
@@ -362,7 +363,7 @@
     padding: 1rem;
   }
 
-  .recipe-library__topGrid {
+  .recipe-library__top-grid {
     grid-template-columns: 1fr;
   }
 
@@ -374,15 +375,15 @@
     grid-template-columns: 1fr;
   }
 
-  .recipe-library__panelHeader--catalog {
+  .recipe-library__panel-header--catalog {
     flex-direction: column;
   }
 
-  .recipe-library__panelHeader--filters {
+  .recipe-library__panel-header--filters {
     padding-bottom: 0.9rem;
   }
 
-  .recipe-library__filterSummary {
+  .recipe-library__filter-summary {
     align-items: flex-start;
     flex-direction: column;
   }

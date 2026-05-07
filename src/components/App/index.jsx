@@ -1,20 +1,20 @@
 import { Outlet } from "react-router-dom";
-import { Header } from "../Header";
-import { Footer } from "../Footer";
+import { Header } from "../Header/index.jsx";
+import { Footer } from "../Footer/index.jsx";
 import { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import {
   loadCustomRecipes,
   normalizeCustomRecipe,
   saveCustomRecipes,
-} from "../../storage/recipesStorage";
-import { areRecipeIdsEqual } from "../../utils/recipeIds";
+} from "../../storage/recipesStorage.js";
+import { areRecipeIdsEqual } from "../../utils/recipeIds.js";
 import {
   loadStoredMenuState,
   removeRecipeFromStoredMenu,
   saveMenuState,
-} from "../../storage/menuStorage";
-import { isSeedRecipe } from "../../utils/recipeSource";
-import { initialMenuState, menuReducer } from "../../reducers/menuReducer";
+} from "../../storage/menuStorage.js";
+import { isSeedRecipe } from "../../utils/recipeSource.js";
+import { initialMenuState, menuReducer } from "../../reducers/menuReducer.js";
 
 export const App = () => {
   const [customRecipes, setCustomRecipes] = useState([]);

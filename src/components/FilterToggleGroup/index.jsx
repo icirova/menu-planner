@@ -1,4 +1,4 @@
-import { Button } from "../Button";
+import { Button } from "../Button/index.jsx";
 import "./style.css";
 
 export const FilterToggleGroup = ({

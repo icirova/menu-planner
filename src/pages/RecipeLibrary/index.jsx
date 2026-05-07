@@ -1,15 +1,15 @@
 import "./style.css";
 import { Link, useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { FilterToggleGroup } from "../../components/FilterToggleGroup";
+import { FilterToggleGroup } from "../../components/FilterToggleGroup/index.jsx";
 import {
   getRecipeSuitableForFilterValues,
   SUITABILITY_OPTIONS,
   TAG_OPTIONS,
-} from "../../constants/recipeMetadata";
-import { normalizeRecipeTags } from "../../utils/normalizeRecipeTag";
-import { isSeedRecipe } from "../../utils/recipeSource";
-import { resolveImageSrc } from "../../utils/resolveImageSrc";
+} from "../../constants/recipeMetadata.js";
+import { normalizeRecipeTags } from "../../utils/normalizeRecipeTag.js";
+import { isSeedRecipe } from "../../utils/recipeSource.js";
+import { resolveImageSrc } from "../../utils/resolveImageSrc.js";
 
 const SORT_OPTIONS = [
   { value: "newest", label: "Nejnovější" },
@@ -22,6 +22,49 @@ const getRecipeSortTimestamp = (recipe) => {
   const parsed = recipe.createdAt ? Date.parse(recipe.createdAt) : NaN;
   if (Number.isFinite(parsed)) return parsed;
   return typeof recipe.id === "number" ? recipe.id : 0;
+};
+
+const RecipeLibraryCard = ({ recipe }) => {
+  const cover = resolveImageSrc(recipe.photo_urls?.[0] || "/image/placeholder.png");
+  const tags = recipe.tags ?? [];
+  const suitableFor = recipe.suitableFor ?? [];
+
+  return (
+    <li className="recipe-library__card">
+      <Link to={`/recipe-detail/${recipe.id}`} className="recipe-library__cover-link">
+        <img src={cover} alt={recipe.title} className="recipe-library__image" />
+        <div className="recipe-library__body">
+          <div className="recipe-library__body-header">
+            <h3 className="recipe-library__card-title">{recipe.title}</h3>
+          </div>
+
+          {(tags.length > 0 || suitableFor.length > 0) && (
+            <div className="recipe-library__meta-group">
+              {tags.length > 0 && (
+                <p className="recipe-library__meta">{tags.join(" • ")}</p>
+              )}
+              {suitableFor.length > 0 && (
+                <p className="recipe-library__meta">{suitableFor.join(" • ")}</p>
+              )}
+              {tags.length === 0 || suitableFor.length === 0 ? (
+                <p className="recipe-library__meta recipe-library__meta--placeholder" aria-hidden="true">
+                  &nbsp;
+                </p>
+              ) : null}
+            </div>
+          )}
+        </div>
+      </Link>
+
+      {!isSeedRecipe(recipe) && (
+        <div className="recipe-library__actions">
+          <Link to={`/recipe-form/${recipe.id}/edit`} className="button recipe-library__link">
+            Upravit
+          </Link>
+        </div>
+      )}
+    </li>
+  );
 };
 
 export const RecipeLibrary = () => {
@@ -145,7 +188,7 @@ export const RecipeLibrary = () => {
         className="recipe-library__hero page-hero page-hero--catalog"
         style={{ "--page-hero-image": 'url("/shopping.webp")' }}
       >
-        <div className="recipe-library__heroContent page-hero__content">
+        <div className="recipe-library__hero-content page-hero__content">
           <p className="page-hero__eyebrow">Katalog receptů</p>
           <h1 className="page-hero__title">Recepty</h1>
           <p className="page-hero__text">
@@ -159,22 +202,22 @@ export const RecipeLibrary = () => {
         </div>
       </section>
 
-      <div className="recipe-library__topGrid">
+      <div className="recipe-library__top-grid">
         <section className="recipe-library__panel recipe-library__panel--controls">
-          <div className="recipe-library__panelHeader recipe-library__panelHeader--filters">
+          <div className="recipe-library__panel-header recipe-library__panel-header--filters">
             <div>
               <h2>Hledání a filtry</h2>
             </div>
           </div>
 
           <div className="recipe-library__search">
-            <label htmlFor="recipe-search" className="recipe-library__searchLabel">
+            <label htmlFor="recipe-search" className="recipe-library__search-label">
               Hledat recept
             </label>
             <input
               id="recipe-search"
               type="search"
-              className="recipe-library__searchInput"
+              className="recipe-library__search-input"
               placeholder="Např. lasagne, salát, polévka..."
               value={query}
               onChange={(event) => setQuery(event.target.value)}
@@ -199,17 +242,17 @@ export const RecipeLibrary = () => {
           </div>
 
           <div
-            className={`recipe-library__filterSummary ${
-              hasActiveFilters ? "" : "recipe-library__filterSummary--empty"
+            className={`recipe-library__filter-summary ${
+              hasActiveFilters ? "" : "recipe-library__filter-summary--empty"
             }`}
             aria-hidden={!hasActiveFilters}
           >
-            <p className="recipe-library__filterSummaryText">
+            <p className="recipe-library__filter-summary-text">
               Aktivní filtry: {activeFiltersCount}
             </p>
             <button
               type="button"
-              className="button button--ghost recipe-library__clearButton"
+              className="button button--ghost recipe-library__clear-button"
               onClick={resetFilters}
               disabled={!hasActiveFilters}
               tabIndex={hasActiveFilters ? undefined : -1}
@@ -220,32 +263,32 @@ export const RecipeLibrary = () => {
         </section>
 
         <aside className="recipe-library__panel recipe-library__panel--summary">
-          <div className="recipe-library__panelHeader">
+          <div className="recipe-library__panel-header">
             <div>
               <h2>Katalog v kostce</h2>
             </div>
           </div>
 
-          <div className="recipe-library__summaryContent">
-            <div className="recipe-library__summaryGrid">
-              <article className="recipe-library__summaryBox">
-                <span className="recipe-library__summaryValue">{recipeList.length}</span>
-                <span className="recipe-library__summaryLabel">receptů celkem</span>
+          <div className="recipe-library__summary-content">
+            <div className="recipe-library__summary-grid">
+              <article className="recipe-library__summary-box">
+                <span className="recipe-library__summary-value">{recipeList.length}</span>
+                <span className="recipe-library__summary-label">receptů celkem</span>
               </article>
 
-              <article className="recipe-library__summaryBox">
-                <span className="recipe-library__summaryValue">{customRecipesCount}</span>
-                <span className="recipe-library__summaryLabel">vlastních receptů</span>
+              <article className="recipe-library__summary-box">
+                <span className="recipe-library__summary-value">{customRecipesCount}</span>
+                <span className="recipe-library__summary-label">vlastních receptů</span>
               </article>
 
-              <article className="recipe-library__summaryBox">
-                <span className="recipe-library__summaryValue">{glutenFreeRecipesCount}</span>
-                <span className="recipe-library__summaryLabel">bezlepkových receptů</span>
+              <article className="recipe-library__summary-box">
+                <span className="recipe-library__summary-value">{glutenFreeRecipesCount}</span>
+                <span className="recipe-library__summary-label">bezlepkových receptů</span>
               </article>
 
-              <article className="recipe-library__summaryBox">
-                <span className="recipe-library__summaryValue">{veganRecipesCount}</span>
-                <span className="recipe-library__summaryLabel">veganských receptů</span>
+              <article className="recipe-library__summary-box">
+                <span className="recipe-library__summary-value">{veganRecipesCount}</span>
+                <span className="recipe-library__summary-label">veganských receptů</span>
               </article>
             </div>
           </div>
@@ -253,8 +296,8 @@ export const RecipeLibrary = () => {
       </div>
 
       <section className="recipe-library__panel" ref={catalogSectionRef}>
-          <div className="recipe-library__panelHeader recipe-library__panelHeader--catalog">
-            <div>
+        <div className="recipe-library__panel-header recipe-library__panel-header--catalog">
+          <div>
             <h2>Recepty</h2>
             <p>
               {filteredRecipes.length} {recipeCountLabel}
@@ -267,7 +310,7 @@ export const RecipeLibrary = () => {
             </label>
             <select
               id="recipe-sort"
-              className="recipe-library__sortSelect"
+              className="recipe-library__sort-select"
               value={sortOrder}
               onChange={(event) => setSortOrder(event.target.value)}
             >
@@ -283,53 +326,14 @@ export const RecipeLibrary = () => {
         {filteredRecipes.length > 0 ? (
           <>
             <ul className="recipe-library__grid" role="list">
-              {visibleRecipes.map((recipe) => {
-              const cover = resolveImageSrc(recipe.photo_urls?.[0] || "/image/placeholder.png");
-              const tags = recipe.tags ?? [];
-              const suitableFor = recipe.suitableFor ?? [];
-
-              return (
-                <li key={recipe.id} className="recipe-library__card">
-                  <Link to={`/recipe-detail/${recipe.id}`} className="recipe-library__coverLink">
-                    <img src={cover} alt={recipe.title} className="recipe-library__image" />
-                    <div className="recipe-library__body">
-                    <div className="recipe-library__bodyHeader">
-                      <h3 className="recipe-library__cardTitle">{recipe.title}</h3>
-                    </div>
-
-                    {(tags.length > 0 || suitableFor.length > 0) && (
-                      <div className="recipe-library__metaGroup">
-                        {tags.length > 0 && (
-                          <p className="recipe-library__meta">{tags.join(" • ")}</p>
-                        )}
-                        {suitableFor.length > 0 && (
-                          <p className="recipe-library__meta">{suitableFor.join(" • ")}</p>
-                        )}
-                        {tags.length === 0 || suitableFor.length === 0 ? (
-                          <p className="recipe-library__meta recipe-library__meta--placeholder" aria-hidden="true">
-                            &nbsp;
-                          </p>
-                        ) : null}
-                      </div>
-                    )}
-
-                    {!isSeedRecipe(recipe) && (
-                      <div className="recipe-library__actions">
-                        <Link to={`/recipe-form/${recipe.id}/edit`} className="button recipe-library__link">
-                          Upravit
-                        </Link>
-                      </div>
-                    )}
-                    </div>
-                  </Link>
-                </li>
-              );
-              })}
+              {visibleRecipes.map((recipe) => (
+                <RecipeLibraryCard key={recipe.id} recipe={recipe} />
+              ))}
             </ul>
 
             {hasMoreRecipes && (
-              <div className="recipe-library__loadMore">
-                <p className="recipe-library__loadMoreText">
+              <div className="recipe-library__load-more">
+                <p className="recipe-library__load-more-text">
                   Zobrazeno {visibleRecipes.length} z {filteredRecipes.length} receptů.
                 </p>
                 <button

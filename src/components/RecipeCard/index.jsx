@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { resolveImageSrc } from "../../utils/resolveImageSrc";
+import { resolveImageSrc } from "../../utils/resolveImageSrc.js";
 import "./style.css";
 
 export const RecipeCard = ({
@@ -25,7 +25,7 @@ export const RecipeCard = ({
 
       <button
         type="button"
-        className="recipe__link recipe__linkButton"
+        className="recipe__link recipe__link-button"
         aria-labelledby={titleId}
         aria-pressed={isSelected}
         title={isSelected ? "Recept je vybraný pro plánování" : "Vybrat recept pro plánování"}

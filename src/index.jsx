@@ -1,12 +1,12 @@
 import './global.css';
 import { createRoot } from 'react-dom/client';
 import { createHashRouter, RouterProvider, } from 'react-router-dom';
-import { App } from './components/App';
-import { HomePage } from './pages/HomePage/';
-import { WeeklyPlanner } from './pages/WeeklyPlanner';
-import { RecipeLibrary } from './pages/RecipeLibrary';
-import {RecipeForm} from './pages/RecipeForm';
-import {RecipeDetail} from './pages/RecipeDetail';
+import { App } from './components/App/index.jsx';
+import { HomePage } from './pages/HomePage/index.jsx';
+import { WeeklyPlanner } from './pages/WeeklyPlanner/index.jsx';
+import { RecipeLibrary } from './pages/RecipeLibrary/index.jsx';
+import {RecipeForm} from './pages/RecipeForm/index.jsx';
+import {RecipeDetail} from './pages/RecipeDetail/index.jsx';
 
 const router = createHashRouter([
   {
