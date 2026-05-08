@@ -1,15 +1,7 @@
 import { CheckboxGroup } from "../../components/CheckboxGroup/index.jsx";
-import {
-  ALLERGEN_OPTIONS,
-  SUITABILITY_OPTIONS,
-  TAG_OPTIONS,
-} from "../../constants/recipeMetadata.js";
+import { ALLERGEN_OPTIONS, TAG_OPTIONS } from "../../constants/recipeMetadata.js";
 
-export const RecipeClassificationFields = ({
-  form,
-  suitabilityOptions,
-  toggleSelection,
-}) => (
+export const RecipeClassificationFields = ({ form, suitabilityOptions, toggleSelection }) => (
   <section className="recipe-form-page__panel">
     <div className="recipe-form-page__section-header">
       <h2>Zařazení</h2>

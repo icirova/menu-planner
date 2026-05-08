@@ -1,44 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { normalizeSuitableForValues } from "../constants/recipeMetadata.js";
 import { prepareCustomRecipeForRuntime } from "../storage/recipesStorage.js";
-import { createNumericId } from "../utils/createId.js";
-import { getCanonicalIngredientName } from "../utils/ingredientNames.js";
-import { normalizeRecipePreTasks } from "../utils/normalizeRecipePreTasks.js";
+import {
+  buildRecipeDraft,
+  createEmptyRecipeFormState,
+  mapRecipeToFormState,
+  normalizeRecipeFormIngredients,
+  toggleInArray,
+  validateRecipeForm,
+} from "../utils/recipeFormDraft.js";
 import { isSeedRecipe } from "../utils/recipeSource.js";
-
-const DEFAULT_SERVINGS = 4;
-
-const createEmptyFormState = () => ({
-  name: "",
-  servings: "",
-  selectedTags: [],
-  selectedSuitableFor: [],
-  selectedAllergens: [],
-  calories: "",
-  method: "",
-  preTasksText: "",
-  ingredients: [],
-  photos: [],
-});
-
-const mapRecipePhotos = (recipe) =>
-  (recipe.photo_urls ?? []).map((url, index) => ({
-    url,
-    name: `obrazek-${index + 1}`,
-  }));
-
-const mapRecipeToFormState = (recipe) => ({
-  name: recipe.title ?? "",
-  servings: String(recipe.servings ?? DEFAULT_SERVINGS),
-  selectedTags: recipe.tags ?? [],
-  selectedSuitableFor: recipe.suitableFor ?? [],
-  selectedAllergens: recipe.allergens ?? [],
-  calories: recipe.calories == null ? "" : String(recipe.calories),
-  method: recipe.workflow ?? "",
-  preTasksText: normalizeRecipePreTasks(recipe.preTasks).join("\n"),
-  ingredients: recipe.ingredients ?? [],
-  photos: mapRecipePhotos(recipe),
-});
 
 const readFileAsDataUrl = (file) =>
   new Promise((resolve, reject) => {
@@ -48,11 +19,6 @@ const readFileAsDataUrl = (file) =>
     reader.readAsDataURL(file);
   });
 
-const toggleInArray = (items, value) =>
-  items.includes(value)
-    ? items.filter((item) => item !== value)
-    : [...items, value];
-
 export const useRecipeForm = ({
   recipeToEdit,
   isEditMode,
@@ -61,13 +27,13 @@ export const useRecipeForm = ({
   navigate,
   onValidationError,
 }) => {
-  const [form, setForm] = useState(createEmptyFormState);
+  const [form, setForm] = useState(createEmptyRecipeFormState);
   const fileInputRef = useRef(null);
   const ingredientInputsRef = useRef(null);
 
   useEffect(() => {
     if (!isEditMode) {
-      setForm(createEmptyFormState());
+      setForm(createEmptyRecipeFormState());
       return;
     }
 
@@ -83,9 +49,10 @@ export const useRecipeForm = ({
   const toggleSelection = (field, value) => {
     setForm((prev) => ({
       ...prev,
-      [field]: field === "selectedSuitableFor"
-        ? normalizeSuitableForValues(toggleInArray(prev[field], value))
-        : toggleInArray(prev[field], value),
+      [field]:
+        field === "selectedSuitableFor"
+          ? normalizeSuitableForValues(toggleInArray(prev[field], value))
+          : toggleInArray(prev[field], value),
     }));
   };
 
@@ -135,61 +102,35 @@ export const useRecipeForm = ({
       return;
     }
 
-    if (!submittedForm.name.trim()) {
-      reportValidationError("Vyplň název receptu.", "name");
+    const fieldValidation = validateRecipeForm(submittedForm, { validateIngredients: false });
+    if (!fieldValidation.isValid) {
+      reportValidationError(fieldValidation.message, fieldValidation.fieldName);
       return;
     }
 
-    const servings = Number(submittedForm.servings);
-    const trimmedCalories = submittedForm.calories.trim();
-    const calories = trimmedCalories === "" ? null : Number(trimmedCalories);
-
-    if (!Number.isFinite(servings) || servings < 1) {
-      reportValidationError("Počet porcí musí být alespoň 1.", "servings");
-      return;
-    }
-
-    if (trimmedCalories !== "" && (!Number.isFinite(calories) || calories < 0)) {
-      reportValidationError("Kalorie musí být 0 nebo kladné číslo.", "calories");
-      return;
-    }
-
-    if (!submittedForm.method.trim()) {
-      reportValidationError("Vyplň postup přípravy.", "method");
-      return;
-    }
-
-    const flushedIngredients = ingredientInputsRef.current?.flushDraftIngredient(submittedForm.ingredients);
+    const flushedIngredients = ingredientInputsRef.current?.flushDraftIngredient(
+      submittedForm.ingredients,
+    );
     if (flushedIngredients === null) return;
 
     const nextIngredients = flushedIngredients ?? submittedForm.ingredients;
-    const normalizedIngredients = nextIngredients
-      .map((ingredient) => ({
-        ...ingredient,
-        item: getCanonicalIngredientName(ingredient.item),
-      }))
-      .filter((ingredient) => ingredient.item !== "");
+    const normalizedIngredients = normalizeRecipeFormIngredients(nextIngredients);
+    const fullValidation = validateRecipeForm(submittedForm, { normalizedIngredients });
 
-    if (normalizedIngredients.length === 0) {
-      reportValidationError("Přidej alespoň jednu surovinu.");
-      ingredientInputsRef.current?.focusItemField();
+    if (!fullValidation.isValid) {
+      reportValidationError(fullValidation.message, fullValidation.fieldName);
+      if (fullValidation.focusIngredient) {
+        ingredientInputsRef.current?.focusItemField();
+      }
       return;
     }
 
-    const draftRecipe = {
-      id: recipeToEdit?.id ?? createNumericId(),
-      createdAt: recipeToEdit?.createdAt ?? new Date().toISOString(),
-      title: submittedForm.name.trim(),
-      servings,
-      tags: submittedForm.selectedTags,
-      photo_urls: submittedForm.photos.map((photo) => photo.url),
-      ingredients: normalizedIngredients,
-      suitableFor: normalizeSuitableForValues(submittedForm.selectedSuitableFor),
-      calories,
-      workflow: submittedForm.method.trim(),
-      preTasks: normalizeRecipePreTasks(submittedForm.preTasksText),
-      allergens: submittedForm.selectedAllergens,
-    };
+    const draftRecipe = buildRecipeDraft(submittedForm, {
+      calories: fullValidation.calories,
+      normalizedIngredients: fullValidation.normalizedIngredients,
+      recipeToEdit,
+      servings: fullValidation.servings,
+    });
 
     try {
       const newRecipe = await prepareCustomRecipeForRuntime(draftRecipe);
