@@ -5,7 +5,8 @@ import { createStableId } from "./createId.js";
 import { getCanonicalIngredientName, normalizeIngredientKey } from "./ingredientNames.js";
 import { getSlotRecipeIds } from "./mealSlots.js";
 
-const isPlainObject = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
+const isPlainObject = (value) =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
 
 const normalizeText = (value) => (typeof value === "string" ? value.trim() : "");
 
@@ -26,7 +27,8 @@ const formatLabel = (value) => {
   return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
 };
 
-const getDayShoppingSelections = (day) => (isPlainObject(day?.shoppingSelections) ? day.shoppingSelections : {});
+const getDayShoppingSelections = (day) =>
+  isPlainObject(day?.shoppingSelections) ? day.shoppingSelections : {};
 
 const isIngredientSelectedForDay = (day, key) => getDayShoppingSelections(day)[key] !== false;
 

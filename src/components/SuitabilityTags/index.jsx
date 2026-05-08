@@ -1,5 +1,4 @@
-import "./style.css"
-
+import "./style.css";
 
 export const SuitabilityTags = ({ suitability }) => {
   if (!suitability || suitability.length === 0) return null;

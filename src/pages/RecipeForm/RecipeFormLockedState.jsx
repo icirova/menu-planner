@@ -2,9 +2,7 @@ import { Link } from "react-router-dom";
 
 export const RecipeFormLockedState = ({ heroImageSrc, recipeId }) => (
   <div className="main recipe-form-page">
-    <section
-      className="recipe-form-page__hero page-hero page-hero--split page-hero--image-layer"
-    >
+    <section className="recipe-form-page__hero page-hero page-hero--split page-hero--image-layer">
       <img className="page-hero__image" src={heroImageSrc} alt="" aria-hidden="true" />
       <div className="recipe-form-page__hero-content page-hero__content">
         <p className="page-hero__eyebrow">Editor receptů</p>

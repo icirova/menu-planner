@@ -7,7 +7,7 @@
 
 .recipe-detail__tag--allergen {
   background-color: #fce8e8; /* světlejší, jemná červená */
-  color: #8b0000;            /* tmavě červený text (dobrá čitelnost) */
+  color: #8b0000; /* tmavě červený text (dobrá čitelnost) */
   padding: 0.3rem 0.8rem;
   border-radius: 999px;
   font-size: 0.85rem;

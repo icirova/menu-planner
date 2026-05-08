@@ -1,12 +1,7 @@
 import { Button } from "../Button/index.jsx";
 import "./style.css";
 
-export const FilterToggleGroup = ({
-  options,
-  selectedValues = [],
-  onToggle,
-  className = "",
-}) => {
+export const FilterToggleGroup = ({ options, selectedValues = [], onToggle, className = "" }) => {
   const classes = ["buttons", className].filter(Boolean).join(" ");
 
   return (

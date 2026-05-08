@@ -290,14 +290,18 @@
   border: 1px solid var(--button-border);
   background-color: var(--button-bg);
   color: var(--button-text);
-  font-family: 'Sorts Mill Goudy', serif;
+  font-family: "Sorts Mill Goudy", serif;
   font-size: 0.98rem;
   line-height: 1.2;
   text-align: center;
   overflow-wrap: anywhere;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.2s ease;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.2s ease;
 }
 
 .form__checkbox-label:hover,

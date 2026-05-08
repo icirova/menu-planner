@@ -129,7 +129,12 @@ export const RecipeForm = () => {
         </p>
       )}
 
-      <form id="form" className="form recipe-form-page__form" onSubmit={handleFormSubmit} noValidate>
+      <form
+        id="form"
+        className="form recipe-form-page__form"
+        onSubmit={handleFormSubmit}
+        noValidate
+      >
         <RecipeBasicFields form={form} setField={setField} />
 
         <RecipeClassificationFields
@@ -170,7 +175,9 @@ export const RecipeForm = () => {
         />
 
         <div className="recipe-form-page__footer-actions">
-          <Link to="/recipes" className="button button--ghost">Zrušit</Link>
+          <Link to="/recipes" className="button button--ghost">
+            Zrušit
+          </Link>
           <button type="submit" className="button button--new-recipe">
             {isEditMode ? "Uložit změny" : "Vytvořit recept"}
           </button>

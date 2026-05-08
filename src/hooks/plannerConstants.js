@@ -1,8 +1,8 @@
 export const TAG_TO_SLOT_KEY = {
-  "snídaně": "breakfast",
-  "svačiny": "snack1",
-  "obědy": "lunch",
-  "večeře": "dinner",
+  snídaně: "breakfast",
+  svačiny: "snack1",
+  obědy: "lunch",
+  večeře: "dinner",
 };
 
 export const MEAL_LABELS = {

@@ -1,20 +1,14 @@
 const isExternalImageUrl = (value) =>
   typeof value === "string" &&
-  (
-    value.startsWith("/") ||
-    value.startsWith("http://") ||
-    value.startsWith("https://")
-  );
+  (value.startsWith("/") || value.startsWith("http://") || value.startsWith("https://"));
 
 const isAppAssetPath = (value) =>
   typeof value === "string" &&
-  (
-    value.startsWith("/image/") ||
+  (value.startsWith("/image/") ||
     value.startsWith("/imgRecipe/") ||
     value.startsWith("/form.webp") ||
     value.startsWith("/notes.webp") ||
-    value.startsWith("/shopping.webp")
-  );
+    value.startsWith("/shopping.webp"));
 
 const normalizeRecipeImageUrl = (photoUrl) => {
   if (typeof photoUrl !== "string" || !photoUrl.trim()) return null;

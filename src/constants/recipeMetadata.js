@@ -1,5 +1,7 @@
 const normalizeMetadataKey = (value) =>
-  String(value ?? "").trim().toLowerCase();
+  String(value ?? "")
+    .trim()
+    .toLowerCase();
 
 const createMetadataIndex = (definitions) =>
   definitions.reduce((index, definition) => {
@@ -19,7 +21,12 @@ const TAG_DEFINITIONS = [
   { label: "Večeře", value: "večeře", icon: "🍽️", aliases: ["vecere", "dinner"] },
   { label: "Moučníky", value: "moučníky", icon: "🍰", aliases: ["moučník", "moucniky", "dessert"] },
   { label: "Polévky", value: "polévky", icon: "🥣", aliases: ["polévka", "polevky", "soup"] },
-  { label: "Pomazánky", value: "pomazánky", icon: "🫙", aliases: ["pomazanka", "pomazanky", "spread"] },
+  {
+    label: "Pomazánky",
+    value: "pomazánky",
+    icon: "🫙",
+    aliases: ["pomazanka", "pomazanky", "spread"],
+  },
   { label: "Přílohy", value: "přílohy", icon: "🥔", aliases: ["priloha", "prilohy", "side"] },
 ];
 
@@ -40,7 +47,7 @@ export const SUITABILITY_OPTIONS = [
 ];
 
 const SUITABILITY_IMPLICATIONS = {
-  "veganské": ["bez mléka"],
+  veganské: ["bez mléka"],
 };
 
 export const normalizeSuitableForValues = (suitability = []) => {

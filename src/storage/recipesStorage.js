@@ -31,9 +31,7 @@ const mergeRecipeLists = (...recipeLists) => {
 
 export const loadCustomRecipes = async () => {
   const { value: storedRecipes, warning } = readSessionJson(CUSTOM_RECIPES_STORAGE_KEY, []);
-  const normalizedDefaultRecipes = defaultRecipes.map((recipe) =>
-    normalizeSeedRecipe(recipe),
-  );
+  const normalizedDefaultRecipes = defaultRecipes.map((recipe) => normalizeSeedRecipe(recipe));
   const normalizedStoredRecipes = Array.isArray(storedRecipes)
     ? await Promise.all(storedRecipes.map((recipe) => prepareCustomRecipeForRuntime(recipe)))
     : [];
@@ -54,7 +52,11 @@ export const saveCustomRecipes = async (recipes) => {
       .map((recipe) => serializeCustomRecipe(recipe)),
   );
 
-  result.warning = writeSessionJson(CUSTOM_RECIPES_STORAGE_KEY, persistedRecipes, "recepty").warning;
+  result.warning = writeSessionJson(
+    CUSTOM_RECIPES_STORAGE_KEY,
+    persistedRecipes,
+    "recepty",
+  ).warning;
 
   return result;
 };

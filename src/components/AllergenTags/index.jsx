@@ -1,4 +1,4 @@
-import "./style.css"
+import "./style.css";
 
 export const AllergenTags = ({ allergens }) => {
   if (!allergens || allergens.length === 0) return null;

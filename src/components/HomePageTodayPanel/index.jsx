@@ -9,11 +9,7 @@ export const HomePageTodayPanel = ({
   weeklyMenu,
   menuDispatch,
 }) => (
-  <section
-    id="today-overview"
-    ref={panelRef}
-    className="home-page__panel home-page__panel--today"
-  >
+  <section id="today-overview" ref={panelRef} className="home-page__panel home-page__panel--today">
     <div className="home-page__panel-header">
       <h2>{todayName}</h2>
     </div>

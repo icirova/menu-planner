@@ -7,13 +7,17 @@
   border-radius: var(--radius-control);
   background-color: var(--button-bg);
   color: var(--button-text);
-  font-family: 'Sorts Mill Goudy', serif;
+  font-family: "Sorts Mill Goudy", serif;
   font-size: 0.98rem;
   line-height: 1.2;
   border: 1px solid var(--button-border);
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.2s ease;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.2s ease;
 }
 
 .button:hover,
@@ -23,7 +27,6 @@
   color: var(--button-active-text);
   box-shadow: var(--button-shadow-hover);
 }
-
 
 /* RecipeForm/tlačítko pro přidání receptu */
 .button--new-recipe {
@@ -81,7 +84,9 @@
   font-size: 1rem;
   line-height: 1;
   text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .button--remove-control:hover {
@@ -96,8 +101,7 @@
 }
 
 .button[disabled] {
-  opacity: .55;
+  opacity: 0.55;
   cursor: not-allowed;
   pointer-events: none;
 }
-

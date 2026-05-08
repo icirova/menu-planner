@@ -7,6 +7,9 @@
     "run": "npm run dev",
     "dev": "vite",
     "test": "node --test test/*.test.js",
+    "lint": "eslint .",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -19,6 +22,10 @@
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "prettier": "^3.8.3",
     "vite": "^7.2.7"
   }
 }

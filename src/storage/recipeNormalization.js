@@ -15,9 +15,7 @@ export const normalizeRecipe = (recipe, source) => ({
   id: normalizeRecipeId(recipe.id),
   source: recipe.source ?? source,
   createdAt:
-    typeof recipe.createdAt === "string" && recipe.createdAt.trim()
-      ? recipe.createdAt
-      : null,
+    typeof recipe.createdAt === "string" && recipe.createdAt.trim() ? recipe.createdAt : null,
   tags: normalizeRecipeTags(recipe.tags ?? []),
   suitableFor: normalizeSuitableForValues(recipe.suitableFor ?? []),
   preTasks: normalizeRecipePreTasks(recipe.preTasks),

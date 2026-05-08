@@ -7,7 +7,9 @@ export const RecipePreTasksEditor = ({
   setPreTaskDraft,
 }) => (
   <div className="recipe-form-page__subsection form__item">
-    <label htmlFor="preTasks" className="form__label">Příprava</label>
+    <label htmlFor="preTasks" className="form__label">
+      Příprava
+    </label>
     <div className="recipe-form-page__task-editor">
       <div className="recipe-form-page__task-form">
         <input

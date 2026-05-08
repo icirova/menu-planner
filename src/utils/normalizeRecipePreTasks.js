@@ -1,8 +1,6 @@
 export const normalizeRecipePreTasks = (value) => {
   if (Array.isArray(value)) {
-    return value
-      .map((item) => (typeof item === "string" ? item.trim() : ""))
-      .filter(Boolean);
+    return value.map((item) => (typeof item === "string" ? item.trim() : "")).filter(Boolean);
   }
 
   if (typeof value === "string") {

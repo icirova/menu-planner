@@ -17,12 +17,7 @@ export const formatIngredient = (ingredient, baseServings, newServings) => {
   }
 
   const scaledAmount = amount * factor;
-  const newAmount = Number.isInteger(scaledAmount)
-    ? String(scaledAmount)
-    : scaledAmount.toFixed(1);
+  const newAmount = Number.isInteger(scaledAmount) ? String(scaledAmount) : scaledAmount.toFixed(1);
 
   return `${newAmount} ${ingredient.unit} ${itemName}`.trim();
 };
-
-
-  

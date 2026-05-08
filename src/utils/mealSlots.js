@@ -30,6 +30,4 @@ export const removeRecipeIdFromSlot = (value, recipeId) => {
 };
 
 export const getWeekRecipeIds = (week = []) =>
-  week.flatMap((day) =>
-    MEAL_KEYS.flatMap(({ key }) => getSlotRecipeIds(day?.[key])),
-  );
+  week.flatMap((day) => MEAL_KEYS.flatMap(({ key }) => getSlotRecipeIds(day?.[key])));

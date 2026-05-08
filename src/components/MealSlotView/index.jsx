@@ -40,22 +40,22 @@ export const MealSlotView = ({
         readOnly
           ? `${label}: ${value || "prázdné"}.`
           : carrying
-          ? `${label}: ${value || "prázdné"}. Cíl přesunu, stiskni mezerník pro položení.`
-          : `${label}: ${value || "prázdné"}.`
+            ? `${label}: ${value || "prázdné"}. Cíl přesunu, stiskni mezerník pro položení.`
+            : `${label}: ${value || "prázdné"}.`
       }
       draggable={!readOnly && hasRecipes}
-      onDragStart={
-        readOnly
-          ? undefined
-          : (e) => onDragStart(e, mealKey, { moveAll: true })
-      }
+      onDragStart={readOnly ? undefined : (e) => onDragStart(e, mealKey, { moveAll: true })}
       onDragOver={readOnly ? undefined : (e) => e.preventDefault()}
       onDragEnter={readOnly ? undefined : (e) => e.currentTarget.classList.add("is-drop-target")}
       onDragLeave={readOnly ? undefined : (e) => e.currentTarget.classList.remove("is-drop-target")}
-      onDrop={readOnly ? undefined : (e) => {
-        e.currentTarget.classList.remove("is-drop-target");
-        onDropTo(e, mealKey);
-      }}
+      onDrop={
+        readOnly
+          ? undefined
+          : (e) => {
+              e.currentTarget.classList.remove("is-drop-target");
+              onDropTo(e, mealKey);
+            }
+      }
       onFocus={(e) => {
         if (readOnly) return;
         if (kbdDrag) e.currentTarget.classList.add("is-drop-target");
@@ -81,7 +81,9 @@ export const MealSlotView = ({
 
             setKbdDrag({ fromDay: dayIndex, fromKey: mealKey, value: recipe.id });
             announce &&
-              announce(`Zvednuto: ${value} z ${day} – ${label}. Přejdi na cílový slot a stiskni mezerník.`);
+              announce(
+                `Zvednuto: ${value} z ${day} – ${label}. Přejdi na cílový slot a stiskni mezerník.`,
+              );
             return;
           }
 
@@ -105,7 +107,7 @@ export const MealSlotView = ({
             ? "Přetáhni recept na jiný slot nebo den"
             : hasRecipes
               ? "Přetáhni jednotlivý recept na jiný slot nebo den"
-            : "Přetáhni recept sem"
+              : "Přetáhni recept sem"
       }
     >
       {hasRecipes ? (
@@ -126,7 +128,9 @@ export const MealSlotView = ({
                           onDragStart(e, mealKey, { recipeId: item.id });
                         }
                   }
-                  title={readOnly ? undefined : `Přetáhni recept ${item.title} na jiný slot nebo den`}
+                  title={
+                    readOnly ? undefined : `Přetáhni recept ${item.title} na jiný slot nebo den`
+                  }
                 >
                   {showDetailLink && (
                     <Link
@@ -136,7 +140,9 @@ export const MealSlotView = ({
                       title="Zobrazit detail receptu"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <span className="card__slot-detail-icon" aria-hidden="true">i</span>
+                      <span className="card__slot-detail-icon" aria-hidden="true">
+                        i
+                      </span>
                     </Link>
                   )}
                   <strong className="card__slot-title">{item.title}</strong>
@@ -164,9 +170,7 @@ export const MealSlotView = ({
           </div>
         </>
       ) : (
-        <span className="card__slot-placeholder">
-          {isOverview ? "" : "Přetáhni recept sem"}
-        </span>
+        <span className="card__slot-placeholder">{isOverview ? "" : "Přetáhni recept sem"}</span>
       )}
     </div>
   );

@@ -2,13 +2,7 @@ import { Link } from "react-router-dom";
 import { resolveImageSrc } from "../../utils/resolveImageSrc.js";
 import "./style.css";
 
-export const RecipeCard = ({
-  id,
-  title,
-  photo_urls = [],
-  isSelected = false,
-  onAddToPlan,
-}) => {
+export const RecipeCard = ({ id, title, photo_urls = [], isSelected = false, onAddToPlan }) => {
   const cover = resolveImageSrc(photo_urls[0] || "/image/placeholder.png");
   const titleId = `recipe-title-${id}`;
 
@@ -20,7 +14,9 @@ export const RecipeCard = ({
         aria-label={`Zobrazit detail receptu ${title}`}
         title="Zobrazit detail receptu"
       >
-        <span className="recipe__detail-icon" aria-hidden="true">i</span>
+        <span className="recipe__detail-icon" aria-hidden="true">
+          i
+        </span>
       </Link>
 
       <button
@@ -35,7 +31,9 @@ export const RecipeCard = ({
           <img src={cover} alt="" className="img" />
         </div>
 
-        <h2 id={titleId} className="recipe__title">{title}</h2>
+        <h2 id={titleId} className="recipe__title">
+          {title}
+        </h2>
       </button>
     </li>
   );

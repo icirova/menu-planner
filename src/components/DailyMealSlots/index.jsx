@@ -56,7 +56,9 @@ export const DailyMealSlots = ({
           onDragStart={onDragStart}
           onDropTo={onDropTo}
           onClear={() => onClearSlot(key, slotLabel || label)}
-          onClearRecipe={(recipeId, recipeTitle) => onClearRecipeFromSlot(key, recipeId, recipeTitle)}
+          onClearRecipe={(recipeId, recipeTitle) =>
+            onClearRecipeFromSlot(key, recipeId, recipeTitle)
+          }
           variant={variant}
           isOptional={optional}
           readOnly={readOnly}

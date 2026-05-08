@@ -7,7 +7,10 @@ export const RecipeBasicFields = ({ form, setField }) => (
     <div className="recipe-form-page__field-grid recipe-form-page__field-grid--top">
       <div className="recipe-form-page__subsection form__item">
         <label htmlFor="name" className="form__label">
-          Název <span className="form__required-mark" aria-hidden="true">*</span>
+          Název{" "}
+          <span className="form__required-mark" aria-hidden="true">
+            *
+          </span>
         </label>
         <input
           type="text"
@@ -22,7 +25,10 @@ export const RecipeBasicFields = ({ form, setField }) => (
 
       <div className="recipe-form-page__subsection form__item">
         <label htmlFor="servings" className="form__label">
-          Počet porcí <span className="form__required-mark" aria-hidden="true">*</span>
+          Počet porcí{" "}
+          <span className="form__required-mark" aria-hidden="true">
+            *
+          </span>
         </label>
         <input
           type="number"
@@ -38,7 +44,9 @@ export const RecipeBasicFields = ({ form, setField }) => (
       </div>
 
       <div className="recipe-form-page__subsection form__item">
-        <label htmlFor="calories" className="form__label">Kalorie na porci</label>
+        <label htmlFor="calories" className="form__label">
+          Kalorie na porci
+        </label>
         <input
           type="number"
           id="calories"

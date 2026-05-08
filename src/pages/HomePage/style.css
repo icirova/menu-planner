@@ -545,7 +545,6 @@
   .home-page__summary-grid {
     grid-template-columns: 1fr;
   }
-
 }
 
 @media (min-width: 680px) {

@@ -6,10 +6,10 @@
 .card__image {
   display: block;
   width: 100%;
-  height: 160px;                /* můžeš změnit na 180px */
+  height: 160px; /* můžeš změnit na 180px */
   object-fit: cover;
 }
-  
+
 /* Nadpis karty */
 .card__title {
   text-align: center;

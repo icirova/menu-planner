@@ -1,11 +1,6 @@
 import { resolveImageSrc } from "../../utils/resolveImageSrc.js";
 
-export const RecipePhotoInputs = ({
-  fileInputRef,
-  handlePhotosChange,
-  photos,
-  removePhotoAt,
-}) => (
+export const RecipePhotoInputs = ({ fileInputRef, handlePhotosChange, photos, removePhotoAt }) => (
   <section className="recipe-form-page__panel">
     <div className="recipe-form-page__section-header">
       <h2>Fotogalerie</h2>
@@ -44,7 +39,8 @@ export const RecipePhotoInputs = ({
         <div className="form__filenames" aria-live="polite">
           {photos.map((p, i) => (
             <div key={`${p.name}-${i}`} className="form__filename">
-              {i === 0 ? "Obálka: " : ""}{p.name}
+              {i === 0 ? "Obálka: " : ""}
+              {p.name}
             </div>
           ))}
         </div>

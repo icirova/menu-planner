@@ -36,12 +36,16 @@ export const HomePageWeekSummaryCard = ({
         </article>
 
         <article className="home-page__summary-box">
-          <span className="home-page__summary-value">{sweetMeals}/{filledSlots.length}</span>
+          <span className="home-page__summary-value">
+            {sweetMeals}/{filledSlots.length}
+          </span>
           <span className="home-page__summary-label">počet sladkých jídel</span>
         </article>
 
         <article className="home-page__summary-box">
-          <span className="home-page__summary-value">{meatLunches}:{veganLunches}</span>
+          <span className="home-page__summary-value">
+            {meatLunches}:{veganLunches}
+          </span>
           <span className="home-page__summary-label">maso vs. vegan obědy</span>
         </article>
       </div>

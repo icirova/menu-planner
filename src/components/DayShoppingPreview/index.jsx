@@ -1,9 +1,4 @@
-export const DayShoppingPreview = ({
-  day,
-  dayIndex,
-  items = [],
-  onToggleItem,
-}) => (
+export const DayShoppingPreview = ({ day, dayIndex, items = [], onToggleItem }) => (
   <section className="card__shopping" aria-label={`Nákup pro ${day}`}>
     <div className="card__shopping-header">
       <h3 className="card__shopping-title">Nakoupit</h3>

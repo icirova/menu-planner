@@ -15,7 +15,8 @@ import { useHomePageSummary } from "../../hooks/useHomePageSummary.js";
 export const HomePage = () => {
   const todayOverviewRef = useRef(null);
   const { recipeList, weeklyMenu, menuDispatch } = useOutletContext();
-  const { dateLabel, heroImageSrc, timeLabel, todayImageSrc, todayIndex, todayName } = useHomePageHero();
+  const { dateLabel, heroImageSrc, timeLabel, todayImageSrc, todayIndex, todayName } =
+    useHomePageHero();
   const {
     completion,
     filledSlots,

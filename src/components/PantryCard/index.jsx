@@ -5,9 +5,7 @@ export const PantryCard = () => (
   <aside className="card card--overview pantry-card" aria-label="Spíž">
     <div className="pantry-card__header">
       <h3 className="card__title pantry-card__title">Spíž</h3>
-      <p className="pantry-card__text">
-        Tyto suroviny nákupní seznam automaticky vynechává.
-      </p>
+      <p className="pantry-card__text">Tyto suroviny nákupní seznam automaticky vynechává.</p>
     </div>
 
     <ul className="pantry-card__list">

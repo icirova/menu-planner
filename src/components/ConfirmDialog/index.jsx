@@ -27,16 +27,9 @@ export const ConfirmDialog = ({
       <h2 id={id} className="recipe-confirm__title">
         {title}
       </h2>
-      <p className="recipe-confirm__text">
-        {text}
-      </p>
+      <p className="recipe-confirm__text">{text}</p>
       <div className="recipe-confirm__actions">
-        <button
-          type="button"
-          className="button button--ghost"
-          onClick={onCancel}
-          disabled={isBusy}
-        >
+        <button type="button" className="button button--ghost" onClick={onCancel} disabled={isBusy}>
           {cancelLabel}
         </button>
         <button

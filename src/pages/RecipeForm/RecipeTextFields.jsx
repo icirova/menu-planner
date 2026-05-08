@@ -18,7 +18,10 @@ export const RecipeTextFields = ({
     <div className="recipe-form-page__field-grid recipe-form-page__field-grid--text">
       <div className="recipe-form-page__subsection form__item">
         <label htmlFor="method" className="form__label">
-          Postup <span className="form__required-mark" aria-hidden="true">*</span>
+          Postup{" "}
+          <span className="form__required-mark" aria-hidden="true">
+            *
+          </span>
         </label>
         <textarea
           id="method"

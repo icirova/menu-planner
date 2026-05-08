@@ -15,7 +15,9 @@ export const RecipeFormEmptyState = () => (
 
     <section className="recipe-form-page__panel recipe-form-page__panel--empty">
       <p>Recept nebyl nalezen.</p>
-      <Link to="/recipes" className="button button--ghost">Zpět na recepty</Link>
+      <Link to="/recipes" className="button button--ghost">
+        Zpět na recepty
+      </Link>
     </section>
   </div>
 );

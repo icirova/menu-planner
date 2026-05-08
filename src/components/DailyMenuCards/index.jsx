@@ -13,7 +13,7 @@ export const DailyMenuCards = ({
   dailyCardProps = {},
   trailingContent = null,
 }) => {
-  const [kbdDrag, setKbdDrag] = useState(null);          // {fromDay, fromKey, value} | null
+  const [kbdDrag, setKbdDrag] = useState(null); // {fromDay, fromKey, value} | null
   const [liveMsg, setLiveMsg] = useState("");
   const announce = (msg) => setLiveMsg(msg);
 
@@ -43,7 +43,9 @@ export const DailyMenuCards = ({
       </div>
 
       {/* Live region pro čtečky */}
-      <div className="sr-only" aria-live="polite">{liveMsg}</div>
+      <div className="sr-only" aria-live="polite">
+        {liveMsg}
+      </div>
     </>
   );
 };

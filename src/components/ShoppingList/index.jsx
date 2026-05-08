@@ -11,13 +11,7 @@ const createEmptyCustomItem = () => ({
   label: "",
 });
 
-export const ShoppingList = ({
-  value,
-  week = [],
-  recipes = [],
-  onChange,
-  showTitle = true,
-}) => {
+export const ShoppingList = ({ value, week = [], recipes = [], onChange, showTitle = true }) => {
   const shopping = useMemo(
     () => getShoppingStateForWeek(value, week, recipes),
     [recipes, value, week],
@@ -86,9 +80,7 @@ export const ShoppingList = ({
   };
 
   return (
-    <div
-      className={`card shopping-card ${showTitle ? "" : "shopping-card--embedded"}`}
-    >
+    <div className={`card shopping-card ${showTitle ? "" : "shopping-card--embedded"}`}>
       {showTitle && <h1 className="card__title">Nákupní seznam</h1>}
 
       <div className="card__content">
@@ -105,7 +97,10 @@ export const ShoppingList = ({
                     className="shopping-card__toggle"
                     onClick={() => toggleGeneratedItem(item.id)}
                   >
-                    <span className={`shopping-card__check ${item.done ? "is-complete" : ""}`} aria-hidden="true">
+                    <span
+                      className={`shopping-card__check ${item.done ? "is-complete" : ""}`}
+                      aria-hidden="true"
+                    >
                       {item.done ? "✓" : ""}
                     </span>
                     <span className="shopping-card__task-main">
@@ -116,13 +111,19 @@ export const ShoppingList = ({
               ))}
 
               {customItems.map((item) => (
-                <li key={item.id} className={`shopping-card__item shopping-card__item--custom ${item.done ? "is-complete" : ""}`}>
+                <li
+                  key={item.id}
+                  className={`shopping-card__item shopping-card__item--custom ${item.done ? "is-complete" : ""}`}
+                >
                   <button
                     type="button"
                     className="shopping-card__toggle"
                     onClick={() => toggleCustomItem(item.id)}
                   >
-                    <span className={`shopping-card__check ${item.done ? "is-complete" : ""}`} aria-hidden="true">
+                    <span
+                      className={`shopping-card__check ${item.done ? "is-complete" : ""}`}
+                      aria-hidden="true"
+                    >
                       {item.done ? "✓" : ""}
                     </span>
                     <span className="shopping-card__task-main">
@@ -153,9 +154,13 @@ export const ShoppingList = ({
               className="shopping-card__note-input"
               placeholder="Přidat vlastní položku"
               value={draftItem.label}
-              onChange={(event) => setDraftItem((current) => ({ ...current, label: event.target.value }))}
+              onChange={(event) =>
+                setDraftItem((current) => ({ ...current, label: event.target.value }))
+              }
             />
-            <button type="submit" className="button button--add">Přidat</button>
+            <button type="submit" className="button button--add">
+              Přidat
+            </button>
           </form>
         </section>
       </div>

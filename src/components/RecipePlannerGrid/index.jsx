@@ -33,14 +33,21 @@ export const RecipePlannerGrid = ({
           <div key={day} className="recipes__planner-day">
             {day}
             <span className="recipes__planner-day-count">
-              {PLANNED_MEAL_KEYS.filter(({ key }) => slotHasRecipes(weeklyMenu.week[dayIndex]?.[key])).length}/{PLANNED_MEAL_KEYS.length}
+              {
+                PLANNED_MEAL_KEYS.filter(({ key }) =>
+                  slotHasRecipes(weeklyMenu.week[dayIndex]?.[key]),
+                ).length
+              }
+              /{PLANNED_MEAL_KEYS.length}
             </span>
           </div>
         ))}
 
         {MEAL_KEYS.map(({ key, optional }) => (
           <Fragment key={key}>
-            <div className={`recipes__planner-slot-label ${optional ? "recipes__planner-slot-label--optional" : ""}`}>
+            <div
+              className={`recipes__planner-slot-label ${optional ? "recipes__planner-slot-label--optional" : ""}`}
+            >
               {MEAL_LABELS[key] ?? key}
             </div>
 
@@ -48,8 +55,7 @@ export const RecipePlannerGrid = ({
               const slotRecipes = getSlotRecipeIds(weeklyMenu.week[dayIndex]?.[key])
                 .map((recipeId) => recipesById.get(recipeId))
                 .filter(Boolean);
-              const isActiveTarget =
-                dayIndex === targetDay && key === targetSlot;
+              const isActiveTarget = dayIndex === targetDay && key === targetSlot;
               const isDuplicateSource =
                 dayIndex === duplicateSource?.dayIndex && key === duplicateSource?.slotKey;
               const isPointerTarget =
@@ -148,9 +154,7 @@ export const RecipePlannerGrid = ({
                           }}
                           title={`Přetáhni recept ${recipe.title} do jiného slotu`}
                         >
-                          <strong className="recipes__planner-cell-title">
-                            {recipe.title}
-                          </strong>
+                          <strong className="recipes__planner-cell-title">{recipe.title}</strong>
                           <button
                             type="button"
                             className="button--remove-control recipes__planner-pill-remove"

@@ -43,13 +43,16 @@ describe("shopping list helpers", () => {
       ],
     );
 
-    assert.deepEqual(normalizeShoppingState({
-      overrides: { mrkev: true, cibule: { done: false }, "": true, rýže: "bad" },
-      customItems: [{ id: "x", label: "Káva", done: true }, { label: " " }],
-    }), {
-      overrides: { mrkev: { done: true }, cibule: { done: false } },
-      customItems: [{ id: "x", label: "Káva", done: true }],
-    });
+    assert.deepEqual(
+      normalizeShoppingState({
+        overrides: { mrkev: true, cibule: { done: false }, "": true, rýže: "bad" },
+        customItems: [{ id: "x", label: "Káva", done: true }, { label: " " }],
+      }),
+      {
+        overrides: { mrkev: { done: true }, cibule: { done: false } },
+        customItems: [{ id: "x", label: "Káva", done: true }],
+      },
+    );
   });
 
   it("builds day shopping items without pantry ingredients and respects day selections", () => {
@@ -91,7 +94,9 @@ describe("shopping list helpers", () => {
         { key: "mrkev", done: false },
       ],
     );
-    assert.deepEqual(items.customItems, [{ id: "custom-1", label: "Čaj", done: false, kind: "custom" }]);
+    assert.deepEqual(items.customItems, [
+      { id: "custom-1", label: "Čaj", done: false, kind: "custom" },
+    ]);
   });
 
   it("summarizes generated and custom shopping items", () => {

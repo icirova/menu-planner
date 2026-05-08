@@ -7,9 +7,7 @@ export const RecipeFormHero = ({
   onDeleteClick,
   recipeTitle,
 }) => (
-  <section
-    className="recipe-form-page__hero page-hero page-hero--split page-hero--image-layer"
-  >
+  <section className="recipe-form-page__hero page-hero page-hero--split page-hero--image-layer">
     <img className="page-hero__image" src={heroImageSrc} alt="" aria-hidden="true" />
     <div className="recipe-form-page__hero-content page-hero__content">
       <Link to="/recipes" className="recipe-form-page__back-link">
@@ -26,11 +24,7 @@ export const RecipeFormHero = ({
       </p>
       {canDeleteRecipe && (
         <div className="page-hero__actions recipe-form-page__hero-actions">
-          <button
-            type="button"
-            className="button button--danger"
-            onClick={onDeleteClick}
-          >
+          <button type="button" className="button button--danger" onClick={onDeleteClick}>
             Smazat recept
           </button>
         </div>
