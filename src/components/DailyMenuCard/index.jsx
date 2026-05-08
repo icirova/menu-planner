@@ -30,17 +30,21 @@ export const DailyMenuCard = ({
   showShoppingSection = !readOnly && variant !== "overview",
   showDetailLink = true,
 }) => {
-  const model = { ...DEFAULT_DAY, ...(data || {}) };
+  const model = useMemo(() => ({ ...DEFAULT_DAY, ...(data || {}) }), [data]);
   const recipesById = useMemo(
     () => new Map(recipes.map((recipe) => [recipe.id, recipe])),
     [recipes],
   );
-  const visibleMealKeys = hideEmptySlots
-    ? MEAL_KEYS.filter(({ key }) => {
-        const recipeIds = getSlotRecipeIds(model[key]);
-        return recipeIds.some((recipeId) => recipesById.has(recipeId));
-      })
-    : MEAL_KEYS;
+  const visibleMealKeys = useMemo(
+    () =>
+      hideEmptySlots
+        ? MEAL_KEYS.filter(({ key }) => {
+            const recipeIds = getSlotRecipeIds(model[key]);
+            return recipeIds.some((recipeId) => recipesById.has(recipeId));
+          })
+        : MEAL_KEYS,
+    [hideEmptySlots, model, recipesById],
+  );
   const dayShoppingItems = useMemo(() => getDayShoppingItems(model, recipes), [model, recipes]);
 
   const handleHtmlDragStart = (e, mealKey, options = {}) => {
@@ -58,7 +62,9 @@ export const DailyMenuCard = ({
   const handleHtmlDropTo = (e, toKey) => {
     e.preventDefault();
     let payload = null;
-    try { payload = JSON.parse(e.dataTransfer.getData("text/plain")); } catch {}
+    try {
+      payload = JSON.parse(e.dataTransfer.getData("text/plain"));
+    } catch {}
     if (!payload) return;
     dispatch({
       type: "MOVE_MEAL",
@@ -73,9 +79,7 @@ export const DailyMenuCard = ({
 
   const clearDay = () => {
     if (!window.confirm(`Opravdu chceš vymazat všechna jídla pro ${day}?`)) return;
-    MEAL_KEYS.forEach(({ key }) =>
-      dispatch({ type: "CLEAR_MEAL", dayIndex, mealKey: key })
-    );
+    MEAL_KEYS.forEach(({ key }) => dispatch({ type: "CLEAR_MEAL", dayIndex, mealKey: key }));
   };
 
   const clearSlot = (slotKey, label) => {
@@ -98,7 +102,12 @@ export const DailyMenuCard = ({
       role="region"
       aria-label={`Denní plán: ${day}`}
     >
-      <CardHeader imageSrc={imageSrc} day={day} showTitle={showHeaderTitle} titleAboveImage={titleAboveImage} />
+      <CardHeader
+        imageSrc={imageSrc}
+        day={day}
+        showTitle={showHeaderTitle}
+        titleAboveImage={titleAboveImage}
+      />
       {showDayReset && <CardToolbar clearDay={clearDay} />}
 
       <div className="card__content" id={`day-${dayIndex}`}>
