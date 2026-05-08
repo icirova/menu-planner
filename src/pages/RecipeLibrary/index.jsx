@@ -2,12 +2,12 @@ import "./style.css";
 import { Link, useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FilterToggleGroup } from "../../components/FilterToggleGroup/index.jsx";
+import { SUITABILITY_OPTIONS, TAG_OPTIONS } from "../../constants/recipeMetadata.js";
 import {
-  getRecipeSuitableForFilterValues,
-  SUITABILITY_OPTIONS,
-  TAG_OPTIONS,
-} from "../../constants/recipeMetadata.js";
-import { normalizeRecipeTags } from "../../utils/normalizeRecipeTag.js";
+  filterRecipes,
+  getRecipeCatalogStats,
+  sortRecipes,
+} from "../../selectors/recipeSelectors.js";
 import { isSeedRecipe } from "../../utils/recipeSource.js";
 import { resolveImageSrc } from "../../utils/resolveImageSrc.js";
 
@@ -17,12 +17,6 @@ const SORT_OPTIONS = [
   { value: "title-desc", label: "Abecedně Z-A" },
 ];
 const RECIPES_BATCH_SIZE = 24;
-
-const getRecipeSortTimestamp = (recipe) => {
-  const parsed = recipe.createdAt ? Date.parse(recipe.createdAt) : NaN;
-  if (Number.isFinite(parsed)) return parsed;
-  return typeof recipe.id === "number" ? recipe.id : 0;
-};
 
 const RecipeLibraryCard = ({ recipe }) => {
   const cover = resolveImageSrc(recipe.photo_urls?.[0] || "/image/placeholder.png");
@@ -40,14 +34,15 @@ const RecipeLibraryCard = ({ recipe }) => {
 
           {(tags.length > 0 || suitableFor.length > 0) && (
             <div className="recipe-library__meta-group">
-              {tags.length > 0 && (
-                <p className="recipe-library__meta">{tags.join(" • ")}</p>
-              )}
+              {tags.length > 0 && <p className="recipe-library__meta">{tags.join(" • ")}</p>}
               {suitableFor.length > 0 && (
                 <p className="recipe-library__meta">{suitableFor.join(" • ")}</p>
               )}
               {tags.length === 0 || suitableFor.length === 0 ? (
-                <p className="recipe-library__meta recipe-library__meta--placeholder" aria-hidden="true">
+                <p
+                  className="recipe-library__meta recipe-library__meta--placeholder"
+                  aria-hidden="true"
+                >
                   &nbsp;
                 </p>
               ) : null}
@@ -83,55 +78,17 @@ export const RecipeLibrary = () => {
   const activeFiltersCount =
     (query.trim() !== "" ? 1 : 0) + selectedTags.length + selectedSuitabilities.length;
 
-  const filteredRecipes = useMemo(() => {
-    const normalizedQuery = query.trim().toLocaleLowerCase("cs-CZ");
-
-    return recipeList
-      .filter((recipe) => {
-        const normalizedRecipeTags = normalizeRecipeTags(recipe.tags);
-        const suitabilityFilterValues = getRecipeSuitableForFilterValues(recipe.suitableFor);
-        const matchesQuery =
-          normalizedQuery === "" ||
-          recipe.title.toLocaleLowerCase("cs-CZ").includes(normalizedQuery);
-
-        return (
-          matchesQuery &&
-          selectedTags.every((tag) => normalizedRecipeTags.includes(tag)) &&
-          selectedSuitabilities.every((suit) => suitabilityFilterValues.includes(suit))
-        );
-      })
-      .sort((a, b) => {
-        if (priorityRecipeId != null) {
-          if (String(a.id) === String(priorityRecipeId)) return -1;
-          if (String(b.id) === String(priorityRecipeId)) return 1;
-        }
-
-        if (sortOrder === "title-asc") {
-          return a.title.localeCompare(b.title, "cs");
-        }
-
-        if (sortOrder === "title-desc") {
-          return b.title.localeCompare(a.title, "cs");
-        }
-
-        const byDate = getRecipeSortTimestamp(b) - getRecipeSortTimestamp(a);
-        if (byDate !== 0) return byDate;
-        return a.title.localeCompare(b.title, "cs");
-      });
-  }, [priorityRecipeId, query, recipeList, selectedSuitabilities, selectedTags, sortOrder]);
-  const glutenFreeRecipesCount = recipeList.filter((recipe) =>
-    recipe.suitableFor?.includes("bez lepku"),
-  ).length;
-  const customRecipesCount = recipeList.filter((recipe) => !isSeedRecipe(recipe)).length;
-  const veganRecipesCount = recipeList.filter((recipe) =>
-    recipe.suitableFor?.includes("veganské"),
-  ).length;
+  const filteredRecipes = useMemo(
+    () =>
+      sortRecipes(filterRecipes(recipeList, { query, selectedTags, selectedSuitabilities }), {
+        priorityRecipeId,
+        sortOrder,
+      }),
+    [priorityRecipeId, query, recipeList, selectedSuitabilities, selectedTags, sortOrder],
+  );
+  const catalogStats = useMemo(() => getRecipeCatalogStats(recipeList), [recipeList]);
   const recipeCountLabel =
-    filteredRecipes.length === 1
-      ? "recept"
-      : filteredRecipes.length < 5
-        ? "recepty"
-        : "receptů";
+    filteredRecipes.length === 1 ? "recept" : filteredRecipes.length < 5 ? "recepty" : "receptů";
   const visibleRecipes = filteredRecipes.slice(0, visibleCount);
   const hasMoreRecipes = visibleRecipes.length < filteredRecipes.length;
 
@@ -150,7 +107,9 @@ export const RecipeLibrary = () => {
     const focusRecipeId = location.state?.focusRecipeId;
     if (focusRecipeId == null) return;
 
-    const targetRecipe = visibleRecipes.find((recipe) => String(recipe.id) === String(focusRecipeId));
+    const targetRecipe = visibleRecipes.find(
+      (recipe) => String(recipe.id) === String(focusRecipeId),
+    );
     if (!targetRecipe) return;
 
     catalogSectionRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
@@ -191,9 +150,7 @@ export const RecipeLibrary = () => {
         <div className="recipe-library__hero-content page-hero__content">
           <p className="page-hero__eyebrow">Katalog receptů</p>
           <h1 className="page-hero__title">Recepty</h1>
-          <p className="page-hero__text">
-            Procházej, vkládej a upravuj.
-          </p>
+          <p className="page-hero__text">Procházej, vkládej a upravuj.</p>
         </div>
         <div className="page-hero__actions">
           <Link to="/recipe-form" className="button button--new-recipe recipe-library__action">
@@ -272,22 +229,24 @@ export const RecipeLibrary = () => {
           <div className="recipe-library__summary-content">
             <div className="recipe-library__summary-grid">
               <article className="recipe-library__summary-box">
-                <span className="recipe-library__summary-value">{recipeList.length}</span>
+                <span className="recipe-library__summary-value">{catalogStats.totalCount}</span>
                 <span className="recipe-library__summary-label">receptů celkem</span>
               </article>
 
               <article className="recipe-library__summary-box">
-                <span className="recipe-library__summary-value">{customRecipesCount}</span>
+                <span className="recipe-library__summary-value">{catalogStats.customCount}</span>
                 <span className="recipe-library__summary-label">vlastních receptů</span>
               </article>
 
               <article className="recipe-library__summary-box">
-                <span className="recipe-library__summary-value">{glutenFreeRecipesCount}</span>
+                <span className="recipe-library__summary-value">
+                  {catalogStats.glutenFreeCount}
+                </span>
                 <span className="recipe-library__summary-label">bezlepkových receptů</span>
               </article>
 
               <article className="recipe-library__summary-box">
-                <span className="recipe-library__summary-value">{veganRecipesCount}</span>
+                <span className="recipe-library__summary-value">{catalogStats.veganCount}</span>
                 <span className="recipe-library__summary-label">veganských receptů</span>
               </article>
             </div>
@@ -336,11 +295,7 @@ export const RecipeLibrary = () => {
                 <p className="recipe-library__load-more-text">
                   Zobrazeno {visibleRecipes.length} z {filteredRecipes.length} receptů.
                 </p>
-                <button
-                  type="button"
-                  className="button button--ghost"
-                  onClick={showMoreRecipes}
-                >
+                <button type="button" className="button button--ghost" onClick={showMoreRecipes}>
                   Načíst další
                 </button>
               </div>
@@ -349,11 +304,7 @@ export const RecipeLibrary = () => {
         ) : (
           <div className="recipe-library__empty">
             <p>Filtry zatím nevrátily žádný recept.</p>
-            <button
-              type="button"
-              className="button button--ghost"
-              onClick={resetFilters}
-            >
+            <button type="button" className="button button--ghost" onClick={resetFilters}>
               Vyčistit filtry
             </button>
           </div>

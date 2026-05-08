@@ -4,13 +4,9 @@ import { RecipeCard } from "../../components/RecipeCard/index.jsx";
 import "./style.css";
 import { useOutletContext } from "react-router-dom";
 import { useMemo, useState } from "react";
-import {
-  getRecipeSuitableForFilterValues,
-  SUITABILITY_OPTIONS,
-  TAG_OPTIONS,
-} from "../../constants/recipeMetadata.js";
-import { normalizeRecipeTags } from "../../utils/normalizeRecipeTag.js";
+import { SUITABILITY_OPTIONS, TAG_OPTIONS } from "../../constants/recipeMetadata.js";
 import { useRecipePlanner } from "../../hooks/useRecipePlanner.js";
+import { filterRecipes, sortRecipes } from "../../selectors/recipeSelectors.js";
 
 export const WeeklyPlanner = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -42,30 +38,19 @@ export const WeeklyPlanner = () => {
 
   const handleSuitabilitySelection = (label) => {
     setSelectedSuitabilities((prev) =>
-      prev.includes(label) ? prev.filter((s) => s !== label) : [...prev, label]
+      prev.includes(label) ? prev.filter((s) => s !== label) : [...prev, label],
     );
   };
 
   const handleTagSelection = (tag) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [tag]
-    );
+    setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [tag]));
   };
 
   const filteredRecipes = useMemo(
-    () => recipeList
-      .filter((recipe) => {
-        const normalizedRecipeTags = normalizeRecipeTags(recipe.tags);
-        const suitabilityFilterValues = getRecipeSuitableForFilterValues(recipe.suitableFor);
-
-        return (
-          selectedTags.every((tag) => normalizedRecipeTags.includes(tag)) &&
-          selectedSuitabilities.every((suit) =>
-            suitabilityFilterValues.includes(suit)
-          )
-        );
-      })
-      .sort((a, b) => a.title.localeCompare(b.title, "cs")),
+    () =>
+      sortRecipes(filterRecipes(recipeList, { selectedTags, selectedSuitabilities }), {
+        sortOrder: "title-asc",
+      }),
     [recipeList, selectedSuitabilities, selectedTags],
   );
 
@@ -87,10 +72,13 @@ export const WeeklyPlanner = () => {
       <div id="recipes-planner" className="recipes__planner" ref={plannerRef}>
         <div className="recipes__planner-header">
           <div>
-          <h2 className="recipes__planner-title">Plánování týdne</h2>
-          <p className="recipes__planner-text">
-            Vyber recept a klikni na slot, nebo nejdřív klikni na slot a potom vyber recept. Do jednoho slotu můžeš přidat i více receptů. Přetáhnout můžeš celý slot i jednotlivý recept. Ikonou v pravém horním rohu slot zduplikuješ do prázdného slotu. Aktivní slot zrušíš opětovným klikem nebo klikem mimo plánovač.
-          </p>
+            <h2 className="recipes__planner-title">Plánování týdne</h2>
+            <p className="recipes__planner-text">
+              Vyber recept a klikni na slot, nebo nejdřív klikni na slot a potom vyber recept. Do
+              jednoho slotu můžeš přidat i více receptů. Přetáhnout můžeš celý slot i jednotlivý
+              recept. Ikonou v pravém horním rohu slot zduplikuješ do prázdného slotu. Aktivní slot
+              zrušíš opětovným klikem nebo klikem mimo plánovač.
+            </p>
           </div>
           <button
             type="button"
@@ -120,7 +108,6 @@ export const WeeklyPlanner = () => {
           handlePlannerPointerDown={handlePlannerPointerDown}
           handlePlannerCellClick={handlePlannerCellClick}
         />
-
       </div>
 
       <div className="recipes__filters">
