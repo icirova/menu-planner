@@ -1,11 +1,4 @@
 import {
-  createEmptyShoppingState,
-  normalizeShoppingState,
-} from "../utils/shoppingList.js";
-import { MEAL_KEYS } from "../constants/mealKeys.js";
-import { DEFAULT_DAY } from "../constants/defaultDay.js";
-import { DAYS } from "../constants/days.js";
-import {
   addRecipeIdToSlot,
   getSlotRecipeIds,
   normalizeSlotValue,
@@ -13,135 +6,21 @@ import {
   slotContainsRecipeId,
 } from "../utils/mealSlots.js";
 import { createStableId } from "../utils/createId.js";
+import {
+  createInitialMenuState,
+  makeEmptyWeek,
+  normalizeMenuState,
+  normalizeShoppingSelections,
+} from "../storage/menuStateNormalization.js";
+import { normalizeShoppingState } from "../utils/shoppingList.js";
 
-const isPlainObject = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
-
-const normalizeTaskItems = (value) => {
-  if (Array.isArray(value)) {
-    return value
-      .map((item, index) => {
-        if (typeof item === "string") {
-          const text = item.trim();
-          return text ? { id: `task-${index}-${text}`, text, done: false } : null;
-        }
-
-        if (isPlainObject(item)) {
-          const text = typeof item.text === "string" ? item.text.trim() : "";
-          if (!text) return null;
-          const id = typeof item.id === "string" && item.id ? item.id : `task-${index}-${text}`;
-          return { id, text, done: Boolean(item.done) };
-        }
-
-        return null;
-      })
-      .filter(Boolean);
-  }
-
-  if (typeof value === "string") {
-    return value
-      .split("\n")
-      .map((item, index) => {
-        const text = item.trim();
-        return text ? { id: `task-${index}-${text}`, text, done: false } : null;
-      })
-      .filter(Boolean);
-  }
-
-  return [];
-};
-
-const normalizeDoneMap = (value) => {
-  if (!isPlainObject(value)) return {};
-
-  return Object.fromEntries(
-    Object.entries(value).filter(([, done]) => Boolean(done)),
-  );
-};
-
-const normalizeShoppingSelections = (value) => {
-  if (!isPlainObject(value)) return {};
-
-  return Object.fromEntries(
-    Object.entries(value)
-      .map(([key, selected]) => {
-        const normalizedKey = typeof key === "string" ? key.trim() : "";
-        return normalizedKey ? [normalizedKey, selected !== false] : null;
-      })
-      .filter(Boolean),
-  );
-};
-
-const makeEmptyWeek = () => DAYS.map(() => ({ ...DEFAULT_DAY }));
-
-export const initialMenuState = {
-  week: makeEmptyWeek(),
-  tasks: [],
-  prepDone: {},
-  extraDone: {},
-  shopping: createEmptyShoppingState(),
-};
-
-const migrateWeekToRecipeIds = (week, recipes) => {
-  if (!Array.isArray(week)) return makeEmptyWeek();
-
-  const titleToId = new Map(recipes.map((recipe) => [recipe.title, recipe.id]));
-  const validRecipeIds = new Set(recipes.map((recipe) => recipe.id));
-
-  return makeEmptyWeek().map((emptyDay, index) => {
-    const day = week[index];
-    const migratedDay = { ...emptyDay, ...(day || {}) };
-    migratedDay.shoppingSelections = normalizeShoppingSelections(migratedDay.shoppingSelections);
-
-    for (const { key } of MEAL_KEYS) {
-      const value = migratedDay[key];
-
-      const migratedIds = (Array.isArray(value) ? value : [value]).flatMap((item) => {
-        if (typeof item === "number") {
-          return validRecipeIds.has(item) ? [item] : [];
-        }
-
-        if (typeof item === "string" && titleToId.has(item)) {
-          return [titleToId.get(item)];
-        }
-
-        return [];
-      });
-
-      migratedDay[key] = normalizeSlotValue(migratedIds);
-    }
-
-    return migratedDay;
-  });
-};
+export const initialMenuState = createInitialMenuState();
 
 export const menuReducer = (state, action) => {
   switch (action.type) {
     case "INIT_FROM_STORAGE": {
       const { payload, recipes } = action;
-
-      if (Array.isArray(payload)) {
-        const nextWeek = migrateWeekToRecipeIds(payload, recipes);
-        return {
-          week: nextWeek,
-          tasks: [],
-          prepDone: {},
-          extraDone: {},
-          shopping: createEmptyShoppingState(),
-        };
-      }
-
-      if (payload && Array.isArray(payload.week)) {
-        const nextWeek = migrateWeekToRecipeIds(payload.week, recipes);
-        return {
-          week: nextWeek,
-          tasks: normalizeTaskItems(payload.tasks),
-          prepDone: normalizeDoneMap(payload.prepDone),
-          extraDone: normalizeDoneMap(payload.extraDone),
-          shopping: normalizeShoppingState(payload.shopping),
-        };
-      }
-
-      return state;
+      return normalizeMenuState(payload, recipes) ?? state;
     }
 
     case "UPDATE_MEAL": {
@@ -150,7 +29,9 @@ export const menuReducer = (state, action) => {
         index === dayIndex
           ? {
               ...day,
-              [mealKey]: append ? addRecipeIdToSlot(day[mealKey], value) : normalizeSlotValue(value),
+              [mealKey]: append
+                ? addRecipeIdToSlot(day[mealKey], value)
+                : normalizeSlotValue(value),
             }
           : day,
       );
@@ -181,9 +62,7 @@ export const menuReducer = (state, action) => {
           ? {
               ...day,
               [mealKey]:
-                typeof recipeId === "number"
-                  ? removeRecipeIdFromSlot(day[mealKey], recipeId)
-                  : "",
+                typeof recipeId === "number" ? removeRecipeIdFromSlot(day[mealKey], recipeId) : "",
             }
           : day,
       );
@@ -210,9 +89,7 @@ export const menuReducer = (state, action) => {
       }
 
       const nextWeek = state.week.map((day, index) =>
-        index === dayIndex
-          ? { ...day, shoppingSelections: nextSelections }
-          : day,
+        index === dayIndex ? { ...day, shoppingSelections: nextSelections } : day,
       );
 
       return { ...state, week: nextWeek };
@@ -236,9 +113,7 @@ export const menuReducer = (state, action) => {
       }
 
       const value =
-        typeof recipeId === "number" && valueIds.includes(recipeId)
-          ? recipeId
-          : valueIds[0];
+        typeof recipeId === "number" && valueIds.includes(recipeId) ? recipeId : valueIds[0];
 
       if (!value) return state;
 
