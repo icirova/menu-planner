@@ -1,59 +1,10 @@
 import { useMemo, useState } from "react";
-import { DAYS } from "../../constants/days.js";
-import { MEAL_KEYS } from "../../constants/mealKeys.js";
-import { normalizeRecipePreTasks } from "../../utils/normalizeRecipePreTasks.js";
-import { getSlotRecipeIds } from "../../utils/mealSlots.js";
+import {
+  getWeeklyExtraItems,
+  getWeeklyGeneratedTasks,
+  groupWeeklyGeneratedTasks,
+} from "../../selectors/weeklyTaskSelectors.js";
 import "./style.css";
-
-const getWeeklyGeneratedTasks = (week = [], recipes = []) => {
-  const recipesById = new Map(recipes.map((recipe) => [recipe.id, recipe]));
-  const seen = new Set();
-
-  return week.flatMap((day, dayIndex) => {
-    const recipeIdsForDay = [
-      ...new Set(
-        MEAL_KEYS
-          .flatMap(({ key }) => getSlotRecipeIds(day?.[key])),
-      ),
-    ];
-
-    return recipeIdsForDay.flatMap((recipeId) => {
-      const recipe = recipesById.get(recipeId);
-      if (!recipe) return [];
-      const tasks = normalizeRecipePreTasks(recipe.preTasks);
-
-      return [...new Set(tasks)].flatMap((task, taskIndex) => {
-        const dedupeKey = `${dayIndex}-${task.toLowerCase()}`;
-        if (seen.has(dedupeKey)) return [];
-        seen.add(dedupeKey);
-
-        return [{
-          id: `${dayIndex}-${recipeId}-${taskIndex}`,
-          dayLabel: DAYS[(dayIndex + DAYS.length - 1) % DAYS.length],
-          recipeTitle: recipe.title,
-          task,
-        }];
-      });
-    });
-  });
-};
-
-const getWeeklyExtraItems = (week = [], recipes = []) => {
-  const recipesById = new Map(recipes.map((recipe) => [recipe.id, recipe]));
-
-  return week.flatMap((day, dayIndex) =>
-    getSlotRecipeIds(day?.extra).flatMap((recipeId) => {
-      const recipe = recipesById.get(recipeId);
-      if (!recipe) return [];
-
-      return [{
-        id: `extra-${dayIndex}-${recipe.id}`,
-        dayLabel: DAYS[dayIndex],
-        recipeTitle: recipe.title,
-      }];
-    }),
-  );
-};
 
 export const WeeklyTasksPanel = ({
   value = "",
@@ -68,31 +19,12 @@ export const WeeklyTasksPanel = ({
   onRemoveNote,
 }) => {
   const [noteDraft, setNoteDraft] = useState("");
-  const generatedTasks = useMemo(
-    () => getWeeklyGeneratedTasks(week, recipes),
-    [recipes, week],
+  const generatedTasks = useMemo(() => getWeeklyGeneratedTasks(week, recipes), [recipes, week]);
+  const extraItems = useMemo(() => getWeeklyExtraItems(week, recipes), [recipes, week]);
+  const groupedGeneratedTasks = useMemo(
+    () => groupWeeklyGeneratedTasks(generatedTasks),
+    [generatedTasks],
   );
-  const extraItems = useMemo(
-    () => getWeeklyExtraItems(week, recipes),
-    [recipes, week],
-  );
-  const groupedGeneratedTasks = useMemo(() => {
-    const groups = new Map();
-
-    generatedTasks.forEach((item) => {
-      const group = groups.get(item.dayLabel);
-      if (group) {
-        group.tasks.push(item);
-      } else {
-        groups.set(item.dayLabel, {
-          dayLabel: item.dayLabel,
-          tasks: [item],
-        });
-      }
-    });
-
-    return Array.from(groups.values());
-  }, [generatedTasks]);
   const noteItems = Array.isArray(value) ? value : [];
 
   const handleAddNote = (event) => {
@@ -126,7 +58,10 @@ export const WeeklyTasksPanel = ({
                         className="weekly-tasks-panel__toggle"
                         onClick={() => onTogglePrepDone?.(id)}
                       >
-                        <span className={`weekly-tasks-panel__check ${prepDone[id] ? "is-complete" : ""}`} aria-hidden="true">
+                        <span
+                          className={`weekly-tasks-panel__check ${prepDone[id] ? "is-complete" : ""}`}
+                          aria-hidden="true"
+                        >
                           {prepDone[id] ? "✓" : ""}
                         </span>
                         <span className="weekly-tasks-panel__task-main">
@@ -141,9 +76,7 @@ export const WeeklyTasksPanel = ({
             ))}
           </ul>
         ) : (
-          <p className="weekly-tasks-panel__empty">
-            Zatím bez úkolů z naplánovaných receptů.
-          </p>
+          <p className="weekly-tasks-panel__empty">Zatím bez úkolů z naplánovaných receptů.</p>
         )}
       </section>
 
@@ -156,14 +89,20 @@ export const WeeklyTasksPanel = ({
           {extraItems.length ? (
             <ul className="weekly-tasks-panel__list">
               {extraItems.map(({ id, dayLabel, recipeTitle }) => (
-                <li key={id} className={`weekly-tasks-panel__item ${extraDone[id] ? "is-complete" : ""}`}>
+                <li
+                  key={id}
+                  className={`weekly-tasks-panel__item ${extraDone[id] ? "is-complete" : ""}`}
+                >
                   <span className="weekly-tasks-panel__day">{dayLabel}</span>
                   <button
                     type="button"
                     className="weekly-tasks-panel__toggle"
                     onClick={() => onToggleExtraDone?.(id)}
                   >
-                    <span className={`weekly-tasks-panel__check ${extraDone[id] ? "is-complete" : ""}`} aria-hidden="true">
+                    <span
+                      className={`weekly-tasks-panel__check ${extraDone[id] ? "is-complete" : ""}`}
+                      aria-hidden="true"
+                    >
                       {extraDone[id] ? "✓" : ""}
                     </span>
                     <span className="weekly-tasks-panel__task-main">
@@ -187,7 +126,10 @@ export const WeeklyTasksPanel = ({
             {noteItems.length ? (
               <ul className="weekly-tasks-panel__notes-list">
                 {noteItems.map(({ id, text, done }) => (
-                  <li key={id} className={`weekly-tasks-panel__note-item ${done ? "is-complete" : ""}`}>
+                  <li
+                    key={id}
+                    className={`weekly-tasks-panel__note-item ${done ? "is-complete" : ""}`}
+                  >
                     <span className="weekly-tasks-panel__task-main">
                       <strong className="weekly-tasks-panel__task-text">{text}</strong>
                     </span>
@@ -207,7 +149,10 @@ export const WeeklyTasksPanel = ({
                       className="weekly-tasks-panel__note-check-button"
                       onClick={() => onToggleNote?.(id)}
                     >
-                      <span className={`weekly-tasks-panel__check ${done ? "is-complete" : ""}`} aria-hidden="true">
+                      <span
+                        className={`weekly-tasks-panel__check ${done ? "is-complete" : ""}`}
+                        aria-hidden="true"
+                      >
                         {done ? "✓" : ""}
                       </span>
                     </button>
@@ -226,7 +171,9 @@ export const WeeklyTasksPanel = ({
                 value={noteDraft}
                 onChange={(event) => setNoteDraft(event.target.value)}
               />
-              <button type="submit" className="button button--add">Přidat</button>
+              <button type="submit" className="button button--add">
+                Přidat
+              </button>
             </form>
           </div>
         </section>
