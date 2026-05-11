@@ -15,6 +15,16 @@ import { RecipeDetailHero } from "./RecipeDetailHero.jsx";
 import { useLightbox } from "./useLightbox.js";
 
 const DEFAULT_SERVINGS = 4;
+const KILOJOULES_PER_KILOCALORIE = 4.184;
+
+const formatEnergyLabel = (calories) => {
+  if (calories == null) return "- kcal na 1 porci";
+
+  const kilojoules = Math.round(calories * KILOJOULES_PER_KILOCALORIE);
+  const formattedKilojoules = kilojoules.toLocaleString("cs-CZ");
+
+  return `${calories} kcal / ${formattedKilojoules} kJ na 1 porci`;
+};
 
 export const RecipeDetail = () => {
   const { id } = useParams();
@@ -64,7 +74,7 @@ export const RecipeDetail = () => {
   }
 
   const coverSrc = resolveImageSrc(recipeDetail.photo_urls?.[0] || "/notes.webp");
-  const caloriesLabel = recipeDetail.calories == null ? "-" : recipeDetail.calories;
+  const energyLabel = formatEnergyLabel(recipeDetail.calories);
   const preTasks = recipeDetail.preTasks ?? [];
   const isLockedRecipe = isSeedRecipe(recipeDetail);
   const canEditRecipe = !isLockedRecipe;
@@ -116,7 +126,7 @@ export const RecipeDetail = () => {
           <div className="recipe-detail__content recipe-detail__subsection">
             <div className="recipe-detail__section">
               <p className="recipe-detail__description recipe-detail__description--meta">
-                {caloriesLabel} kcal na 1 porci
+                {energyLabel}
               </p>
               <ServingsControl
                 value={desiredServings}
