@@ -1,4 +1,7 @@
-import { normalizeSuitableForValues } from "../constants/recipeMetadata.js";
+import {
+  normalizeAllergenValuesForSuitability,
+  normalizeSuitableForValues,
+} from "../constants/recipeMetadata.js";
 import { createNumericId } from "./createId.js";
 import { getCanonicalIngredientName } from "./ingredientNames.js";
 import { normalizeRecipePreTasks } from "./normalizeRecipePreTasks.js";
@@ -24,18 +27,25 @@ const mapRecipePhotosToForm = (recipe) =>
     name: `obrazek-${index + 1}`,
   }));
 
-export const mapRecipeToFormState = (recipe) => ({
-  name: recipe.title ?? "",
-  servings: String(recipe.servings ?? DEFAULT_RECIPE_SERVINGS),
-  selectedTags: recipe.tags ?? [],
-  selectedSuitableFor: recipe.suitableFor ?? [],
-  selectedAllergens: recipe.allergens ?? [],
-  calories: recipe.calories == null ? "" : String(recipe.calories),
-  method: recipe.workflow ?? "",
-  preTasksText: normalizeRecipePreTasks(recipe.preTasks).join("\n"),
-  ingredients: recipe.ingredients ?? [],
-  photos: mapRecipePhotosToForm(recipe),
-});
+export const mapRecipeToFormState = (recipe) => {
+  const selectedSuitableFor = normalizeSuitableForValues(recipe.suitableFor ?? []);
+
+  return {
+    name: recipe.title ?? "",
+    servings: String(recipe.servings ?? DEFAULT_RECIPE_SERVINGS),
+    selectedTags: recipe.tags ?? [],
+    selectedSuitableFor,
+    selectedAllergens: normalizeAllergenValuesForSuitability(
+      recipe.allergens ?? [],
+      selectedSuitableFor,
+    ),
+    calories: recipe.calories == null ? "" : String(recipe.calories),
+    method: recipe.workflow ?? "",
+    preTasksText: normalizeRecipePreTasks(recipe.preTasks).join("\n"),
+    ingredients: recipe.ingredients ?? [],
+    photos: mapRecipePhotosToForm(recipe),
+  };
+};
 
 export const toggleInArray = (items = [], value) =>
   items.includes(value) ? items.filter((item) => item !== value) : [...items, value];
@@ -101,17 +111,21 @@ export const buildRecipeDraft = (
     recipeToEdit = null,
     servings,
   } = {},
-) => ({
-  id: recipeToEdit?.id ?? idFactory(),
-  createdAt: recipeToEdit?.createdAt ?? now(),
-  title: form.name.trim(),
-  servings: servings ?? Number(form.servings),
-  tags: form.selectedTags,
-  photo_urls: form.photos.map((photo) => photo.url),
-  ingredients: normalizedIngredients,
-  suitableFor: normalizeSuitableForValues(form.selectedSuitableFor),
-  calories: calories ?? (form.calories.trim() === "" ? null : Number(form.calories)),
-  workflow: form.method.trim(),
-  preTasks: normalizeRecipePreTasks(form.preTasksText),
-  allergens: form.selectedAllergens,
-});
+) => {
+  const suitableFor = normalizeSuitableForValues(form.selectedSuitableFor);
+
+  return {
+    id: recipeToEdit?.id ?? idFactory(),
+    createdAt: recipeToEdit?.createdAt ?? now(),
+    title: form.name.trim(),
+    servings: servings ?? Number(form.servings),
+    tags: form.selectedTags,
+    photo_urls: form.photos.map((photo) => photo.url),
+    ingredients: normalizedIngredients,
+    suitableFor,
+    calories: calories ?? (form.calories.trim() === "" ? null : Number(form.calories)),
+    workflow: form.method.trim(),
+    preTasks: normalizeRecipePreTasks(form.preTasksText),
+    allergens: normalizeAllergenValuesForSuitability(form.selectedAllergens, suitableFor),
+  };
+};

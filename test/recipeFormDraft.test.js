@@ -46,7 +46,7 @@ describe("recipe form draft helpers", () => {
         servings: "2",
         selectedTags: ["obědy"],
         selectedSuitableFor: ["bez lepku"],
-        selectedAllergens: ["lepek"],
+        selectedAllergens: [],
         calories: "300",
         method: "Postup",
         preTasksText: "Připravit",

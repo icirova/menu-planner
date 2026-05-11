@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { normalizeSuitableForValues } from "../constants/recipeMetadata.js";
+import {
+  isAllergenOptionDisabled,
+  normalizeAllergenValuesForSuitability,
+  normalizeSuitableForValues,
+} from "../constants/recipeMetadata.js";
 import { prepareCustomRecipeForRuntime } from "../storage/recipesStorage.js";
 import {
   buildRecipeDraft,
@@ -47,13 +51,42 @@ export const useRecipeForm = ({
   };
 
   const toggleSelection = (field, value) => {
-    setForm((prev) => ({
-      ...prev,
-      [field]:
-        field === "selectedSuitableFor"
-          ? normalizeSuitableForValues(toggleInArray(prev[field], value))
-          : toggleInArray(prev[field], value),
-    }));
+    setForm((prev) => {
+      if (field === "selectedSuitableFor") {
+        const selectedSuitableFor = normalizeSuitableForValues(toggleInArray(prev[field], value));
+
+        return {
+          ...prev,
+          selectedSuitableFor,
+          selectedAllergens: normalizeAllergenValuesForSuitability(
+            prev.selectedAllergens,
+            selectedSuitableFor,
+          ),
+        };
+      }
+
+      if (field === "selectedAllergens") {
+        if (isAllergenOptionDisabled(value, prev.selectedSuitableFor)) {
+          return {
+            ...prev,
+            selectedAllergens: normalizeAllergenValuesForSuitability(
+              prev.selectedAllergens,
+              prev.selectedSuitableFor,
+            ),
+          };
+        }
+
+        return {
+          ...prev,
+          selectedAllergens: toggleInArray(prev[field], value),
+        };
+      }
+
+      return {
+        ...prev,
+        [field]: toggleInArray(prev[field], value),
+      };
+    });
   };
 
   const handlePhotosChange = async (e) => {

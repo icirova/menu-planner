@@ -1,4 +1,7 @@
-import { normalizeSuitableForValues } from "../constants/recipeMetadata.js";
+import {
+  normalizeAllergenValuesForSuitability,
+  normalizeSuitableForValues,
+} from "../constants/recipeMetadata.js";
 import { normalizeRecipePreTasks } from "../utils/normalizeRecipePreTasks.js";
 import { normalizeRecipeTags } from "../utils/normalizeRecipeTag.js";
 import { createNumericId } from "../utils/createId.js";
@@ -10,16 +13,23 @@ const normalizeRecipeId = (value) => {
   return clampRecipeId(value) ?? createNumericId();
 };
 
-export const normalizeRecipe = (recipe, source) => ({
-  ...recipe,
-  id: normalizeRecipeId(recipe.id),
-  source: recipe.source ?? source,
-  createdAt:
-    typeof recipe.createdAt === "string" && recipe.createdAt.trim() ? recipe.createdAt : null,
-  tags: normalizeRecipeTags(recipe.tags ?? []),
-  suitableFor: normalizeSuitableForValues(recipe.suitableFor ?? []),
-  preTasks: normalizeRecipePreTasks(recipe.preTasks),
-});
+export const normalizeRecipe = (recipe, source) => {
+  const suitableFor = normalizeSuitableForValues(recipe.suitableFor ?? []);
+
+  return {
+    ...recipe,
+    id: normalizeRecipeId(recipe.id),
+    source: recipe.source ?? source,
+    createdAt:
+      typeof recipe.createdAt === "string" && recipe.createdAt.trim() ? recipe.createdAt : null,
+    tags: normalizeRecipeTags(recipe.tags ?? []),
+    suitableFor,
+    ...(recipe.allergens == null
+      ? {}
+      : { allergens: normalizeAllergenValuesForSuitability(recipe.allergens, suitableFor) }),
+    preTasks: normalizeRecipePreTasks(recipe.preTasks),
+  };
+};
 
 export const normalizeCustomRecipe = (recipe) => normalizeRecipe(recipe, RECIPE_SOURCE.CUSTOM);
 

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { IngredientInputs } from "../../components/IngredientInputs/index.jsx";
 import {
+  ALLERGEN_OPTIONS,
+  isAllergenOptionDisabled,
   isSuitabilityOptionDisabled,
   SUITABILITY_OPTIONS,
 } from "../../constants/recipeMetadata.js";
@@ -56,6 +58,10 @@ export const RecipeForm = () => {
   const suitabilityOptions = SUITABILITY_OPTIONS.map((option) => ({
     ...option,
     disabled: isSuitabilityOptionDisabled(option.value, form.selectedSuitableFor),
+  }));
+  const allergenOptions = ALLERGEN_OPTIONS.map((option) => ({
+    ...option,
+    disabled: isAllergenOptionDisabled(option.value, form.selectedSuitableFor),
   }));
   const {
     addPreTask,
@@ -138,6 +144,7 @@ export const RecipeForm = () => {
         <RecipeBasicFields form={form} setField={setField} />
 
         <RecipeClassificationFields
+          allergenOptions={allergenOptions}
           form={form}
           suitabilityOptions={suitabilityOptions}
           toggleSelection={toggleSelection}

@@ -50,6 +50,12 @@ const SUITABILITY_IMPLICATIONS = {
   veganské: ["bez mléka"],
 };
 
+const SUITABILITY_ALLERGEN_EXCLUSIONS = {
+  veganské: ["korýši", "vejce", "ryby", "mléko"],
+  "bez lepku": ["lepek"],
+  "bez mléka": ["mléko"],
+};
+
 export const normalizeSuitableForValues = (suitability = []) => {
   const values = [...suitability];
 
@@ -74,6 +80,28 @@ export const getRecipeSuitableForFilterValues = (suitability = []) => {
 
 export const isSuitabilityOptionDisabled = (optionValue, selectedValues = []) =>
   optionValue === "bez mléka" && normalizeSuitableForValues(selectedValues).includes("veganské");
+
+export const getExcludedAllergensForSuitability = (suitability = []) => {
+  const values = new Set(getRecipeSuitableForFilterValues(suitability));
+  const excludedAllergens = new Set();
+
+  values.forEach((value) => {
+    (SUITABILITY_ALLERGEN_EXCLUSIONS[value] ?? []).forEach((allergen) => {
+      excludedAllergens.add(allergen);
+    });
+  });
+
+  return excludedAllergens;
+};
+
+export const normalizeAllergenValuesForSuitability = (allergens = [], suitability = []) => {
+  const excludedAllergens = getExcludedAllergensForSuitability(suitability);
+
+  return allergens.filter((allergen) => !excludedAllergens.has(allergen));
+};
+
+export const isAllergenOptionDisabled = (optionValue, selectedSuitableFor = []) =>
+  getExcludedAllergensForSuitability(selectedSuitableFor).has(optionValue);
 
 const ALLERGEN_DEFINITIONS = [
   { label: "Lepek", value: "lepek", icon: "🌾", aliases: ["gluten"] },

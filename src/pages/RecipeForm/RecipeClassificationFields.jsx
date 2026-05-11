@@ -1,7 +1,12 @@
 import { CheckboxGroup } from "../../components/CheckboxGroup/index.jsx";
-import { ALLERGEN_OPTIONS, TAG_OPTIONS } from "../../constants/recipeMetadata.js";
+import { TAG_OPTIONS } from "../../constants/recipeMetadata.js";
 
-export const RecipeClassificationFields = ({ form, suitabilityOptions, toggleSelection }) => (
+export const RecipeClassificationFields = ({
+  allergenOptions,
+  form,
+  suitabilityOptions,
+  toggleSelection,
+}) => (
   <section className="recipe-form-page__panel">
     <div className="recipe-form-page__section-header">
       <h2>Zařazení</h2>
@@ -27,7 +32,7 @@ export const RecipeClassificationFields = ({ form, suitabilityOptions, toggleSel
       <CheckboxGroup
         legend="Alergeny"
         name="allergens"
-        options={ALLERGEN_OPTIONS}
+        options={allergenOptions}
         selectedValues={form.selectedAllergens}
         onToggle={(value) => toggleSelection("selectedAllergens", value)}
       />
