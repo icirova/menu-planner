@@ -146,12 +146,11 @@ export const recipes = [
       { amount: 40, unit: "g", item: "máslo" },
       { amount: 15, unit: "g", item: "čerstvé droždí" },
       { amount: 1, unit: "špetka", item: "sůl" },
-      { amount: 300, unit: "ml", item: "olej na smažení" },
     ],
     allergens: ["lepek", "mléko", "vejce"],
     suitableFor: [],
     preTasks: [],
-    calories: 430,
+    calories: 380,
     workflow:
       "Z droždí, části vlažného mléka a trochy cukru připrav kvásek. Do mouky přidej zbytek cukru, vejce, rozpuštěné máslo, sůl, kvásek a zbytek mléka a vypracuj hladké těsto. Nech ho asi hodinu vykynout, potom vyválej plát silný asi 1,5 cm a vykrajuj donuty. Nech je ještě krátce nakynout a smaž v rozpáleném oleji z obou stran dozlatova. Po usmažení je nech okapat a ozdob podle chuti.",
   },
@@ -642,7 +641,7 @@ export const recipes = [
     allergens: [],
     suitableFor: ["bez lepku", "veganské"],
     preTasks: ["Večer namočit cizrnu."],
-    calories: 700,
+    calories: 260,
     workflow:
       "Opeč zeleninu a brambory, přidej kari, zalij vývarem a vař do měkka, zahusti škrobem rozmíchaným ve studené vodě, přidej uvařenou cizrnu a podávej s rýží.",
   },
@@ -1969,7 +1968,7 @@ export const recipes = [
     photo_urls: ["/imgRecipe/pomazanka-niva.webp"],
     ingredients: [
       { amount: 120, unit: "g", item: "niva" },
-      { amount: 125, unit: "g", item: "máslo" },
+      { amount: 125, unit: "g", item: "tvaroh" },
       { amount: 100, unit: "g", item: "pomazánkové máslo" },
       { amount: 1, unit: "ks", item: "jarní cibulka" },
       { amount: 1, unit: "špetka", item: "pepř" },
@@ -1977,9 +1976,9 @@ export const recipes = [
     allergens: ["mléko"],
     suitableFor: ["bez lepku"],
     preTasks: [],
-    calories: 390,
+    calories: 210,
     workflow:
-      "Nivu nastrouhej nebo rozdrob najemno. Smíchej ji s povoleným máslem a pomazánkovým máslem, přidej najemno nakrájenou jarní cibulku a dochuť pepřem. Nech chvíli odležet v lednici a podávej s pečivem.",
+      "Nivu nastrouhej nebo rozdrob najemno. Smíchej ji s tvarohem a pomazánkovým máslem, přidej najemno nakrájenou jarní cibulku a dochuť pepřem. Nech chvíli odležet v lednici a podávej s pečivem.",
   },
   {
     id: 96,
@@ -2197,5 +2196,24 @@ export const recipes = [
     calories: 420,
     workflow:
       "Na oleji orestuj nadrobno nakrájenou cibuli dozlatova, stáhni plamen a vmíchej sladkou papriku. Hned přidej kuře, krátce opeč, osol, opepři a podlij vývarem. Dus doměkka asi 35-45 minut. Mouku rozmíchej ve smetaně, vlij do omáčky a ještě asi 10 minut provař do zhoustnutí. Podávej s těstovinami, knedlíkem nebo rýží.",
+  },
+  {
+    id: 106,
+    title: "Ovocný sendvič",
+    servings: 2,
+    tags: ["snídaně", "svačiny"],
+    photo_urls: ["/imgRecipe/ovocny-sendvic.webp"],
+    ingredients: [
+      { amount: 4, unit: "plátky", item: "toastový chléb" },
+      { amount: 60, unit: "g", item: "burákové máslo" },
+      { amount: 1, unit: "ks", item: "banán" },
+      { amount: 100, unit: "g", item: "jahody" },
+    ],
+    allergens: ["lepek", "arašídy"],
+    suitableFor: [],
+    preTasks: [],
+    calories: 390,
+    workflow:
+      "Plátky toastového chleba namaž burákovým máslem, oblož plátky banánu a jahodami, přiklop druhým plátkem chleba a rozkroj na trojúhelníky.",
   },
 ];
