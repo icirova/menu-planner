@@ -111,12 +111,12 @@ export const PANTRY_ITEMS = [
   },
   {
     label: "olej",
-    category: "suché zásoby",
+    category: "dochucení",
     aliases: ["olej", "rostlinný olej"],
   },
   {
     label: "koření",
-    category: "suché zásoby",
+    category: "dochucení",
     aliases: [
       "koření",
       "bobkový list",
