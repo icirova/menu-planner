@@ -120,6 +120,7 @@ describe("shopping list helpers", () => {
       ].every((label) => pantryLabels.includes(label)),
       true,
     );
+    assert.equal(pantryLabels.includes("nori vločky"), false);
 
     const day = {
       lunch: [3],
@@ -181,6 +182,7 @@ describe("shopping list helpers", () => {
 
     assert.deepEqual(getDayShoppingItems(day, pantryRecipes), [
       { id: "mrkev", key: "mrkev", label: "Mrkev", selected: true },
+      { id: "nori-vlocky", key: "nori-vlocky", label: "Nori vločky", selected: true },
     ]);
   });
 

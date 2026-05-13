@@ -127,7 +127,7 @@ export const PANTRY_ITEMS = [
   },
   {
     label: "nori",
-    aliases: ["nori", "řasa nori", "nori vločky"],
+    aliases: ["nori", "řasa nori"],
   },
   {
     label: "burákové máslo",
