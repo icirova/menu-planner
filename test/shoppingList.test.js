@@ -84,6 +84,40 @@ describe("shopping list helpers", () => {
   it("shows requested pantry items and ignores their ingredient aliases", () => {
     const pantryLabels = PANTRY_ITEMS.map((item) => item.label);
 
+    assert.deepEqual(
+      PANTRY_ITEMS.map((item) => item.category),
+      [
+        "lednice",
+        "lednice",
+        "lednice",
+        "lednice",
+        "lednice",
+        "lednice",
+        "lednice",
+        "pečení",
+        "pečení",
+        "pečení",
+        "pečení",
+        "pečení",
+        "pečení",
+        "pečení",
+        "snídaně a svačiny",
+        "snídaně a svačiny",
+        "snídaně a svačiny",
+        "snídaně a svačiny",
+        "snídaně a svačiny",
+        "snídaně a svačiny",
+        "suché zásoby",
+        "suché zásoby",
+        "suché zásoby",
+        "suché zásoby",
+        "suché zásoby",
+        "suché zásoby",
+        "suché zásoby",
+        "suché zásoby",
+        "suché zásoby",
+      ],
+    );
     assert.equal(pantryLabels.includes("bobkový list"), false);
     assert.equal(pantryLabels.includes("nové koření"), false);
     assert.equal(pantryLabels.includes("pepř"), false);

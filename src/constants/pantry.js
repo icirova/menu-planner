@@ -1,46 +1,122 @@
 export const PANTRY_ITEMS = [
   {
-    label: "sůl",
-    aliases: ["sůl"],
+    label: "vejce",
+    category: "lednice",
+    aliases: ["vejce"],
   },
   {
-    label: "hrubozrnná sůl",
-    aliases: ["hrubozrnná sůl"],
+    label: "droždí",
+    category: "lednice",
+    aliases: ["droždí", "čerstvé droždí", "kvasnice"],
+  },
+  {
+    label: "rostlinné mléko",
+    category: "lednice",
+    aliases: ["rostlinné mléko"],
+  },
+  {
+    label: "ocet",
+    category: "lednice",
+    aliases: ["ocet"],
+  },
+  {
+    label: "jablečný ocet",
+    category: "lednice",
+    aliases: ["jablečný ocet"],
+  },
+  {
+    label: "sojová omáčka",
+    category: "lednice",
+    aliases: ["sojová omáčka", "sójová omáčka"],
+  },
+  {
+    label: "cibule",
+    category: "lednice",
+    aliases: ["cibule", "cibuli"],
   },
   {
     label: "cukr",
+    category: "pečení",
     aliases: ["cukr"],
   },
   {
     label: "hnědý cukr",
+    category: "pečení",
     aliases: ["hnědý cukr"],
   },
   {
     label: "prášek do pečiva",
+    category: "pečení",
     aliases: ["prášek do pečiva", "kypřící prášek", "prášek do pečení", "prdopeč"],
   },
   {
     label: "jedlá soda",
+    category: "pečení",
     aliases: ["jedlá soda"],
   },
   {
     label: "med",
+    category: "pečení",
     aliases: ["med"],
   },
   {
     label: "javorový sirup",
+    category: "pečení",
     aliases: ["javorový sirup"],
   },
   {
     label: "datlový sirup",
+    category: "pečení",
     aliases: ["datlový sirup"],
   },
   {
+    label: "svačinky",
+    category: "snídaně a svačiny",
+    aliases: ["svačinky"],
+  },
+  {
+    label: "rozinky",
+    category: "snídaně a svačiny",
+    aliases: ["rozinky"],
+  },
+  {
+    label: "semínka",
+    category: "snídaně a svačiny",
+    aliases: ["semínka", "chia semínka", "sezamová semínka", "slunečnicová semínka"],
+  },
+  {
+    label: "granola",
+    category: "snídaně a svačiny",
+    aliases: ["granola"],
+  },
+  {
+    label: "ovesné vločky",
+    category: "snídaně a svačiny",
+    aliases: ["ovesné vločky"],
+  },
+  {
+    label: "burákové máslo",
+    category: "snídaně a svačiny",
+    aliases: ["burákové máslo", "arašídové máslo"],
+  },
+  {
+    label: "sůl",
+    category: "suché zásoby",
+    aliases: ["sůl"],
+  },
+  {
+    label: "hrubozrnná sůl",
+    category: "suché zásoby",
+    aliases: ["hrubozrnná sůl"],
+  },
+  {
     label: "olej",
+    category: "suché zásoby",
     aliases: ["olej", "rostlinný olej"],
   },
   {
     label: "koření",
+    category: "suché zásoby",
     aliases: [
       "koření",
       "bobkový list",
@@ -70,76 +146,29 @@ export const PANTRY_ITEMS = [
     ],
   },
   {
-    label: "ovesné vločky",
-    aliases: ["ovesné vločky"],
-  },
-  {
-    label: "granola",
-    aliases: ["granola"],
-  },
-  {
-    label: "semínka",
-    aliases: ["semínka", "chia semínka", "sezamová semínka", "slunečnicová semínka"],
-  },
-  {
-    label: "rozinky",
-    aliases: ["rozinky"],
-  },
-  {
-    label: "svačinky",
-    aliases: ["svačinky"],
-  },
-  {
     label: "strouhanka",
+    category: "suché zásoby",
     aliases: ["strouhanka"],
   },
   {
     label: "těstoviny",
+    category: "suché zásoby",
     aliases: ["těstoviny"],
   },
   {
     label: "rýžové nudle",
+    category: "suché zásoby",
     aliases: ["rýžové nudle"],
   },
   {
-    label: "vejce",
-    aliases: ["vejce"],
-  },
-  {
-    label: "rostlinné mléko",
-    aliases: ["rostlinné mléko"],
-  },
-  {
     label: "česnek",
+    category: "suché zásoby",
     aliases: ["česnek", "čerstvý česnek"],
   },
   {
-    label: "cibule",
-    aliases: ["cibule", "cibuli"],
-  },
-  {
-    label: "droždí",
-    aliases: ["droždí", "čerstvé droždí", "kvasnice"],
-  },
-  {
-    label: "ocet",
-    aliases: ["ocet"],
-  },
-  {
-    label: "jablečný ocet",
-    aliases: ["jablečný ocet"],
-  },
-  {
-    label: "sojová omáčka",
-    aliases: ["sojová omáčka", "sójová omáčka"],
-  },
-  {
     label: "nori",
+    category: "suché zásoby",
     aliases: ["nori", "řasa nori"],
-  },
-  {
-    label: "burákové máslo",
-    aliases: ["burákové máslo", "arašídové máslo"],
   },
 ];
 
