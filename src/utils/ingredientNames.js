@@ -24,6 +24,11 @@ const INGREDIENT_NAME_GROUPS = [
   { canonical: "cibule", aliases: ["cibuli"], measuredName: "cibule" },
   { canonical: "česnek", aliases: ["česneku"], measuredName: "česneku" },
   { canonical: "brambory", aliases: ["brambor", "brambora"], measuredName: "brambor" },
+  {
+    canonical: "brusinky",
+    aliases: ["sušené brusinky", "sušených brusinek"],
+    measuredName: "brusinek",
+  },
   { canonical: "rajčata", aliases: ["rajče", "rajčat"], measuredName: "rajčat" },
   { canonical: "mrkev", aliases: ["mrkve"], measuredName: "mrkve" },
   { canonical: "petržel", aliases: ["petržele"], measuredName: "petržele" },
@@ -174,11 +179,6 @@ const INGREDIENT_NAME_GROUPS = [
   { canonical: "vlašské ořechy", aliases: ["vlašských ořechů"], measuredName: "vlašských ořechů" },
   { canonical: "sušená rajčata", aliases: ["sušených rajčat"], measuredName: "sušených rajčat" },
   { canonical: "sušené švestky", aliases: ["sušených švestek"], measuredName: "sušených švestek" },
-  {
-    canonical: "sušené brusinky",
-    aliases: ["sušených brusinek"],
-    measuredName: "sušených brusinek",
-  },
   { canonical: "kuřecí prsa", aliases: ["kuřecích prsou"], measuredName: "kuřecích prsou" },
   {
     canonical: "kuřecí stehna nebo prsa",

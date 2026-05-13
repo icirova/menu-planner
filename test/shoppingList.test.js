@@ -483,6 +483,25 @@ describe("shopping list helpers", () => {
     ]);
   });
 
+  it("groups dried cranberries under cranberries", () => {
+    const day = {
+      snack1: [3, 4],
+      shoppingSelections: {},
+    };
+    const cranberryRecipes = [
+      { id: 3, title: "Paštika", ingredients: [{ amount: 1, unit: "lžíce", item: "brusinky" }] },
+      {
+        id: 4,
+        title: "Chléb",
+        ingredients: [{ amount: 2, unit: "lžíce", item: "sušené brusinky" }],
+      },
+    ];
+
+    assert.deepEqual(getDayShoppingItems(day, cranberryRecipes), [
+      { id: "brusinky", key: "brusinky", label: "Brusinky", selected: true },
+    ]);
+  });
+
   it("ignores fresh yeast aliases as pantry yeast", () => {
     const day = {
       breakfast: [3, 4, 5],
