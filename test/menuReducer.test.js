@@ -72,7 +72,7 @@ describe("menuReducer", () => {
     assert.equal(afterSlotClear.week[0].lunch, "");
   });
 
-  it("moves one recipe or an entire slot without dropping existing target recipes", () => {
+  it("moves one recipe by appending and swaps an entire slot with the target", () => {
     const state = createState();
     state.week[0].lunch = [1, 2];
     state.week[1].dinner = [3];
@@ -100,6 +100,18 @@ describe("menuReducer", () => {
 
     assert.equal(afterMoveAll.week[1].dinner, "");
     assert.deepEqual(afterMoveAll.week[2].extra, [3, 2]);
+
+    const afterSwap = menuReducer(afterMoveAll, {
+      type: "MOVE_MEAL",
+      fromDay: 2,
+      fromKey: "extra",
+      toDay: 0,
+      toKey: "lunch",
+      moveAll: true,
+    });
+
+    assert.deepEqual(afterSwap.week[2].extra, [1]);
+    assert.deepEqual(afterSwap.week[0].lunch, [3, 2]);
   });
 
   it("removes a deleted recipe from every slot", () => {

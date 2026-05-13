@@ -104,11 +104,9 @@ export const menuReducer = (state, action) => {
       const nextWeek = state.week.map((day) => ({ ...day }));
 
       if (moveAll) {
-        nextWeek[fromDay][fromKey] = "";
-        nextWeek[toDay][toKey] = normalizeSlotValue([
-          ...getSlotRecipeIds(nextWeek[toDay][toKey]),
-          ...valueIds,
-        ]);
+        const targetValue = nextWeek[toDay][toKey];
+        nextWeek[toDay][toKey] = normalizeSlotValue(valueIds);
+        nextWeek[fromDay][fromKey] = normalizeSlotValue(targetValue);
         return { ...state, week: nextWeek };
       }
 
