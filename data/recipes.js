@@ -345,7 +345,7 @@ export const recipes = [
     id: 18,
     title: "Hummus",
     servings: 4,
-    tags: ["snídaně", "večeře"],
+    tags: ["snídaně", "večeře", "pomazánky"],
     photo_urls: ["/imgRecipe/hummus.webp"],
     ingredients: [
       { amount: 400, unit: "g", item: "uvařená cizrna" },
@@ -1444,7 +1444,7 @@ export const recipes = [
   },
   {
     id: 69,
-    title: "Celozrnný chléb s ořechy a brusinkami",
+    title: "Chléb s ořechy a brusinkami",
     servings: 8,
     tags: ["přílohy"],
     photo_urls: ["/imgRecipe/chleb-brusinky.webp"],
@@ -2008,7 +2008,7 @@ export const recipes = [
     tags: ["večeře", "svačiny"],
     photo_urls: ["/imgRecipe/hot-dog.webp"],
     ingredients: [
-      { amount: 4, unit: "ks", item: "rohlík na hot dog" },
+      { amount: 4, unit: "ks", item: "rohlík" },
       { amount: 4, unit: "ks", item: "párek" },
       { amount: 4, unit: "lžíce", item: "kečup" },
       { amount: 2, unit: "lžíce", item: "hořčice" },
