@@ -24,13 +24,20 @@
   line-height: 1.45;
 }
 
+.pantry-card__groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-top: 1rem;
+}
+
 .pantry-card__list {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   margin: 0;
-  padding: 1rem 0 0;
+  padding: 0;
 }
 
 .pantry-card__item {
