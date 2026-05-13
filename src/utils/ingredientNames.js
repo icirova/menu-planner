@@ -170,11 +170,7 @@ const INGREDIENT_NAME_GROUPS = [
     aliases: ["slunečnicových semínek"],
     measuredName: "slunečnicových semínek",
   },
-  {
-    canonical: "nasekané ořechy",
-    aliases: ["nasekaných ořechů"],
-    measuredName: "nasekaných ořechů",
-  },
+  { canonical: "ořechy", aliases: ["ořechů", "nasekané ořechy", "nasekaných ořechů"], measuredName: "ořechů" },
   { canonical: "vlašské ořechy", aliases: ["vlašských ořechů"], measuredName: "vlašských ořechů" },
   { canonical: "sušená rajčata", aliases: ["sušených rajčat"], measuredName: "sušených rajčat" },
   { canonical: "sušené švestky", aliases: ["sušených švestek"], measuredName: "sušených švestek" },

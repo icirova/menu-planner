@@ -403,6 +403,21 @@ describe("shopping list helpers", () => {
     ]);
   });
 
+  it("groups chopped nuts under nuts", () => {
+    const day = {
+      snack1: [3, 4],
+      shoppingSelections: {},
+    };
+    const nutRecipes = [
+      { id: 3, title: "Granola", ingredients: [{ amount: 100, unit: "g", item: "nasekané ořechy" }] },
+      { id: 4, title: "Koláč", ingredients: [{ amount: 100, unit: "g", item: "ořechy" }] },
+    ];
+
+    assert.deepEqual(getDayShoppingItems(day, nutRecipes), [
+      { id: "orechy", key: "orechy", label: "Ořechy", selected: true },
+    ]);
+  });
+
   it("ignores fresh yeast aliases as pantry yeast", () => {
     const day = {
       breakfast: [3, 4, 5],
