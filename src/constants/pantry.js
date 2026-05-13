@@ -151,6 +151,11 @@ export const PANTRY_ITEMS = [
     aliases: ["strouhanka"],
   },
   {
+    label: "chléb",
+    category: "suché zásoby",
+    aliases: ["chléb", "chleba", "toastový chléb", "celozrnný chléb"],
+  },
+  {
     label: "těstoviny",
     category: "suché zásoby",
     aliases: ["těstoviny"],

@@ -116,6 +116,7 @@ describe("shopping list helpers", () => {
         "suché zásoby",
         "suché zásoby",
         "suché zásoby",
+        "suché zásoby",
       ],
     );
     assert.equal(pantryLabels.includes("bobkový list"), false);
@@ -140,6 +141,7 @@ describe("shopping list helpers", () => {
         "rozinky",
         "svačinky",
         "strouhanka",
+        "chléb",
         "těstoviny",
         "rýžové nudle",
         "vejce",
@@ -197,6 +199,9 @@ describe("shopping list helpers", () => {
           { amount: 20, unit: "g", item: "rozinky" },
           { amount: 1, unit: "ks", item: "svačinky" },
           { amount: 50, unit: "g", item: "strouhanka" },
+          { amount: 2, unit: "plátky", item: "chléb" },
+          { amount: 2, unit: "plátky", item: "toastový chléb" },
+          { amount: 2, unit: "plátky", item: "celozrnný chléb" },
           { amount: 100, unit: "g", item: "těstoviny" },
           { amount: 100, unit: "g", item: "rýžové nudle" },
           { amount: 1, unit: "ks", item: "vejce" },
