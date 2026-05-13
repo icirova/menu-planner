@@ -63,7 +63,6 @@ describe("shopping list helpers", () => {
     };
 
     assert.deepEqual(getDayShoppingItems(day, recipes), [
-      { id: "cibule", key: "cibule", label: "Cibule", selected: true },
       { id: "mrkev", key: "mrkev", label: "Mrkev", selected: false },
       { id: "ryze", key: "ryze", label: "Rýže", selected: true },
     ]);
@@ -102,6 +101,7 @@ describe("shopping list helpers", () => {
         "javorový sirup",
         "datlový sirup",
         "ovesné vločky",
+        "granola",
         "semínka",
         "rozinky",
         "svačinky",
@@ -111,6 +111,7 @@ describe("shopping list helpers", () => {
         "vejce",
         "rostlinné mléko",
         "česnek",
+        "cibule",
         "droždí",
         "ocet",
         "jablečný ocet",
@@ -157,6 +158,7 @@ describe("shopping list helpers", () => {
           { amount: 1, unit: "lžička", item: "sušená petrželka" },
           { amount: 1, unit: "lžička", item: "římský kmín" },
           { amount: 50, unit: "g", item: "ovesné vločky" },
+          { amount: 50, unit: "g", item: "granola" },
           { amount: 1, unit: "lžíce", item: "chia semínka" },
           { amount: 20, unit: "g", item: "rozinky" },
           { amount: 1, unit: "ks", item: "svačinky" },
@@ -166,6 +168,8 @@ describe("shopping list helpers", () => {
           { amount: 1, unit: "ks", item: "vejce" },
           { amount: 200, unit: "ml", item: "rostlinné mléko" },
           { amount: 2, unit: "stroužky", item: "česnek" },
+          { amount: 1, unit: "ks", item: "cibule" },
+          { amount: 1, unit: "ks", item: "cibuli" },
           { amount: 15, unit: "g", item: "čerstvé droždí" },
           { amount: 1, unit: "lžíce", item: "ocet" },
           { amount: 1, unit: "lžíce", item: "jablečný ocet" },
@@ -481,7 +485,7 @@ describe("shopping list helpers", () => {
     ];
     const shopping = {
       overrides: {
-        cibule: { done: true },
+        mrkev: { done: true },
         "stará-položka": { done: true },
         ryze: { done: true },
       },
@@ -489,16 +493,13 @@ describe("shopping list helpers", () => {
     };
 
     const state = getShoppingStateForWeek(shopping, week, recipes);
-    assert.deepEqual(Object.keys(state.overrides), ["cibule"]);
+    assert.deepEqual(Object.keys(state.overrides), ["mrkev"]);
     assert.deepEqual(state.customItems, [{ id: "custom-1", label: "Čaj", done: false }]);
 
     const items = getShoppingListItems(shopping, week, recipes);
     assert.deepEqual(
       items.generatedItems.map(({ key, done }) => ({ key, done })),
-      [
-        { key: "cibule", done: true },
-        { key: "mrkev", done: false },
-      ],
+      [{ key: "mrkev", done: true }],
     );
     assert.deepEqual(items.customItems, [
       { id: "custom-1", label: "Čaj", done: false, kind: "custom" },
@@ -508,7 +509,7 @@ describe("shopping list helpers", () => {
   it("summarizes generated and custom shopping items", () => {
     const summary = getShoppingListSummary(
       {
-        overrides: { cibule: { done: true } },
+        overrides: { mrkev: { done: true } },
         customItems: [{ id: "custom-1", label: "Čaj", done: false }],
       },
       [{ lunch: [1], shoppingSelections: {} }],
@@ -516,8 +517,8 @@ describe("shopping list helpers", () => {
     );
 
     assert.deepEqual(summary, {
-      totalCount: 3,
-      toBuyCount: 2,
+      totalCount: 2,
+      toBuyCount: 1,
       doneCount: 1,
     });
   });

@@ -74,6 +74,10 @@ export const PANTRY_ITEMS = [
     aliases: ["ovesné vločky"],
   },
   {
+    label: "granola",
+    aliases: ["granola"],
+  },
+  {
     label: "semínka",
     aliases: ["semínka", "chia semínka", "sezamová semínka", "slunečnicová semínka"],
   },
@@ -108,6 +112,10 @@ export const PANTRY_ITEMS = [
   {
     label: "česnek",
     aliases: ["česnek", "čerstvý česnek"],
+  },
+  {
+    label: "cibule",
+    aliases: ["cibule", "cibuli"],
   },
   {
     label: "droždí",
