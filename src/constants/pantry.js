@@ -8,10 +8,6 @@ export const PANTRY_ITEMS = [
     aliases: ["hrubozrnná sůl"],
   },
   {
-    label: "pepř",
-    aliases: ["pepř", "pepř celý", "celý pepř", "pepř mletý", "mletý pepř"],
-  },
-  {
     label: "cukr",
     aliases: ["cukr"],
   },
@@ -47,6 +43,13 @@ export const PANTRY_ITEMS = [
     label: "koření",
     aliases: [
       "koření",
+      "bobkový list",
+      "nové koření",
+      "pepř",
+      "pepř celý",
+      "celý pepř",
+      "pepř mletý",
+      "mletý pepř",
       "kmín",
       "mletý kmín",
       "drcený kmín",
@@ -129,14 +132,6 @@ export const PANTRY_ITEMS = [
   {
     label: "burákové máslo",
     aliases: ["burákové máslo", "arašídové máslo"],
-  },
-  {
-    label: "bobkový list",
-    aliases: ["bobkový list"],
-  },
-  {
-    label: "nové koření",
-    aliases: ["nové koření"],
   },
 ];
 

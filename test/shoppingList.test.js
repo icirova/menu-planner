@@ -85,6 +85,9 @@ describe("shopping list helpers", () => {
   it("shows requested pantry items and ignores their ingredient aliases", () => {
     const pantryLabels = PANTRY_ITEMS.map((item) => item.label);
 
+    assert.equal(pantryLabels.includes("bobkový list"), false);
+    assert.equal(pantryLabels.includes("nové koření"), false);
+    assert.equal(pantryLabels.includes("pepř"), false);
     assert.deepEqual(
       [
         "olej",
