@@ -319,7 +319,11 @@ const INGREDIENT_NAME_GROUPS = [
     ],
     measuredName: "listového salátu",
   },
-  { canonical: "máslo nebo olej", aliases: ["másla nebo oleje"], measuredName: "másla nebo oleje" },
+  {
+    canonical: "máslo nebo olej",
+    aliases: ["máslo/olej", "másla nebo oleje", "másla/oleje"],
+    measuredName: "másla nebo oleje",
+  },
   { canonical: "maso na řízek", aliases: ["masa na řízek"], measuredName: "masa na řízek" },
   {
     canonical: "med/javorový sirup",
@@ -332,9 +336,9 @@ const INGREDIENT_NAME_GROUPS = [
   { canonical: "mléko nebo voda", aliases: ["mléka nebo vody"], measuredName: "mléka nebo vody" },
   { canonical: "nori vločky", aliases: ["nori vloček"], measuredName: "nori vloček" },
   {
-    canonical: "pažitka/petrželka",
-    aliases: ["pažitky/petrželky"],
-    measuredName: "pažitky/petrželky",
+    canonical: "pažitka nebo petrželka",
+    aliases: ["pažitka/petrželka", "pažitky nebo petrželky", "pažitky/petrželky"],
+    measuredName: "pažitky nebo petrželky",
   },
   { canonical: "perlivá voda", aliases: ["perlivé vody"], measuredName: "perlivé vody" },
   {
@@ -563,3 +567,8 @@ export const formatIngredientNameForAmount = (itemName, unit) => {
     getFallbackMeasuredName(canonicalName)
   );
 };
+
+export const formatShoppingIngredientName = (itemName) =>
+  getCanonicalIngredientName(itemName)
+    .replace(/\s+nebo\s+/g, " / ")
+    .replace(/\s*\/\s*/g, " / ");

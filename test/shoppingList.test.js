@@ -385,6 +385,32 @@ describe("shopping list helpers", () => {
     ]);
   });
 
+  it("shows alternative ingredients with slash in the shopping list", () => {
+    const day = {
+      dinner: [3, 4, 5],
+      shoppingSelections: {},
+    };
+    const alternativeRecipes = [
+      { id: 3, title: "Mozeček", ingredients: [{ amount: 2, unit: "lžíce", item: "máslo nebo olej" }] },
+      { id: 4, title: "Smažení", ingredients: [{ amount: 2, unit: "lžíce", item: "máslo/olej" }] },
+      {
+        id: 5,
+        title: "Pomazánka",
+        ingredients: [{ amount: 1, unit: "lžíce", item: "pažitka/petrželka" }],
+      },
+    ];
+
+    assert.deepEqual(getDayShoppingItems(day, alternativeRecipes), [
+      { id: "maslo-nebo-olej", key: "maslo-nebo-olej", label: "Máslo / olej", selected: true },
+      {
+        id: "pazitka-nebo-petrzelka",
+        key: "pazitka-nebo-petrzelka",
+        label: "Pažitka / petrželka",
+        selected: true,
+      },
+    ]);
+  });
+
   it("shows bread rolls in plural", () => {
     const day = {
       dinner: [3],

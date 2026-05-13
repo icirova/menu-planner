@@ -2,7 +2,11 @@ import { DAYS } from "../constants/days.js";
 import { MEAL_KEYS } from "../constants/mealKeys.js";
 import { IGNORED_INGREDIENTS } from "../constants/pantry.js";
 import { createStableId } from "./createId.js";
-import { getCanonicalIngredientName, normalizeIngredientKey } from "./ingredientNames.js";
+import {
+  formatShoppingIngredientName,
+  getCanonicalIngredientName,
+  normalizeIngredientKey,
+} from "./ingredientNames.js";
 import { getSlotRecipeIds } from "./mealSlots.js";
 
 const isPlainObject = (value) =>
@@ -125,6 +129,7 @@ const buildGeneratedShoppingItems = (week, recipes) => {
           if (!isPlainObject(ingredient)) return;
 
           const itemName = getCanonicalIngredientName(ingredient.item);
+          const labelName = formatShoppingIngredientName(itemName);
           const key = normalizeKey(itemName);
           if (!itemName || !key) return;
           if (isPantryItemKey(key)) return;
@@ -136,7 +141,7 @@ const buildGeneratedShoppingItems = (week, recipes) => {
               dayIndex,
               dayLabel: DAYS[dayIndex],
               key,
-              label: formatLabel(itemName),
+              label: formatLabel(labelName),
             });
           }
         });
@@ -180,6 +185,7 @@ export const getDayShoppingItems = (day, recipes) => {
         if (!isPlainObject(ingredient)) return;
 
         const itemName = getCanonicalIngredientName(ingredient.item);
+        const labelName = formatShoppingIngredientName(itemName);
         const key = normalizeKey(itemName);
         if (!itemName || !key || aggregated.has(key)) return;
         if (isPantryItemKey(key)) return;
@@ -187,7 +193,7 @@ export const getDayShoppingItems = (day, recipes) => {
         aggregated.set(key, {
           id: key,
           key,
-          label: formatLabel(itemName),
+          label: formatLabel(labelName),
           selected: isIngredientSelectedForDay(day, key),
         });
       });
