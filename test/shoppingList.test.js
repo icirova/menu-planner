@@ -82,6 +82,64 @@ describe("shopping list helpers", () => {
     assert.equal(PANTRY_ITEMS.some((item) => item.label === "voda"), false);
   });
 
+  it("shows requested pantry items and ignores their ingredient aliases", () => {
+    const pantryLabels = PANTRY_ITEMS.map((item) => item.label);
+
+    assert.deepEqual(
+      [
+        "olej",
+        "sůl",
+        "koření",
+        "ovesné vločky",
+        "semínka",
+        "rozinky",
+        "svačinky",
+        "strouhanka",
+        "těstoviny",
+        "rýžové nudle",
+        "vejce",
+        "rostlinné mléko",
+        "ocet",
+        "jablečný ocet",
+        "sojová omáčka",
+      ].every((label) => pantryLabels.includes(label)),
+      true,
+    );
+
+    const day = {
+      lunch: [3],
+      shoppingSelections: {},
+    };
+    const pantryRecipes = [
+      {
+        id: 3,
+        title: "Spížový test",
+        ingredients: [
+          { amount: 1, unit: "lžíce", item: "rostlinný olej" },
+          { amount: 1, unit: "lžička", item: "sůl" },
+          { amount: 1, unit: "lžička", item: "kari koření" },
+          { amount: 50, unit: "g", item: "ovesné vločky" },
+          { amount: 1, unit: "lžíce", item: "chia semínka" },
+          { amount: 20, unit: "g", item: "rozinky" },
+          { amount: 1, unit: "ks", item: "svačinky" },
+          { amount: 50, unit: "g", item: "strouhanka" },
+          { amount: 100, unit: "g", item: "těstoviny" },
+          { amount: 100, unit: "g", item: "rýžové nudle" },
+          { amount: 1, unit: "ks", item: "vejce" },
+          { amount: 200, unit: "ml", item: "rostlinné mléko" },
+          { amount: 1, unit: "lžíce", item: "ocet" },
+          { amount: 1, unit: "lžíce", item: "jablečný ocet" },
+          { amount: 1, unit: "lžíce", item: "sójová omáčka" },
+          { amount: 1, unit: "ks", item: "mrkev" },
+        ],
+      },
+    ];
+
+    assert.deepEqual(getDayShoppingItems(day, pantryRecipes), [
+      { id: "mrkev", key: "mrkev", label: "Mrkev", selected: true },
+    ]);
+  });
+
   it("keeps wholegrain spelt flour separate and groups its aliases", () => {
     const day = {
       breakfast: [3, 4, 5],
@@ -140,7 +198,7 @@ describe("shopping list helpers", () => {
     ]);
   });
 
-  it("groups plant oil under oil", () => {
+  it("ignores plant oil as pantry oil", () => {
     const day = {
       lunch: [3, 4],
       shoppingSelections: {},
@@ -154,9 +212,7 @@ describe("shopping list helpers", () => {
       },
     ];
 
-    assert.deepEqual(getDayShoppingItems(day, oilRecipes), [
-      { id: "olej", key: "olej", label: "Olej", selected: true },
-    ]);
+    assert.deepEqual(getDayShoppingItems(day, oilRecipes), []);
   });
 
   it("groups ground paprika under sweet paprika", () => {
