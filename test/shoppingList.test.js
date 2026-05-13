@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
+import { PANTRY_ITEMS } from "../src/constants/pantry.js";
 import {
   getDayShoppingItems,
   getShoppingListItems,
@@ -68,7 +69,7 @@ describe("shopping list helpers", () => {
     ]);
   });
 
-  it("treats lukewarm water as pantry water", () => {
+  it("ignores water without showing it in pantry items", () => {
     const day = {
       breakfast: [3],
       shoppingSelections: {},
@@ -78,6 +79,7 @@ describe("shopping list helpers", () => {
     ];
 
     assert.deepEqual(getDayShoppingItems(day, waterRecipes), []);
+    assert.equal(PANTRY_ITEMS.some((item) => item.label === "voda"), false);
   });
 
   it("keeps wholegrain spelt flour separate and groups its aliases", () => {

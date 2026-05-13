@@ -1,6 +1,6 @@
 import { DAYS } from "../constants/days.js";
 import { MEAL_KEYS } from "../constants/mealKeys.js";
-import { PANTRY_ITEMS } from "../constants/pantry.js";
+import { IGNORED_INGREDIENTS } from "../constants/pantry.js";
 import { createStableId } from "./createId.js";
 import { getCanonicalIngredientName, normalizeIngredientKey } from "./ingredientNames.js";
 import { getSlotRecipeIds } from "./mealSlots.js";
@@ -15,7 +15,7 @@ const buildCustomItemId = () => createStableId("custom");
 const normalizeKey = normalizeIngredientKey;
 
 const PANTRY_KEYS = new Set(
-  PANTRY_ITEMS.flatMap((item) => item.aliases ?? [item.label])
+  IGNORED_INGREDIENTS.flatMap((item) => item.aliases ?? [item.label])
     .map((name) => normalizeKey(getCanonicalIngredientName(name)))
     .filter(Boolean),
 );

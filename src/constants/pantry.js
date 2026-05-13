@@ -8,15 +8,19 @@ export const PANTRY_ITEMS = [
     aliases: ["pepř"],
   },
   {
-    label: "voda",
-    aliases: ["voda"],
-  },
-  {
     label: "bobkový list",
     aliases: ["bobkový list"],
   },
   {
     label: "nové koření",
     aliases: ["nové koření"],
+  },
+];
+
+export const IGNORED_INGREDIENTS = [
+  ...PANTRY_ITEMS,
+  {
+    label: "voda",
+    aliases: ["voda"],
   },
 ];
