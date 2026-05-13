@@ -99,6 +99,8 @@ describe("shopping list helpers", () => {
         "rýžové nudle",
         "vejce",
         "rostlinné mléko",
+        "česnek",
+        "droždí",
         "ocet",
         "jablečný ocet",
         "sojová omáčka",
@@ -118,6 +120,19 @@ describe("shopping list helpers", () => {
           { amount: 1, unit: "lžíce", item: "rostlinný olej" },
           { amount: 1, unit: "lžička", item: "sůl" },
           { amount: 1, unit: "lžička", item: "kari koření" },
+          { amount: 1, unit: "lžička", item: "mletý kmín" },
+          { amount: 1, unit: "lžička", item: "drcený kmín" },
+          { amount: 1, unit: "ks", item: "bobkový list" },
+          { amount: 1, unit: "ks", item: "pepř celý" },
+          { amount: 1, unit: "lžička", item: "pepř mletý" },
+          { amount: 1, unit: "ks", item: "nové koření" },
+          { amount: 1, unit: "lžička", item: "tymián" },
+          { amount: 1, unit: "lžička", item: "sladká paprika" },
+          { amount: 1, unit: "lžička", item: "bazalka (sušená)" },
+          { amount: 1, unit: "lžička", item: "sušený česnek" },
+          { amount: 1, unit: "lžička", item: "skořice" },
+          { amount: 1, unit: "lžička", item: "sušená petrželka" },
+          { amount: 1, unit: "lžička", item: "římský kmín" },
           { amount: 50, unit: "g", item: "ovesné vločky" },
           { amount: 1, unit: "lžíce", item: "chia semínka" },
           { amount: 20, unit: "g", item: "rozinky" },
@@ -127,6 +142,8 @@ describe("shopping list helpers", () => {
           { amount: 100, unit: "g", item: "rýžové nudle" },
           { amount: 1, unit: "ks", item: "vejce" },
           { amount: 200, unit: "ml", item: "rostlinné mléko" },
+          { amount: 2, unit: "stroužky", item: "česnek" },
+          { amount: 15, unit: "g", item: "čerstvé droždí" },
           { amount: 1, unit: "lžíce", item: "ocet" },
           { amount: 1, unit: "lžíce", item: "jablečný ocet" },
           { amount: 1, unit: "lžíce", item: "sójová omáčka" },
@@ -137,6 +154,28 @@ describe("shopping list helpers", () => {
 
     assert.deepEqual(getDayShoppingItems(day, pantryRecipes), [
       { id: "mrkev", key: "mrkev", label: "Mrkev", selected: true },
+    ]);
+  });
+
+  it("keeps special spice mixes in the shopping list", () => {
+    const day = {
+      dinner: [3],
+      shoppingSelections: {},
+    };
+    const spiceRecipes = [
+      {
+        id: 3,
+        title: "Speciální koření",
+        ingredients: [
+          { amount: 1, unit: "lžíce", item: "grilovací koření" },
+          { amount: 1, unit: "lžíce", item: "perníkové koření" },
+        ],
+      },
+    ];
+
+    assert.deepEqual(getDayShoppingItems(day, spiceRecipes), [
+      { id: "grilovaci-koreni", key: "grilovaci-koreni", label: "Grilovací koření", selected: true },
+      { id: "pernikove-koreni", key: "pernikove-koreni", label: "Perníkové koření", selected: true },
     ]);
   });
 
@@ -215,7 +254,7 @@ describe("shopping list helpers", () => {
     assert.deepEqual(getDayShoppingItems(day, oilRecipes), []);
   });
 
-  it("groups ground paprika under sweet paprika", () => {
+  it("ignores ground paprika as pantry sweet paprika", () => {
     const day = {
       lunch: [3, 4],
       shoppingSelections: {},
@@ -225,9 +264,7 @@ describe("shopping list helpers", () => {
       { id: 4, title: "Tacos", ingredients: [{ amount: 1, unit: "lžíce", item: "mletá paprika" }] },
     ];
 
-    assert.deepEqual(getDayShoppingItems(day, paprikaRecipes), [
-      { id: "sladka-paprika", key: "sladka-paprika", label: "Sladká paprika", selected: true },
-    ]);
+    assert.deepEqual(getDayShoppingItems(day, paprikaRecipes), []);
   });
 
   it("groups baking powder aliases under baking powder", () => {
@@ -366,7 +403,7 @@ describe("shopping list helpers", () => {
     ]);
   });
 
-  it("groups fresh yeast and yeast aliases under yeast", () => {
+  it("ignores fresh yeast aliases as pantry yeast", () => {
     const day = {
       breakfast: [3, 4, 5],
       shoppingSelections: {},
@@ -377,9 +414,7 @@ describe("shopping list helpers", () => {
       { id: 5, title: "Chléb", ingredients: [{ amount: 8, unit: "g", item: "kvasnice" }] },
     ];
 
-    assert.deepEqual(getDayShoppingItems(day, yeastRecipes), [
-      { id: "drozdi", key: "drozdi", label: "Droždí", selected: true },
-    ]);
+    assert.deepEqual(getDayShoppingItems(day, yeastRecipes), []);
   });
 
   it("groups dried yeast aliases under dried yeast", () => {

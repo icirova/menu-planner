@@ -5,7 +5,7 @@ export const PANTRY_ITEMS = [
   },
   {
     label: "pepř",
-    aliases: ["pepř"],
+    aliases: ["pepř", "pepř celý", "celý pepř", "pepř mletý", "mletý pepř"],
   },
   {
     label: "olej",
@@ -13,7 +13,26 @@ export const PANTRY_ITEMS = [
   },
   {
     label: "koření",
-    aliases: ["koření", "grilovací koření", "kari koření", "perníkové koření"],
+    aliases: [
+      "koření",
+      "kmín",
+      "mletý kmín",
+      "drcený kmín",
+      "kmín drcený",
+      "tymián",
+      "sušený tymián",
+      "sladká paprika",
+      "mletá paprika",
+      "kari",
+      "kari koření",
+      "bazalka (sušená)",
+      "sušená bazalka",
+      "česnek (sušený)",
+      "sušený česnek",
+      "skořice",
+      "sušená petrželka",
+      "římský kmín",
+    ],
   },
   {
     label: "ovesné vločky",
@@ -50,6 +69,14 @@ export const PANTRY_ITEMS = [
   {
     label: "rostlinné mléko",
     aliases: ["rostlinné mléko"],
+  },
+  {
+    label: "česnek",
+    aliases: ["česnek", "čerstvý česnek"],
+  },
+  {
+    label: "droždí",
+    aliases: ["droždí", "čerstvé droždí", "kvasnice"],
   },
   {
     label: "ocet",
