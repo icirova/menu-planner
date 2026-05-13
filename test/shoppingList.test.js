@@ -89,7 +89,15 @@ describe("shopping list helpers", () => {
       [
         "olej",
         "sůl",
+        "hrubozrnná sůl",
         "koření",
+        "cukr",
+        "hnědý cukr",
+        "prášek do pečiva",
+        "jedlá soda",
+        "med",
+        "javorový sirup",
+        "datlový sirup",
         "ovesné vločky",
         "semínka",
         "rozinky",
@@ -104,6 +112,8 @@ describe("shopping list helpers", () => {
         "ocet",
         "jablečný ocet",
         "sojová omáčka",
+        "nori",
+        "burákové máslo",
       ].every((label) => pantryLabels.includes(label)),
       true,
     );
@@ -119,6 +129,15 @@ describe("shopping list helpers", () => {
         ingredients: [
           { amount: 1, unit: "lžíce", item: "rostlinný olej" },
           { amount: 1, unit: "lžička", item: "sůl" },
+          { amount: 1, unit: "lžička", item: "hrubozrnná sůl" },
+          { amount: 1, unit: "lžíce", item: "cukr" },
+          { amount: 1, unit: "lžíce", item: "hnědý cukr" },
+          { amount: 1, unit: "balení", item: "prášek do pečiva" },
+          { amount: 1, unit: "lžička", item: "kypřící prášek" },
+          { amount: 1, unit: "lžička", item: "jedlá soda" },
+          { amount: 1, unit: "lžíce", item: "med" },
+          { amount: 1, unit: "lžíce", item: "javorový sirup" },
+          { amount: 1, unit: "lžíce", item: "datlový sirup" },
           { amount: 1, unit: "lžička", item: "kari koření" },
           { amount: 1, unit: "lžička", item: "mletý kmín" },
           { amount: 1, unit: "lžička", item: "drcený kmín" },
@@ -147,6 +166,11 @@ describe("shopping list helpers", () => {
           { amount: 1, unit: "lžíce", item: "ocet" },
           { amount: 1, unit: "lžíce", item: "jablečný ocet" },
           { amount: 1, unit: "lžíce", item: "sójová omáčka" },
+          { amount: 1, unit: "plát", item: "nori" },
+          { amount: 1, unit: "plát", item: "řasa nori" },
+          { amount: 1, unit: "lžíce", item: "nori vločky" },
+          { amount: 1, unit: "lžíce", item: "burákové máslo" },
+          { amount: 1, unit: "lžíce", item: "arašídové máslo" },
           { amount: 1, unit: "ks", item: "mrkev" },
         ],
       },
@@ -267,7 +291,7 @@ describe("shopping list helpers", () => {
     assert.deepEqual(getDayShoppingItems(day, paprikaRecipes), []);
   });
 
-  it("groups baking powder aliases under baking powder", () => {
+  it("ignores baking powder aliases as pantry baking powder", () => {
     const day = {
       snack1: [3, 4, 5, 6],
       shoppingSelections: {},
@@ -295,9 +319,7 @@ describe("shopping list helpers", () => {
       },
     ];
 
-    assert.deepEqual(getDayShoppingItems(day, bakingRecipes), [
-      { id: "prasek-do-peciva", key: "prasek-do-peciva", label: "Prášek do pečiva", selected: true },
-    ]);
+    assert.deepEqual(getDayShoppingItems(day, bakingRecipes), []);
   });
 
   it("groups pudding powder aliases under pudding", () => {

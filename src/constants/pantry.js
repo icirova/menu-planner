@@ -4,8 +4,40 @@ export const PANTRY_ITEMS = [
     aliases: ["sůl"],
   },
   {
+    label: "hrubozrnná sůl",
+    aliases: ["hrubozrnná sůl"],
+  },
+  {
     label: "pepř",
     aliases: ["pepř", "pepř celý", "celý pepř", "pepř mletý", "mletý pepř"],
+  },
+  {
+    label: "cukr",
+    aliases: ["cukr"],
+  },
+  {
+    label: "hnědý cukr",
+    aliases: ["hnědý cukr"],
+  },
+  {
+    label: "prášek do pečiva",
+    aliases: ["prášek do pečiva", "kypřící prášek", "prášek do pečení", "prdopeč"],
+  },
+  {
+    label: "jedlá soda",
+    aliases: ["jedlá soda"],
+  },
+  {
+    label: "med",
+    aliases: ["med"],
+  },
+  {
+    label: "javorový sirup",
+    aliases: ["javorový sirup"],
+  },
+  {
+    label: "datlový sirup",
+    aliases: ["datlový sirup"],
   },
   {
     label: "olej",
@@ -89,6 +121,14 @@ export const PANTRY_ITEMS = [
   {
     label: "sojová omáčka",
     aliases: ["sojová omáčka", "sójová omáčka"],
+  },
+  {
+    label: "nori",
+    aliases: ["nori", "řasa nori", "nori vločky"],
+  },
+  {
+    label: "burákové máslo",
+    aliases: ["burákové máslo", "arašídové máslo"],
   },
   {
     label: "bobkový list",
