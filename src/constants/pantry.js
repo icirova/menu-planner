@@ -35,6 +35,11 @@ export const PANTRY_ITEMS = [
     aliases: ["cibule", "cibuli"],
   },
   {
+    label: "zelenina",
+    category: "lednice",
+    aliases: ["zelenina"],
+  },
+  {
     label: "cukr",
     category: "pečení",
     aliases: ["cukr"],
@@ -73,6 +78,11 @@ export const PANTRY_ITEMS = [
     label: "svačinky",
     category: "snídaně a svačiny",
     aliases: ["svačinky"],
+  },
+  {
+    label: "ovoce",
+    category: "snídaně a svačiny",
+    aliases: ["ovoce"],
   },
   {
     label: "rozinky",
