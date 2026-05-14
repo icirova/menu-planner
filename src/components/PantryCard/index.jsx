@@ -21,8 +21,12 @@ export const PantryCard = () => (
     </div>
 
     <div className="pantry-card__groups">
-      {pantryGroups.map((group) => (
-        <ul key={group.category} className="pantry-card__list" aria-label={group.category}>
+      {pantryGroups.map((group, groupIndex) => (
+        <ul
+          key={`${group.category}-${groupIndex}`}
+          className="pantry-card__list"
+          aria-label={group.category}
+        >
           {group.items.map((item) => (
             <li key={item.label} className="pantry-card__item">
               {item.label}
