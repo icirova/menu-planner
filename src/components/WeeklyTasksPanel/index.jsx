@@ -26,6 +26,7 @@ export const WeeklyTasksPanel = ({
     [generatedTasks],
   );
   const noteItems = Array.isArray(value) ? value : [];
+  const canAddNote = noteDraft.trim() !== "";
 
   const handleAddNote = (event) => {
     event.preventDefault();
@@ -171,7 +172,7 @@ export const WeeklyTasksPanel = ({
                 value={noteDraft}
                 onChange={(event) => setNoteDraft(event.target.value)}
               />
-              <button type="submit" className="button button--add">
+              <button type="submit" className="button button--add" disabled={!canAddNote}>
                 Přidat
               </button>
             </form>

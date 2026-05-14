@@ -100,8 +100,14 @@
   border-color: #e5c8c3;
 }
 
-.button[disabled] {
-  opacity: 0.55;
+.button:disabled,
+.button:disabled:hover,
+.button:disabled:active,
+.button:disabled:focus {
+  background-color: #ece8df;
+  border-color: #d8d0c4;
+  color: #8a8378;
+  box-shadow: none;
   cursor: not-allowed;
   pointer-events: none;
 }

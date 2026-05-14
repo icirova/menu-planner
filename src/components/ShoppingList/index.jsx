@@ -21,6 +21,7 @@ export const ShoppingList = ({ value, week = [], recipes = [], onChange, showTit
     [recipes, shopping, week],
   );
   const [draftItem, setDraftItem] = useState(createEmptyCustomItem);
+  const canAddCustomItem = draftItem.label.trim() !== "";
   const hasShoppingItems = generatedItems.length > 0 || customItems.length > 0;
 
   const updateShopping = (updater) => {
@@ -158,7 +159,7 @@ export const ShoppingList = ({ value, week = [], recipes = [], onChange, showTit
                 setDraftItem((current) => ({ ...current, label: event.target.value }))
               }
             />
-            <button type="submit" className="button button--add">
+            <button type="submit" className="button button--add" disabled={!canAddCustomItem}>
               Přidat
             </button>
           </form>

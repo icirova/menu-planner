@@ -9,6 +9,12 @@ export const IngredientInputs = forwardRef(
   ({ ingredients, setIngredients, onValidationError }, ref) => {
     const [newIngredient, setNewIngredient] = useState({ amount: "", unit: "", item: "" });
     const rowRef = useRef(null);
+    const parsedDraftAmount = parseFloat(newIngredient.amount);
+    const canAddIngredient =
+      Number.isFinite(parsedDraftAmount) &&
+      parsedDraftAmount > 0 &&
+      newIngredient.unit !== "" &&
+      newIngredient.item.trim() !== "";
 
     const focusDraftField = useCallback((fieldName) => {
       rowRef.current?.querySelector(`[name="${fieldName}"]`)?.focus();
@@ -141,6 +147,7 @@ export const IngredientInputs = forwardRef(
               />
 
               <select
+                name="unit"
                 value={newIngredient.unit}
                 onChange={(e) => handleChange("unit", e.target.value)}
                 className="form__input form__input--unit"
@@ -172,6 +179,7 @@ export const IngredientInputs = forwardRef(
                 type="button"
                 className="button button--add"
                 onClick={addIngredient}
+                disabled={!canAddIngredient}
                 aria-label="Přidat surovinu"
               >
                 Přidat
