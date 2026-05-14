@@ -22,11 +22,11 @@ export const RecipeDetailGallery = ({
               key={`${recipeId}-${index}`}
               className="recipe-detail__thumb-btn"
               onClick={() => onOpenLightbox(index)}
-              aria-label={`Otevřít foto ${index + 2}`}
+              aria-label={`Otevřít foto ${index + 1}`}
             >
               <img
                 src={src}
-                alt={`${recipeTitle} – foto ${index + 2}`}
+                alt={`${recipeTitle} – foto ${index + 1}`}
                 className="recipe-detail__thumb"
                 loading="lazy"
               />
@@ -67,7 +67,7 @@ export const RecipeDetailGallery = ({
           <img
             className="lightbox__img"
             src={gallery[lightboxIndex]}
-            alt={`${recipeTitle} – foto ${lightboxIndex + 2}`}
+            alt={`${recipeTitle} – foto ${lightboxIndex + 1}`}
             onClick={(event) => event.stopPropagation()}
           />
         </div>
