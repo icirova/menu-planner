@@ -21,6 +21,11 @@ const INGREDIENT_NAME_GROUPS = [
   { canonical: "cukr", aliases: ["cukru"], measuredName: "cukru" },
   { canonical: "mléko", aliases: ["mléka"], measuredName: "mléka" },
   { canonical: "máslo", aliases: ["másla"], measuredName: "másla" },
+  {
+    canonical: "burákové máslo",
+    aliases: ["burákového másla", "arašídové máslo", "arašídového másla"],
+    measuredName: "burákového másla",
+  },
   { canonical: "cibule", aliases: ["cibuli"], measuredName: "cibule" },
   { canonical: "česnek", aliases: ["česneku"], measuredName: "česneku" },
   { canonical: "brambory", aliases: ["brambor", "brambora"], measuredName: "brambor" },

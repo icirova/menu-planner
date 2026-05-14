@@ -14,4 +14,15 @@ describe("ingredient formatting", () => {
       "1 lžíce pažitky nebo petrželky",
     );
   });
+
+  it("uses measured forms for peanut butter", () => {
+    assert.equal(
+      formatIngredient({ amount: 60, unit: "g", item: "burákové máslo" }, 1, 1),
+      "60 g burákového másla",
+    );
+    assert.equal(
+      formatIngredient({ amount: 1, unit: "lžíce", item: "arašídové máslo" }, 1, 1),
+      "1 lžíce burákového másla",
+    );
+  });
 });
