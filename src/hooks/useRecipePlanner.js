@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useReducer } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import {
   getOutsideCancelActionType,
   getSlotRecipeIdsForPlanner,
@@ -11,6 +11,7 @@ import { usePlannerPointerDrag } from "./usePlannerPointerDrag.js";
 
 export const useRecipePlanner = ({ recipeList, weeklyMenu, menuDispatch, selectedTags }) => {
   const [plannerUiState, plannerUiDispatch] = useReducer(plannerUiReducer, initialPlannerUiState);
+  const [keyboardDrag, setKeyboardDrag] = useState(null);
   const { duplicateMessage, duplicateSource, planMessage, selectedRecipeId, selectedTarget } =
     plannerUiState;
   const { focusPlannerCell, plannerCellRefs, plannerRef } = usePlannerFocus();
@@ -181,6 +182,59 @@ export const useRecipePlanner = ({ recipeList, weeklyMenu, menuDispatch, selecte
     commitDraggedPayload,
   });
 
+  const handlePlannerCellKeyDown = useCallback(
+    (event, dayIndex, slotKey, slotRecipes = []) => {
+      if (event.key === "Escape" && keyboardDrag) {
+        event.preventDefault();
+        setKeyboardDrag(null);
+        plannerUiDispatch({ type: "CANCEL_KEYBOARD_DRAG" });
+        return;
+      }
+
+      if (event.key !== " " && event.key !== "Spacebar") {
+        return;
+      }
+
+      event.preventDefault();
+
+      if (!keyboardDrag) {
+        if (!slotRecipes.length) {
+          plannerUiDispatch({ type: "REJECT_KEYBOARD_DRAG_SOURCE" });
+          return;
+        }
+
+        const shouldMoveAll = slotRecipes.length > 1;
+        const label = shouldMoveAll
+          ? slotRecipes.map((recipe) => recipe.title).join(", ")
+          : slotRecipes[0].title;
+        const payload = {
+          dayIndex,
+          slotKey,
+          recipeId: shouldMoveAll ? undefined : slotRecipes[0].id,
+          moveAll: shouldMoveAll,
+        };
+
+        setKeyboardDrag({ ...payload, label });
+        plannerUiDispatch({ type: "START_KEYBOARD_DRAG", dayIndex, label, slotKey });
+        return;
+      }
+
+      if (keyboardDrag.dayIndex === dayIndex && keyboardDrag.slotKey === slotKey) {
+        setKeyboardDrag(null);
+        plannerUiDispatch({ type: "CANCEL_KEYBOARD_DRAG" });
+        return;
+      }
+
+      const didMove = commitDraggedPayload(keyboardDrag, dayIndex, slotKey);
+      setKeyboardDrag(null);
+
+      if (didMove) {
+        plannerUiDispatch({ type: "COMMIT_KEYBOARD_DRAG", dayIndex, slotKey });
+      }
+    },
+    [commitDraggedPayload, keyboardDrag],
+  );
+
   const clearPlannerCell = (dayIndex, slotKey, recipeId = null) => {
     menuDispatch({
       type: "CLEAR_MEAL",
@@ -216,6 +270,7 @@ export const useRecipePlanner = ({ recipeList, weeklyMenu, menuDispatch, selecte
     planMessage,
     plannerCellRefs,
     plannerRef,
+    keyboardDrag,
     pointerDrag,
     recipesById,
     selectedRecipeId,
@@ -224,6 +279,7 @@ export const useRecipePlanner = ({ recipeList, weeklyMenu, menuDispatch, selecte
     clearPlannerCell,
     clearWholePlan,
     handleDuplicateSlotStart,
+    handlePlannerCellKeyDown,
     handlePlannerPointerDown,
     handlePlannerCellClick,
     startPlanning,

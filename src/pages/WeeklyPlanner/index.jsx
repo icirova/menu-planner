@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { SUITABILITY_OPTIONS, TAG_OPTIONS } from "../../constants/recipeMetadata.js";
 import { useRecipePlanner } from "../../hooks/useRecipePlanner.js";
 import { filterRecipes, sortRecipes } from "../../selectors/recipeSelectors.js";
+import { getWeekRecipeIds } from "../../utils/mealSlots.js";
 
 export const WeeklyPlanner = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -18,6 +19,7 @@ export const WeeklyPlanner = () => {
     planMessage,
     plannerCellRefs,
     plannerRef,
+    keyboardDrag,
     pointerDrag,
     recipesById,
     selectedRecipeId,
@@ -26,6 +28,7 @@ export const WeeklyPlanner = () => {
     clearPlannerCell,
     clearWholePlan,
     handleDuplicateSlotStart,
+    handlePlannerCellKeyDown,
     handlePlannerPointerDown,
     handlePlannerCellClick,
     startPlanning,
@@ -53,6 +56,7 @@ export const WeeklyPlanner = () => {
       }),
     [recipeList, selectedSuitabilities, selectedTags],
   );
+  const hasPlannedRecipes = getWeekRecipeIds(weeklyMenu.week).length > 0;
 
   return (
     <div className="main recipes-page">
@@ -84,6 +88,7 @@ export const WeeklyPlanner = () => {
             type="button"
             className="button button--ghost recipes__planner-clear-all"
             onClick={clearWholePlan}
+            disabled={!hasPlannedRecipes}
           >
             Vymazat celý plán
           </button>
@@ -99,12 +104,14 @@ export const WeeklyPlanner = () => {
           weeklyMenu={weeklyMenu}
           recipesById={recipesById}
           duplicateSource={duplicateSource}
+          keyboardDrag={keyboardDrag}
           pointerDrag={pointerDrag}
           plannerCellRefs={plannerCellRefs}
           targetDay={targetDay}
           targetSlot={targetSlot}
           clearPlannerCell={clearPlannerCell}
           handleDuplicateSlotStart={handleDuplicateSlotStart}
+          handlePlannerCellKeyDown={handlePlannerCellKeyDown}
           handlePlannerPointerDown={handlePlannerPointerDown}
           handlePlannerCellClick={handlePlannerCellClick}
         />

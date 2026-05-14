@@ -8,12 +8,14 @@ export const RecipePlannerGrid = ({
   weeklyMenu,
   recipesById,
   duplicateSource,
+  keyboardDrag,
   pointerDrag,
   plannerCellRefs,
   targetDay,
   targetSlot,
   clearPlannerCell,
   handleDuplicateSlotStart,
+  handlePlannerCellKeyDown,
   handlePlannerPointerDown,
   handlePlannerCellClick,
 }) => {
@@ -66,6 +68,9 @@ export const RecipePlannerGrid = ({
                 pointerDrag?.isActive &&
                 dayIndex === pointerDrag.payload?.dayIndex &&
                 key === pointerDrag.payload?.slotKey;
+              const isKeyboardTarget = Boolean(keyboardDrag);
+              const isKeyboardSource =
+                dayIndex === keyboardDrag?.dayIndex && key === keyboardDrag?.slotKey;
               const slotLabel = slotRecipes.map((recipe) => recipe.title).join(", ");
 
               return (
@@ -84,13 +89,21 @@ export const RecipePlannerGrid = ({
                   }}
                   role="button"
                   tabIndex={0}
-                  className={`recipes__planner-cell ${slotRecipes.length ? "is-filled" : ""} ${isActiveTarget ? "is-active-target" : ""} ${isDuplicateSource ? "is-duplicate-source" : ""} ${isPointerTarget ? "is-drop-target" : ""} ${isPointerSource ? "is-drag-source" : ""} ${optional ? "recipes__planner-cell--optional" : ""}`}
+                  className={`recipes__planner-cell ${slotRecipes.length ? "is-filled" : ""} ${isActiveTarget ? "is-active-target" : ""} ${isDuplicateSource ? "is-duplicate-source" : ""} ${isPointerTarget || isKeyboardTarget ? "is-drop-target" : ""} ${isPointerSource || isKeyboardSource ? "is-drag-source" : ""} ${optional ? "recipes__planner-cell--optional" : ""}`}
+                  aria-label={
+                    isKeyboardTarget
+                      ? `${day} – ${MEAL_LABELS[key] ?? key}: ${slotLabel || "prázdný slot"}. Cíl přesunu, stiskni mezerník pro položení.`
+                      : undefined
+                  }
                   onClick={() => handlePlannerCellClick(dayIndex, key)}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
+                    if (e.key === "Enter") {
                       e.preventDefault();
                       handlePlannerCellClick(dayIndex, key);
+                      return;
                     }
+
+                    handlePlannerCellKeyDown(e, dayIndex, key, slotRecipes);
                   }}
                   onPointerDown={(event) => {
                     if (!slotRecipes.length) return;

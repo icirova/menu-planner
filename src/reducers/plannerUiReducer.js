@@ -154,6 +154,38 @@ export const plannerUiReducer = (state, action) => {
         selectedTarget: null,
       };
 
+    case "START_KEYBOARD_DRAG":
+      return {
+        ...state,
+        duplicateMessage: null,
+        duplicateSource: null,
+        planMessage: `Zvednuto: ${action.label} ze slotu ${getDaySlotLabel(action.dayIndex, action.slotKey)}. Přejdi na cílový slot a stiskni mezerník.`,
+        selectedRecipeId: null,
+        selectedTarget: null,
+      };
+
+    case "CANCEL_KEYBOARD_DRAG":
+      return {
+        ...state,
+        duplicateMessage: null,
+        planMessage: "Přesun klávesnicí byl zrušen.",
+      };
+
+    case "REJECT_KEYBOARD_DRAG_SOURCE":
+      return {
+        ...state,
+        duplicateMessage: null,
+        planMessage: "Slot je prázdný, není co přesouvat.",
+      };
+
+    case "COMMIT_KEYBOARD_DRAG":
+      return {
+        ...state,
+        duplicateMessage: null,
+        planMessage: `Přesunuto do slotu ${getDaySlotLabel(action.dayIndex, action.slotKey)}.`,
+        selectedTarget: null,
+      };
+
     case "CLEAR_CELL":
       return {
         ...state,

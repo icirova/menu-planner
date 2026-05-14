@@ -55,7 +55,7 @@
 }
 
 .recipes__planner-board {
-  overflow-x: visible;
+  overflow-x: auto;
   padding-bottom: 0.25rem;
 }
 
@@ -67,9 +67,9 @@
 
 .recipes__planner-grid {
   display: grid;
-  grid-template-columns: minmax(112px, 130px) repeat(7, minmax(0, 1fr));
+  grid-template-columns: minmax(104px, 120px) repeat(7, minmax(132px, 1fr));
   gap: 0.65rem;
-  min-width: 0;
+  min-width: 1120px;
   width: 100%;
 }
 
@@ -185,9 +185,7 @@
 }
 
 .recipes__planner-slot-actions {
-  position: absolute;
-  top: 0.45rem;
-  right: 0.45rem;
+  align-self: flex-end;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
@@ -231,23 +229,26 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #537462;
-  padding-right: 4.2rem;
 }
 
 .recipes__planner-cell-title {
   font-family: "Sorts Mill Goudy", serif;
   font-size: 0.94rem;
   line-height: 1.25;
-  overflow-wrap: anywhere;
+  min-width: 0;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .recipes__planner-cell-list {
   display: grid;
   gap: 0.45rem;
+  min-width: 0;
 }
 
 .recipes__planner-pill {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.45rem;
   min-width: 0;
@@ -259,7 +260,12 @@
 }
 
 .recipes__planner-pill .recipes__planner-cell-title {
-  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recipes__planner-pill-remove {
+  justify-self: end;
 }
 
 .recipes__planner-drag-ghost {
@@ -323,28 +329,35 @@
   margin: 0;
 }
 
-@media screen and (max-width: 679px) {
+@media screen and (max-width: 1023px) {
   .recipes-page {
     padding: 1rem;
   }
 
+  .recipes__planner-grid {
+    gap: 0.5rem;
+  }
+
+  .recipes__planner-cell-title {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .recipes__planner-pill {
+    min-width: 0;
+  }
+}
+
+@media screen and (max-width: 679px) {
   .recipes__hero {
     align-items: flex-start;
   }
 
-  .recipes__planner {
-    padding: 1rem;
-  }
-
   .recipes__planner-clear-all {
     width: 100%;
-  }
-
-  .recipes__planner-board {
-    overflow-x: auto;
-  }
-
-  .recipes__planner-grid {
-    min-width: 860px;
   }
 }

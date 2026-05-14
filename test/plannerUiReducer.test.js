@@ -163,4 +163,33 @@ describe("planner UI reducer", () => {
     assert.equal(clearedWeek.selectedRecipeId, null);
     assert.match(clearedWeek.planMessage, /Celý týdenní plán/);
   });
+
+  it("reports keyboard drag flow", () => {
+    const started = plannerUiReducer(initialPlannerUiState, {
+      type: "START_KEYBOARD_DRAG",
+      dayIndex: 0,
+      label: "Polévka",
+      slotKey: "lunch",
+    });
+
+    assert.equal(started.selectedRecipeId, null);
+    assert.equal(started.selectedTarget, null);
+    assert.match(started.planMessage, /Zvednuto: Polévka/);
+
+    const committed = plannerUiReducer(started, {
+      type: "COMMIT_KEYBOARD_DRAG",
+      dayIndex: 1,
+      slotKey: "dinner",
+    });
+
+    assert.match(committed.planMessage, /Přesunuto do slotu/);
+
+    const rejected = plannerUiReducer(initialPlannerUiState, {
+      type: "REJECT_KEYBOARD_DRAG_SOURCE",
+    });
+    assert.match(rejected.planMessage, /Slot je prázdný/);
+
+    const cancelled = plannerUiReducer(started, { type: "CANCEL_KEYBOARD_DRAG" });
+    assert.match(cancelled.planMessage, /zrušen/);
+  });
 });
