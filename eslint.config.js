@@ -9,6 +9,7 @@ const browserGlobals = {
   console: "readonly",
   crypto: "readonly",
   document: "readonly",
+  indexedDB: "readonly",
   sessionStorage: "readonly",
   window: "readonly",
 };
