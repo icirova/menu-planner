@@ -90,6 +90,11 @@ export const PANTRY_ITEMS = [
     aliases: ["rozinky"],
   },
   {
+    label: "brusinky",
+    category: "snídaně a svačiny",
+    aliases: ["brusinky", "sušené brusinky"],
+  },
+  {
     label: "semínka",
     category: "snídaně a svačiny",
     aliases: ["semínka", "chia semínka", "sezamová semínka", "slunečnicová semínka"],

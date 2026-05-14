@@ -63,8 +63,30 @@ describe("shopping list helpers", () => {
     };
 
     assert.deepEqual(getDayShoppingItems(day, recipes), [
-      { id: "mrkev", key: "mrkev", label: "Mrkev", selected: false },
-      { id: "ryze", key: "ryze", label: "Rýže", selected: true },
+      { id: "mrkev", key: "mrkev", label: "mrkev", selected: false },
+      { id: "ryze", key: "ryze", label: "rýže", selected: true },
+    ]);
+  });
+
+  it("uses the base ingredient name for cooked ingredients in shopping lists", () => {
+    const day = {
+      lunch: [3],
+      shoppingSelections: {},
+    };
+    const cookedRecipes = [
+      {
+        id: 3,
+        title: "Cizrnové kari",
+        ingredients: [
+          { amount: 400, unit: "g", item: "uvařená cizrna" },
+          { amount: 2, unit: "hrnek", item: "uvařená rýže natural" },
+        ],
+      },
+    ];
+
+    assert.deepEqual(getDayShoppingItems(day, cookedRecipes), [
+      { id: "cizrna", key: "cizrna", label: "cizrna", selected: true },
+      { id: "ryze-natural", key: "ryze-natural", label: "rýže natural", selected: true },
     ]);
   });
 
@@ -109,6 +131,7 @@ describe("shopping list helpers", () => {
         "snídaně a svačiny",
         "snídaně a svačiny",
         "snídaně a svačiny",
+        "snídaně a svačiny",
         "suché zásoby",
         "suché zásoby",
         "dochucení",
@@ -141,6 +164,7 @@ describe("shopping list helpers", () => {
         "granola",
         "semínka",
         "rozinky",
+        "brusinky",
         "svačinky",
         "ovoce",
         "strouhanka",
@@ -230,8 +254,8 @@ describe("shopping list helpers", () => {
     ];
 
     assert.deepEqual(getDayShoppingItems(day, pantryRecipes), [
-      { id: "mrkev", key: "mrkev", label: "Mrkev", selected: true },
-      { id: "nori-vlocky", key: "nori-vlocky", label: "Nori vločky", selected: true },
+      { id: "mrkev", key: "mrkev", label: "mrkev", selected: true },
+      { id: "nori-vlocky", key: "nori-vlocky", label: "nori vločky", selected: true },
     ]);
   });
 
@@ -252,8 +276,8 @@ describe("shopping list helpers", () => {
     ];
 
     assert.deepEqual(getDayShoppingItems(day, spiceRecipes), [
-      { id: "grilovaci-koreni", key: "grilovaci-koreni", label: "Grilovací koření", selected: true },
-      { id: "pernikove-koreni", key: "pernikove-koreni", label: "Perníkové koření", selected: true },
+      { id: "grilovaci-koreni", key: "grilovaci-koreni", label: "grilovací koření", selected: true },
+      { id: "pernikove-koreni", key: "pernikove-koreni", label: "perníkové koření", selected: true },
     ]);
   });
 
@@ -277,11 +301,11 @@ describe("shopping list helpers", () => {
     ];
 
     assert.deepEqual(getDayShoppingItems(day, flourRecipes), [
-      { id: "celozrnna-mouka", key: "celozrnna-mouka", label: "Celozrnná mouka", selected: true },
+      { id: "celozrnna-mouka", key: "celozrnna-mouka", label: "celozrnná mouka", selected: true },
       {
         id: "celozrnna-spaldova-mouka",
         key: "celozrnna-spaldova-mouka",
-        label: "Celozrnná špaldová mouka",
+        label: "celozrnná špaldová mouka",
         selected: true,
       },
     ]);
@@ -309,7 +333,7 @@ describe("shopping list helpers", () => {
       {
         id: "hladka-spaldova-mouka",
         key: "hladka-spaldova-mouka",
-        label: "Hladká špaldová mouka",
+        label: "hladká špaldová mouka",
         selected: true,
       },
     ]);
@@ -392,7 +416,7 @@ describe("shopping list helpers", () => {
     ];
 
     assert.deepEqual(getDayShoppingItems(day, puddingRecipes), [
-      { id: "pudink", key: "pudink", label: "Pudink", selected: true },
+      { id: "pudink", key: "pudink", label: "pudink", selected: true },
     ]);
   });
 
@@ -412,11 +436,11 @@ describe("shopping list helpers", () => {
     ];
 
     assert.deepEqual(getDayShoppingItems(day, alternativeRecipes), [
-      { id: "maslo-nebo-olej", key: "maslo-nebo-olej", label: "Máslo / olej", selected: true },
+      { id: "maslo-nebo-olej", key: "maslo-nebo-olej", label: "máslo / olej", selected: true },
       {
         id: "pazitka-nebo-petrzelka",
         key: "pazitka-nebo-petrzelka",
-        label: "Pažitka / petrželka",
+        label: "pažitka / petrželka",
         selected: true,
       },
     ]);
@@ -432,7 +456,7 @@ describe("shopping list helpers", () => {
     ];
 
     assert.deepEqual(getDayShoppingItems(day, rollRecipes), [
-      { id: "rohliky", key: "rohliky", label: "Rohlíky", selected: true },
+      { id: "rohliky", key: "rohliky", label: "rohlíky", selected: true },
     ]);
   });
 
@@ -449,7 +473,7 @@ describe("shopping list helpers", () => {
     ];
 
     assert.deepEqual(getDayShoppingItems(day, saladRecipes), [
-      { id: "listovy-salat", key: "listovy-salat", label: "Listový salát", selected: true },
+      { id: "listovy-salat", key: "listovy-salat", label: "listový salát", selected: true },
     ]);
   });
 
@@ -464,7 +488,7 @@ describe("shopping list helpers", () => {
     ];
 
     assert.deepEqual(getDayShoppingItems(day, cottageRecipes), [
-      { id: "cottage", key: "cottage", label: "Cottage", selected: true },
+      { id: "cottage", key: "cottage", label: "cottage", selected: true },
     ]);
   });
 
@@ -481,8 +505,8 @@ describe("shopping list helpers", () => {
     ];
 
     assert.deepEqual(getDayShoppingItems(day, cheeseRecipes), [
-      { id: "eidam", key: "eidam", label: "Eidam", selected: true },
-      { id: "syr", key: "syr", label: "Sýr", selected: true },
+      { id: "eidam", key: "eidam", label: "eidam", selected: true },
+      { id: "syr", key: "syr", label: "sýr", selected: true },
     ]);
   });
 
@@ -501,7 +525,7 @@ describe("shopping list helpers", () => {
     ];
 
     assert.deepEqual(getDayShoppingItems(day, bananaRecipes), [
-      { id: "banany", key: "banany", label: "Banány", selected: true },
+      { id: "banany", key: "banany", label: "banány", selected: true },
     ]);
   });
 
@@ -516,11 +540,11 @@ describe("shopping list helpers", () => {
     ];
 
     assert.deepEqual(getDayShoppingItems(day, nutRecipes), [
-      { id: "orechy", key: "orechy", label: "Ořechy", selected: true },
+      { id: "orechy", key: "orechy", label: "ořechy", selected: true },
     ]);
   });
 
-  it("groups dried cranberries under cranberries", () => {
+  it("ignores dried cranberries as pantry cranberries", () => {
     const day = {
       snack1: [3, 4],
       shoppingSelections: {},
@@ -534,9 +558,7 @@ describe("shopping list helpers", () => {
       },
     ];
 
-    assert.deepEqual(getDayShoppingItems(day, cranberryRecipes), [
-      { id: "brusinky", key: "brusinky", label: "Brusinky", selected: true },
-    ]);
+    assert.deepEqual(getDayShoppingItems(day, cranberryRecipes), []);
   });
 
   it("ignores fresh yeast aliases as pantry yeast", () => {
@@ -564,7 +586,7 @@ describe("shopping list helpers", () => {
     ];
 
     assert.deepEqual(getDayShoppingItems(day, driedYeastRecipes), [
-      { id: "susene-drozdi", key: "susene-drozdi", label: "Sušené droždí", selected: true },
+      { id: "susene-drozdi", key: "susene-drozdi", label: "sušené droždí", selected: true },
     ]);
   });
 

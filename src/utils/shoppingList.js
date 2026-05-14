@@ -4,6 +4,7 @@ import { IGNORED_INGREDIENTS } from "../constants/pantry.js";
 import { createStableId } from "./createId.js";
 import {
   formatShoppingIngredientName,
+  getBaseIngredientNameForShopping,
   getCanonicalIngredientName,
   normalizeIngredientKey,
 } from "./ingredientNames.js";
@@ -28,7 +29,7 @@ const isPantryItemKey = (key) => PANTRY_KEYS.has(key);
 
 const formatLabel = (value) => {
   const text = normalizeText(value);
-  return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
+  return text.toLocaleLowerCase("cs-CZ");
 };
 
 const getDayShoppingSelections = (day) =>
@@ -128,7 +129,7 @@ const buildGeneratedShoppingItems = (week, recipes) => {
         recipe.ingredients.forEach((ingredient) => {
           if (!isPlainObject(ingredient)) return;
 
-          const itemName = getCanonicalIngredientName(ingredient.item);
+          const itemName = getBaseIngredientNameForShopping(ingredient.item);
           const labelName = formatShoppingIngredientName(itemName);
           const key = normalizeKey(itemName);
           if (!itemName || !key) return;
@@ -184,7 +185,7 @@ export const getDayShoppingItems = (day, recipes) => {
       recipe.ingredients.forEach((ingredient) => {
         if (!isPlainObject(ingredient)) return;
 
-        const itemName = getCanonicalIngredientName(ingredient.item);
+        const itemName = getBaseIngredientNameForShopping(ingredient.item);
         const labelName = formatShoppingIngredientName(itemName);
         const key = normalizeKey(itemName);
         if (!itemName || !key || aggregated.has(key)) return;

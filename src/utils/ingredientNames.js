@@ -39,7 +39,7 @@ const INGREDIENT_NAME_GROUPS = [
   { canonical: "petržel", aliases: ["petržele"], measuredName: "petržele" },
   { canonical: "celer", aliases: ["celeru"], measuredName: "celeru" },
   { canonical: "rýže", aliases: ["rýži"], measuredName: "rýže" },
-  { canonical: "čočka", aliases: ["čočky"], measuredName: "čočky" },
+  { canonical: "čočka", aliases: ["čočky", "čočku"], measuredName: "čočky" },
   { canonical: "těstoviny", aliases: ["těstovin"], measuredName: "těstovin" },
   {
     canonical: "sladká paprika",
@@ -266,6 +266,7 @@ const INGREDIENT_NAME_GROUPS = [
     measuredName: "kulatozrnné rýže",
   },
   { canonical: "sushi rýže", aliases: ["sushi rýže"], measuredName: "sushi rýže" },
+  { canonical: "cizrna", aliases: ["cizrny", "cizrnu"], measuredName: "cizrny" },
   {
     canonical: "uvařená rýže natural",
     aliases: ["uvařené rýže natural"],
@@ -436,6 +437,11 @@ const INGREDIENT_ALIASES = new Map(
   ),
 );
 
+const COOKED_INGREDIENT_PREFIX_PATTERN =
+  /^(?:uvarena|uvarene|uvareny|uvarenou|uvareneho|uvarenych|varena|varene|vareny|varenou|vareneho|varenych)-+/;
+const COOKED_INGREDIENT_TEXT_PREFIX_PATTERN =
+  /^(?:uvařená|uvařené|uvařený|uvařenou|uvařeného|uvařených|vařená|vařené|vařený|vařenou|vařeného|vařených)\s+/i;
+
 const MEASURED_NAMES = new Map(
   INGREDIENT_NAME_GROUPS.map(({ canonical, measuredName }) => [
     normalizeIngredientKey(canonical),
@@ -560,6 +566,22 @@ export const getCanonicalIngredientName = (value) => {
 
   const key = normalizeIngredientKey(text);
   return INGREDIENT_ALIASES.get(key) ?? text.toLocaleLowerCase("cs-CZ");
+};
+
+const removeCookedIngredientPrefix = (value) => {
+  const key = normalizeIngredientKey(value);
+  if (!key) return "";
+
+  return key.replace(COOKED_INGREDIENT_PREFIX_PATTERN, "");
+};
+
+export const getBaseIngredientNameForShopping = (value) => {
+  const text = typeof value === "string" ? value.trim().replace(/\s+/g, " ") : "";
+  const baseText = text.replace(COOKED_INGREDIENT_TEXT_PREFIX_PATTERN, "");
+  const baseKey = removeCookedIngredientPrefix(value);
+  if (!baseKey) return "";
+
+  return INGREDIENT_ALIASES.get(baseKey) ?? baseText.toLocaleLowerCase("cs-CZ");
 };
 
 export const formatIngredientNameForAmount = (itemName, unit) => {
