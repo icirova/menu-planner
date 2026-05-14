@@ -18,6 +18,40 @@ const SORT_OPTIONS = [
 ];
 const RECIPES_BATCH_SIZE = 24;
 
+const RecipeCatalogSummary = ({ catalogStats, className = "" }) => (
+  <aside className={`recipe-library__panel recipe-library__panel--summary ${className}`}>
+    <div className="recipe-library__panel-header">
+      <div>
+        <h2>Katalog v kostce</h2>
+      </div>
+    </div>
+
+    <div className="recipe-library__summary-content">
+      <div className="recipe-library__summary-grid">
+        <article className="recipe-library__summary-box">
+          <span className="recipe-library__summary-value">{catalogStats.totalCount}</span>
+          <span className="recipe-library__summary-label">receptů celkem</span>
+        </article>
+
+        <article className="recipe-library__summary-box">
+          <span className="recipe-library__summary-value">{catalogStats.customCount}</span>
+          <span className="recipe-library__summary-label">vlastních receptů</span>
+        </article>
+
+        <article className="recipe-library__summary-box">
+          <span className="recipe-library__summary-value">{catalogStats.glutenFreeCount}</span>
+          <span className="recipe-library__summary-label">bezlepkových receptů</span>
+        </article>
+
+        <article className="recipe-library__summary-box">
+          <span className="recipe-library__summary-value">{catalogStats.veganCount}</span>
+          <span className="recipe-library__summary-label">veganských receptů</span>
+        </article>
+      </div>
+    </div>
+  </aside>
+);
+
 const RecipeLibraryCard = ({ recipe }) => {
   const cover = resolveImageSrc(recipe.photo_urls?.[0] || "/image/placeholder.png");
   const tags = recipe.tags ?? [];
@@ -219,39 +253,10 @@ export const RecipeLibrary = () => {
           </div>
         </section>
 
-        <aside className="recipe-library__panel recipe-library__panel--summary">
-          <div className="recipe-library__panel-header">
-            <div>
-              <h2>Katalog v kostce</h2>
-            </div>
-          </div>
-
-          <div className="recipe-library__summary-content">
-            <div className="recipe-library__summary-grid">
-              <article className="recipe-library__summary-box">
-                <span className="recipe-library__summary-value">{catalogStats.totalCount}</span>
-                <span className="recipe-library__summary-label">receptů celkem</span>
-              </article>
-
-              <article className="recipe-library__summary-box">
-                <span className="recipe-library__summary-value">{catalogStats.customCount}</span>
-                <span className="recipe-library__summary-label">vlastních receptů</span>
-              </article>
-
-              <article className="recipe-library__summary-box">
-                <span className="recipe-library__summary-value">
-                  {catalogStats.glutenFreeCount}
-                </span>
-                <span className="recipe-library__summary-label">bezlepkových receptů</span>
-              </article>
-
-              <article className="recipe-library__summary-box">
-                <span className="recipe-library__summary-value">{catalogStats.veganCount}</span>
-                <span className="recipe-library__summary-label">veganských receptů</span>
-              </article>
-            </div>
-          </div>
-        </aside>
+        <RecipeCatalogSummary
+          catalogStats={catalogStats}
+          className="recipe-library__panel--summary-desktop"
+        />
       </div>
 
       <section className="recipe-library__panel" ref={catalogSectionRef}>
@@ -310,6 +315,11 @@ export const RecipeLibrary = () => {
           </div>
         )}
       </section>
+
+      <RecipeCatalogSummary
+        catalogStats={catalogStats}
+        className="recipe-library__panel--summary-mobile"
+      />
     </div>
   );
 };

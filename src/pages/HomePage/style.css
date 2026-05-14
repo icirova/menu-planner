@@ -514,6 +514,10 @@
 }
 
 @media (max-width: 960px) {
+  .home-page__sheet {
+    padding: 1rem;
+  }
+
   .home-page__hero-aside {
     justify-items: start;
     align-content: start;
@@ -564,10 +568,6 @@
 }
 
 @media (max-width: 640px) {
-  .home-page__sheet {
-    padding: 1rem;
-  }
-
   .home-page__panel--today .card__image {
     height: 150px;
   }

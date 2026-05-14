@@ -284,9 +284,15 @@ h2 {
   }
 }
 
+@media screen and (max-width: 1023px) {
+  .container {
+    padding-inline: 0;
+  }
+}
+
 @media screen and (max-width: 640px) {
   .container {
-    padding: 0.85rem 0.85rem 1.25rem;
+    padding: 0.85rem 0 calc(5rem + env(safe-area-inset-bottom));
   }
 
   .main {

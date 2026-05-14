@@ -260,11 +260,13 @@
   right: 16px;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1023px) {
   .recipe-detail-page {
     padding: 1rem;
   }
+}
 
+@media (max-width: 860px) {
   .recipe-detail-page__panel {
     padding: 0;
   }
