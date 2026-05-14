@@ -1326,7 +1326,7 @@ export const recipes = [
     ],
     allergens: ["sezam"],
     suitableFor: ["veganské", "bez lepku", "bez mléka"],
-    preTasks: [],
+    preTasks: ["Večer namočit cizrnu."],
     calories: 240,
     workflow:
       "Na oleji orestuj cibuli a mrkev se solí, přidej česnek, kmín, kurkumu a cizrnu, zalij vývarem. Povař 30 minut a rozmixuj dohladka. Dochuť zázvorovou šťávou, solí a pepřem. Posyp sezamem.",
