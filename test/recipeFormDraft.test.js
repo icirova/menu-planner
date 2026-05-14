@@ -79,6 +79,15 @@ describe("recipe form draft helpers", () => {
     );
 
     assert.deepEqual(
+      validateRecipeForm({ ...validForm, servings: "101" }, { validateIngredients: false }),
+      {
+        isValid: false,
+        message: "Počet porcí může být maximálně 100.",
+        fieldName: "servings",
+      },
+    );
+
+    assert.deepEqual(
       validateRecipeForm({ ...validForm, calories: "-1" }, { validateIngredients: false }),
       {
         isValid: false,

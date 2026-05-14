@@ -1,3 +1,5 @@
+import { MAX_SERVINGS, MIN_SERVINGS } from "../../constants/servings.js";
+
 export const RecipeBasicFields = ({ form, setField }) => (
   <section className="recipe-form-page__panel">
     <div className="recipe-form-page__section-header">
@@ -34,7 +36,8 @@ export const RecipeBasicFields = ({ form, setField }) => (
           type="number"
           id="servings"
           name="servings"
-          min="1"
+          min={MIN_SERVINGS}
+          max={MAX_SERVINGS}
           step="1"
           className="form__input"
           placeholder="Např. 4"

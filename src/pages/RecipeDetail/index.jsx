@@ -6,6 +6,7 @@ import { SuitabilityTags } from "../../components/SuitabilityTags/index.jsx";
 import { ServingsControl } from "../../components/ServingsControl/index.jsx";
 import { IngredientsList } from "../../components/IngredientsList/index.jsx";
 import { RecipeTags } from "../../components/RecipeTags/index.jsx";
+import { MAX_SERVINGS, MIN_SERVINGS } from "../../constants/servings.js";
 import { areRecipeIdsEqual, normalizeRecipeIdValue } from "../../utils/recipeIds.js";
 import { isSeedRecipe } from "../../utils/recipeSource.js";
 import { resolveImageSrc } from "../../utils/resolveImageSrc.js";
@@ -16,6 +17,12 @@ import { useLightbox } from "./useLightbox.js";
 
 const DEFAULT_SERVINGS = 4;
 const KILOJOULES_PER_KILOCALORIE = 4.184;
+
+const clampServings = (value) => {
+  const servings = Number.parseInt(value, 10);
+  if (!Number.isFinite(servings)) return MIN_SERVINGS;
+  return Math.min(Math.max(servings, MIN_SERVINGS), MAX_SERVINGS);
+};
 
 const formatEnergyLabel = (calories) => {
   if (calories == null) return "- kcal na 1 porci";
@@ -36,7 +43,7 @@ export const RecipeDetail = () => {
   const [desiredServings, setDesiredServings] = useState(4);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const gallery = (recipeDetail?.photo_urls ?? []).slice(1).map(resolveImageSrc);
+  const gallery = (recipeDetail?.photo_urls ?? []).map(resolveImageSrc);
   const { closeLightbox, lightboxIndex, openLightbox, showNext, showPrevious } = useLightbox(
     gallery.length,
   );
@@ -130,7 +137,7 @@ export const RecipeDetail = () => {
               </p>
               <ServingsControl
                 value={desiredServings}
-                onChange={(e) => setDesiredServings(parseInt(e.target.value, 10) || 1)}
+                onChange={(e) => setDesiredServings(clampServings(e.target.value))}
               />
             </div>
 

@@ -2,6 +2,7 @@ import {
   normalizeAllergenValuesForSuitability,
   normalizeSuitableForValues,
 } from "../constants/recipeMetadata.js";
+import { MAX_SERVINGS, MIN_SERVINGS } from "../constants/servings.js";
 import { createNumericId } from "./createId.js";
 import { getCanonicalIngredientName } from "./ingredientNames.js";
 import { normalizeRecipePreTasks } from "./normalizeRecipePreTasks.js";
@@ -73,8 +74,16 @@ export const validateRecipeForm = (
   const trimmedCalories = form.calories.trim();
   const calories = trimmedCalories === "" ? null : Number(trimmedCalories);
 
-  if (!Number.isFinite(servings) || servings < 1) {
+  if (!Number.isFinite(servings) || servings < MIN_SERVINGS) {
     return { isValid: false, message: "Počet porcí musí být alespoň 1.", fieldName: "servings" };
+  }
+
+  if (servings > MAX_SERVINGS) {
+    return {
+      isValid: false,
+      message: `Počet porcí může být maximálně ${MAX_SERVINGS}.`,
+      fieldName: "servings",
+    };
   }
 
   if (trimmedCalories !== "" && (!Number.isFinite(calories) || calories < 0)) {
